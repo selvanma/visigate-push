@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>VisiGate Portals</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f7f6;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            margin: 0;
+        }
+        .container {
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+            text-align: center;
+            width: 90%;
+            max-width: 400px;
+        }
+        h2 {
+            color: #2c3e50;
+            margin-bottom: 25px;
+        }
+        a.btn {
+            display: block;
+            width: 100%;
+            padding: 15px;
+            margin-bottom: 15px;
+            background-color: #3498db;
+            color: white;
+            text-decoration: none;
+            font-weight: bold;
+            border-radius: 8px;
+            box-sizing: border-box;
+            transition: background 0.3s;
+        }
+        a.btn.guard { background-color: #e74c3c; }
+        a.btn.resident { background-color: #27ae60; }
+        a.btn:hover { opacity: 0.9; }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <h2>VisiGate Access Portals</h2>
+        
+        <!-- Guard App Link (Updated to v563) -->
+        <a href="https://script.google.com/macros/s/AKfycbwAeuMShFKEpa9ZnP_OKl5qzAv8mPrYQ9FVMYJAwYS1zLpvsYHDfanF5xKVH5dS7b8E/exec" class="btn guard">Open Guard App</a>
+        
+        <!-- Resident Portal Link (Replace with your actual v152 URL) -->
+        <a href="YOUR_RESIDENT_PORTAL_URL_HERE" class="btn resident">Open Resident Portal</a>
+        
+        <div id="status" style="margin-top: 20px; font-size: 12px; color: #7f8c8d;">Initializing system...</div>
+    </div>
+
+    <!-- Register the Service Worker for Web Push -->
+    <script>
+        if ('serviceWorker' in navigator) {
+            navigator.serviceWorker.register('/visigate-push/firebase-messaging-sw.js')
+            .then(function(registration) {
+                document.getElementById('status').innerText = "Push Notifications Active";
+                console.log('Registration successful, scope is:', registration.scope);
+            }).catch(function(err) {
+                document.getElementById('status').innerText = "Push Notifications Failed";
+                console.log('Service worker registration failed, error:', err);
+            });
+        } else {
+            document.getElementById('status').innerText = "Push not supported in this browser.";
+        }
+    </script>
+</body>
+</html>
