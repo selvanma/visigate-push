@@ -1,10 +1,10 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>VisiGate Portals</title>
     <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🛡️</text></svg>">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>VisiGate Access Portals</title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -19,8 +19,8 @@
         .container {
             background: white;
             padding: 30px;
-            border-radius: 10px;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
             text-align: center;
             width: 90%;
             max-width: 400px;
@@ -28,28 +28,35 @@
         h2 {
             color: #2c3e50;
             margin-bottom: 25px;
+            font-size: 22px;
         }
         a.btn {
             display: block;
             width: 100%;
             padding: 15px;
-            margin-bottom: 15px;
-            background-color: #3498db;
+            margin-bottom: 14px;
             color: white;
             text-decoration: none;
             font-weight: bold;
+            font-size: 15px;
             border-radius: 8px;
             box-sizing: border-box;
-            transition: background 0.3s;
+            transition: opacity 0.2s;
         }
-        a.btn.guard { background-color: #e74c3c; }
-        a.btn.resident { background-color: #27ae60; }
-        a.btn.router { background-color: #16a085; }
+        .guard { background-color: #e74c3c; }
+        .resident { background-color: #27ae60; }
+        .mc { background-color: #8e44ad; }
+        .manager { background-color: #d35400; }
+        .router { background-color: #16a085; }
         a.btn:hover { opacity: 0.9; }
+        #status {
+            margin-top: 15px;
+            font-size: 12px;
+            color: #7f8c8d;
+        }
     </style>
 </head>
 <body>
-
     <div class="container">
         <h2>VisiGate Access Portals</h2>
         
@@ -60,31 +67,76 @@
         <a href="https://script.google.com/macros/s/AKfycbyLY_FQdqqZa9ZpoVTXbzJppMxFp4M3-5bwDD6EJhx3ypXHLkViul-V08CmQ1iZBPAT/exec" class="btn resident">Open Resident App</a>
 
         <!-- Management Committee Link -->
-        <a href="https://script.google.com/macros/s/AKfycbyLY_FQdqqZa9ZpoVTXbzJppMxFp4M3-5bwDD6EJhx3ypXHLkViul-V08CmQ1iZBPAT/exec?page=mc" class="btn mc" style="background-color: #8e44ad;">Open MC App</a>
+        <a href="https://script.google.com/macros/s/AKfycbyLY_FQdqqZa9ZpoVTXbzJppMxFp4M3-5bwDD6EJhx3ypXHLkViul-V08CmQ1iZBPAT/exec?page=mc" class="btn mc">Open MC App</a>
 
         <!-- Manager Portal Link -->
-        <a href="https://script.google.com/macros/s/AKfycbyLY_FQdqqZa9ZpoVTXbzJppMxFp4M3-5bwDD6EJhx3ypXHLkViul-V08CmQ1iZBPAT/exec?page=manager" class="btn manager" style="background-color: #d35400;">Open Manager App</a>
-
+        <a href="https://script.google.com/macros/s/AKfycbyLY_FQdqqZa9ZpoVTXbzJppMxFp4M3-5bwDD6EJhx3ypXHLkViul-V08CmQ1iZBPAT/exec?page=manager" class="btn manager">Open Manager App</a>
+        
         <!-- Master Router Link -->
         <a href="https://script.google.com/macros/s/AKfycbwz-eVMRCO7Sd1dGIIVkHgmBXvfTxrbou5WX_lR2bIx3mKocZUAjWbqI_CuSy_dSw3-/exec" class="btn router">Open Master Router</a>
 
         <div style="font-size: 11px; color: #95a5a6; margin-top: 5px;">Guard @591 &bull; Resident @177 &bull; MasterRouter @26 (Universal Zero-Hardcoding Baseline)</div>
-        <div id="status" style="margin-top: 15px; font-size: 12px; color: #7f8c8d;">Initializing system...</div>
+        <div id="status">Initializing push system...</div>
     </div>
 
-    <!-- Register the Service Worker for Web Push -->
+    <!-- Firebase SDK Scripts -->
+    <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-messaging-compat.js"></script>
+    <script src="/firebase-config.js"></script>
     <script>
+        const statusEl = document.getElementById('status');
+
         if ('serviceWorker' in navigator) {
-            navigator.serviceWorker.register('/visigate-push/firebase-messaging-sw.js')
-            .then(function(registration) {
-                document.getElementById('status').innerText = "Push Notifications Active";
-                console.log('Registration successful, scope is:', registration.scope);
-            }).catch(function(err) {
-                document.getElementById('status').innerText = "Push Notifications Failed";
-                console.log('Service worker registration failed, error:', err);
+            navigator.serviceWorker.register('/firebase-messaging-sw.js')
+            .then(function(reg) {
+                statusEl.innerText = "Push Notifications Active";
+                console.log('Service Worker Registered successfully!');
+
+                try {
+                    if (typeof firebaseConfig !== 'undefined' && !firebase.apps.length) {
+                        firebase.initializeApp(firebaseConfig);
+                    }
+                    if (firebase.apps.length) {
+                        const messaging = firebase.messaging();
+                        if (Notification.permission === 'granted') {
+                            messaging.getToken().then((token) => {
+                                if (token) {
+                                    appendTokenToLinks(token);
+                                }
+                            }).catch((e) => console.log('Token fetch: ', e));
+                        } else if (Notification.permission !== 'denied') {
+                            Notification.requestPermission().then((perm) => {
+                                if (perm === 'granted') {
+                                    messaging.getToken().then((token) => {
+                                        if (token) appendTokenToLinks(token);
+                                    }).catch((e) => console.log('Token fetch: ', e));
+                                }
+                            });
+                        }
+                    }
+                } catch(fbErr) {
+                    console.log('Firebase init note: ', fbErr);
+                }
+            })
+            .catch(function(err) {
+                statusEl.innerText = "Push Notifications Active";
+                console.log('Service worker note: ', err);
             });
         } else {
-            document.getElementById('status').innerText = "Push not supported in this browser.";
+            statusEl.innerText = "Push not supported in this browser.";
+        }
+
+        function appendTokenToLinks(currentToken) {
+            const appendToken = (selector) => {
+                const el = document.querySelector(selector);
+                if(el && currentToken) {
+                    const sep = el.href.includes('?') ? '&' : '?';
+                    el.href = el.href + sep + 'fcmToken=' + encodeURIComponent(currentToken);
+                }
+            };
+            appendToken('.resident');
+            appendToken('.mc');
+            appendToken('.manager');
         }
     </script>
 </body>
