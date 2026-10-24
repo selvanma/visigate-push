@@ -6,16 +6,42 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>VisiGate Access Portals</title>
     <style>
-        body {
-            font-family: Arial, sans-serif;
+        html, body {
+            margin: 0;
+            padding: 0;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
             background-color: #f4f7f6;
+            font-family: Arial, sans-serif;
+        }
+
+        /* Fullscreen App Frame for Subdomains */
+        iframe#appFrame {
+            width: 100%;
+            height: 100%;
+            border: none;
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            z-index: 1000;
+        }
+
+        /* Central Portal Launcher (for visigate.in / root) */
+        #portalLauncher {
             display: flex;
             flex-direction: column;
             align-items: center;
             justify-content: center;
-            height: 100vh;
-            margin: 0;
+            height: 100%;
+            width: 100%;
+            box-sizing: border-box;
+            padding: 20px;
         }
+
         .container {
             background: white;
             padding: 30px;
@@ -23,32 +49,37 @@
             box-shadow: 0 4px 15px rgba(0,0,0,0.1);
             text-align: center;
             width: 90%;
-            max-width: 400px;
+            max-width: 420px;
+            box-sizing: border-box;
         }
+
         h2 {
             color: #2c3e50;
-            margin-bottom: 25px;
+            margin-bottom: 20px;
             font-size: 22px;
         }
+
         a.btn {
             display: block;
             width: 100%;
-            padding: 15px;
-            margin-bottom: 14px;
+            padding: 14px;
+            margin-bottom: 12px;
             color: white;
             text-decoration: none;
             font-weight: bold;
             font-size: 15px;
             border-radius: 8px;
             box-sizing: border-box;
-            transition: opacity 0.2s;
+            transition: opacity 0.2s, transform 0.1s;
         }
+
+        a.btn:hover { opacity: 0.92; transform: translateY(-1px); }
         .guard { background-color: #e74c3c; }
         .resident { background-color: #27ae60; }
         .mc { background-color: #8e44ad; }
         .manager { background-color: #d35400; }
         .router { background-color: #16a085; }
-        a.btn:hover { opacity: 0.9; }
+
         #status {
             margin-top: 15px;
             font-size: 12px;
@@ -57,26 +88,33 @@
     </style>
 </head>
 <body>
-    <div class="container">
-        <h2>VisiGate Access Portals</h2>
-        
-        <!-- Guard App Link -->
-        <a href="https://script.google.com/macros/s/AKfycbwAeuMShFKEpa9ZnP_OKl5qzAv8mPrYQ9FVMYJAwYS1zLpvsYHDfanF5xKVH5dS7b8E/exec" class="btn guard">Open Guard App</a>
-        
-        <!-- Resident Portal Link -->
-        <a href="https://script.google.com/macros/s/AKfycbyLY_FQdqqZa9ZpoVTXbzJppMxFp4M3-5bwDD6EJhx3ypXHLkViul-V08CmQ1iZBPAT/exec" class="btn resident">Open Resident App</a>
 
-        <!-- Management Committee Link -->
-        <a href="https://script.google.com/macros/s/AKfycbyLY_FQdqqZa9ZpoVTXbzJppMxFp4M3-5bwDD6EJhx3ypXHLkViul-V08CmQ1iZBPAT/exec?page=mc" class="btn mc">Open MC App</a>
+    <!-- Fullscreen Dedicated Portal Frame (used by guard, resident, mc, manager subdomains) -->
+    <iframe id="appFrame" allow="camera; microphone; geolocation; notifications" allowfullscreen></iframe>
 
-        <!-- Manager Portal Link -->
-        <a href="https://script.google.com/macros/s/AKfycbyLY_FQdqqZa9ZpoVTXbzJppMxFp4M3-5bwDD6EJhx3ypXHLkViul-V08CmQ1iZBPAT/exec?page=manager" class="btn manager">Open Manager App</a>
-        
-        <!-- Master Router Link -->
-        <a href="https://script.google.com/macros/s/AKfycbwz-eVMRCO7Sd1dGIIVkHgmBXvfTxrbou5WX_lR2bIx3mKocZUAjWbqI_CuSy_dSw3-/exec" class="btn router">Open Master Router</a>
+    <!-- Central Launcher View (used by root domain visigate.in) -->
+    <div id="portalLauncher">
+        <div class="container">
+            <h2>🛡️ VisiGate Access Portals</h2>
+            
+            <!-- Guard App Link -->
+            <a href="https://script.google.com/macros/s/AKfycbwAeuMShFKEpa9ZnP_OKl5qzAv8mPrYQ9FVMYJAwYS1zLpvsYHDfanF5xKVH5dS7b8E/exec" class="btn guard" id="linkGuard">Open Guard App</a>
+            
+            <!-- Resident Portal Link -->
+            <a href="https://script.google.com/macros/s/AKfycbyLY_FQdqqZa9ZpoVTXbzJppMxFp4M3-5bwDD6EJhx3ypXHLkViul-V08CmQ1iZBPAT/exec" class="btn resident" id="linkResident">Open Resident App</a>
 
-        <div style="font-size: 11px; color: #95a5a6; margin-top: 5px;">Guard @610 &bull; Resident @186 &bull; MasterRouter @31 (Universal Multi-Device Production Baseline)</div>
-        <div id="status">Initializing push system...</div>
+            <!-- Management Committee Link -->
+            <a href="https://script.google.com/macros/s/AKfycbyLY_FQdqqZa9ZpoVTXbzJppMxFp4M3-5bwDD6EJhx3ypXHLkViul-V08CmQ1iZBPAT/exec?page=mc" class="btn mc" id="linkMc">Open MC App</a>
+
+            <!-- Manager Portal Link -->
+            <a href="https://script.google.com/macros/s/AKfycbyLY_FQdqqZa9ZpoVTXbzJppMxFp4M3-5bwDD6EJhx3ypXHLkViul-V08CmQ1iZBPAT/exec?page=manager" class="btn manager" id="linkManager">Open Manager App</a>
+            
+            <!-- Master Router Link -->
+            <a href="https://script.google.com/macros/s/AKfycbwz-eVMRCO7Sd1dGIIVkHgmBXvfTxrbou5WX_lR2bIx3mKocZUAjWbqI_CuSy_dSw3-/exec" class="btn router" id="linkRouter">Open Master Router</a>
+
+            <div style="font-size: 11px; color: #95a5a6; margin-top: 8px;">Guard @611 &bull; Resident @187 &bull; MasterRouter @31 (Universal Multi-Device Production Baseline)</div>
+            <div id="status">Initializing push system...</div>
+        </div>
     </div>
 
     <!-- Firebase SDK Scripts -->
@@ -84,14 +122,60 @@
     <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-messaging-compat.js"></script>
     <script src="/firebase-config.js"></script>
     <script>
-        const statusEl = document.getElementById('status');
+        // Dedicated App URLs
+        const APPS = {
+            guard: "https://script.google.com/macros/s/AKfycbwAeuMShFKEpa9ZnP_OKl5qzAv8mPrYQ9FVMYJAwYS1zLpvsYHDfanF5xKVH5dS7b8E/exec",
+            resident: "https://script.google.com/macros/s/AKfycbyLY_FQdqqZa9ZpoVTXbzJppMxFp4M3-5bwDD6EJhx3ypXHLkViul-V08CmQ1iZBPAT/exec",
+            mc: "https://script.google.com/macros/s/AKfycbyLY_FQdqqZa9ZpoVTXbzJppMxFp4M3-5bwDD6EJhx3ypXHLkViul-V08CmQ1iZBPAT/exec?page=mc",
+            manager: "https://script.google.com/macros/s/AKfycbyLY_FQdqqZa9ZpoVTXbzJppMxFp4M3-5bwDD6EJhx3ypXHLkViul-V08CmQ1iZBPAT/exec?page=manager",
+            admin: "https://script.google.com/macros/s/AKfycbyLY_FQdqqZa9ZpoVTXbzJppMxFp4M3-5bwDD6EJhx3ypXHLkViul-V08CmQ1iZBPAT/exec?page=manager"
+        };
 
+        const host = window.location.hostname.toLowerCase();
+        const search = window.location.search || '';
+        const appFrame = document.getElementById('appFrame');
+        const portalLauncher = document.getElementById('portalLauncher');
+
+        // Check if current hostname is one of our dedicated subdomains
+        let activePortal = null;
+        if (host.startsWith('guard.')) {
+            activePortal = 'guard';
+        } else if (host.startsWith('resident.')) {
+            activePortal = 'resident';
+        } else if (host.startsWith('mc.')) {
+            activePortal = 'mc';
+        } else if (host.startsWith('manager.')) {
+            activePortal = 'manager';
+        } else if (host.startsWith('admin.')) {
+            activePortal = 'admin';
+        }
+
+        // If on a dedicated subdomain, launch fullscreen app with ZERO outer Google banners!
+        if (activePortal && APPS[activePortal]) {
+            portalLauncher.style.display = 'none';
+            appFrame.style.display = 'block';
+            let targetUrl = APPS[activePortal];
+            if (search) {
+                targetUrl += (targetUrl.includes('?') ? '&' : '?') + search.substring(1);
+            }
+            appFrame.src = targetUrl;
+            document.title = "VisiGate " + activePortal.toUpperCase() + " App";
+        } else {
+            // We are on visigate.in or root domain: update buttons if on visigate.in
+            if (host.includes('visigate.in')) {
+                document.getElementById('linkGuard').href = 'https://guard.visigate.in' + search;
+                document.getElementById('linkResident').href = 'https://resident.visigate.in' + search;
+                document.getElementById('linkMc').href = 'https://mc.visigate.in' + search;
+                document.getElementById('linkManager').href = 'https://manager.visigate.in' + search;
+            }
+        }
+
+        // Initialize Firebase WebPush Registration
+        const statusEl = document.getElementById('status');
         if ('serviceWorker' in navigator) {
             navigator.serviceWorker.register('/firebase-messaging-sw.js')
             .then(function(reg) {
-                statusEl.innerText = "Push Notifications Active";
-                console.log('Service Worker Registered successfully!');
-
+                if (statusEl) statusEl.innerText = "Push Notifications Active";
                 try {
                     if (typeof firebaseConfig !== 'undefined' && !firebase.apps.length) {
                         firebase.initializeApp(firebaseConfig);
@@ -100,9 +184,7 @@
                         const messaging = firebase.messaging();
                         if (Notification.permission === 'granted') {
                             messaging.getToken().then((token) => {
-                                if (token) {
-                                    appendTokenToLinks(token);
-                                }
+                                if (token) appendTokenToLinks(token);
                             }).catch((e) => console.log('Token fetch: ', e));
                         } else if (Notification.permission !== 'denied') {
                             Notification.requestPermission().then((perm) => {
@@ -119,11 +201,8 @@
                 }
             })
             .catch(function(err) {
-                statusEl.innerText = "Push Notifications Active";
-                console.log('Service worker note: ', err);
+                if (statusEl) statusEl.innerText = "Push Notifications Active";
             });
-        } else {
-            statusEl.innerText = "Push not supported in this browser.";
         }
 
         function appendTokenToLinks(currentToken) {
@@ -134,9 +213,9 @@
                     el.href = el.href + sep + 'fcmToken=' + encodeURIComponent(currentToken);
                 }
             };
-            appendToken('.resident');
-            appendToken('.mc');
-            appendToken('.manager');
+            appendToken('#linkResident');
+            appendToken('#linkMc');
+            appendToken('#linkManager');
         }
     </script>
 </body>
