@@ -726,30 +726,31 @@
 
             <form id="mandatoryGateForm" onsubmit="handleMandatoryUnlock(event)">
                 <div style="margin-bottom: 12px;">
-                    <label class="form-label">Society / Apartment / Tower Name <span class="modal-req-tag">*</span></label>
-                    <input type="text" id="gateSocietyName" class="form-input" value="Royal Palms Residency" placeholder="e.g. Blossom Enclave, Prestige Towers" required>
+                    <label class="form-label">Society / Apartment / Tower Name <span class="modal-req-tag">* (Compulsory)</span></label>
+                    <input type="text" id="gateSocietyName" class="form-input" value="" placeholder="Enter Society / Apartment Name (e.g. Green Meadows)" required>
                 </div>
 
                 <div class="form-grid" style="grid-template-columns: repeat(2, 1fr); margin-bottom: 12px;">
                     <div>
                         <label class="form-label">Your Full Name <span class="modal-req-tag">* (Compulsory)</span></label>
-                        <input type="text" id="gateFullName" class="form-input" value="Kishore Kumar" placeholder="e.g. Kishore Kumar" required>
+                        <input type="text" id="gateFullName" class="form-input" value="" placeholder="Enter Your Full Name" required>
                     </div>
                     <div>
-                        <label class="form-label">Your WhatsApp Number <span class="modal-req-tag">* (Compulsory)</span></label>
-                        <input type="tel" id="gateWhatsApp" class="form-input" value="+91 98450 12345" placeholder="+91 98XXX XXXXX" required>
+                        <label class="form-label">Your WhatsApp Number <span class="modal-req-tag">* (Compulsory: +91 &amp; 10-digits)</span></label>
+                        <input type="tel" id="gateWhatsApp" class="form-input" value="" placeholder="+91 XXXXXXXXXX (e.g. +91 9876543210)" required>
                     </div>
                 </div>
 
                 <div class="form-grid" style="grid-template-columns: repeat(2, 1fr); margin-bottom: 18px;">
                     <div>
-                        <label class="form-label">Your Email ID <span class="modal-req-tag">* (Compulsory)</span></label>
-                        <input type="email" id="gateEmail" class="form-input" value="kishore@royalpalms.org" placeholder="you@society.org" required>
+                        <label class="form-label">Your Email ID <span class="modal-req-tag">* (Compulsory: @xxxxxx.xxx)</span></label>
+                        <input type="email" id="gateEmail" class="form-input" value="" placeholder="you@domain.xxx (e.g. name@society.org)" required>
                     </div>
                     <div>
                         <label class="form-label">Your Role in Society <span class="modal-opt-tag">(Optional Entry)</span></label>
                         <select id="gateRole" class="form-select">
-                            <option value="MC President" selected>MC President</option>
+                            <option value="" selected>-- Select Role (Optional) --</option>
+                            <option value="MC President">MC President</option>
                             <option value="MC Secretary">MC Secretary</option>
                             <option value="Estate Manager">Estate / Facility Manager</option>
                             <option value="Security Committee">Security Committee Member</option>
@@ -777,12 +778,12 @@
 
             <div class="sandbox-society-pill" id="headerSocietyBadge">
                 <span id="badgeSocietyLogo">🏢</span>
-                <span id="badgeSocietyName">Royal Palms Residency (Live Testbed)</span>
+                <span id="badgeSocietyName">Your Society / Apartment (Live Testbed)</span>
             </div>
 
             <div class="header-actions">
                 <button type="button" class="btn-top-action" onclick="openLeadModal()">
-                    <span>👤 <span id="headerLeadName">Kishore Kumar</span> (Edit Lead)</span>
+                    <span>👤 <span id="headerLeadName">Prospective Society</span> (Edit Lead)</span>
                 </button>
                 <a href="#setupSection" class="btn-top-action">
                     <span>⚙️ Setup Residents (Max 10)</span>
@@ -822,31 +823,26 @@
             <div class="form-grid">
                 <div>
                     <label class="form-label">Gate Name / Number</label>
-                    <select id="cfgGateName" class="form-select">
-                        <option value="Main Gate Checkpoint (Gate 1)" selected>Main Gate Checkpoint (Gate 1)</option>
-                        <option value="North Gate (Gate 2)">North Gate (Gate 2)</option>
-                        <option value="Tower Block Gate">Tower Block Gate</option>
-                        <option value="Basement Service Gate">Basement Service Gate</option>
-                    </select>
+                    <input type="text" id="cfgGateName" class="form-input" placeholder="e.g. Main Gate / Gate 1" value="">
                 </div>
                 <div>
                     <label class="form-label">Guard On-Duty Full Name</label>
-                    <input type="text" id="cfgGuardName" class="form-input" value="Guard Ramesh" required>
+                    <input type="text" id="cfgGuardName" class="form-input" placeholder="Enter Guard Name" value="">
                 </div>
                 <div>
-                    <label class="form-label">Guard WhatsApp Number</label>
-                    <input type="tel" id="cfgGuardPhone" class="form-input" value="+91 98450 99881" required>
+                    <label class="form-label">Guard WhatsApp Number (+91 &amp; 10 digits)</label>
+                    <input type="tel" id="cfgGuardPhone" class="form-input" placeholder="+91 XXXXXXXXXX" value="" oninput="onGuardPhoneInput(this.value)">
                 </div>
                 <div>
-                    <label class="form-label">Guard Security ID / Code</label>
-                    <input type="text" id="cfgGuardCode" class="form-input" value="G-101" required>
+                    <label class="form-label">Guard Security ID / Code (Auto: Last 4 digits)</label>
+                    <input type="text" id="cfgGuardCode" class="form-input" placeholder="Auto: Last 4 digits" value="" readonly style="background: rgba(30, 41, 59, 0.7); color: #38bdf8; font-weight: 700;">
                 </div>
             </div>
 
             <!-- Resident Directory (Strictly Restricted to Max 10 Entries) -->
             <div class="setup-section-title">
                 <span>2. Resident Directory (Maximum 10 Units Enforced)</span>
-                <span style="font-size: 11px; color: #10b981; font-weight: 700;" id="residentUnitCounter">Configured Units: 8 / 10 Max</span>
+                <span style="font-size: 11px; color: #10b981; font-weight: 700;" id="residentUnitCounter">Configured Units: 0 / 10 Max</span>
             </div>
             <div class="table-responsive">
                 <table class="res-reg-table">
@@ -869,8 +865,8 @@
                     <button type="button" class="btn-top-action" onclick="addResidentUnitRow()" id="btnAddUnitBtn">
                         <span>➕ Add Unit (Max 10)</span>
                     </button>
-                    <button type="button" class="btn-top-action" style="background: rgba(239, 68, 68, 0.15); border-color: rgba(239, 68, 68, 0.35); color: #f87171;" onclick="resetDefaultUnits()">
-                        <span>↺ Reset to Default 8 Units</span>
+                    <button type="button" class="btn-top-action" style="background: rgba(239, 68, 68, 0.15); border-color: rgba(239, 68, 68, 0.35); color: #f87171;" onclick="clearAllUnits()">
+                        <span>🗑️ Clear All Units</span>
                     </button>
                 </div>
                 <button type="submit" class="btn-launch-sandbox">
@@ -913,11 +909,11 @@
                 <div class="panel-meta-bar">
                     <div class="panel-heading">
                         <span id="guardAppBrandIcon">🏢</span>
-                        <span><strong id="guardAppSocietyTitle" style="color: #ffffff;">Royal Palms Residency</strong> &bull; Guard Checkpoint Tablet</span>
+                        <span><strong id="guardAppSocietyTitle" style="color: #ffffff;">Your Society / Apartment</strong> &bull; Guard Checkpoint Tablet</span>
                         <span class="badge-live-tag">LIVE PWA GATE ENGINE</span>
                     </div>
                     <div style="font-size: 12px; color: var(--text-secondary);">
-                        Checkpoint: <strong id="displayGateLabel" style="color: #fff;">Gate 1</strong> &bull; Guard: <strong id="displayGuardCode" style="color: #38bdf8;">G-101 (Guard Ramesh)</strong>
+                        Checkpoint: <strong id="displayGateLabel" style="color: #fff;">--</strong> &bull; Guard: <strong id="displayGuardCode" style="color: #38bdf8;">--</strong>
                     </div>
                 </div>
 
@@ -963,14 +959,18 @@
                                 </div>
                             </div>
 
-                            <div class="form-grid" style="grid-template-columns: repeat(2, 1fr); margin-bottom: 10px;">
+                            <div class="form-grid" style="grid-template-columns: repeat(3, 1fr); margin-bottom: 10px;">
                                 <div>
                                     <label class="form-label">Visitor Full Name</label>
-                                    <input type="text" id="vName" class="form-input" value="Suresh Kumar" required>
+                                    <input type="text" id="vName" class="form-input" placeholder="Enter Visitor Name" value="" required>
                                 </div>
                                 <div>
-                                    <label class="form-label">Visitor Mobile / WhatsApp</label>
-                                    <input type="tel" id="vMobile" class="form-input" value="+91 98450 11223" required>
+                                    <label class="form-label">Visitor WhatsApp (+91 &amp; 10 digits)</label>
+                                    <input type="tel" id="vMobile" class="form-input" placeholder="+91 XXXXXXXXXX" value="" required oninput="onVisitorPhoneInput(this.value)">
+                                </div>
+                                <div>
+                                    <label class="form-label">Visitor Code (Auto: Last 4 digits)</label>
+                                    <input type="text" id="vCodeDisplay" class="form-input" placeholder="Auto: Last 4 digits" value="" readonly style="background: rgba(30, 41, 59, 0.7); color: #38bdf8; font-weight: 700;">
                                 </div>
                             </div>
 
@@ -1013,14 +1013,14 @@
                                 </div>
                                 <div>
                                     <label class="form-label">Visit Count</label>
-                                    <input type="text" id="vVisitCount" class="form-input" value="Visit #3" readonly style="color: var(--accent-cyan);">
+                                    <input type="text" id="vVisitCount" class="form-input" value="Visit #1" readonly style="color: var(--accent-cyan);">
                                 </div>
                             </div>
 
                             <div class="form-grid" style="grid-template-columns: repeat(3, 1fr); margin-bottom: 10px;">
                                 <div>
                                     <label class="form-label">Vehicle Plate (Optional)</label>
-                                    <input type="text" id="vPlate" class="form-input" value="KA-01-XX-1024">
+                                    <input type="text" id="vPlate" class="form-input" value="" placeholder="e.g. KA-01-XX-1234 (Optional)">
                                 </div>
                                 <div>
                                     <label class="form-label">Parking Slot Area</label>
@@ -1033,7 +1033,7 @@
                                 </div>
                                 <div>
                                     <label class="form-label">Slot Number</label>
-                                    <input type="text" id="vSlotNumber" class="form-input" value="Bay #V-12">
+                                    <input type="text" id="vSlotNumber" class="form-input" value="" placeholder="e.g. Bay 12 (Optional)">
                                 </div>
                             </div>
 
@@ -1062,9 +1062,8 @@
                                     <span style="font-size: 11px; color: var(--accent-emerald);">● Synchronized</span>
                                 </div>
                                 <div class="log-terminal-output" id="guardLogOutput">
-                                    [READY] Gate tablet initialized for Royal Palms Residency.<br>
-                                    [GATE] Main Gate Checkpoint &bull; Officer: G-101 (Guard Ramesh).<br>
-                                    [DIRECTORY] Enforced maximum 10 resident test units.<br>
+                                    [READY] Gate tablet initialized.<br>
+                                    [SETUP] Society can enter Gate Name, Guard Name, and WhatsApp in setup section above.<br>
                                     [WAITING] Awaiting manual visitor, vehicle, or parcel entry...<br>
                                 </div>
                             </div>
@@ -1094,7 +1093,7 @@
                             <div class="form-grid" style="grid-template-columns: repeat(2, 1fr); margin-bottom: 10px;">
                                 <div>
                                     <label class="form-label">Vehicle Registration Number</label>
-                                    <input type="text" id="vehPlate" class="form-input" value="KA-03-XX-4040" placeholder="KA-XX-XX-XXXX" required>
+                                    <input type="text" id="vehPlate" class="form-input" value="" placeholder="e.g. KA-03-XX-4040" required>
                                 </div>
                                 <div>
                                     <label class="form-label">Public vs. Private Vehicle</label>
@@ -1106,14 +1105,18 @@
                                 </div>
                             </div>
 
-                            <div class="form-grid" style="grid-template-columns: repeat(2, 1fr); margin-bottom: 10px;">
+                            <div class="form-grid" style="grid-template-columns: repeat(3, 1fr); margin-bottom: 10px;">
                                 <div>
                                     <label class="form-label">Driver Name</label>
-                                    <input type="text" id="vehDriverName" class="form-input" value="Arjun Singh" required>
+                                    <input type="text" id="vehDriverName" class="form-input" value="" placeholder="Enter Driver Name" required>
                                 </div>
                                 <div>
-                                    <label class="form-label">Driver WhatsApp Number</label>
-                                    <input type="tel" id="vehDriverMobile" class="form-input" value="+91 98220 55667" required>
+                                    <label class="form-label">Driver WhatsApp Number (+91 &amp; 10 digits)</label>
+                                    <input type="tel" id="vehDriverMobile" class="form-input" value="" placeholder="+91 XXXXXXXXXX" required oninput="onDriverPhoneInput(this.value)">
+                                </div>
+                                <div>
+                                    <label class="form-label">Driver Code (Auto: Last 4 digits)</label>
+                                    <input type="text" id="vehCodeDisplay" class="form-input" placeholder="Auto: Last 4 digits" value="" readonly style="background: rgba(30, 41, 59, 0.7); color: #38bdf8; font-weight: 700;">
                                 </div>
                             </div>
 
@@ -1135,7 +1138,7 @@
                                 </div>
                                 <div>
                                     <label class="form-label">Slot Number</label>
-                                    <input type="text" id="vehSlotNumber" class="form-input" value="Bay #V-08">
+                                    <input type="text" id="vehSlotNumber" class="form-input" value="" placeholder="e.g. Bay 08 (Optional)">
                                 </div>
                             </div>
 
@@ -1246,7 +1249,7 @@
                                     </div>
                                     <div>
                                         <label class="form-label">Tracking / AWB Number</label>
-                                        <input type="text" id="pAwbNumber" class="form-input" value="AWB-984210384" required>
+                                        <input type="text" id="pAwbNumber" class="form-input" value="" placeholder="Enter AWB / Tracking No." required>
                                     </div>
                                 </div>
 
@@ -1276,11 +1279,11 @@
                                 <div class="form-grid" style="grid-template-columns: repeat(2, 1fr); margin-bottom: 12px;">
                                     <div>
                                         <label class="form-label">Gate Drop Box / Shelf</label>
-                                        <input type="text" id="pLockerSlot" class="form-input" value="Locker Shelf #B-04" required>
+                                        <input type="text" id="pLockerSlot" class="form-input" value="" placeholder="e.g. Locker Shelf 1 / Box A" required>
                                     </div>
                                     <div>
                                         <label class="form-label">Pickup OTP (Generated)</label>
-                                        <input type="text" id="pGeneratedOtp" class="form-input" value="5821" readonly style="color: #38bdf8; font-weight: 700;">
+                                        <input type="text" id="pGeneratedOtp" class="form-input" value="" placeholder="Auto Generated OTP" readonly style="color: #38bdf8; font-weight: 700;">
                                     </div>
                                 </div>
 
@@ -1323,7 +1326,7 @@
                                 <div class="form-grid" style="grid-template-columns: repeat(3, 1fr); margin-bottom: 8px;">
                                     <div>
                                         <label class="form-label">Return AWB / RMA Code</label>
-                                        <input type="text" id="rAwb" class="form-input" value="RET-77041289" required>
+                                        <input type="text" id="rAwb" class="form-input" value="" placeholder="Enter Return AWB / RMA Code" required>
                                     </div>
                                     <div>
                                         <label class="form-label">Return Quantity</label>
@@ -1331,13 +1334,13 @@
                                     </div>
                                     <div>
                                         <label class="form-label">Pickup Agent Name &amp; ID</label>
-                                        <input type="text" id="rAgent" class="form-input" value="Vikas (Agent #AZ-902)" required>
+                                        <input type="text" id="rAgent" class="form-input" value="" placeholder="Enter Courier Agent Name & ID" required>
                                     </div>
                                 </div>
 
                                 <div style="margin-bottom: 12px;">
                                     <label class="form-label">Return Reason</label>
-                                    <input type="text" id="rReason" class="form-input" value="Wrong size replacement item" required>
+                                    <input type="text" id="rReason" class="form-input" value="" placeholder="Enter Return Reason" required>
                                 </div>
 
                                 <div class="guard-action-buttons-quad">
@@ -1374,20 +1377,9 @@
                                     </thead>
                                     <tbody id="parcelInventoryTableBody">
                                         <tr>
-                                            <td><code style="color: #38bdf8;">PCL-101</code></td>
-                                            <td>Amazon / AWB-984210384</td>
-                                            <td>Flat A-101</td>
-                                            <td>1 Box</td>
-                                            <td><strong style="color: #10b981;">#5821</strong></td>
-                                            <td><span class="badge-status status-collect">In Locker</span></td>
-                                        </tr>
-                                        <tr>
-                                            <td><code style="color: #38bdf8;">PCL-102</code></td>
-                                            <td>Blue Dart / AWB-44129031</td>
-                                            <td>Flat B-204</td>
-                                            <td>2 Docs</td>
-                                            <td><strong style="color: #10b981;">#1940</strong></td>
-                                            <td><span class="badge-status status-collect">In Locker</span></td>
+                                            <td colspan="6" style="text-align: center; color: var(--text-muted); padding: 18px; font-size: 12px;">
+                                                No parcels currently logged. Society can log inbound parcels at the checkpoint above.
+                                            </td>
                                         </tr>
                                     </tbody>
                                 </table>
@@ -1408,7 +1400,7 @@
                 <div class="panel-meta-bar">
                     <div class="panel-heading">
                         <span id="resAppBrandIcon">🏢</span>
-                        <span><strong id="resAppSocietyTitle" style="color: #ffffff;">Royal Palms Residency</strong> &bull; Resident Mobile Suite</span>
+                        <span><strong id="resAppSocietyTitle" style="color: #ffffff;">Your Society / Apartment</strong> &bull; Resident Mobile Suite</span>
                         <span class="badge-live-tag">META VERIFIED &amp; FCM</span>
                     </div>
                     <div style="font-size: 12px; color: var(--text-secondary);">
@@ -1449,7 +1441,7 @@
                                         <strong style="font-size: 11px; color: #38bdf8;">Firebase WebPush Alert</strong>
                                         <span style="font-size: 9px; color: #94a3b8;">Just Now</span>
                                     </div>
-                                    <div style="font-size: 11px; color: #f8fafc; font-weight: 600; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;" id="resWebpushBanner">Gate Alert: Suresh Kumar at Main Gate</div>
+                                    <div style="font-size: 11px; color: #f8fafc; font-weight: 600; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;" id="resWebpushBanner">No active gate alerts pending.</div>
                                     <div style="font-size: 9px; color: #10b981;">● Native Browser Push &bull; 100% Free Zero Meta Fee</div>
                                 </div>
                             </div>
@@ -1461,11 +1453,7 @@
                                     <span style="font-size: 10px; color: #10b981; font-weight: 700;">JUST NOW</span>
                                 </div>
                                 <div style="font-size: 12px; line-height: 1.5; color: #e2e8f0; margin-bottom: 10px;" id="resVisitorDetails">
-                                    <strong>Visitor Code:</strong> V-1024<br>
-                                    <strong>Name:</strong> Suresh Kumar (Delivery / Swiggy)<br>
-                                    <strong>Visiting:</strong> Flat A-101 (Mr. R. Sharma)<br>
-                                    <strong>Vehicle:</strong> KA-01-XX-1024 &bull; Bay #V-12<br>
-                                    <strong>IN Time:</strong> 07:15 PM &bull; Guard G-101
+                                    <em>Waiting for gate visitor or vehicle entry...<br>Enter visitor/vehicle details at Guard Checkpoint and click "WhatsApp Alert Card" or "FCM WebPush" to see live simulation.</em>
                                 </div>
 
                                 <!-- Resident Options: 1: ALLOW, 2: DOOR-LOCK, 3: COLLECT-PARCELDOC -->
@@ -1493,14 +1481,18 @@
                             <p style="font-size: 12px; color: var(--text-secondary); margin-bottom: 10px;">
                                 Issue an instant digital pass with a 4-digit PIN &amp; QR code. Share directly to the visitor or driver's WhatsApp so the guard clears them in 0 seconds!
                             </p>
-                            <div class="form-grid" style="grid-template-columns: repeat(2, 1fr); margin-bottom: 8px;">
+                            <div class="form-grid" style="grid-template-columns: repeat(3, 1fr); margin-bottom: 8px;">
                                 <div>
                                     <label class="form-label">Visitor / Guest Name</label>
-                                    <input type="text" id="resPreName" class="form-input" value="Rohan Verma (Dinner Guest)">
+                                    <input type="text" id="resPreName" class="form-input" value="" placeholder="Enter Guest / Driver Name">
                                 </div>
                                 <div>
-                                    <label class="form-label">Visitor WhatsApp</label>
-                                    <input type="tel" id="resPreMobile" class="form-input" value="+91 98112 44556">
+                                    <label class="form-label">Visitor WhatsApp (+91 &amp; 10 digits)</label>
+                                    <input type="tel" id="resPreMobile" class="form-input" value="" placeholder="+91 XXXXXXXXXX" oninput="onPreMobileInput(this.value)">
+                                </div>
+                                <div>
+                                    <label class="form-label">Pass PIN Code (Auto: Last 4 digits)</label>
+                                    <input type="text" id="resPreCodeDisplay" class="form-input" placeholder="Auto: Last 4 digits" value="" readonly style="background: rgba(30, 41, 59, 0.7); color: #38bdf8; font-weight: 700;">
                                 </div>
                             </div>
                             <div class="form-grid" style="grid-template-columns: repeat(2, 1fr); margin-bottom: 10px;">
@@ -1511,11 +1503,12 @@
                                         <option value="Cab">Cab / Taxi Pickup</option>
                                         <option value="Delivery">Courier / Delivery</option>
                                         <option value="Service">Technician / Carpenter</option>
+                                        <option value="Vehicle">Pre-Approved Resident/Guest Vehicle</option>
                                     </select>
                                 </div>
                                 <div>
                                     <label class="form-label">Vehicle Registration (Optional)</label>
-                                    <input type="text" id="resPrePlate" class="form-input" value="DL-03-AB-7711">
+                                    <input type="text" id="resPrePlate" class="form-input" value="" placeholder="e.g. DL-03-AB-7711 (Optional)">
                                 </div>
                             </div>
                             <div style="display: flex; gap: 8px; flex-wrap: wrap;">
@@ -1532,15 +1525,9 @@
                         <!-- Parcel Pickup OTP Card -->
                         <div class="inner-action-card">
                             <h4 style="font-size: 15px; color: #ffffff; margin-bottom: 6px;">📦 My Gate Parcel Locker &amp; Pickup OTP</h4>
-                            <div style="background: rgba(30, 41, 59, 0.7); padding: 10px 12px; border-radius: 8px; border: 1px solid rgba(56, 189, 248, 0.3);">
-                                <div style="display: flex; justify-content: space-between; align-items: center;">
-                                    <div>
-                                        <strong style="color: #ffffff; font-size: 13px;">Amazon Logistics &bull; AWB-984210384</strong>
-                                        <div style="font-size: 11px; color: var(--text-muted);">Stored at Gate Checkpoint Locker #B-04</div>
-                                    </div>
-                                    <div style="background: rgba(16, 185, 129, 0.2); border: 1px solid var(--accent-emerald); color: #10b981; padding: 6px 10px; border-radius: 6px; font-weight: 700; font-size: 14px;">
-                                        OTP #5821
-                                    </div>
+                            <div id="resLockerCard" style="background: rgba(30, 41, 59, 0.7); padding: 10px 12px; border-radius: 8px; border: 1px solid rgba(56, 189, 248, 0.3);">
+                                <div style="font-size: 12px; color: var(--text-muted); text-align: center; padding: 6px;">
+                                    No parcels currently in gate locker for your unit.
                                 </div>
                             </div>
                         </div>
@@ -1555,29 +1542,29 @@
                 <div class="panel-meta-bar">
                     <div class="panel-heading">
                         <span id="mcAppBrandIcon">🏢</span>
-                        <span><strong id="mcAppSocietyTitle" style="color: #ffffff;">Royal Palms Residency</strong> &bull; MC Security Analytics</span>
+                        <span><strong id="mcAppSocietyTitle" style="color: #ffffff;">Your Society / Apartment</strong> &bull; MC Security Analytics</span>
                         <span class="badge-live-tag">EXECUTIVE OVERSIGHT</span>
                     </div>
                     <div style="font-size: 12px; color: var(--text-secondary);">
-                        Society: <strong style="color: #fff;" class="displaySocietyText">Royal Palms Residency</strong> &bull; Max 10 Demo Units
+                        Society: <strong style="color: #fff;" class="displaySocietyText">Your Society / Apartment</strong> &bull; Max 10 Demo Units
                     </div>
                 </div>
 
                 <div class="stats-quad-grid">
                     <div class="quad-card">
-                        <div class="quad-num" style="color: var(--accent-emerald);" id="mcOccupancyNum">8 / 10 Units</div>
+                        <div class="quad-num" style="color: var(--accent-emerald);" id="mcOccupancyNum">0 / 10 Units</div>
                         <div class="quad-sub">Configured Test Units</div>
                     </div>
                     <div class="quad-card">
-                        <div class="quad-num" style="color: var(--accent-cyan);" id="mcEntriesNum">48 Entries</div>
+                        <div class="quad-num" style="color: var(--accent-cyan);" id="mcEntriesNum">0 Entries</div>
                         <div class="quad-sub">Total Gate Check-Ins Today</div>
                     </div>
                     <div class="quad-card">
-                        <div class="quad-num" style="color: var(--accent-amber);" id="mcActiveInsideNum">2 Active</div>
+                        <div class="quad-num" style="color: var(--accent-amber);" id="mcActiveInsideNum">0 Active</div>
                         <div class="quad-sub">Visitors / Vehicles Inside Now</div>
                     </div>
                     <div class="quad-card">
-                        <div class="quad-num" style="color: var(--accent-purple);" id="mcParcelCount">2 Parcels</div>
+                        <div class="quad-num" style="color: var(--accent-purple);" id="mcParcelCount">0 Parcels</div>
                         <div class="quad-sub">Items in Gate Locker</div>
                     </div>
                 </div>
@@ -1616,7 +1603,7 @@
                 <div class="panel-meta-bar">
                     <div class="panel-heading">
                         <span id="mgrAppBrandIcon">🏢</span>
-                        <span><strong id="mgrAppSocietyTitle" style="color: #ffffff;">Royal Palms Residency</strong> &bull; Estate Manager Facility Hub</span>
+                        <span><strong id="mgrAppSocietyTitle" style="color: #ffffff;">Your Society / Apartment</strong> &bull; Estate Manager Facility Hub</span>
                         <span class="badge-live-tag">FACILITY OPERATIONS</span>
                     </div>
                     <div style="font-size: 12px; color: var(--text-secondary);">
@@ -1646,13 +1633,8 @@
                     <div class="inner-action-card">
                         <h4 style="font-size: 15px; color: #ffffff; margin-bottom: 10px;">Helpdesk Resident Tickets</h4>
                         <div style="display: flex; flex-direction: column; gap: 8px; font-size: 12px;">
-                            <div style="background: rgba(30, 41, 59, 0.7); padding: 8px 12px; border-radius: 6px; display: flex; justify-content: space-between; align-items: center;">
-                                <div><strong>Flat B-204:</strong> Water pressure valve check</div>
-                                <span style="color: #f59e0b; font-weight: 700;">IN PROGRESS</span>
-                            </div>
-                            <div style="background: rgba(30, 41, 59, 0.7); padding: 8px 12px; border-radius: 6px; display: flex; justify-content: space-between; align-items: center;">
-                                <div><strong>Flat C-302:</strong> Intercom connection active</div>
-                                <span style="color: #10b981; font-weight: 700;">RESOLVED</span>
+                            <div style="background: rgba(30, 41, 59, 0.7); padding: 12px; border-radius: 6px; color: var(--text-muted); text-align: center;">
+                                No active tickets logged. Society residents can raise facility requests from their app.
                             </div>
                         </div>
                     </div>
@@ -1679,7 +1661,7 @@
                         [INIT] Master Router JSON Core v31 initialized.<br>
                         [META_CLOUD_API] Webhook endpoint: https://graph.facebook.com/v19.0/messages -> CONNECTED<br>
                         [MACRODROID_RELAY] Device ring relay endpoint: https://trigger.macrodroid.com/ -> LISTENING<br>
-                        [ACTIVE_CLUSTER] Society: Royal Palms Residency &bull; Isolated Database Cluster Active.<br>
+                        [ACTIVE_CLUSTER] Isolated Database Cluster standing by for Society configuration.<br>
                         [DISPATCH_READY] Standing by for multi-channel push &amp; WhatsApp triggers.<br>
                     </div>
                 </div>
@@ -1697,112 +1679,84 @@
 
     <script>
         // State Store for the Interactive Demo
-        let currentSociety = "Royal Palms Residency";
-        let currentGate = "Main Gate Checkpoint (Gate 1)";
-        let currentGuardName = "Guard Ramesh";
-        let currentGuardPhone = "+91 98450 99881";
-        let currentGuardCode = "G-101";
+        let currentSociety = "";
+        let currentGate = "";
+        let currentGuardName = "";
+        let currentGuardPhone = "";
+        let currentGuardCode = "";
 
         let leadContact = {
-            name: "Kishore Kumar",
-            phone: "+91 98450 12345",
-            email: "kishore@royalpalms.org",
-            role: "MC President"
+            society: "",
+            name: "",
+            phone: "",
+            email: "",
+            role: ""
         };
 
         // Registered Resident Units (STRICTLY RESTRICTED TO MAXIMUM 10 ENTRIES)
         const MAX_RESIDENT_UNITS = 10;
         let residentUnits = [
-            { flat: "Flat A-101", name: "R. Sharma", phone: "+91 98765 43210", code: "R-101-A" },
-            { flat: "Flat B-204", name: "Sunita Rao", phone: "+91 98450 67890", code: "R-204-B" },
-            { flat: "Flat C-302", name: "Dr. Vikram Mehta", phone: "+91 98112 33445", code: "R-302-A" },
-            { flat: "Flat D-405", name: "K. Anand", phone: "+91 98220 55667", code: "R-405-A" },
-            { flat: "Villa 07", name: "Pooja Verma", phone: "+91 98330 77889", code: "R-V07-A" },
-            { flat: "Villa 12", name: "Deepak Joshi", phone: "+91 98440 99112", code: "R-V12-A" },
-            { flat: "Tower 2-501", name: "Nitin Gadkari", phone: "+91 98550 22334", code: "R-T2-501" },
-            { flat: "Tower 2-602", name: "Meera Nair", phone: "+91 98660 44556", code: "R-T2-602" }
+            { flat: "", name: "", phone: "", code: "" },
+            { flat: "", name: "", phone: "", code: "" }
         ];
 
-        // Active Visitors / Vehicles Log
-        let entriesLog = [
-            {
-                code: "V-1021",
-                name: "Rahul Verma",
-                mobile: "+91 98450 11990",
-                mainCategory: "Guest",
-                subCategory: "Personal Guest",
-                flat: "Flat A-101",
-                headCount: 2,
-                vehicle: "KA-03-XX-4040",
-                parkingSlot: "Guest Parking Bay",
-                slotNumber: "Bay #V-08",
-                inTime: "05:15 PM",
-                inGuard: "G-101",
-                response: "1: ALLOW (R-101-A)",
-                outTime: "06:45 PM",
-                outGuard: "G-101",
-                status: "OUT"
-            },
-            {
-                code: "V-1022",
-                name: "Karan Johar (Amazon)",
-                mobile: "+91 98112 33445",
-                mainCategory: "Delivery",
-                subCategory: "Amazon",
-                flat: "Flat B-204",
-                headCount: 1,
-                vehicle: "KA-05-AB-9912",
-                parkingSlot: "No Parking (Drop Only)",
-                slotNumber: "-",
-                inTime: "06:20 PM",
-                inGuard: "G-101",
-                response: "1: ALLOW (R-204-B)",
-                outTime: "06:32 PM",
-                outGuard: "G-101",
-                status: "OUT"
-            },
-            {
-                code: "V-1023",
-                name: "Arjun Singh (Prepaid Taxi)",
-                mobile: "+91 98220 55667",
-                mainCategory: "Cab",
-                subCategory: "Uber Taxi",
-                flat: "Flat C-302",
-                headCount: 1,
-                vehicle: "KA-04-XY-8811",
-                parkingSlot: "No Parking (Drop Only)",
-                slotNumber: "-",
-                inTime: "06:55 PM",
-                inGuard: "G-101",
-                response: "1: ALLOW (R-302-A)",
-                outTime: "--",
-                outGuard: "--",
-                status: "INSIDE"
-            },
-            {
-                code: "V-1024",
-                name: "Suresh Kumar",
-                mobile: "+91 98450 11223",
-                mainCategory: "Delivery",
-                subCategory: "Swiggy",
-                flat: "Flat A-101",
-                headCount: 1,
-                vehicle: "KA-01-XX-1024",
-                parkingSlot: "Guest Parking Bay",
-                slotNumber: "Bay #V-12",
-                inTime: "07:15 PM",
-                inGuard: "G-101",
-                response: "PENDING (Waiting Resident)",
-                outTime: "--",
-                outGuard: "--",
-                status: "INSIDE"
-            }
-        ];
+        // Active Visitors / Vehicles Log (Starts empty for society to fill)
+        let entriesLog = [];
 
         // Approved Visitors Waiting for Parcel Collection (Response: 3)
-        let approvedDropBoxVisitors = [
-            { name: "Suresh Kumar", flat: "Flat A-101", subCat: "Swiggy", plate: "KA-01-XX-1024" }
-        ];
+        let approvedDropBoxVisitors = [];
+
+        let residentPreApprovedPass = null;
+
+        // Validation Helpers
+        function isValidWhatsApp(phone) {
+            if (!phone) return false;
+            // Format: Must start with +91, followed by optional space/hyphen, and exactly 10 digits
+            const re = /^\+91[\s-]?[0-9]{10}$/;
+            return re.test(phone.trim());
+        }
+
+        function isValidEmail(email) {
+            if (!email) return false;
+            // Format: standard email ending with @domain.xxx
+            const re = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+            return re.test(email.trim());
+        }
+
+        function extractLast4Digits(phone) {
+            if (!phone) return '0000';
+            const digits = phone.replace(/\D/g, '');
+            return digits.length >= 4 ? digits.slice(-4) : digits.padStart(4, '0');
+        }
+
+        // Live input handlers to dynamically compute last 4-digit codes
+        function onGuardPhoneInput(val) {
+            const code = extractLast4Digits(val);
+            document.getElementById('cfgGuardCode').value = code;
+            currentGuardCode = code;
+            const displayCode = document.getElementById('displayGuardCode');
+            if (displayCode) {
+                displayCode.innerText = `${currentGuardCode} (${currentGuardName || 'Guard'})`;
+            }
+        }
+
+        function onVisitorPhoneInput(val) {
+            const code = extractLast4Digits(val);
+            const display = document.getElementById('vCodeDisplay');
+            if (display) display.value = code;
+        }
+
+        function onDriverPhoneInput(val) {
+            const code = extractLast4Digits(val);
+            const display = document.getElementById('vehCodeDisplay');
+            if (display) display.value = code;
+        }
+
+        function onPreMobileInput(val) {
+            const code = extractLast4Digits(val);
+            const display = document.getElementById('resPreCodeDisplay');
+            if (display) display.value = code;
+        }
 
         window.addEventListener('DOMContentLoaded', () => {
             checkLeadGate();
@@ -1821,7 +1775,10 @@
             if (savedLead) {
                 try {
                     leadContact = JSON.parse(savedLead);
-                    if (leadContact.society) currentSociety = leadContact.society;
+                    if (leadContact.society) {
+                        currentSociety = leadContact.society;
+                        applySocietyNameAcrossUi(currentSociety);
+                    }
                     updateHeaderLeadBadge();
                 } catch(e) {}
             }
@@ -1834,7 +1791,7 @@
         }
 
         function openLeadModal() {
-            document.getElementById('gateSocietyName').value = currentSociety;
+            document.getElementById('gateSocietyName').value = currentSociety || (leadContact ? leadContact.society : '') || '';
             document.getElementById('gateFullName').value = leadContact.name || '';
             document.getElementById('gateWhatsApp').value = leadContact.phone || '';
             document.getElementById('gateEmail').value = leadContact.email || '';
@@ -1851,7 +1808,19 @@
             const role = document.getElementById('gateRole').value;
 
             if (!society || !name || !phone || !email) {
-                alert("Please fill all mandatory compulsory fields: Society Name, Full Name, WhatsApp Number, and Email ID.");
+                alert("Please fill all mandatory compulsory fields:\n\n• Society / Apartment Name\n• Your Full Name\n• WhatsApp Number\n• Email ID");
+                return;
+            }
+
+            if (!isValidWhatsApp(phone)) {
+                alert("Invalid WhatsApp Number!\n\nMandatory Format Required:\nMust start with +91 followed by 10 digits\nExample: +91 9876543210 or +919876543210");
+                document.getElementById('gateWhatsApp').focus();
+                return;
+            }
+
+            if (!isValidEmail(email)) {
+                alert("Invalid Email ID!\n\nMandatory Format Required:\nMust end with @domain.xxx\nExample: name@society.org or you@company.com");
+                document.getElementById('gateEmail').focus();
                 return;
             }
 
@@ -1863,20 +1832,30 @@
             updateHeaderLeadBadge();
             document.getElementById('mandatoryLeadGate').style.display = 'none';
 
-            // Update UI across all 4 apps
-            document.getElementById('badgeSocietyName').innerText = `${currentSociety} (Live Testbed)`;
-            document.getElementById('guardAppSocietyTitle').innerText = currentSociety;
-            document.getElementById('resAppSocietyTitle').innerText = currentSociety;
-            document.getElementById('mcAppSocietyTitle').innerText = currentSociety;
-            document.getElementById('mgrAppSocietyTitle').innerText = currentSociety;
-            document.querySelectorAll('.displaySocietyText').forEach(el => el.innerText = currentSociety);
+            applySocietyNameAcrossUi(currentSociety);
 
             const now = new Date().toLocaleTimeString();
             const gLog = document.getElementById('guardLogOutput');
-            gLog.innerHTML += `<br><span style="color: #38bdf8;">[${now}] 🔓 Demo unlocked by ${name} (${role || 'Evaluator'}, ${phone}, ${email}) for society "${currentSociety}".</span><br>`;
+            const leadCode = extractLast4Digits(phone);
+            gLog.innerHTML += `<br><span style="color: #38bdf8;">[${now}] 🔓 Demo unlocked by ${name} (Registered Code: ${leadCode}, Role: ${role || 'Society Member'}, Phone: ${phone}, Email: ${email}) for society "${currentSociety}".</span><br>`;
             gLog.scrollTop = gLog.scrollHeight;
 
-            alert(`Welcome ${name}!\n\nYour live demo for "${currentSociety}" is now fully unlocked with all 4 apps active.`);
+            alert(`Welcome ${name}!\n\nYour live demo for "${currentSociety}" is now unlocked with all 4 apps active.`);
+        }
+
+        function applySocietyNameAcrossUi(socName) {
+            if (!socName) return;
+            const badge = document.getElementById('badgeSocietyName');
+            if (badge) badge.innerText = `${socName} (Live Testbed)`;
+            const gTitle = document.getElementById('guardAppSocietyTitle');
+            if (gTitle) gTitle.innerText = socName;
+            const rTitle = document.getElementById('resAppSocietyTitle');
+            if (rTitle) rTitle.innerText = socName;
+            const mTitle = document.getElementById('mcAppSocietyTitle');
+            if (mTitle) mTitle.innerText = socName;
+            const mgrTitle = document.getElementById('mgrAppSocietyTitle');
+            if (mgrTitle) mgrTitle.innerText = socName;
+            document.querySelectorAll('.displaySocietyText').forEach(el => el.innerText = socName);
         }
 
         function updateHeaderLeadBadge() {
@@ -1900,17 +1879,18 @@
             residentUnits.forEach((u, i) => {
                 const tr = document.createElement('tr');
                 tr.innerHTML = `
-                    <td><input type="text" class="form-input" value="${u.flat}" onchange="updateResidentUnit(${i}, 'flat', this.value)"></td>
-                    <td><input type="text" class="form-input" value="${u.name}" onchange="updateResidentUnit(${i}, 'name', this.value)"></td>
-                    <td><input type="tel" class="form-input" value="${u.phone}" onchange="updateResidentUnit(${i}, 'phone', this.value)"></td>
-                    <td><input type="text" class="form-input" value="${u.code}" onchange="updateResidentUnit(${i}, 'code', this.value)"></td>
+                    <td><input type="text" class="form-input" placeholder="e.g. Flat 101 / Villa 4" value="${u.flat || ''}" oninput="updateResidentUnit(${i}, 'flat', this.value)"></td>
+                    <td><input type="text" class="form-input" placeholder="e.g. Resident Name" value="${u.name || ''}" oninput="updateResidentUnit(${i}, 'name', this.value)"></td>
+                    <td><input type="tel" class="form-input" placeholder="+91 XXXXXXXXXX" value="${u.phone || ''}" oninput="updateResidentUnit(${i}, 'phone', this.value)"></td>
+                    <td><input type="text" class="form-input" placeholder="Auto: Last 4 digits" value="${u.code || ''}" readonly style="background: rgba(30, 41, 59, 0.7); color: #38bdf8; font-weight: 700;"></td>
                 `;
                 tbody.appendChild(tr);
             });
 
             // Update Counter
+            const configuredCount = residentUnits.filter(u => u.flat && u.flat.trim() !== '').length;
             const counter = document.getElementById('residentUnitCounter');
-            counter.innerText = `Configured Units: ${residentUnits.length} / ${MAX_RESIDENT_UNITS} Max`;
+            counter.innerText = `Configured Units: ${configuredCount} / ${MAX_RESIDENT_UNITS} Max`;
             if (residentUnits.length >= MAX_RESIDENT_UNITS) {
                 counter.innerText += " (Limit Reached)";
                 counter.style.color = "#f59e0b";
@@ -1918,7 +1898,7 @@
                 counter.style.color = "#10b981";
             }
 
-            document.getElementById('mcOccupancyNum').innerText = `${residentUnits.length} / ${MAX_RESIDENT_UNITS} Units`;
+            document.getElementById('mcOccupancyNum').innerText = `${configuredCount} / ${MAX_RESIDENT_UNITS} Units`;
         }
 
         function addResidentUnitRow() {
@@ -1926,35 +1906,34 @@
                 alert(`Demo Limit Reached: Maximum ${MAX_RESIDENT_UNITS} resident units allowed per test society.`);
                 return;
             }
-            const nextNum = 100 + residentUnits.length + 1;
             residentUnits.push({
-                flat: `Flat E-${nextNum}`,
-                name: `Resident Unit ${residentUnits.length + 1}`,
-                phone: `+91 98000 000${residentUnits.length + 1}`,
-                code: `R-E${nextNum}`
+                flat: '',
+                name: '',
+                phone: '',
+                code: ''
             });
             renderResidentRegistrationTable();
             syncFlatDropdowns();
         }
 
-        function resetDefaultUnits() {
-            residentUnits = [
-                { flat: "Flat A-101", name: "R. Sharma", phone: "+91 98765 43210", code: "R-101-A" },
-                { flat: "Flat B-204", name: "Sunita Rao", phone: "+91 98450 67890", code: "R-204-B" },
-                { flat: "Flat C-302", name: "Dr. Vikram Mehta", phone: "+91 98112 33445", code: "R-302-A" },
-                { flat: "Flat D-405", name: "K. Anand", phone: "+91 98220 55667", code: "R-405-A" },
-                { flat: "Villa 07", name: "Pooja Verma", phone: "+91 98330 77889", code: "R-V07-A" },
-                { flat: "Villa 12", name: "Deepak Joshi", phone: "+91 98440 99112", code: "R-V12-A" },
-                { flat: "Tower 2-501", name: "Nitin Gadkari", phone: "+91 98550 22334", code: "R-T2-501" },
-                { flat: "Tower 2-602", name: "Meera Nair", phone: "+91 98660 44556", code: "R-T2-602" }
-            ];
-            renderResidentRegistrationTable();
-            syncFlatDropdowns();
+        function clearAllUnits() {
+            if (confirm("Clear all resident units to start fresh?")) {
+                residentUnits = [
+                    { flat: '', name: '', phone: '', code: '' },
+                    { flat: '', name: '', phone: '', code: '' }
+                ];
+                renderResidentRegistrationTable();
+                syncFlatDropdowns();
+            }
         }
 
         function updateResidentUnit(index, key, val) {
             if (residentUnits[index]) {
                 residentUnits[index][key] = val;
+                if (key === 'phone') {
+                    residentUnits[index].code = extractLast4Digits(val);
+                    renderResidentRegistrationTable();
+                }
                 syncFlatDropdowns();
             }
         }
@@ -1972,38 +1951,59 @@
                 if (!sel) return;
                 const currentVal = sel.value;
                 sel.innerHTML = '';
-                residentUnits.forEach(u => {
+                const validUnits = residentUnits.filter(u => u.flat && u.flat.trim() !== '');
+                if (validUnits.length === 0) {
                     const opt = document.createElement('option');
-                    opt.value = u.flat;
-                    opt.innerText = `${u.flat} (${u.name} - ${u.code})`;
+                    opt.value = '';
+                    opt.innerText = '-- Fill Flat No. in Resident Directory Above --';
                     sel.appendChild(opt);
-                });
-                if (currentVal) sel.value = currentVal;
+                } else {
+                    validUnits.forEach(u => {
+                        const opt = document.createElement('option');
+                        opt.value = u.flat;
+                        opt.innerText = `${u.flat}${u.name ? ' (' + u.name + (u.code ? ' - Code: ' + u.code : '') + ')' : ''}`;
+                        sel.appendChild(opt);
+                    });
+                }
+                if (currentVal && Array.from(sel.options).some(o => o.value === currentVal)) {
+                    sel.value = currentVal;
+                }
             });
         }
 
         function syncSelectedFlat() {
             const chosen = document.getElementById('vTargetFlat').value;
             const resSel = document.getElementById('residentFlatSelector');
-            if (resSel) resSel.value = chosen;
+            if (resSel && chosen) resSel.value = chosen;
         }
 
         function applySocietySetup(e) {
             e.preventDefault();
-            currentGate = document.getElementById('cfgGateName').value;
-            currentGuardName = document.getElementById('cfgGuardName').value || "Guard Ramesh";
-            currentGuardPhone = document.getElementById('cfgGuardPhone').value || "+91 98450 99881";
-            currentGuardCode = document.getElementById('cfgGuardCode').value || "G-101";
+            const gateName = document.getElementById('cfgGateName').value.trim();
+            const guardName = document.getElementById('cfgGuardName').value.trim();
+            const guardPhone = document.getElementById('cfgGuardPhone').value.trim();
+
+            if (guardPhone && !isValidWhatsApp(guardPhone)) {
+                alert("Guard WhatsApp Number must be in format +91 followed by 10 digits\nExample: +91 9845099881");
+                document.getElementById('cfgGuardPhone').focus();
+                return;
+            }
+
+            currentGate = gateName || "Gate 1";
+            currentGuardName = guardName || "On-Duty Guard";
+            currentGuardPhone = guardPhone || "";
+            currentGuardCode = guardPhone ? extractLast4Digits(guardPhone) : "0000";
+            document.getElementById('cfgGuardCode').value = currentGuardCode;
 
             document.getElementById('displayGateLabel').innerText = currentGate;
             document.getElementById('displayGuardCode').innerText = `${currentGuardCode} (${currentGuardName})`;
 
             const now = new Date().toLocaleTimeString();
             const gLog = document.getElementById('guardLogOutput');
-            gLog.innerHTML += `<br><span style="color: #38bdf8;">[${now}] 🏢 Guard & Gate updated: Gate: ${currentGate}. Guard: ${currentGuardName} (${currentGuardCode}). Resident Units: ${residentUnits.length}.</span><br>`;
+            gLog.innerHTML += `<br><span style="color: #38bdf8;">[${now}] 🏢 Guard & Gate updated: Gate: "${currentGate}". Guard: "${currentGuardName}" (Code: ${currentGuardCode}). Resident Units: ${residentUnits.filter(u => u.flat).length}.</span><br>`;
             gLog.scrollTop = gLog.scrollHeight;
 
-            alert(`Settings saved successfully!\nGate: ${currentGate}\nGuard: ${currentGuardName} (${currentGuardCode})\nRegistered Units: ${residentUnits.length} / 10 Max`);
+            alert(`Settings saved successfully!\n\nGate: ${currentGate}\nGuard: ${currentGuardName} (Code: ${currentGuardCode})\nRegistered Units: ${residentUnits.filter(u => u.flat).length} / 10 Max`);
             document.getElementById('sandboxWorkspace').scrollIntoView({ behavior: 'smooth' });
         }
 
@@ -2086,8 +2086,6 @@
             }
         }
 
-        let residentPreApprovedPass = null;
-
         function simulateQrScan(mode) {
             const now = new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
             const logBox = document.getElementById('guardLogOutput');
@@ -2096,73 +2094,101 @@
                 if (residentPreApprovedPass) {
                     document.getElementById('vName').value = residentPreApprovedPass.name;
                     document.getElementById('vMobile').value = residentPreApprovedPass.mobile;
+                    const code = extractLast4Digits(residentPreApprovedPass.mobile);
+                    document.getElementById('vCodeDisplay').value = code;
                     document.getElementById('vMainCategory').value = residentPreApprovedPass.category === 'Delivery' ? 'Delivery' : (residentPreApprovedPass.category === 'Cab' ? 'Cab' : 'Guest');
                     onCategoryChange('v');
                     if (residentPreApprovedPass.plate) document.getElementById('vPlate').value = residentPreApprovedPass.plate;
-                    logBox.innerHTML += `<br><span style="color: #10b981;">[${now}] 🔍 QR Code Scanned: Valid Digital Pass ${residentPreApprovedPass.code} (#PIN ${residentPreApprovedPass.pin}) for ${residentPreApprovedPass.name} verified against Resident Pre-Approved Registry. Auto-cleared!</span><br>`;
-                    alert(`QR Pass Scanned Successfully!\nCode: ${residentPreApprovedPass.code}\nGuest: ${residentPreApprovedPass.name}\nPIN: #${residentPreApprovedPass.pin}\nStatus: Verified Against Resident Pre-Approval Registry!`);
+                    logBox.innerHTML += `<br><span style="color: #10b981;">[${now}] 🔍 QR Code Scanned: Valid Digital Pass ${residentPreApprovedPass.code} (#PIN ${residentPreApprovedPass.pin}) for ${residentPreApprovedPass.name} (Code: ${code}) verified against Resident Pre-Approved Registry. Auto-cleared!</span><br>`;
+                    alert(`QR Pass Scanned Successfully!\nCode: ${residentPreApprovedPass.code}\nGuest: ${residentPreApprovedPass.name}\nVisitor Code: ${code}\nPIN: #${residentPreApprovedPass.pin}\nStatus: Verified Against Resident Pre-Approval Registry!`);
                 } else {
-                    const passCode = "QR-PASS-" + Math.floor(1000 + Math.random() * 9000);
+                    const samplePhone = "+91 98450 11990";
+                    const passCode = extractLast4Digits(samplePhone);
                     document.getElementById('vName').value = "Pre-Approved Guest (QR Scanned)";
+                    document.getElementById('vMobile').value = samplePhone;
+                    document.getElementById('vCodeDisplay').value = passCode;
                     document.getElementById('vMainCategory').value = "Guest";
                     onCategoryChange('v');
                     document.getElementById('vPlate').value = "KA-04-QR-9900";
-                    logBox.innerHTML += `<br><span style="color: #10b981;">[${now}] 🔍 QR Code Scanned: Valid Digital Pass ${passCode} verified. Auto-cleared!</span><br>`;
-                    alert(`QR Pass Scanned Successfully!\nCode: ${passCode}\nValidated against Resident Pre-Approved Pass Database.`);
+                    logBox.innerHTML += `<br><span style="color: #10b981;">[${now}] 🔍 QR Code Scanned: Valid Digital Pass QR-${passCode} verified. Auto-cleared!</span><br>`;
+                    alert(`QR Pass Scanned Successfully!\nVisitor Code: ${passCode}\nValidated against Resident Pre-Approved Pass Database.`);
                 }
             } else {
                 if (residentPreApprovedPass && residentPreApprovedPass.plate) {
+                    const code = extractLast4Digits(residentPreApprovedPass.mobile);
                     document.getElementById('vehPlate').value = residentPreApprovedPass.plate;
                     document.getElementById('vehDriverName').value = residentPreApprovedPass.name;
                     document.getElementById('vehDriverMobile').value = residentPreApprovedPass.mobile;
+                    document.getElementById('vehCodeDisplay').value = code;
                     document.getElementById('vehOwnership').value = "Private Guest Vehicle";
-                    logBox.innerHTML += `<br><span style="color: #10b981;">[${now}] 🔍 Vehicle FASTag / QR Scanned: Verified Gate Pass ${residentPreApprovedPass.code} for Vehicle ${residentPreApprovedPass.plate} (Driver: ${residentPreApprovedPass.name}). Barrier Raised!</span><br>`;
-                    alert(`Vehicle QR / FASTag Scanned!\nPlate: ${residentPreApprovedPass.plate}\nDriver: ${residentPreApprovedPass.name}\nPre-Approval: ${residentPreApprovedPass.code} Active.\nBarrier Raised!`);
+                    logBox.innerHTML += `<br><span style="color: #10b981;">[${now}] 🔍 Vehicle FASTag / QR Scanned: Verified Gate Pass ${residentPreApprovedPass.code} for Vehicle ${residentPreApprovedPass.plate} (Driver: ${residentPreApprovedPass.name}, Code: ${code}). Barrier Raised!</span><br>`;
+                    alert(`Vehicle QR / FASTag Scanned!\nPlate: ${residentPreApprovedPass.plate}\nDriver: ${residentPreApprovedPass.name}\nDriver Code: ${code}\nPre-Approval: ${residentPreApprovedPass.code} Active.\nBarrier Raised!`);
                 } else {
-                    const passCode = "FASTAG-" + Math.floor(1000 + Math.random() * 9000);
+                    const samplePhone = "+91 98220 55667";
+                    const passCode = extractLast4Digits(samplePhone);
                     document.getElementById('vehPlate').value = "KA-01-FAST-5544";
                     document.getElementById('vehDriverName').value = "FASTag Authorized Resident";
+                    document.getElementById('vehDriverMobile').value = samplePhone;
+                    document.getElementById('vehCodeDisplay').value = passCode;
                     document.getElementById('vehOwnership').value = "Private Resident Vehicle";
-                    logBox.innerHTML += `<br><span style="color: #10b981;">[${now}] 🔍 Vehicle FASTag / QR Scanned: Verified Gate Pass for Bay #V-08. Barrier Raised!</span><br>`;
-                    alert(`FASTag Scanned Successfully!\nCode: ${passCode}\nPlate: KA-01-FAST-5544\nVerified resident vehicle. Barrier Raised!`);
+                    logBox.innerHTML += `<br><span style="color: #10b981;">[${now}] 🔍 Vehicle FASTag / QR Scanned: Verified Gate Pass for Bay #V-08 (Code: ${passCode}). Barrier Raised!</span><br>`;
+                    alert(`FASTag Scanned Successfully!\nDriver Code: ${passCode}\nPlate: KA-01-FAST-5544\nVerified resident vehicle. Barrier Raised!`);
                 }
             }
             logBox.scrollTop = logBox.scrollHeight;
         }
 
         function sendQrPassToVisitor() {
-            const name = document.getElementById('vName').value;
+            const name = document.getElementById('vName').value || "Visitor";
             const mobile = document.getElementById('vMobile').value;
-            const code = "VIS-PASS-" + Math.floor(1000 + Math.random() * 9000);
-            const text = encodeURIComponent(`Hello ${name}, your VisiGate digital gate pass for ${currentSociety} is #${code}. Show this at the gate checkpoint.`);
+            if (!mobile || !isValidWhatsApp(mobile)) {
+                alert("Please enter a valid Visitor WhatsApp Number (+91 followed by 10 digits).");
+                return;
+            }
+            const code = extractLast4Digits(mobile);
+            const text = encodeURIComponent(`Hello ${name}, your VisiGate digital gate pass for ${currentSociety || 'our society'} is #${code}. Show this at the gate checkpoint.`);
             window.open(`https://api.whatsapp.com/send?phone=${mobile.replace(/\D/g, '')}&text=${text}`, '_blank');
         }
 
         function sendQrPassToVehicle() {
-            const driver = document.getElementById('vehDriverName').value;
+            const driver = document.getElementById('vehDriverName').value || "Driver";
             const mobile = document.getElementById('vehDriverMobile').value;
-            const plate = document.getElementById('vehPlate').value;
-            const text = encodeURIComponent(`Hello ${driver}, gate clearance pass for vehicle ${plate} at ${currentSociety} is active.`);
+            const plate = document.getElementById('vehPlate').value || "Vehicle";
+            if (!mobile || !isValidWhatsApp(mobile)) {
+                alert("Please enter a valid Driver WhatsApp Number (+91 followed by 10 digits).");
+                return;
+            }
+            const code = extractLast4Digits(mobile);
+            const text = encodeURIComponent(`Hello ${driver}, gate clearance pass for vehicle ${plate} at ${currentSociety || 'our society'} is active (Code: ${code}).`);
             window.open(`https://api.whatsapp.com/send?phone=${mobile.replace(/\D/g, '')}&text=${text}`, '_blank');
         }
 
         // Separate Guard Action Buttons (Register, FCM Push, WhatsApp, MacroDroid)
         function triggerGuardAction(actionType) {
-            const name = document.getElementById('vName').value;
+            const name = document.getElementById('vName').value.trim() || 'Visitor';
             const flat = document.getElementById('vTargetFlat').value;
-            const plate = document.getElementById('vPlate').value || 'None';
-            const slot = document.getElementById('vSlotNumber').value || '-';
+            const plate = document.getElementById('vPlate').value.trim() || 'None';
+            const slot = document.getElementById('vSlotNumber').value.trim() || '-';
             const mainCat = document.getElementById('vMainCategory').value;
             const subCat = document.getElementById('vSubCategory').value;
+            const vMobile = document.getElementById('vMobile').value.trim();
             const now = new Date().toLocaleTimeString();
             const logBox = document.getElementById('guardLogOutput');
 
+            // Visitor code is always the last 4 digits of visitor WhatsApp
+            const visitorCode = extractLast4Digits(vMobile);
+            const resUnit = residentUnits.find(u => u.flat === flat);
+            const residentCode = resUnit && resUnit.code ? resUnit.code : '0000';
+
             if (actionType === 'REGISTER_VISITOR') {
-                const code = "V-" + (1020 + entriesLog.length + 1);
+                if (!flat) {
+                    alert("Please select or fill a Target Flat in the Resident Directory above.");
+                    return;
+                }
                 entriesLog.unshift({
-                    code: code,
+                    code: visitorCode,
                     name: name,
-                    mobile: document.getElementById('vMobile').value,
+                    mobile: vMobile || "Not Provided",
                     mainCategory: mainCat,
                     subCategory: subCat,
                     flat: flat,
@@ -2171,39 +2197,53 @@
                     parkingSlot: document.getElementById('vParkingSlot').value,
                     slotNumber: slot,
                     inTime: now,
-                    inGuard: currentGuardCode,
+                    inGuard: currentGuardCode || "0000",
                     response: "PENDING (Waiting Resident)",
                     outTime: "--",
                     outGuard: "--",
                     status: "INSIDE"
                 });
                 renderTables();
-                logBox.innerHTML += `<br>[${now}] 📝 [REGISTERED] ${code}: ${name} (${mainCat}/${subCat}) visiting ${flat} registered by ${currentGuardCode}.<br>`;
-                alert(`Visitor Registered!\nCode: ${code}\nName: ${name}\nFlat: ${flat}`);
+                logBox.innerHTML += `<br>[${now}] 📝 [REGISTERED] Visitor Code ${visitorCode}: ${name} (${mainCat}/${subCat}) visiting ${flat} registered by Guard ${currentGuardCode || '0000'}.<br>`;
+                alert(`Visitor Registered!\nVisitor Code: ${visitorCode}\nName: ${name}\nTarget Flat: ${flat}`);
             } else if (actionType === 'FCM_PUSH') {
-                logBox.innerHTML += `[${now}] 🔥 [FCM_WEBPUSH] Native browser push dispatched to ${flat}: "Gate Alert: ${name} at ${currentGate}". (0 Fee)<br>`;
-                document.getElementById('resWebpushBanner').innerText = `Gate Alert: ${name} (${subCat}) at ${currentGate}`;
+                if (!flat) {
+                    alert("Please select or fill a Target Flat in the Resident Directory above.");
+                    return;
+                }
+                logBox.innerHTML += `[${now}] 🔥 [FCM_WEBPUSH] Native browser push dispatched to ${flat} (Resident Code: ${residentCode}): "Gate Alert: ${name} at ${currentGate || 'Gate'}". (0 Fee)<br>`;
+                document.getElementById('resWebpushBanner').innerText = `Gate Alert: ${name} (${subCat}) at ${currentGate || 'Gate'}`;
                 showResidentBadge();
             } else if (actionType === 'WHATSAPP_ALERT') {
-                logBox.innerHTML += `[${now}] 💬 [WHATSAPP_API] Interactive card sent to ${flat} with buttons: [1: ALLOW], [2: DOOR-LOCK], [3: COLLECT-PARCELDOC].<br>`;
+                if (!flat) {
+                    alert("Please select or fill a Target Flat in the Resident Directory above.");
+                    return;
+                }
+                logBox.innerHTML += `[${now}] 💬 [WHATSAPP_API] Interactive card sent to ${flat} (Resident Code: ${residentCode}) with buttons: [1: ALLOW], [2: DOOR-LOCK], [3: COLLECT-PARCELDOC].<br>`;
                 document.getElementById('resVisitorDetails').innerHTML = 
-                    `<strong>Visitor Code:</strong> V-1024<br>` +
+                    `<strong>Visitor Code:</strong> ${visitorCode}<br>` +
                     `<strong>Name:</strong> ${name} (${mainCat} / ${subCat})<br>` +
-                    `<strong>Visiting:</strong> ${flat}<br>` +
+                    `<strong>Visiting:</strong> ${flat}${resUnit && resUnit.name ? ' (' + resUnit.name + ' - Code: ' + residentCode + ')' : ''}<br>` +
                     `<strong>Vehicle:</strong> ${plate} &bull; ${slot}<br>` +
-                    `<strong>IN Time:</strong> ${now} &bull; Guard ${currentGuardCode}`;
+                    `<strong>IN Time:</strong> ${now} &bull; Guard Code ${currentGuardCode || '0000'}`;
                 document.getElementById('resButtonContainer').style.display = 'block';
                 document.getElementById('resResponseFeedback').style.display = 'none';
                 showResidentBadge();
             } else if (actionType === 'MACRODROID_CALL') {
+                if (!flat) {
+                    alert("Please select or fill a Target Flat in the Resident Directory above.");
+                    return;
+                }
                 logBox.innerHTML += `[${now}] 🔔 [MACRODROID_RELAY] Automated missed-call webhook triggered for resident phone at ${flat}.<br>`;
                 alert(`MacroDroid Missed Call Trigger Dispatched!\nTarget: ${flat}\nRelay: https://trigger.macrodroid.com/`);
             } else if (actionType === 'REGISTER_VEHICLE') {
-                const vPlate = document.getElementById('vehPlate').value;
-                const vDriver = document.getElementById('vehDriverName').value;
+                const vPlate = document.getElementById('vehPlate').value.trim() || 'KA-XX-XXXX';
+                const vDriver = document.getElementById('vehDriverName').value.trim() || 'Driver';
                 const vFlat = document.getElementById('vehTargetFlat').value;
-                logBox.innerHTML += `<br>[${now}] 🚗 [VEHICLE_LOGGED] Plate: ${vPlate} &bull; Driver: ${vDriver} &bull; Flat: ${vFlat}.<br>`;
-                alert(`Vehicle Logged!\nPlate: ${vPlate}\nDriver: ${vDriver}`);
+                const dMobile = document.getElementById('vehDriverMobile').value.trim();
+                const dCode = extractLast4Digits(dMobile);
+                logBox.innerHTML += `<br>[${now}] 🚗 [VEHICLE_LOGGED] Plate: ${vPlate} &bull; Driver: ${vDriver} (Code: ${dCode}) &bull; Flat: ${vFlat || 'Gate'}.<br>`;
+                alert(`Vehicle Logged!\nPlate: ${vPlate}\nDriver: ${vDriver}\nDriver Code: ${dCode}`);
             } else {
                 logBox.innerHTML += `[${now}] ⚡ Action triggered: ${actionType}<br>`;
             }
@@ -2222,42 +2262,46 @@
             const logBox = document.getElementById('guardLogOutput');
             const now = new Date().toLocaleTimeString();
 
+            const flat = document.getElementById('vTargetFlat').value;
+            const resUnit = residentUnits.find(u => u.flat === flat);
+            const residentCode = resUnit && resUnit.code ? resUnit.code : '0000';
+
             btnGroup.style.display = 'none';
             feedback.style.display = 'block';
 
             if (choice === '1') {
                 feedback.style.background = 'rgba(16, 185, 129, 0.2)';
                 feedback.style.color = '#10b981';
-                feedback.innerHTML = '✅ 1: ALLOW ENTRY APPROVED<br><span style="font-size: 11px;">Gate 1 barrier unlocked. WhatsApp recorded.</span>';
+                feedback.innerHTML = `✅ 1: ALLOW ENTRY APPROVED<br><span style="font-size: 11px;">Gate barrier unlocked by Resident Code ${residentCode}.</span>`;
 
-                logBox.innerHTML += `<span style="color: #10b981; font-weight: 700;">[${now}] ✅ RESIDENT RESPONSE: 1 (ALLOW) &bull; Gate barrier raised.</span><br>`;
+                logBox.innerHTML += `<span style="color: #10b981; font-weight: 700;">[${now}] ✅ RESIDENT RESPONSE: 1 (ALLOW) by Resident Code ${residentCode} &bull; Gate barrier raised.</span><br>`;
                 if (entriesLog.length > 0 && entriesLog[0].status === 'INSIDE') {
-                    entriesLog[0].response = '1: ALLOW (R-101-A)';
+                    entriesLog[0].response = `1: ALLOW (${residentCode})`;
                 }
             } else if (choice === '2') {
                 feedback.style.background = 'rgba(239, 68, 68, 0.2)';
                 feedback.style.color = '#ef4444';
-                feedback.innerHTML = '🚫 2: DOOR-LOCK / ENTRY DENIED<br><span style="font-size: 11px;">Guard alerted: Do not permit inside.</span>';
+                feedback.innerHTML = `🚫 2: DOOR-LOCK / ENTRY DENIED<br><span style="font-size: 11px;">Denied by Resident Code ${residentCode}. Guard alerted: Do not permit inside.</span>`;
 
-                logBox.innerHTML += `<span style="color: #ef4444; font-weight: 700;">[${now}] 🚫 RESIDENT RESPONSE: 2 (DOOR-LOCK / DENY) &bull; Turn visitor away.</span><br>`;
+                logBox.innerHTML += `<span style="color: #ef4444; font-weight: 700;">[${now}] 🚫 RESIDENT RESPONSE: 2 (DOOR-LOCK / DENY) by Resident Code ${residentCode} &bull; Turn visitor away.</span><br>`;
                 if (entriesLog.length > 0 && entriesLog[0].status === 'INSIDE') {
-                    entriesLog[0].response = '2: DOOR-LOCK (R-101-A)';
+                    entriesLog[0].response = `2: DOOR-LOCK (${residentCode})`;
                 }
             } else if (choice === '3') {
                 // RESPONSE 3: COLLECT-PARCELDOC
                 feedback.style.background = 'rgba(59, 130, 246, 0.2)';
                 feedback.style.color = '#60a5fa';
-                feedback.innerHTML = '📦 3: COLLECT-PARCELDOC (DROP AT GATE)<br><span style="font-size: 11px;">Routed to Gate Drop Box for parcel collection.</span>';
+                feedback.innerHTML = `📦 3: COLLECT-PARCELDOC (DROP AT GATE)<br><span style="font-size: 11px;">Approved by Resident Code ${residentCode}. Routed to Gate Drop Box for parcel collection.</span>`;
 
-                logBox.innerHTML += `<span style="color: #38bdf8; font-weight: 700;">[${now}] 📦 RESIDENT RESPONSE: 3 (COLLECT-PARCELDOC) &bull; Visitor instructed to drop parcel at gate drop box.</span><br>`;
+                logBox.innerHTML += `<span style="color: #38bdf8; font-weight: 700;">[${now}] 📦 RESIDENT RESPONSE: 3 (COLLECT-PARCELDOC) by Resident Code ${residentCode} &bull; Visitor instructed to drop parcel at gate drop box.</span><br>`;
                 
                 if (entriesLog.length > 0 && entriesLog[0].status === 'INSIDE') {
-                    entriesLog[0].response = '3: COLLECT-PARCELDOC';
+                    entriesLog[0].response = `3: COLLECT-PARCELDOC (${residentCode})`;
                 }
 
                 // Add to approved drop box queue for auto-filling
                 const approvedItem = {
-                    name: document.getElementById('vName').value,
+                    name: document.getElementById('vName').value.trim() || 'Delivery Courier',
                     flat: document.getElementById('vTargetFlat').value,
                     subCat: document.getElementById('vSubCategory').value,
                     plate: document.getElementById('vPlate').value || 'None'
@@ -2276,7 +2320,9 @@
 
         function updateApprovedDropBoxUi() {
             const select = document.getElementById('pApprovedVisitorSelect');
-            const badge = document.getElementById('countApprovedDropBox');
+            const badge = document.getElementById('parcelApprovedCount');
+            if (!select || !badge) return;
+
             select.innerHTML = '<option value="">-- Select Approved Delivery Visitor to Auto-Fill --</option>';
 
             approvedDropBoxVisitors.forEach((item, idx) => {
@@ -2316,24 +2362,49 @@
         function handleInboundParcelSubmit(e) {
             e.preventDefault();
             const courier = document.getElementById('pCourierCompany').value;
-            const awb = document.getElementById('pAwbNumber').value;
+            const awb = document.getElementById('pAwbNumber').value || ("AWB-" + Math.floor(100000000 + Math.random() * 900000000));
             const flat = document.getElementById('pTargetFlat').value;
-            const qty = document.getElementById('pQuantity').value;
-            const otp = document.getElementById('pGeneratedOtp').value;
+            const qty = document.getElementById('pQuantity').value || 1;
+            const otp = document.getElementById('pGeneratedOtp').value || Math.floor(1000 + Math.random() * 9000);
 
             const tbody = document.getElementById('parcelInventoryTableBody');
+            
+            // Clear placeholder if first entry
+            if (tbody.children.length === 1 && tbody.children[0].innerText.includes('No parcels currently logged')) {
+                tbody.innerHTML = '';
+            }
+
             const tr = document.createElement('tr');
             const pCode = "PCL-" + (100 + tbody.children.length + 1);
 
             tr.innerHTML = `
                 <td><code style="color: #38bdf8;">${pCode}</code></td>
                 <td>${courier} / ${awb}</td>
-                <td>${flat}</td>
+                <td>${flat || 'Gate Locker'}</td>
                 <td>${qty} Box</td>
                 <td><strong style="color: #10b981;">#${otp}</strong></td>
                 <td><span class="badge-status status-collect">In Locker</span></td>
             `;
             tbody.prepend(tr);
+
+            // Update Resident locker card
+            const rLocker = document.getElementById('resLockerCard');
+            if (rLocker) {
+                rLocker.innerHTML = `
+                    <div style="display: flex; justify-content: space-between; align-items: center;">
+                        <div>
+                            <strong style="color: #ffffff; font-size: 13px;">${courier} &bull; ${awb}</strong>
+                            <div style="font-size: 11px; color: var(--text-muted);">Stored at Gate Checkpoint Locker</div>
+                        </div>
+                        <div style="background: rgba(16, 185, 129, 0.2); border: 1px solid var(--accent-emerald); color: #10b981; padding: 6px 10px; border-radius: 6px; font-weight: 700; font-size: 14px;">
+                            OTP #${otp}
+                        </div>
+                    </div>
+                `;
+            }
+
+            // Update MC stat
+            document.getElementById('mcParcelCount').innerText = `${tbody.children.length} Parcels`;
 
             const now = new Date().toLocaleTimeString();
             const logBox = document.getElementById('guardLogOutput');
@@ -2347,21 +2418,22 @@
             e.preventDefault();
             const flat = document.getElementById('rFlat').value;
             const courier = document.getElementById('rCourier').value;
-            const awb = document.getElementById('rAwb').value;
-            const agent = document.getElementById('rAgent').value;
-            const qty = document.getElementById('rQty').value;
-            const now = new Date().toLocaleTimeString();
+            const awb = document.getElementById('rAwb').value || ("RET-" + Math.floor(10000000 + Math.random() * 90000000));
+            const qty = document.getElementById('rQty').value || 1;
+            const agent = document.getElementById('rAgent').value || "Courier Agent";
+            const reason = document.getElementById('rReason').value || "Return Handover";
 
+            const now = new Date().toLocaleTimeString();
             const logBox = document.getElementById('guardLogOutput');
-            logBox.innerHTML += `<br>[${now}] 📤 [RETURN_PARCELDOC] Handed over ${qty} package (${awb}) from ${flat} to ${agent} (${courier}). Verified by ${currentGuardCode}.<br>`;
+            logBox.innerHTML += `<br>[${now}] 📤 [RETURN_HANDOVER] AWB: ${awb} (${courier}, Qty: ${qty}) from ${flat} handed to ${agent}. Guard: ${currentGuardCode || '0000'}. Reason: ${reason}.<br>`;
             logBox.scrollTop = logBox.scrollHeight;
 
-            alert(`Return Parcel Handover Recorded!\nAWB: ${awb}\nAgent: ${agent}\nVerified by Guard Code: ${currentGuardCode}`);
+            alert(`Return Parcel Handover Logged!\nAWB: ${awb}\nFlat: ${flat}\nPickup Agent: ${agent}\nGuard Code: ${currentGuardCode || '0000'}`);
         }
 
         function triggerParcelAlert(type) {
             const flat = document.getElementById('pTargetFlat').value;
-            const otp = document.getElementById('pGeneratedOtp').value;
+            const otp = document.getElementById('pGeneratedOtp').value || "5821";
             alert(`Parcel Alert (${type}) triggered for ${flat}!\nOTP: #${otp}`);
         }
 
@@ -2375,28 +2447,40 @@
             const mobile = document.getElementById('resPreMobile').value.trim();
             const cat = document.getElementById('resPreCat').value;
             const plate = document.getElementById('resPrePlate').value.trim();
-            const pin = Math.floor(1000 + Math.random() * 9000);
+            
+            if (mobile && !isValidWhatsApp(mobile)) {
+                alert("Visitor WhatsApp Number must be in format +91 followed by 10 digits\nExample: +91 9811244556");
+                document.getElementById('resPreMobile').focus();
+                return;
+            }
+
+            // PIN and Code are strictly the last 4 digits of the registered visitor WhatsApp
+            const pin = extractLast4Digits(mobile);
             
             residentPreApprovedPass = {
                 name: name || "Pre-Approved Guest",
-                mobile: mobile || "+91 98112 44556",
+                mobile: mobile || "+91 98000 00000",
                 category: cat,
-                plate: plate || "KA-04-QR-9900",
+                plate: plate || "",
                 pin: pin,
                 code: `QR-PASS-${pin}`
             };
 
             const box = document.getElementById('prePassOutput');
             box.style.display = 'block';
-            box.innerHTML = `<strong>Pass Generated for ${residentPreApprovedPass.name}:</strong> PIN Code <code style="font-size: 15px; color: #38bdf8;">#${pin}</code> &bull; ${residentPreApprovedPass.code}<br>Category: <strong>${cat}</strong>${plate ? ` &bull; Vehicle: <strong>${plate}</strong>` : ''}<br>Status: <span style="color: #10b981; font-weight: 700;">Synced to Guard Checkpoint Tablet</span> (Guard can now scan QR or enter PIN for 0-second fast entry).`;
+            box.innerHTML = `<strong>Pass Generated for ${residentPreApprovedPass.name}:</strong> PIN Code <code style="font-size: 15px; color: #38bdf8;">#${pin}</code> &bull; ${residentPreApprovedPass.code}<br>Category: <strong>${cat}</strong>${plate ? ` &bull; Vehicle: <strong>${plate}</strong>` : ''}<br>Status: <span style="color: #10b981; font-weight: 700;">Synced to Guard Checkpoint Tablet</span> (Guard can now scan QR or enter PIN #${pin} for 0-second fast entry).`;
         }
 
         function residentSendQrPassToGuest() {
-            const name = residentPreApprovedPass ? residentPreApprovedPass.name : document.getElementById('resPreName').value;
+            const name = residentPreApprovedPass ? residentPreApprovedPass.name : (document.getElementById('resPreName').value || 'Guest');
             const mobile = residentPreApprovedPass ? residentPreApprovedPass.mobile : document.getElementById('resPreMobile').value;
-            const pin = residentPreApprovedPass ? residentPreApprovedPass.pin : "5821";
-            const plate = residentPreApprovedPass ? residentPreApprovedPass.plate : "";
-            const text = encodeURIComponent(`Hi ${name}, here is your digital entry pass for ${currentSociety}: PIN #${pin}${plate ? ` (Vehicle: ${plate})` : ''}. Tap to view QR: https://visigatealerts.in/pass?id=${pin}`);
+            const pin = residentPreApprovedPass ? residentPreApprovedPass.pin : extractLast4Digits(mobile);
+            const plate = residentPreApprovedPass ? residentPreApprovedPass.plate : (document.getElementById('resPrePlate').value || '');
+            if (!mobile || !isValidWhatsApp(mobile)) {
+                alert("Please enter a valid Visitor WhatsApp Number (+91 followed by 10 digits).");
+                return;
+            }
+            const text = encodeURIComponent(`Hi ${name}, here is your digital entry pass for ${currentSociety || 'our society'}: PIN #${pin}${plate ? ` (Vehicle: ${plate})` : ''}. Tap to view QR: https://visigatealerts.in/pass?id=${pin}`);
             window.open(`https://api.whatsapp.com/send?phone=${mobile.replace(/\D/g, '')}&text=${text}`, '_blank');
         }
 
@@ -2404,8 +2488,8 @@
             const u = residentUnits.find(x => x.flat === flat);
             if (u) {
                 document.getElementById('resVisitorDetails').innerHTML = 
-                    `<strong>Target:</strong> ${u.flat} (${u.name})<br>` +
-                    `<strong>Resident Code:</strong> ${u.code}<br>` +
+                    `<strong>Target:</strong> ${u.flat} (${u.name || 'Resident'})<br>` +
+                    `<strong>Resident Code:</strong> ${u.code || '0000'}<br>` +
                     `<strong>Status:</strong> Ready for gate approvals.`;
             }
         }
@@ -2415,38 +2499,46 @@
             if (item) {
                 const now = new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
                 item.outTime = now;
-                item.outGuard = currentGuardCode;
+                item.outGuard = currentGuardCode || "0000";
                 item.status = "OUT";
                 renderTables();
-                const logBox = document.getElementById('guardLogOutput');
-                logBox.innerHTML += `<span style="color: #f59e0b;">[${now}] 🚪 Code ${code} (${item.name}) marked OUT by ${currentGuardCode}.</span><br>`;
-                logBox.scrollTop = logBox.scrollHeight;
+                alert(`Visitor ${item.name} (${code}) marked OUT by Guard ${item.outGuard} at ${now}.`);
             }
-        }
-
-        function markVehicleExit(plate) {
-            alert(`Vehicle ${plate} marked OUT. Parking bay released!`);
         }
 
         function renderTables() {
             const activeTbody = document.getElementById('mcAuditTableBody');
-            activeTbody.innerHTML = entriesLog.map(item => `
-                <tr>
-                    <td><code style="color: #38bdf8;">${item.code}</code></td>
-                    <td><strong>${item.name}</strong></td>
-                    <td>${item.mobile}</td>
-                    <td>${item.mainCategory}</td>
-                    <td>${item.subCategory}</td>
-                    <td>${item.flat}</td>
-                    <td>${item.inTime} (${item.inGuard})</td>
-                    <td><span class="badge-status ${item.response.includes('1') ? 'status-approved' : (item.response.includes('2') ? 'status-denied' : (item.response.includes('3') ? 'status-collect' : 'status-inside'))}">${item.response}</span></td>
-                    <td>${item.outTime !== '--' ? item.outTime + ' (' + item.outGuard + ')' : '<span style="color: #f59e0b;">INSIDE</span>'}</td>
-                    <td>${item.vehicle} &bull; ${item.slotNumber}</td>
-                </tr>
-            `).join('');
+            if (!activeTbody) return;
 
+            if (entriesLog.length === 0) {
+                activeTbody.innerHTML = `
+                    <tr>
+                        <td colspan="10" style="text-align: center; color: var(--text-muted); padding: 22px; font-size: 13px;">
+                            📋 No gate entries logged yet.<br>
+                            <span style="font-size: 11px; color: #38bdf8;">The Society can register visitor or vehicle entries in the Guard Checkpoint App above to populate live real-time audit logs.</span>
+                        </td>
+                    </tr>
+                `;
+            } else {
+                activeTbody.innerHTML = entriesLog.map(item => `
+                    <tr>
+                        <td><code style="color: #38bdf8; font-weight: 700;">${item.code}</code></td>
+                        <td><strong>${item.name}</strong></td>
+                        <td>${item.mobile}</td>
+                        <td>${item.mainCategory}</td>
+                        <td>${item.subCategory}</td>
+                        <td>${item.flat}</td>
+                        <td>${item.inTime} (${item.inGuard})</td>
+                        <td><span class="badge-status ${item.response.includes('1') ? 'status-approved' : (item.response.includes('2') ? 'status-denied' : (item.response.includes('3') ? 'status-collect' : 'status-inside'))}">${item.response}</span></td>
+                        <td>${item.outTime !== '--' ? item.outTime + ' (' + item.outGuard + ')' : '<button type="button" class="btn-top-action" style="padding: 2px 8px; font-size: 10px; color: #f59e0b;" onclick="markVisitorOut(\'' + item.code + '\')">Mark OUT</button>'}</td>
+                        <td>${item.vehicle} &bull; ${item.slotNumber}</td>
+                    </tr>
+                `).join('');
+            }
+
+            document.getElementById('mcEntriesNum').innerText = `${entriesLog.length} Entries`;
             const insideCount = entriesLog.filter(x => x.status === 'INSIDE').length;
-            document.getElementById('mcActiveInsideNum').innerText = insideCount + " Active";
+            document.getElementById('mcActiveInsideNum').innerText = `${insideCount} Active`;
         }
     </script>
 </body>
