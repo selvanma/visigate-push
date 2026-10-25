@@ -131,6 +131,83 @@
             color: #ffffff;
         }
 
+        /* Compulsory Lead Gate Overlay */
+        .mandatory-modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            background: rgba(7, 13, 25, 0.88);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            z-index: 9999;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        .mandatory-modal-card {
+            background: linear-gradient(135deg, rgba(15, 23, 42, 0.98) 0%, rgba(30, 41, 59, 0.92) 100%);
+            border: 2px solid var(--border-accent);
+            border-radius: 20px;
+            max-width: 580px;
+            width: 100%;
+            padding: 28px 24px;
+            box-shadow: 0 25px 60px rgba(0, 0, 0, 0.85);
+            position: relative;
+            animation: modalPop 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        @keyframes modalPop {
+            from { opacity: 0; transform: scale(0.95) translateY(10px); }
+            to { opacity: 1; transform: scale(1) translateY(0); }
+        }
+
+        .modal-badge {
+            background: rgba(245, 158, 11, 0.15);
+            border: 1px solid rgba(245, 158, 11, 0.4);
+            color: var(--accent-amber);
+            font-size: 11px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            padding: 4px 12px;
+            border-radius: 9999px;
+            display: inline-block;
+            margin-bottom: 12px;
+        }
+
+        .modal-title {
+            font-family: var(--font-display);
+            font-size: 22px;
+            font-weight: 800;
+            color: #ffffff;
+            margin-bottom: 8px;
+            line-height: 1.3;
+        }
+
+        .modal-desc {
+            font-size: 13px;
+            color: var(--text-secondary);
+            margin-bottom: 20px;
+            line-height: 1.5;
+        }
+
+        .modal-req-tag {
+            color: #f43f5e;
+            font-weight: 700;
+            margin-left: 2px;
+        }
+
+        .modal-opt-tag {
+            color: var(--text-muted);
+            font-size: 10px;
+            font-weight: normal;
+            margin-left: 4px;
+        }
+
         /* Hero */
         .demo-hero {
             max-width: 1100px;
@@ -182,15 +259,17 @@
 
         .setup-section-title {
             font-family: var(--font-display);
-            font-size: 16px;
+            font-size: 15px;
             font-weight: 700;
             color: #ffffff;
             margin-bottom: 12px;
             display: flex;
             align-items: center;
-            gap: 8px;
+            justify-content: space-between;
             border-bottom: 1px solid rgba(255, 255, 255, 0.08);
             padding-bottom: 8px;
+            flex-wrap: wrap;
+            gap: 8px;
         }
 
         .form-grid {
@@ -227,7 +306,7 @@
             box-shadow: 0 0 10px rgba(56, 189, 248, 0.25);
         }
 
-        /* Resident Registration Table (Max 10) */
+        /* Resident Registration Table (Strictly Max 10 Entries) */
         .res-reg-table {
             width: 100%;
             border-collapse: collapse;
@@ -636,6 +715,58 @@
 </head>
 <body>
 
+    <!-- COMPULSORY LEAD CAPTURE MODAL (Mandatory: Name, Email, WhatsApp; Optional: Role) -->
+    <div class="mandatory-modal-overlay" id="mandatoryLeadGate" style="display: none;">
+        <div class="mandatory-modal-card">
+            <span class="modal-badge">🔐 Mandatory Registration to Access Demo</span>
+            <h2 class="modal-title">Welcome to VisiGate Society Testbed</h2>
+            <p class="modal-desc">
+                Experience the live 3-tab Guard App (Visitor, Vehicle, ParcelDoc), Resident Mobile Suite, MC Analytics &amp; Manager Hub. Please enter your mandatory details below to unlock the demo.
+            </p>
+
+            <form id="mandatoryGateForm" onsubmit="handleMandatoryUnlock(event)">
+                <div style="margin-bottom: 12px;">
+                    <label class="form-label">Society / Apartment / Tower Name <span class="modal-req-tag">*</span></label>
+                    <input type="text" id="gateSocietyName" class="form-input" value="Royal Palms Residency" placeholder="e.g. Blossom Enclave, Prestige Towers" required>
+                </div>
+
+                <div class="form-grid" style="grid-template-columns: repeat(2, 1fr); margin-bottom: 12px;">
+                    <div>
+                        <label class="form-label">Your Full Name <span class="modal-req-tag">* (Compulsory)</span></label>
+                        <input type="text" id="gateFullName" class="form-input" value="Kishore Kumar" placeholder="e.g. Kishore Kumar" required>
+                    </div>
+                    <div>
+                        <label class="form-label">Your WhatsApp Number <span class="modal-req-tag">* (Compulsory)</span></label>
+                        <input type="tel" id="gateWhatsApp" class="form-input" value="+91 98450 12345" placeholder="+91 98XXX XXXXX" required>
+                    </div>
+                </div>
+
+                <div class="form-grid" style="grid-template-columns: repeat(2, 1fr); margin-bottom: 18px;">
+                    <div>
+                        <label class="form-label">Your Email ID <span class="modal-req-tag">* (Compulsory)</span></label>
+                        <input type="email" id="gateEmail" class="form-input" value="kishore@royalpalms.org" placeholder="you@society.org" required>
+                    </div>
+                    <div>
+                        <label class="form-label">Your Role in Society <span class="modal-opt-tag">(Optional Entry)</span></label>
+                        <select id="gateRole" class="form-select">
+                            <option value="MC President" selected>MC President</option>
+                            <option value="MC Secretary">MC Secretary</option>
+                            <option value="Estate Manager">Estate / Facility Manager</option>
+                            <option value="Security Committee">Security Committee Member</option>
+                            <option value="Resident Owner">Resident / Flat Owner</option>
+                            <option value="Prospective Buyer">Prospective Evaluator</option>
+                        </select>
+                    </div>
+                </div>
+
+                <button type="submit" class="btn-launch-sandbox" style="width: 100%; padding: 13px;">
+                    <span>🔓 Unlock &amp; Access Full Interactive Demo</span>
+                    <span>&rarr;</span>
+                </button>
+            </form>
+        </div>
+    </div>
+
     <!-- Header -->
     <header class="demo-header">
         <div class="header-wrap">
@@ -650,8 +781,11 @@
             </div>
 
             <div class="header-actions">
+                <button type="button" class="btn-top-action" onclick="openLeadModal()">
+                    <span>👤 <span id="headerLeadName">Kishore Kumar</span> (Edit Lead)</span>
+                </button>
                 <a href="#setupSection" class="btn-top-action">
-                    <span>⚙️ Setup Society &amp; Residents</span>
+                    <span>⚙️ Setup Residents (Max 10)</span>
                 </a>
                 <a href="/" class="btn-top-action" style="background: transparent; border-color: var(--border-glass); color: var(--text-secondary);">
                     <span>← Main Platform</span>
@@ -665,59 +799,25 @@
         <span class="demo-badge-pill">Interactive Live Demonstration &amp; Multi-App Testbed</span>
         <h1 class="demo-title">Test-Drive VisiGate for Your Society</h1>
         <p class="demo-subtitle">
-            Configure your society parameters below. Experience the exact live 3-tab Guard App (Visitor, Vehicle, ParcelDoc), mobile camera capture, QR scanning, separate WhatsApp &amp; FCM push buttons, and automated parcel collection on Response 3!
+            Experience the identical live Guard App (with Visitor, Vehicle, ParcelDoc tabs), Resident Mobile Suite (with Pre-Approved Visitor &amp; Vehicle pass generation), MC Analytics &amp; Estate Manager Suite with maximum 10 registered test units per society!
         </p>
     </section>
 
-    <!-- SECTION 1: PROSPECTIVE SOCIETY ONBOARDING & SETUP -->
+    <!-- SECTION 1: PROSPECTIVE SOCIETY SETUP & MAX 10 RESIDENT DIRECTORY -->
     <section class="setup-card" id="setupSection">
-        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px; flex-wrap: wrap; gap: 8px;">
-            <div style="font-family: var(--font-display); font-size: 18px; font-weight: 700; color: #ffffff; display: flex; align-items: center; gap: 8px;">
-                <span>🏢 Society Onboarding &amp; Contact Follow-Up</span>
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 14px; flex-wrap: wrap; gap: 8px;">
+            <div style="font-family: var(--font-display); font-size: 17px; font-weight: 700; color: #ffffff; display: flex; align-items: center; gap: 8px;">
+                <span>🏢 Society Configuration &amp; Registered Contact</span>
             </div>
             <span style="font-size: 12px; color: var(--accent-cyan); font-weight: 600;">
-                ⚡ Instantly generates your live sandbox with zero waiting
+                ⚡ Strictly restricted to maximum 10 units per demo society
             </span>
         </div>
 
         <form id="onboardingForm" onsubmit="applySocietySetup(event)">
-            <!-- Prospective Society Lead Follow-up -->
+            <!-- Gate & Guard On-Duty Registration -->
             <div class="setup-section-title">
-                <span>1. Prospective Society &amp; Management Committee Contact Details</span>
-            </div>
-            <div class="form-grid">
-                <div>
-                    <label class="form-label">Society / Apartment / Tower Name</label>
-                    <input type="text" id="cfgSocietyName" class="form-input" value="Royal Palms Residency" placeholder="e.g. Blossom Enclave, Prestige Towers" required>
-                </div>
-                <div>
-                    <label class="form-label">Contact Person Name</label>
-                    <input type="text" id="cfgContactName" class="form-input" value="Kishore Kumar" placeholder="e.g. Kishore Kumar" required>
-                </div>
-                <div>
-                    <label class="form-label">Role in Society</label>
-                    <select id="cfgContactRole" class="form-select">
-                        <option value="MC President" selected>Management Committee President</option>
-                        <option value="MC Secretary">Management Committee Secretary</option>
-                        <option value="Estate Manager">Estate / Facility Manager</option>
-                        <option value="Managing Agent">Managing Agent / Facility Head</option>
-                        <option value="Security Chief">Chief Security Officer</option>
-                        <option value="Resident">Resident / Flat Owner</option>
-                    </select>
-                </div>
-                <div>
-                    <label class="form-label">Contact WhatsApp Number</label>
-                    <input type="tel" id="cfgContactPhone" class="form-input" value="+91 98450 12345" placeholder="+91 98XXX XXXXX" required>
-                </div>
-                <div>
-                    <label class="form-label">Email ID (for Followup)</label>
-                    <input type="email" id="cfgContactEmail" class="form-input" value="kishore@royalpalms.org" placeholder="contact@society.org" required>
-                </div>
-            </div>
-
-            <!-- Guard Checkpoint Registration -->
-            <div class="setup-section-title">
-                <span>2. Gate Checkpoint &amp; Guard On-Duty Registration</span>
+                <span>1. Checkpoint Gate &amp; Guard Registration</span>
             </div>
             <div class="form-grid">
                 <div>
@@ -725,7 +825,7 @@
                     <select id="cfgGateName" class="form-select">
                         <option value="Main Gate Checkpoint (Gate 1)" selected>Main Gate Checkpoint (Gate 1)</option>
                         <option value="North Gate (Gate 2)">North Gate (Gate 2)</option>
-                        <option value="Tower Block Checkpoint">Tower Block Checkpoint</option>
+                        <option value="Tower Block Gate">Tower Block Gate</option>
                         <option value="Basement Service Gate">Basement Service Gate</option>
                     </select>
                 </div>
@@ -743,10 +843,10 @@
                 </div>
             </div>
 
-            <!-- Resident Directory (Restricted to Max 10 Entries) -->
-            <div class="setup-section-title" style="display: flex; justify-content: space-between; align-items: center;">
-                <span>3. Resident Directory Registration (Max 10 Test Units)</span>
-                <span style="font-size: 11px; color: var(--accent-amber); font-weight: normal;">*Demo restricted to maximum 10 flats/villas</span>
+            <!-- Resident Directory (Strictly Restricted to Max 10 Entries) -->
+            <div class="setup-section-title">
+                <span>2. Resident Directory (Maximum 10 Units Enforced)</span>
+                <span style="font-size: 11px; color: #10b981; font-weight: 700;" id="residentUnitCounter">Configured Units: 8 / 10 Max</span>
             </div>
             <div class="table-responsive">
                 <table class="res-reg-table">
@@ -759,14 +859,22 @@
                         </tr>
                     </thead>
                     <tbody id="residentRegTableBody">
-                        <!-- Populated by JavaScript up to 10 entries -->
+                        <!-- Populated by JavaScript strictly up to 10 entries -->
                     </tbody>
                 </table>
             </div>
 
-            <div style="display: flex; justify-content: flex-end; margin-top: 14px;">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 14px; flex-wrap: wrap; gap: 10px;">
+                <div style="display: flex; gap: 8px;">
+                    <button type="button" class="btn-top-action" onclick="addResidentUnitRow()" id="btnAddUnitBtn">
+                        <span>➕ Add Unit (Max 10)</span>
+                    </button>
+                    <button type="button" class="btn-top-action" style="background: rgba(239, 68, 68, 0.15); border-color: rgba(239, 68, 68, 0.35); color: #f87171;" onclick="resetDefaultUnits()">
+                        <span>↺ Reset to Default 8 Units</span>
+                    </button>
+                </div>
                 <button type="submit" class="btn-launch-sandbox">
-                    <span>🚀 Apply Society Branding &amp; Initialize Live Testbed</span>
+                    <span>🚀 Save Settings &amp; Sync Across All 4 Apps</span>
                 </button>
             </div>
         </form>
@@ -827,16 +935,12 @@
                     </button>
                 </div>
 
-                <!-- ===================================== -->
-                <!-- GUARD TAB 1: VISITOR                  -->
-                <!-- ===================================== -->
+                <!-- GUARD TAB 1: VISITOR -->
                 <div id="guardViewVisitor">
                     <div class="panel-layout-split">
-                        <!-- Left: Visitor Form -->
                         <div class="inner-action-card">
                             <h4 style="font-size: 15px; color: #ffffff; margin-bottom: 10px;">Visitor Entry &amp; Camera Pipeline</h4>
 
-                            <!-- Camera & QR Scanning Controls -->
                             <div class="camera-box">
                                 <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
                                     <div style="font-size: 11px; color: var(--accent-cyan); font-weight: 700;">📸 Camera Facial Snapshot</div>
@@ -898,9 +1002,9 @@
 
                             <div class="form-grid" style="grid-template-columns: repeat(3, 1fr); margin-bottom: 10px;">
                                 <div>
-                                    <label class="form-label">Target Flat / Villa</label>
+                                    <label class="form-label">Target Flat / Villa (Max 10)</label>
                                     <select id="vTargetFlat" class="form-select" onchange="syncSelectedFlat()">
-                                        <!-- Dynamically synced with registered flats -->
+                                        <!-- Synced with max 10 registered flats -->
                                     </select>
                                 </div>
                                 <div>
@@ -936,7 +1040,7 @@
                             <!-- 4 Separate Action Buttons for Guard -->
                             <div class="guard-action-buttons-quad">
                                 <button type="button" class="btn-guard-act btn-act-reg" onclick="triggerGuardAction('REGISTER_VISITOR')">
-                                    <span>📝 1. Register Visitor Entry</span>
+                                    <span>📝 1. Register Entry</span>
                                 </button>
                                 <button type="button" class="btn-guard-act btn-act-push" onclick="triggerGuardAction('FCM_PUSH')">
                                     <span>🔥 2. FCM WebPush Alert</span>
@@ -960,7 +1064,7 @@
                                 <div class="log-terminal-output" id="guardLogOutput">
                                     [READY] Gate tablet initialized for Royal Palms Residency.<br>
                                     [GATE] Main Gate Checkpoint &bull; Officer: G-101 (Guard Ramesh).<br>
-                                    [STATUS] 10 Resident units synchronized in memory.<br>
+                                    [DIRECTORY] Enforced maximum 10 resident test units.<br>
                                     [WAITING] Awaiting manual visitor, vehicle, or parcel entry...<br>
                                 </div>
                             </div>
@@ -971,9 +1075,7 @@
                     </div>
                 </div>
 
-                <!-- ===================================== -->
-                <!-- GUARD TAB 2: VEHICLE                  -->
-                <!-- ===================================== -->
+                <!-- GUARD TAB 2: VEHICLE -->
                 <div id="guardViewVehicle" style="display: none;">
                     <div class="panel-layout-split">
                         <div class="inner-action-card">
@@ -1093,9 +1195,7 @@
                     </div>
                 </div>
 
-                <!-- ===================================== -->
-                <!-- GUARD TAB 3: PARCELDOC & RETURN       -->
-                <!-- ===================================== -->
+                <!-- GUARD TAB 3: PARCELDOC & RETURN -->
                 <div id="guardViewParcel" style="display: none;">
                     
                     <!-- Banner: Resident Approved IN Visitors for Parcel Collection at Gate Drop Box -->
@@ -1391,7 +1491,7 @@
                         <div class="inner-action-card">
                             <h4 style="font-size: 15px; color: #ffffff; margin-bottom: 6px;">🎫 Create Pre-Approved Visitor / Vehicle Pass</h4>
                             <p style="font-size: 12px; color: var(--text-secondary); margin-bottom: 10px;">
-                                Issue an instant digital pass with a 4-digit PIN &amp; QR code. Share directly to the visitor's WhatsApp so the guard clears them in 0 seconds!
+                                Issue an instant digital pass with a 4-digit PIN &amp; QR code. Share directly to the visitor or driver's WhatsApp so the guard clears them in 0 seconds!
                             </p>
                             <div class="form-grid" style="grid-template-columns: repeat(2, 1fr); margin-bottom: 8px;">
                                 <div>
@@ -1465,8 +1565,8 @@
 
                 <div class="stats-quad-grid">
                     <div class="quad-card">
-                        <div class="quad-num" style="color: var(--accent-emerald);" id="mcOccupancyNum">10 / 10 Units</div>
-                        <div class="quad-sub">Configured Test Units (100%)</div>
+                        <div class="quad-num" style="color: var(--accent-emerald);" id="mcOccupancyNum">8 / 10 Units</div>
+                        <div class="quad-sub">Configured Test Units</div>
                     </div>
                     <div class="quad-card">
                         <div class="quad-num" style="color: var(--accent-cyan);" id="mcEntriesNum">48 Entries</div>
@@ -1603,7 +1703,15 @@
         let currentGuardPhone = "+91 98450 99881";
         let currentGuardCode = "G-101";
 
-        // Registered Resident Units (Restricted to Maximum 10 entries)
+        let leadContact = {
+            name: "Kishore Kumar",
+            phone: "+91 98450 12345",
+            email: "kishore@royalpalms.org",
+            role: "MC President"
+        };
+
+        // Registered Resident Units (STRICTLY RESTRICTED TO MAXIMUM 10 ENTRIES)
+        const MAX_RESIDENT_UNITS = 10;
         let residentUnits = [
             { flat: "Flat A-101", name: "R. Sharma", phone: "+91 98765 43210", code: "R-101-A" },
             { flat: "Flat B-204", name: "Sunita Rao", phone: "+91 98450 67890", code: "R-204-B" },
@@ -1692,15 +1800,91 @@
         ];
 
         // Approved Visitors Waiting for Parcel Collection (Response: 3)
-        let approvedDropBoxVisitors = [];
+        let approvedDropBoxVisitors = [
+            { name: "Suresh Kumar", flat: "Flat A-101", subCat: "Swiggy", plate: "KA-01-XX-1024" }
+        ];
 
         window.addEventListener('DOMContentLoaded', () => {
+            checkLeadGate();
             renderResidentRegistrationTable();
             syncFlatDropdowns();
             renderTables();
+            updateApprovedDropBoxUi();
             updateLiveTime();
             setInterval(updateLiveTime, 30000);
         });
+
+        // Mandatory Lead Gate Check
+        function checkLeadGate() {
+            const registered = localStorage.getItem('visigate_demo_unlocked');
+            const savedLead = localStorage.getItem('visigate_demo_lead');
+            if (savedLead) {
+                try {
+                    leadContact = JSON.parse(savedLead);
+                    if (leadContact.society) currentSociety = leadContact.society;
+                    updateHeaderLeadBadge();
+                } catch(e) {}
+            }
+
+            if (!registered) {
+                document.getElementById('mandatoryLeadGate').style.display = 'flex';
+            } else {
+                document.getElementById('mandatoryLeadGate').style.display = 'none';
+            }
+        }
+
+        function openLeadModal() {
+            document.getElementById('gateSocietyName').value = currentSociety;
+            document.getElementById('gateFullName').value = leadContact.name || '';
+            document.getElementById('gateWhatsApp').value = leadContact.phone || '';
+            document.getElementById('gateEmail').value = leadContact.email || '';
+            if (leadContact.role) document.getElementById('gateRole').value = leadContact.role;
+            document.getElementById('mandatoryLeadGate').style.display = 'flex';
+        }
+
+        function handleMandatoryUnlock(e) {
+            e.preventDefault();
+            const society = document.getElementById('gateSocietyName').value.trim();
+            const name = document.getElementById('gateFullName').value.trim();
+            const phone = document.getElementById('gateWhatsApp').value.trim();
+            const email = document.getElementById('gateEmail').value.trim();
+            const role = document.getElementById('gateRole').value;
+
+            if (!society || !name || !phone || !email) {
+                alert("Please fill all mandatory compulsory fields: Society Name, Full Name, WhatsApp Number, and Email ID.");
+                return;
+            }
+
+            currentSociety = society;
+            leadContact = { society, name, phone, email, role };
+            localStorage.setItem('visigate_demo_lead', JSON.stringify(leadContact));
+            localStorage.setItem('visigate_demo_unlocked', 'true');
+
+            updateHeaderLeadBadge();
+            document.getElementById('mandatoryLeadGate').style.display = 'none';
+
+            // Update UI across all 4 apps
+            document.getElementById('badgeSocietyName').innerText = `${currentSociety} (Live Testbed)`;
+            document.getElementById('guardAppSocietyTitle').innerText = currentSociety;
+            document.getElementById('resAppSocietyTitle').innerText = currentSociety;
+            document.getElementById('mcAppSocietyTitle').innerText = currentSociety;
+            document.getElementById('mgrAppSocietyTitle').innerText = currentSociety;
+            document.querySelectorAll('.displaySocietyText').forEach(el => el.innerText = currentSociety);
+
+            const now = new Date().toLocaleTimeString();
+            const gLog = document.getElementById('guardLogOutput');
+            gLog.innerHTML += `<br><span style="color: #38bdf8;">[${now}] 🔓 Demo unlocked by ${name} (${role || 'Evaluator'}, ${phone}, ${email}) for society "${currentSociety}".</span><br>`;
+            gLog.scrollTop = gLog.scrollHeight;
+
+            alert(`Welcome ${name}!\n\nYour live demo for "${currentSociety}" is now fully unlocked with all 4 apps active.`);
+        }
+
+        function updateHeaderLeadBadge() {
+            const badge = document.getElementById('headerLeadName');
+            if (badge && leadContact.name) {
+                badge.innerText = leadContact.name;
+            }
+        }
 
         function updateLiveTime() {
             const now = new Date();
@@ -1709,7 +1893,7 @@
             if (pClock) pClock.innerText = timeStr;
         }
 
-        // Render Resident Registration Table (Max 10)
+        // Render Resident Registration Table (Strictly Max 10)
         function renderResidentRegistrationTable() {
             const tbody = document.getElementById('residentRegTableBody');
             tbody.innerHTML = '';
@@ -1723,6 +1907,49 @@
                 `;
                 tbody.appendChild(tr);
             });
+
+            // Update Counter
+            const counter = document.getElementById('residentUnitCounter');
+            counter.innerText = `Configured Units: ${residentUnits.length} / ${MAX_RESIDENT_UNITS} Max`;
+            if (residentUnits.length >= MAX_RESIDENT_UNITS) {
+                counter.innerText += " (Limit Reached)";
+                counter.style.color = "#f59e0b";
+            } else {
+                counter.style.color = "#10b981";
+            }
+
+            document.getElementById('mcOccupancyNum').innerText = `${residentUnits.length} / ${MAX_RESIDENT_UNITS} Units`;
+        }
+
+        function addResidentUnitRow() {
+            if (residentUnits.length >= MAX_RESIDENT_UNITS) {
+                alert(`Demo Limit Reached: Maximum ${MAX_RESIDENT_UNITS} resident units allowed per test society.`);
+                return;
+            }
+            const nextNum = 100 + residentUnits.length + 1;
+            residentUnits.push({
+                flat: `Flat E-${nextNum}`,
+                name: `Resident Unit ${residentUnits.length + 1}`,
+                phone: `+91 98000 000${residentUnits.length + 1}`,
+                code: `R-E${nextNum}`
+            });
+            renderResidentRegistrationTable();
+            syncFlatDropdowns();
+        }
+
+        function resetDefaultUnits() {
+            residentUnits = [
+                { flat: "Flat A-101", name: "R. Sharma", phone: "+91 98765 43210", code: "R-101-A" },
+                { flat: "Flat B-204", name: "Sunita Rao", phone: "+91 98450 67890", code: "R-204-B" },
+                { flat: "Flat C-302", name: "Dr. Vikram Mehta", phone: "+91 98112 33445", code: "R-302-A" },
+                { flat: "Flat D-405", name: "K. Anand", phone: "+91 98220 55667", code: "R-405-A" },
+                { flat: "Villa 07", name: "Pooja Verma", phone: "+91 98330 77889", code: "R-V07-A" },
+                { flat: "Villa 12", name: "Deepak Joshi", phone: "+91 98440 99112", code: "R-V12-A" },
+                { flat: "Tower 2-501", name: "Nitin Gadkari", phone: "+91 98550 22334", code: "R-T2-501" },
+                { flat: "Tower 2-602", name: "Meera Nair", phone: "+91 98660 44556", code: "R-T2-602" }
+            ];
+            renderResidentRegistrationTable();
+            syncFlatDropdowns();
         }
 
         function updateResidentUnit(index, key, val) {
@@ -1763,33 +1990,20 @@
 
         function applySocietySetup(e) {
             e.preventDefault();
-            currentSociety = document.getElementById('cfgSocietyName').value || "Royal Palms Residency";
             currentGate = document.getElementById('cfgGateName').value;
             currentGuardName = document.getElementById('cfgGuardName').value || "Guard Ramesh";
             currentGuardPhone = document.getElementById('cfgGuardPhone').value || "+91 98450 99881";
             currentGuardCode = document.getElementById('cfgGuardCode').value || "G-101";
 
-            // Update UI Badges & Titles
-            document.getElementById('badgeSocietyName').innerText = `${currentSociety} (Live Testbed)`;
-            document.getElementById('guardAppSocietyTitle').innerText = currentSociety;
-            document.getElementById('resAppSocietyTitle').innerText = currentSociety;
-            document.getElementById('mcAppSocietyTitle').innerText = currentSociety;
-            document.getElementById('mgrAppSocietyTitle').innerText = currentSociety;
-            document.querySelectorAll('.displaySocietyText').forEach(el => el.innerText = currentSociety);
             document.getElementById('displayGateLabel').innerText = currentGate;
             document.getElementById('displayGuardCode').innerText = `${currentGuardCode} (${currentGuardName})`;
 
-            // Telemetry Log
             const now = new Date().toLocaleTimeString();
             const gLog = document.getElementById('guardLogOutput');
-            gLog.innerHTML += `<br><span style="color: #38bdf8;">[${now}] 🏢 Society configured: "${currentSociety}". Gate: ${currentGate}. Guard: ${currentGuardName} (${currentGuardCode}, ${currentGuardPhone}).</span><br>`;
+            gLog.innerHTML += `<br><span style="color: #38bdf8;">[${now}] 🏢 Guard & Gate updated: Gate: ${currentGate}. Guard: ${currentGuardName} (${currentGuardCode}). Resident Units: ${residentUnits.length}.</span><br>`;
             gLog.scrollTop = gLog.scrollHeight;
 
-            const rLog = document.getElementById('routerLogOutput');
-            rLog.innerHTML += `[${now}] [CLUSTER_UPDATE] Society: "${currentSociety}" &bull; Contact Saved &bull; Security Node: ${currentGate}<br>`;
-            rLog.scrollTop = rLog.scrollHeight;
-
-            alert(`Testbed successfully initialized for: ${currentSociety}!\n\nAll Guard, Resident, MC & Manager tabs are now branded with your society settings.`);
+            alert(`Settings saved successfully!\nGate: ${currentGate}\nGuard: ${currentGuardName} (${currentGuardCode})\nRegistered Units: ${residentUnits.length} / 10 Max`);
             document.getElementById('sandboxWorkspace').scrollIntoView({ behavior: 'smooth' });
         }
 
@@ -1872,25 +2086,48 @@
             }
         }
 
+        let residentPreApprovedPass = null;
+
         function simulateQrScan(mode) {
-            const passCode = "QR-PASS-" + Math.floor(1000 + Math.random() * 9000);
-            const now = new Date().toLocaleTimeString();
+            const now = new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
             const logBox = document.getElementById('guardLogOutput');
 
             if (mode === 'VISITOR') {
-                document.getElementById('vName').value = "Pre-Approved Guest (QR Scanned)";
-                document.getElementById('vMainCategory').value = "Guest";
-                onCategoryChange('v');
-                document.getElementById('vPlate').value = "KA-04-QR-9900";
-                logBox.innerHTML += `<br><span style="color: #10b981;">[${now}] 🔍 QR Code Scanned: Valid Digital Pass ${passCode} matched Flat A-101. Auto-cleared!</span><br>`;
+                if (residentPreApprovedPass) {
+                    document.getElementById('vName').value = residentPreApprovedPass.name;
+                    document.getElementById('vMobile').value = residentPreApprovedPass.mobile;
+                    document.getElementById('vMainCategory').value = residentPreApprovedPass.category === 'Delivery' ? 'Delivery' : (residentPreApprovedPass.category === 'Cab' ? 'Cab' : 'Guest');
+                    onCategoryChange('v');
+                    if (residentPreApprovedPass.plate) document.getElementById('vPlate').value = residentPreApprovedPass.plate;
+                    logBox.innerHTML += `<br><span style="color: #10b981;">[${now}] 🔍 QR Code Scanned: Valid Digital Pass ${residentPreApprovedPass.code} (#PIN ${residentPreApprovedPass.pin}) for ${residentPreApprovedPass.name} verified against Resident Pre-Approved Registry. Auto-cleared!</span><br>`;
+                    alert(`QR Pass Scanned Successfully!\nCode: ${residentPreApprovedPass.code}\nGuest: ${residentPreApprovedPass.name}\nPIN: #${residentPreApprovedPass.pin}\nStatus: Verified Against Resident Pre-Approval Registry!`);
+                } else {
+                    const passCode = "QR-PASS-" + Math.floor(1000 + Math.random() * 9000);
+                    document.getElementById('vName').value = "Pre-Approved Guest (QR Scanned)";
+                    document.getElementById('vMainCategory').value = "Guest";
+                    onCategoryChange('v');
+                    document.getElementById('vPlate').value = "KA-04-QR-9900";
+                    logBox.innerHTML += `<br><span style="color: #10b981;">[${now}] 🔍 QR Code Scanned: Valid Digital Pass ${passCode} verified. Auto-cleared!</span><br>`;
+                    alert(`QR Pass Scanned Successfully!\nCode: ${passCode}\nValidated against Resident Pre-Approved Pass Database.`);
+                }
             } else {
-                document.getElementById('vehPlate').value = "KA-01-FAST-5544";
-                document.getElementById('vehDriverName').value = "FASTag Authorized Resident";
-                document.getElementById('vehOwnership').value = "Private Resident Vehicle";
-                logBox.innerHTML += `<br><span style="color: #10b981;">[${now}] 🔍 Vehicle FASTag / QR Scanned: Verified Gate Pass for Bay #V-08. Barrier Raised!</span><br>`;
+                if (residentPreApprovedPass && residentPreApprovedPass.plate) {
+                    document.getElementById('vehPlate').value = residentPreApprovedPass.plate;
+                    document.getElementById('vehDriverName').value = residentPreApprovedPass.name;
+                    document.getElementById('vehDriverMobile').value = residentPreApprovedPass.mobile;
+                    document.getElementById('vehOwnership').value = "Private Guest Vehicle";
+                    logBox.innerHTML += `<br><span style="color: #10b981;">[${now}] 🔍 Vehicle FASTag / QR Scanned: Verified Gate Pass ${residentPreApprovedPass.code} for Vehicle ${residentPreApprovedPass.plate} (Driver: ${residentPreApprovedPass.name}). Barrier Raised!</span><br>`;
+                    alert(`Vehicle QR / FASTag Scanned!\nPlate: ${residentPreApprovedPass.plate}\nDriver: ${residentPreApprovedPass.name}\nPre-Approval: ${residentPreApprovedPass.code} Active.\nBarrier Raised!`);
+                } else {
+                    const passCode = "FASTAG-" + Math.floor(1000 + Math.random() * 9000);
+                    document.getElementById('vehPlate').value = "KA-01-FAST-5544";
+                    document.getElementById('vehDriverName').value = "FASTag Authorized Resident";
+                    document.getElementById('vehOwnership').value = "Private Resident Vehicle";
+                    logBox.innerHTML += `<br><span style="color: #10b981;">[${now}] 🔍 Vehicle FASTag / QR Scanned: Verified Gate Pass for Bay #V-08. Barrier Raised!</span><br>`;
+                    alert(`FASTag Scanned Successfully!\nCode: ${passCode}\nPlate: KA-01-FAST-5544\nVerified resident vehicle. Barrier Raised!`);
+                }
             }
             logBox.scrollTop = logBox.scrollHeight;
-            alert(`QR Pass Scanned Successfully!\nCode: ${passCode}\nValidated against Resident Pre-Approved Pass Database.`);
         }
 
         function sendQrPassToVisitor() {
@@ -2134,17 +2371,32 @@
         }
 
         function residentCreatePreapprovedPass() {
-            const name = document.getElementById('resPreName').value;
+            const name = document.getElementById('resPreName').value.trim();
+            const mobile = document.getElementById('resPreMobile').value.trim();
+            const cat = document.getElementById('resPreCat').value;
+            const plate = document.getElementById('resPrePlate').value.trim();
             const pin = Math.floor(1000 + Math.random() * 9000);
+            
+            residentPreApprovedPass = {
+                name: name || "Pre-Approved Guest",
+                mobile: mobile || "+91 98112 44556",
+                category: cat,
+                plate: plate || "KA-04-QR-9900",
+                pin: pin,
+                code: `QR-PASS-${pin}`
+            };
+
             const box = document.getElementById('prePassOutput');
             box.style.display = 'block';
-            box.innerHTML = `<strong>Pass Generated for ${name}:</strong> PIN Code <code style="font-size: 15px; color: #38bdf8;">#${pin}</code> &bull; QR-PASS-${pin}<br>Show this PIN/QR to the guard at ${currentGate} for 0-second gate clearance.`;
+            box.innerHTML = `<strong>Pass Generated for ${residentPreApprovedPass.name}:</strong> PIN Code <code style="font-size: 15px; color: #38bdf8;">#${pin}</code> &bull; ${residentPreApprovedPass.code}<br>Category: <strong>${cat}</strong>${plate ? ` &bull; Vehicle: <strong>${plate}</strong>` : ''}<br>Status: <span style="color: #10b981; font-weight: 700;">Synced to Guard Checkpoint Tablet</span> (Guard can now scan QR or enter PIN for 0-second fast entry).`;
         }
 
         function residentSendQrPassToGuest() {
-            const name = document.getElementById('resPreName').value;
-            const mobile = document.getElementById('resPreMobile').value;
-            const text = encodeURIComponent(`Hi ${name}, here is your digital entry pass for ${currentSociety}: PIN #5821. Tap to view QR: https://visigatealerts.in/pass?id=5821`);
+            const name = residentPreApprovedPass ? residentPreApprovedPass.name : document.getElementById('resPreName').value;
+            const mobile = residentPreApprovedPass ? residentPreApprovedPass.mobile : document.getElementById('resPreMobile').value;
+            const pin = residentPreApprovedPass ? residentPreApprovedPass.pin : "5821";
+            const plate = residentPreApprovedPass ? residentPreApprovedPass.plate : "";
+            const text = encodeURIComponent(`Hi ${name}, here is your digital entry pass for ${currentSociety}: PIN #${pin}${plate ? ` (Vehicle: ${plate})` : ''}. Tap to view QR: https://visigatealerts.in/pass?id=${pin}`);
             window.open(`https://api.whatsapp.com/send?phone=${mobile.replace(/\D/g, '')}&text=${text}`, '_blank');
         }
 
