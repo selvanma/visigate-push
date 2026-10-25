@@ -161,12 +161,13 @@
             appFrame.src = targetUrl;
             document.title = "VisiGate " + activePortal.toUpperCase() + " App";
         } else {
-            // We are on visigate.in or root domain: update buttons if on visigate.in
-            if (host.includes('visigate.in')) {
-                document.getElementById('linkGuard').href = 'https://guard.visigate.in' + search;
-                document.getElementById('linkResident').href = 'https://resident.visigate.in' + search;
-                document.getElementById('linkMc').href = 'https://mc.visigate.in' + search;
-                document.getElementById('linkManager').href = 'https://manager.visigate.in' + search;
+            // We are on visigatealerts.in or visigate.in or root domain: update buttons
+            let baseDomain = host.includes('visigatealerts.in') ? 'visigatealerts.in' : (host.includes('visigate.in') ? 'visigate.in' : null);
+            if (baseDomain) {
+                document.getElementById('linkGuard').href = 'https://guard.' + baseDomain + search;
+                document.getElementById('linkResident').href = 'https://resident.' + baseDomain + search;
+                document.getElementById('linkMc').href = 'https://mc.' + baseDomain + search;
+                document.getElementById('linkManager').href = 'https://manager.' + baseDomain + search;
             }
         }
 
