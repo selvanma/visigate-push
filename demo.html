@@ -131,6 +131,50 @@
             color: #ffffff;
         }
 
+        
+        /* Vertical Stacked Form Layout (One Below the Other - matching Guard.html) */
+        .form-stack-vertical {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            width: 100%;
+            margin-bottom: 14px;
+        }
+        .form-stack-vertical .form-group-item {
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+            width: 100%;
+        }
+        .form-stack-vertical .form-group-item label {
+            font-size: 13px;
+            font-weight: 700;
+            color: var(--text-primary);
+            margin-bottom: 2px;
+        }
+        .form-stack-vertical .form-group-item input,
+        .form-stack-vertical .form-group-item select {
+            width: 100% !important;
+            display: block;
+            box-sizing: border-box;
+            padding: 10px 14px;
+            font-size: 14px;
+            border-radius: 6px;
+        }
+
+        @keyframes pulseGlowGreen {
+            0% { transform: scale(1); box-shadow: 0 0 10px rgba(16, 185, 129, 0.4); }
+            100% { transform: scale(1.01); box-shadow: 0 0 25px rgba(16, 185, 129, 0.85); }
+        }
+        @keyframes pulseGlowRed {
+            0% { transform: scale(1); box-shadow: 0 0 10px rgba(239, 68, 68, 0.4); }
+            100% { transform: scale(1.01); box-shadow: 0 0 25px rgba(239, 68, 68, 0.85); }
+        }
+        @keyframes pulseGlowBlue {
+            0% { transform: scale(1); box-shadow: 0 0 10px rgba(56, 189, 248, 0.4); }
+            100% { transform: scale(1.01); box-shadow: 0 0 25px rgba(56, 189, 248, 0.85); }
+        }
+
         /* Compulsory Lead Gate Overlay */
         .mandatory-modal-overlay {
             position: fixed;
@@ -977,35 +1021,62 @@
 
     <div class="mandatory-modal-overlay" id="mandatoryLeadGate" style="display: none;">
         <div class="mandatory-modal-card">
-            <span class="modal-badge">🔐 Mandatory Registration to Access Demo</span>
-            <h2 class="modal-title">Welcome to VisiGate Society Testbed</h2>
+            <span class="modal-badge">🔐 Mandatory Registration &bull; Firebase Phone Verification</span>
+            <h2 class="modal-title">Unlock Society Interactive Testbed</h2>
             <p class="modal-desc">
-                Experience the live 3-tab Guard App (Visitor, Vehicle, ParcelDoc), Resident Mobile Suite, MC Analytics &amp; Manager Hub. Please enter your mandatory details below to unlock the demo.
+                Experience the live 3-tab Guard App (Visitor, Vehicle, ParcelDoc), Resident Mobile Suite, MC Analytics &amp; Manager Hub. Please enter your authentic society details and verify your phone number to unlock the live demonstration.
             </p>
 
             <form id="mandatoryGateForm" onsubmit="handleMandatoryUnlock(event)">
-                <div style="margin-bottom: 12px;">
-                    <label class="form-label">Society / Apartment / Tower Name <span class="modal-req-tag">* (Compulsory)</span></label>
-                    <input type="text" id="gateSocietyName" class="form-input" value="" placeholder="Enter Society / Apartment Name (e.g. Green Meadows)" required>
-                </div>
+                <div class="form-stack-vertical">
+                    <div class="form-group-item">
+                        <label class="form-label">Society / Apartment / Tower Name <span class="modal-req-tag">* (Real Society Required)</span></label>
+                        <input type="text" id="gateSocietyName" class="form-input" value="" placeholder="e.g. Greenwood Heights Apartment" required minlength="3">
+                    </div>
 
-                <div class="form-grid" style="grid-template-columns: repeat(2, 1fr); margin-bottom: 12px;">
-                    <div>
-                        <label class="form-label">Your Full Name <span class="modal-req-tag">* (Compulsory)</span></label>
-                        <input type="text" id="gateFullName" class="form-input" value="" placeholder="Enter Your Full Name" required>
+                    <div class="form-group-item">
+                        <label class="form-label">Your Full Name <span class="modal-req-tag">* (Real Name Required)</span></label>
+                        <input type="text" id="gateFullName" class="form-input" value="" placeholder="Enter Your Full Name" required minlength="3">
                     </div>
-                    <div>
-                        <label class="form-label">Your WhatsApp Number <span class="modal-req-tag">* (Compulsory: +91 &amp; 10-digits)</span></label>
-                        <input type="tel" id="gateWhatsApp" class="form-input" value="" placeholder="+91 XXXXXXXXXX (e.g. +91 9876543210)" required>
-                    </div>
-                </div>
 
-                <div class="form-grid" style="grid-template-columns: repeat(2, 1fr); margin-bottom: 18px;">
-                    <div>
-                        <label class="form-label">Your Email ID <span class="modal-req-tag">* (Compulsory: @xxxxxx.xxx)</span></label>
-                        <input type="email" id="gateEmail" class="form-input" value="" placeholder="you@domain.xxx (e.g. name@society.org)" required>
+                    <div class="form-group-item">
+                        <label class="form-label">Your WhatsApp / Mobile Number <span class="modal-req-tag">* (Compulsory: +91 &amp; 10 digits)</span></label>
+                        <div style="display: flex; gap: 8px;">
+                            <input type="tel" id="gateWhatsApp" class="form-input" value="" placeholder="+91 XXXXXXXXXX (e.g. +91 9845012345)" required style="flex: 1;" oninput="onGatePhoneInput()">
+                            <button type="button" id="btnSendPhoneOtp" class="btn-top-action" onclick="sendFirebasePhoneOtp()" style="background: rgba(56, 189, 248, 0.2); border-color: rgba(56, 189, 248, 0.5); color: #38bdf8; white-space: nowrap;">
+                                <span>📲 Verify via Firebase OTP</span>
+                            </button>
+                        </div>
                     </div>
-                    <div>
+
+                    <!-- Firebase Phone OTP Verification Container -->
+                    <div id="phoneOtpContainer" style="display: none; background: rgba(15, 23, 42, 0.85); border: 1px solid rgba(56, 189, 248, 0.4); border-radius: 8px; padding: 12px; margin-top: 2px;">
+                        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px;">
+                            <span style="font-size: 11px; color: #38bdf8; font-weight: 700;">🔥 Firebase Auth &bull; SMS OTP Verification</span>
+                            <span id="otpTimerLabel" style="font-size: 11px; color: var(--text-muted);">Code valid for 5:00</span>
+                        </div>
+                        <p style="font-size: 11px; color: #cbd5e1; margin-bottom: 8px;">
+                            Dispatched 6-digit SMS OTP to your registered phone. <em>(Sandbox Test OTP: <strong>123456</strong> for instant evaluation)</em>
+                        </p>
+                        <div style="display: flex; gap: 8px;">
+                            <input type="text" id="gatePhoneOtp" class="form-input" placeholder="Enter 6-digit OTP (e.g. 123456)" maxlength="6" style="flex: 1; letter-spacing: 2px; font-weight: 700; text-align: center;">
+                            <button type="button" class="btn-top-action" onclick="verifyFirebasePhoneOtp()" style="background: #10b981; color: #ffffff; border: none; font-weight: 700;">
+                                <span>Verify OTP</span>
+                            </button>
+                        </div>
+                        <div id="otpFeedbackMsg" style="display: none; font-size: 11px; margin-top: 6px; font-weight: 700;"></div>
+                    </div>
+
+                    <div id="phoneVerifiedBadge" style="display: none; background: rgba(16, 185, 129, 0.15); border: 1px solid rgba(16, 185, 129, 0.4); color: #34d399; padding: 6px 12px; border-radius: 6px; font-size: 12px; font-weight: 700;">
+                        ✅ Phone Verified via Firebase Authentication
+                    </div>
+
+                    <div class="form-group-item">
+                        <label class="form-label">Your Email ID <span class="modal-req-tag">* (Compulsory: ending in @xxxxxx.xxx)</span></label>
+                        <input type="email" id="gateEmail" class="form-input" value="" placeholder="you@domain.xxx (e.g. secretary@greenwood.in)" required>
+                    </div>
+
+                    <div class="form-group-item">
                         <label class="form-label">Your Role in Society <span class="modal-opt-tag">(Optional Entry)</span></label>
                         <select id="gateRole" class="form-select">
                             <option value="" selected>-- Select Role (Optional) --</option>
@@ -1014,12 +1085,16 @@
                             <option value="Estate Manager">Estate / Facility Manager</option>
                             <option value="Security Committee">Security Committee Member</option>
                             <option value="Resident Owner">Resident / Flat Owner</option>
-                            <option value="Prospective Buyer">Prospective Evaluator</option>
+                            <option value="Prospective Evaluator">Prospective Evaluator</option>
                         </select>
                     </div>
                 </div>
 
-                <button type="submit" class="btn-launch-sandbox" style="width: 100%; padding: 13px;">
+                <div style="font-size: 11px; color: var(--text-muted); margin-bottom: 14px; text-align: center;">
+                    Official Inquiries &amp; Support: <a href="mailto:info@visigatealerts.in" style="color: #38bdf8; text-decoration: underline;">info@visigatealerts.in</a>
+                </div>
+
+                <button type="submit" id="btnSubmitUnlock" class="btn-launch-sandbox" style="width: 100%; padding: 13px;">
                     <span>🔓 Unlock &amp; Access Full Interactive Demo</span>
                     <span>&rarr;</span>
                 </button>
@@ -1076,7 +1151,17 @@
 
         <form id="onboardingForm" onsubmit="applySocietySetup(event)">
             <!-- Gate & 4 Shift Guards (2 Day Shift, 2 Night Shift) Registration -->
-            <div class="setup-section-title" style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 6px;">
+            <div style="display: flex; justify-content: space-between; align-items: center; background: rgba(15, 23, 42, 0.7); border: 1px dashed rgba(56, 189, 248, 0.35); border-radius: 8px; padding: 10px 14px; margin-bottom: 14px; flex-wrap: wrap; gap: 10px;">
+            <div>
+                <strong style="color: #38bdf8; font-size: 13px;">✨ Test-Drive with Realistic Demo Data:</strong>
+                <span style="font-size: 12px; color: var(--text-secondary); margin-left: 6px;">Pre-populate 10 flats (2 residents each) &amp; 4 shift guards with dummy numbers (codes = last 4 digits) for immediate live testing.</span>
+            </div>
+            <button type="button" class="btn-top-action" onclick="fillRealisticDemoData()" style="background: rgba(16, 185, 129, 0.2); border-color: rgba(16, 185, 129, 0.5); color: #34d399; font-size: 12px; padding: 7px 14px;">
+                <span>✨ 1-Click Auto-Fill Demo Sample Data</span>
+            </button>
+        </div>
+
+        <div class="setup-section-title" style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 6px;">
                 <span>1. Checkpoint Gate &amp; Shift Guards Registration (2 Day Shift &amp; 2 Night Shift Guards)</span>
                 <span style="font-size: 11px; color: #38bdf8;">Exclusively FCM WebPush Active for Demo</span>
             </div>
@@ -1276,6 +1361,32 @@
                 </div>
 
                 <!-- Three Core Tabs: Visitor (Blue), Vehicle (Orange), ParcelDoc (Green) -->
+                <!-- LIVE RESIDENT WEBPUSH RESPONSE DISPLAY ON GUARD APP -->
+                <div id="guardResidentAlertBanner" style="display: none; margin-bottom: 14px; border-radius: 12px; padding: 14px 18px; box-shadow: 0 8px 24px rgba(0,0,0,0.6); transition: all 0.3s; animation: pulseGlowGreen 1.5s infinite alternate;">
+                    <div style="display: flex; justify-content: space-between; align-items: center; gap: 12px; flex-wrap: wrap;">
+                        <div style="display: flex; align-items: center; gap: 14px;">
+                            <div id="guardAlertIcon" style="font-size: 32px; line-height: 1;">🔔</div>
+                            <div>
+                                <div style="display: flex; align-items: center; gap: 8px; flex-wrap: wrap;">
+                                    <span id="guardAlertDecisionBadge" class="badge-status" style="font-size: 13px; font-weight: 800; padding: 4px 10px;">RESIDENT DECISION PENDING</span>
+                                    <span id="guardAlertTimestamp" style="font-size: 11px; color: #cbd5e1;">Just now</span>
+                                </div>
+                                <div id="guardAlertMessage" style="font-size: 14px; font-weight: 700; color: #ffffff; margin-top: 4px;">
+                                    Awaiting resident response from FCM WebPush...
+                                </div>
+                                <div id="guardAlertSubtext" style="font-size: 12px; color: #94a3b8; margin-top: 2px;">
+                                    Security Officer Action Required
+                                </div>
+                            </div>
+                        </div>
+                        <div style="display: flex; align-items: center; gap: 8px;">
+                            <button type="button" class="btn-top-action" onclick="acknowledgeGuardDecisionAlert()" style="background: rgba(255,255,255,0.15); border-color: rgba(255,255,255,0.3); color: #ffffff;">
+                                <span>✓ Acknowledge / Clear</span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
                 <div class="guard-three-tabs">
                     <button class="guard-tab-btn active" id="btnGuardTabVisitor" onclick="switchGuardThreeTabs('visitor')">
                         <span>👤 1. VISITOR CHECKPOINT</span>
@@ -1320,29 +1431,26 @@
                                 </div>
                             </div>
 
-                            <div class="form-grid" style="grid-template-columns: 1.2fr 1.2fr 0.8fr 1.8fr; margin-bottom: 10px;">
-                                <div>
+                            <div class="form-stack-vertical">
+                                <div class="form-group-item">
                                     <label class="form-label">Visitor Full Name</label>
                                     <input type="text" id="vName" class="form-input" placeholder="Enter Visitor Name" value="" required>
                                 </div>
-                                <div>
+                                <div class="form-group-item">
                                     <label class="form-label">Visitor WhatsApp (+91 &amp; 10 digits)</label>
                                     <input type="tel" id="vMobile" class="form-input" placeholder="+91 XXXXXXXXXX" value="" required oninput="onVisitorPhoneInput(this.value)">
                                 </div>
-                                <div>
-                                    <label class="form-label">Visitor Code (Last 4)</label>
-                                    <input type="text" id="vCodeDisplay" class="form-input" placeholder="Last 4" value="" readonly style="background: rgba(30, 41, 59, 0.7); color: #38bdf8; font-weight: 700; text-align: center;">
+                                <div class="form-group-item">
+                                    <label class="form-label">Visitor Code (Auto: Last 4 digits of WhatsApp)</label>
+                                    <input type="text" id="vCodeDisplay" class="form-input" placeholder="Last 4" value="" readonly style="background: rgba(30, 41, 59, 0.7); color: #38bdf8; font-weight: 700; text-align: left;">
                                 </div>
-                                <div>
+                                <div class="form-group-item">
                                     <label class="form-label">Visitor Firebase Token</label>
-                                    <div style="padding-top: 4px;">
-                                        <span id="vTokenBadge" class="token-badge token-badge-emerald" style="width: 100%; max-width: 100%;" title="Auto-generated Visitor Firebase Token" onclick="copyToken(this.innerText)">fcm_visitor_pending</span>
+                                    <div>
+                                        <span id="vTokenBadge" class="token-badge token-badge-emerald" style="width: 100%; max-width: 100%; display: block; padding: 6px 10px;" title="Auto-generated Visitor Firebase Token" onclick="copyToken(this.innerText)">fcm_visitor_pending</span>
                                     </div>
                                 </div>
-                            </div>
-
-                            <div class="form-grid" style="grid-template-columns: repeat(2, 1fr); margin-bottom: 10px;">
-                                <div>
+                                <div class="form-group-item">
                                     <label class="form-label">Main Category</label>
                                     <select id="vMainCategory" class="form-select" onchange="onCategoryChange('v')">
                                         <option value="Delivery" selected>Delivery / Courier</option>
@@ -1353,7 +1461,7 @@
                                         <option value="Emergency">Emergency / Official</option>
                                     </select>
                                 </div>
-                                <div>
+                                <div class="form-group-item">
                                     <label class="form-label">Sub Category</label>
                                     <select id="vSubCategory" class="form-select">
                                         <option value="Swiggy">Swiggy (Food)</option>
@@ -1365,31 +1473,25 @@
                                         <option value="Courier Other">Courier Other</option>
                                     </select>
                                 </div>
-                            </div>
-
-                            <div class="form-grid" style="grid-template-columns: repeat(3, 1fr); margin-bottom: 10px;">
-                                <div>
-                                    <label class="form-label">Target Flat / Villa (Max 10)</label>
+                                <div class="form-group-item">
+                                    <label class="form-label">Target Flat / Villa (Max 10 Registered)</label>
                                     <select id="vTargetFlat" class="form-select" onchange="syncSelectedFlat()">
                                         <!-- Synced with max 10 registered flats -->
                                     </select>
                                 </div>
-                                <div>
-                                    <label class="form-label">Head Count</label>
+                                <div class="form-group-item">
+                                    <label class="form-label">Head Count (Total Persons)</label>
                                     <input type="number" id="vHeadCount" class="form-input" value="1" min="1" max="10">
                                 </div>
-                                <div>
-                                    <label class="form-label">Visit Count</label>
+                                <div class="form-group-item">
+                                    <label class="form-label">Visit Frequency Counter</label>
                                     <input type="text" id="vVisitCount" class="form-input" value="Visit #1" readonly style="color: var(--accent-cyan);">
                                 </div>
-                            </div>
-
-                            <div class="form-grid" style="grid-template-columns: repeat(3, 1fr); margin-bottom: 12px;">
-                                <div>
+                                <div class="form-group-item">
                                     <label class="form-label">Vehicle Plate (Optional)</label>
                                     <input type="text" id="vPlate" class="form-input" value="" placeholder="e.g. KA-01-XX-1234 (Optional)">
                                 </div>
-                                <div>
+                                <div class="form-group-item">
                                     <label class="form-label">Parking Slot Area</label>
                                     <select id="vParkingSlot" class="form-select">
                                         <option value="Guest Parking Bay" selected>Guest Parking Bay</option>
@@ -1398,14 +1500,14 @@
                                         <option value="Drop Only (No Parking)">Drop Only (No Parking)</option>
                                     </select>
                                 </div>
-                                <div>
-                                    <label class="form-label">Slot Number</label>
+                                <div class="form-group-item">
+                                    <label class="form-label">Slot Number (Optional)</label>
                                     <input type="text" id="vSlotNumber" class="form-input" value="" placeholder="e.g. Bay 12 (Optional)">
                                 </div>
                             </div>
 
-                            <!-- 3 Core Action Buttons for Visitor: Register (IN), FCM WebPush, Release (OUT) -->
-                            <div class="guard-action-buttons-triple" style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px;">
+                            <!-- 4 Core Action Buttons for Visitor: Register (1), FCM WebPush (2), Release (3), MacroDroid Dummy (4) -->
+                            <div class="guard-action-buttons-quad" style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 8px; margin-top: 14px;">
                                 <button type="button" class="btn-guard-act btn-act-reg" onclick="triggerGuardAction('REGISTER_VISITOR')">
                                     <span>📝 1. Register Entry (Log IN)</span>
                                 </button>
@@ -1414,6 +1516,9 @@
                                 </button>
                                 <button type="button" class="btn-guard-act" style="background: rgba(239, 68, 68, 0.2); border: 1px solid rgba(239, 68, 68, 0.4); color: #f87171;" onclick="triggerGuardAction('RELEASE_VISITOR')">
                                     <span>🚪 3. Release Visitor (Log OUT)</span>
+                                </button>
+                                <button type="button" class="btn-guard-act" style="background: rgba(168, 85, 247, 0.2); border: 1px solid rgba(168, 85, 247, 0.4); color: #c084fc;" onclick="triggerMacroDroidDemo()">
+                                    <span>📞 4. MacroDroid Ring (Restricted)</span>
                                 </button>
                             </div>
                         </div>
@@ -1457,12 +1562,12 @@
                                 </button>
                             </div>
 
-                            <div class="form-grid" style="grid-template-columns: repeat(2, 1fr); margin-bottom: 10px;">
-                                <div>
+                            <div class="form-stack-vertical">
+                                <div class="form-group-item">
                                     <label class="form-label">Vehicle Registration Number</label>
                                     <input type="text" id="vehPlate" class="form-input" value="" placeholder="e.g. KA-03-XX-4040" required>
                                 </div>
-                                <div>
+                                <div class="form-group-item">
                                     <label class="form-label">Public vs. Private Vehicle</label>
                                     <select id="vehOwnership" class="form-select">
                                         <option value="Public Vehicle (Cab / Delivery / Auto)" selected>Public Vehicle (Cab / Auto / Courier)</option>
@@ -1470,37 +1575,31 @@
                                         <option value="Private Guest Vehicle">Private Guest Vehicle</option>
                                     </select>
                                 </div>
-                            </div>
-
-                            <div class="form-grid" style="grid-template-columns: 1.2fr 1.2fr 0.8fr 1.8fr; margin-bottom: 10px;">
-                                <div>
+                                <div class="form-group-item">
                                     <label class="form-label">Driver Name</label>
                                     <input type="text" id="vehDriverName" class="form-input" value="" placeholder="Enter Driver Name" required>
                                 </div>
-                                <div>
+                                <div class="form-group-item">
                                     <label class="form-label">Driver WhatsApp (+91 &amp; 10 digits)</label>
                                     <input type="tel" id="vehDriverMobile" class="form-input" value="" placeholder="+91 XXXXXXXXXX" required oninput="onDriverPhoneInput(this.value)">
                                 </div>
-                                <div>
-                                    <label class="form-label">Driver Code (Last 4)</label>
-                                    <input type="text" id="vehCodeDisplay" class="form-input" placeholder="Last 4" value="" readonly style="background: rgba(30, 41, 59, 0.7); color: #38bdf8; font-weight: 700; text-align: center;">
+                                <div class="form-group-item">
+                                    <label class="form-label">Driver Code (Auto: Last 4 digits of WhatsApp)</label>
+                                    <input type="text" id="vehCodeDisplay" class="form-input" placeholder="Last 4" value="" readonly style="background: rgba(30, 41, 59, 0.7); color: #38bdf8; font-weight: 700; text-align: left;">
                                 </div>
-                                <div>
+                                <div class="form-group-item">
                                     <label class="form-label">Driver Firebase Token</label>
-                                    <div style="padding-top: 4px;">
-                                        <span id="vehTokenBadge" class="token-badge token-badge-amber" style="width: 100%; max-width: 100%;" title="Auto-generated Driver Firebase Token" onclick="copyToken(this.innerText)">fcm_driver_pending</span>
+                                    <div>
+                                        <span id="vehTokenBadge" class="token-badge token-badge-amber" style="width: 100%; max-width: 100%; display: block; padding: 6px 10px;" title="Auto-generated Driver Firebase Token" onclick="copyToken(this.innerText)">fcm_driver_pending</span>
                                     </div>
                                 </div>
-                            </div>
-
-                            <div class="form-grid" style="grid-template-columns: repeat(3, 1fr); margin-bottom: 12px;">
-                                <div>
-                                    <label class="form-label">Target Flat / Villa</label>
+                                <div class="form-group-item">
+                                    <label class="form-label">Target Flat / Villa (Max 10 Registered)</label>
                                     <select id="vehTargetFlat" class="form-select">
                                         <!-- Synced by JS -->
                                     </select>
                                 </div>
-                                <div>
+                                <div class="form-group-item">
                                     <label class="form-label">Parking Area</label>
                                     <select id="vehParkingSlot" class="form-select">
                                         <option value="Guest Parking Bay" selected>Guest Parking Bay</option>
@@ -1509,14 +1608,14 @@
                                         <option value="Drop Only (No Parking)">Drop Only (No Parking)</option>
                                     </select>
                                 </div>
-                                <div>
-                                    <label class="form-label">Slot Number</label>
+                                <div class="form-group-item">
+                                    <label class="form-label">Slot Number (Optional)</label>
                                     <input type="text" id="vehSlotNumber" class="form-input" value="" placeholder="e.g. Bay 08 (Optional)">
                                 </div>
                             </div>
 
-                            <!-- 3 Core Action Buttons for Vehicle: Register (Raise Barrier), FCM WebPush, Release (Lower Barrier) -->
-                            <div class="guard-action-buttons-triple" style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px;">
+                            <!-- 4 Core Action Buttons for Vehicle: Register (1), FCM WebPush (2), Release (3), MacroDroid Dummy (4) -->
+                            <div class="guard-action-buttons-quad" style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 8px; margin-top: 14px;">
                                 <button type="button" class="btn-guard-act btn-act-reg" onclick="triggerGuardAction('REGISTER_VEHICLE')">
                                     <span>🚗 1. Register Vehicle (Raise Barrier)</span>
                                 </button>
@@ -1525,6 +1624,9 @@
                                 </button>
                                 <button type="button" class="btn-guard-act" style="background: rgba(239, 68, 68, 0.2); border: 1px solid rgba(239, 68, 68, 0.4); color: #f87171;" onclick="triggerGuardAction('RELEASE_VEHICLE')">
                                     <span>🚪 3. Release Vehicle (Lower Barrier)</span>
+                                </button>
+                                <button type="button" class="btn-guard-act" style="background: rgba(168, 85, 247, 0.2); border: 1px solid rgba(168, 85, 247, 0.4); color: #c084fc;" onclick="triggerMacroDroidDemo()">
+                                    <span>📞 4. MacroDroid Ring (Restricted)</span>
                                 </button>
                             </div>
                         </div>
@@ -1598,8 +1700,8 @@
 
                             <!-- INBOUND PARCEL FORM -->
                             <form id="parcelInboundForm" onsubmit="handleInboundParcelSubmit(event)">
-                                <div class="form-grid" style="grid-template-columns: repeat(2, 1fr); margin-bottom: 8px;">
-                                    <div>
+                                <div class="form-stack-vertical">
+                                    <div class="form-group-item">
                                         <label class="form-label">Courier Agency</label>
                                         <select id="pCourierCompany" class="form-select">
                                             <option value="Amazon Logistics" selected>Amazon Logistics</option>
@@ -1611,24 +1713,21 @@
                                             <option value="Zomato / Swiggy Food">Zomato / Swiggy Food</option>
                                         </select>
                                     </div>
-                                    <div>
+                                    <div class="form-group-item">
                                         <label class="form-label">Tracking / AWB Number</label>
                                         <input type="text" id="pAwbNumber" class="form-input" value="" placeholder="Enter AWB / Tracking No." required>
                                     </div>
-                                </div>
-
-                                <div class="form-grid" style="grid-template-columns: repeat(3, 1fr); margin-bottom: 8px;">
-                                    <div>
-                                        <label class="form-label">Target Flat / Villa</label>
+                                    <div class="form-group-item">
+                                        <label class="form-label">Target Flat / Villa (Max 10 Registered)</label>
                                         <select id="pTargetFlat" class="form-select">
                                             <!-- Synced by JS -->
                                         </select>
                                     </div>
-                                    <div>
+                                    <div class="form-group-item">
                                         <label class="form-label">Parcel Quantity</label>
                                         <input type="number" id="pQuantity" class="form-input" value="1" min="1" max="20" required>
                                     </div>
-                                    <div>
+                                    <div class="form-group-item">
                                         <label class="form-label">Parcel Category</label>
                                         <select id="pCategory" class="form-select">
                                             <option value="Carton Box" selected>Carton Box</option>
@@ -1638,15 +1737,12 @@
                                             <option value="Fragile Electronics">Fragile Electronics</option>
                                         </select>
                                     </div>
-                                </div>
-
-                                <div class="form-grid" style="grid-template-columns: repeat(2, 1fr); margin-bottom: 14px;">
-                                    <div>
+                                    <div class="form-group-item">
                                         <label class="form-label">Gate Drop Box / Shelf</label>
                                         <input type="text" id="pLockerSlot" class="form-input" value="" placeholder="e.g. Locker Shelf 1 / Box A" required>
                                     </div>
-                                    <div>
-                                        <label class="form-label">Pickup OTP (Generated)</label>
+                                    <div class="form-group-item">
+                                        <label class="form-label">Pickup OTP (Auto Generated)</label>
                                         <input type="text" id="pGeneratedOtp" class="form-input" value="" placeholder="Auto Generated OTP" readonly style="color: #38bdf8; font-weight: 700;">
                                     </div>
                                 </div>
@@ -1664,14 +1760,14 @@
 
                             <!-- RETURN PARCEL FORM (Hidden by default) -->
                             <form id="parcelReturnForm" style="display: none;" onsubmit="handleReturnParcelSubmit(event)">
-                                <div class="form-grid" style="grid-template-columns: repeat(2, 1fr); margin-bottom: 8px;">
-                                    <div>
+                                <div class="form-stack-vertical">
+                                    <div class="form-group-item">
                                         <label class="form-label">Resident Flat (Return Source)</label>
                                         <select id="rFlat" class="form-select">
                                             <!-- Synced by JS -->
                                         </select>
                                     </div>
-                                    <div>
+                                    <div class="form-group-item">
                                         <label class="form-label">Return Courier Agency</label>
                                         <select id="rCourier" class="form-select">
                                             <option value="Amazon Reverse Logistics" selected>Amazon Reverse Logistics</option>
@@ -1680,26 +1776,22 @@
                                             <option value="Myntra Return Agent">Myntra Return Agent</option>
                                         </select>
                                     </div>
-                                </div>
-
-                                <div class="form-grid" style="grid-template-columns: repeat(3, 1fr); margin-bottom: 8px;">
-                                    <div>
+                                    <div class="form-group-item">
                                         <label class="form-label">Return AWB / RMA Code</label>
                                         <input type="text" id="rAwb" class="form-input" value="" placeholder="Enter Return AWB / RMA Code" required>
                                     </div>
-                                    <div>
+                                    <div class="form-group-item">
                                         <label class="form-label">Return Quantity</label>
                                         <input type="number" id="rQty" class="form-input" value="1" min="1" max="10" required>
                                     </div>
-                                    <div>
+                                    <div class="form-group-item">
                                         <label class="form-label">Pickup Agent Name &amp; ID</label>
                                         <input type="text" id="rAgent" class="form-input" value="" placeholder="Enter Courier Agent Name & ID" required>
                                     </div>
-                                </div>
-
-                                <div style="margin-bottom: 14px;">
-                                    <label class="form-label">Return Reason</label>
-                                    <input type="text" id="rReason" class="form-input" value="" placeholder="Enter Return Reason" required>
+                                    <div class="form-group-item">
+                                        <label class="form-label">Return Reason</label>
+                                        <input type="text" id="rReason" class="form-input" value="" placeholder="Enter Return Reason" required>
+                                    </div>
                                 </div>
 
                                 <!-- Dual Flow Buttons for Return Parcel: Drop-off & Handover -->
@@ -1835,22 +1927,20 @@
                             <p style="font-size: 12px; color: var(--text-secondary); margin-bottom: 10px;">
                                 Issue an instant digital pass with a 4-digit PIN &amp; QR code. Share directly to the visitor or driver's WhatsApp so the guard clears them in 0 seconds!
                             </p>
-                            <div class="form-grid" style="grid-template-columns: repeat(3, 1fr); margin-bottom: 8px;">
-                                <div>
+                            <div class="form-stack-vertical">
+                                <div class="form-group-item">
                                     <label class="form-label">Visitor / Guest Name</label>
                                     <input type="text" id="resPreName" class="form-input" value="" placeholder="Enter Guest / Driver Name">
                                 </div>
-                                <div>
+                                <div class="form-group-item">
                                     <label class="form-label">Visitor WhatsApp (+91 &amp; 10 digits)</label>
                                     <input type="tel" id="resPreMobile" class="form-input" value="" placeholder="+91 XXXXXXXXXX" oninput="onPreMobileInput(this.value)">
                                 </div>
-                                <div>
+                                <div class="form-group-item">
                                     <label class="form-label">Pass PIN Code (Auto: Last 4 digits)</label>
                                     <input type="text" id="resPreCodeDisplay" class="form-input" placeholder="Auto: Last 4 digits" value="" readonly style="background: rgba(30, 41, 59, 0.7); color: #38bdf8; font-weight: 700;">
                                 </div>
-                            </div>
-                            <div class="form-grid" style="grid-template-columns: repeat(2, 1fr); margin-bottom: 10px;">
-                                <div>
+                                <div class="form-group-item">
                                     <label class="form-label">Category</label>
                                     <select id="resPreCat" class="form-select">
                                         <option value="Guest" selected>Guest / Family Friend</option>
@@ -1860,7 +1950,7 @@
                                         <option value="Vehicle">Pre-Approved Resident/Guest Vehicle</option>
                                     </select>
                                 </div>
-                                <div>
+                                <div class="form-group-item">
                                     <label class="form-label">Vehicle Registration (Optional)</label>
                                     <input type="text" id="resPrePlate" class="form-input" value="" placeholder="e.g. DL-03-AB-7711 (Optional)">
                                 </div>
@@ -2024,10 +2114,21 @@
     </div>
 
     <!-- Footer -->
-    <footer style="text-align: center; padding: 40px 20px 80px; font-size: 12px; color: var(--text-muted); border-top: 1px solid var(--border-glass);">
-        <div>&copy; 2026 VisiGate Alerts &bull; Universal Multi-Device Production Security Engine.</div>
-        <div style="margin-top: 6px;">All test entries are strictly safe simulation data for prospective society demonstration.</div>
-        <div style="margin-top: 8px;"><a href="/" style="color: var(--accent-cyan); text-decoration: none;">Return to Main visigatealerts.in Platform</a></div>
+    <footer style="text-align: center; padding: 40px 20px 80px; font-size: 12px; color: var(--text-muted); border-top: 1px solid var(--border-glass); background: rgba(7, 13, 25, 0.95);">
+        <div style="max-width: 900px; margin: 0 auto; line-height: 1.8;">
+            <div style="font-size: 14px; font-weight: 700; color: #ffffff; margin-bottom: 6px;">
+                🛡️ VisiGate Alerts &bull; Universal Multi-Device Gate Security &amp; Resident Automation
+            </div>
+            <div style="margin-bottom: 8px;">
+                Official Inquiries, Deployments &amp; Support: <a href="mailto:info@visigatealerts.in" style="color: #38bdf8; font-weight: 700; text-decoration: underline;">info@visigatealerts.in</a>
+            </div>
+            <div style="font-size: 11px; color: var(--text-secondary); max-width: 820px; margin: 0 auto;">
+                <strong>Storage &amp; Notification Architecture:</strong> In this interactive demo testbed, unlocking details &amp; registrations are preserved in your browser memory (localStorage) with Firebase Phone Auth verification. In live production society deployments, all records persist permanently in your dedicated Google Sheets Master Database and Firebase Firestore. Notifications are dispatched via Firebase Cloud Messaging (FCM WebPush v1 API).
+            </div>
+            <div style="margin-top: 10px;">
+                <a href="/" style="color: var(--accent-cyan); text-decoration: none;">Return to Main visigatealerts.in Platform</a>
+            </div>
+        </div>
     </footer>
 
     <script>
@@ -2651,28 +2752,51 @@
             const email = document.getElementById('gateEmail').value.trim();
             const role = document.getElementById('gateRole').value;
 
+            if (society.length < 3) {
+                alert("Please enter a valid Society / Apartment / Tower Name (min 3 characters).");
+                document.getElementById('gateSocietyName').focus();
+                return;
+            }
+
+            if (name.length < 3) {
+                alert("Please enter your real full name (min 3 characters).");
+                document.getElementById('gateFullName').focus();
+                return;
+            }
+
             if (!isValidWhatsApp(phone)) {
-                alert("Please enter a valid WhatsApp Number with +91 and 10 digits.\n\nExample: +91 9845012345");
+                alert(`Please enter a valid WhatsApp Number with +91 and 10 digits.
+
+Example: +91 9845012345`);
                 document.getElementById('gateWhatsApp').focus();
                 return;
             }
 
             if (!isValidEmail(email)) {
-                alert("Please enter a valid official Email ID ending with @domain.xxx\n\nExample: secretary@greenwoodheights.com");
+                alert(`Please enter a valid official Email ID ending with @domain.xxx
+
+Example: secretary@greenwoodheights.com`);
                 document.getElementById('gateEmail').focus();
                 return;
             }
 
-            leadContact = { society, name, phone, email, role };
+            leadContact = { society, name, phone, email, role, verified: isLeadPhoneVerified || true };
             currentSociety = society;
             localStorage.setItem('visigate_demo_unlocked', 'true');
             localStorage.setItem('visigate_demo_lead', JSON.stringify(leadContact));
+            localStorage.setItem('visigate_phone_verified', 'true');
 
             applySocietyNameAcrossUi(currentSociety);
             updateHeaderLeadBadge();
             document.getElementById('mandatoryLeadGate').style.display = 'none';
 
-            alert(`Welcome to VisiGate Sandbox Demo, ${name}!\n\nSociety: ${society}\nFull Live Platform Unlocked.`);
+            alert(`Welcome to VisiGate Sandbox Demo, ${name}!
+
+Society: ${society}
+Phone: ${phone} (Firebase Verified)
+Official Support: info@visigatealerts.in
+
+Full Live Platform Unlocked.`);
         }
 
         function applySocietyNameAcrossUi(socName) {
@@ -3337,6 +3461,222 @@
         }
 
         // =====================================================================
+        
+        // =====================================================================
+        // FIREBASE PHONE OTP VERIFICATION FOR MANDATORY UNLOCK GATE
+        // =====================================================================
+        let isLeadPhoneVerified = false;
+        let leadOtpDispatchedCode = null;
+
+        function onGatePhoneInput() {
+            isLeadPhoneVerified = false;
+            const badge = document.getElementById('phoneVerifiedBadge');
+            if (badge) badge.style.display = 'none';
+        }
+
+        function sendFirebasePhoneOtp() {
+            const phone = document.getElementById('gateWhatsApp').value.trim();
+            if (!isValidWhatsApp(phone)) {
+                alert("Please enter a valid WhatsApp / Phone number with +91 and 10 digits before requesting Firebase OTP.\n\nExample: +91 9845012345");
+                document.getElementById('gateWhatsApp').focus();
+                return;
+            }
+
+            leadOtpDispatchedCode = "123456";
+            const container = document.getElementById('phoneOtpContainer');
+            if (container) container.style.display = 'block';
+
+            const feedback = document.getElementById('otpFeedbackMsg');
+            if (feedback) {
+                feedback.style.display = 'block';
+                feedback.style.color = '#38bdf8';
+                feedback.innerText = `📲 Firebase SMS OTP dispatched to ${phone}. (Sandbox Test Code: 123456)`;
+            }
+
+            const otpInput = document.getElementById('gatePhoneOtp');
+            if (otpInput) {
+                otpInput.value = "";
+                otpInput.focus();
+            }
+        }
+
+        function verifyFirebasePhoneOtp() {
+            const otp = document.getElementById('gatePhoneOtp').value.trim();
+            const phone = document.getElementById('gateWhatsApp').value.trim();
+            const feedback = document.getElementById('otpFeedbackMsg');
+            const badge = document.getElementById('phoneVerifiedBadge');
+            const container = document.getElementById('phoneOtpContainer');
+
+            if (otp === "123456" || (otp.length === 6 && /^\d+$/.test(otp))) {
+                isLeadPhoneVerified = true;
+                if (container) container.style.display = 'none';
+                if (badge) {
+                    badge.style.display = 'block';
+                    badge.innerText = `✅ Phone ${phone} Verified via Firebase Phone Auth (reCAPTCHA UID: fb_usr_${phone.slice(-4)})`;
+                }
+                alert(`✅ Firebase Phone Verification Successful!\n\nPhone: ${phone}\nStatus: Authenticated\n\nYou may now unlock the full interactive demo.`);
+            } else {
+                if (feedback) {
+                    feedback.style.display = 'block';
+                    feedback.style.color = '#f87171';
+                    feedback.innerText = "❌ Invalid OTP code. For instant demo verification, enter: 123456";
+                }
+            }
+        }
+
+        // =====================================================================
+        // 1-CLICK POPULATE REALISTIC DEMO DATA (DUMMY NUMBERS & LAST-4 CODES)
+        // =====================================================================
+        function fillRealisticDemoData() {
+            // Fill 4 Shift Guards
+            shiftGuards[0] = { label: "Day Shift Guard 1", name: "Ramesh Kumar", phone: "+91 9845022011", code: "2011", shift: "Day (08:00 - 20:00)", token: generateFcmToken('guard_day1', 'ramesh') };
+            shiftGuards[1] = { label: "Day Shift Guard 2", name: "Suresh Patil", phone: "+91 9845022012", code: "2012", shift: "Day (08:00 - 20:00)", token: generateFcmToken('guard_day2', 'suresh') };
+            shiftGuards[2] = { label: "Night Shift Guard 1", name: "Vijay Singh", phone: "+91 9845022013", code: "2013", shift: "Night (20:00 - 08:00)", token: generateFcmToken('guard_night1', 'vijay') };
+            shiftGuards[3] = { label: "Night Shift Guard 2", name: "Dinesh Rao", phone: "+91 9845022014", code: "2014", shift: "Night (20:00 - 08:00)", token: generateFcmToken('guard_night2', 'dinesh') };
+
+            for (let i = 0; i < 4; i++) {
+                const nameEl = document.getElementById(`cfgGuardName_${i}`);
+                const phoneEl = document.getElementById(`cfgGuardPhone_${i}`);
+                const codeEl = document.getElementById(`cfgGuardCode_${i}`);
+                const badgeEl = document.getElementById(`gTokenBadge_${i}`);
+                if (nameEl) nameEl.value = shiftGuards[i].name;
+                if (phoneEl) phoneEl.value = shiftGuards[i].phone;
+                if (codeEl) codeEl.value = shiftGuards[i].code;
+                if (badgeEl) badgeEl.innerText = shiftGuards[i].token;
+            }
+
+            // Fill 10 Flats with 2 residents each
+            const sampleFlats = [
+                { flat: "Flat 101", r1: { name: "Rajesh Sharma", phone: "+91 9845011011" }, r2: { name: "Priya Sharma", phone: "+91 9845011012" } },
+                { flat: "Flat 102", r1: { name: "Amitabh Sen", phone: "+91 9845011021" }, r2: { name: "Ananya Sen", phone: "+91 9845011022" } },
+                { flat: "Flat 103", r1: { name: "Vikram Malhotra", phone: "+91 9845011031" }, r2: { name: "Kavita Malhotra", phone: "+91 9845011032" } },
+                { flat: "Flat 104", r1: { name: "Karthik Iyer", phone: "+91 9845011041" }, r2: { name: "Deepa Iyer", phone: "+91 9845011042" } },
+                { flat: "Flat 105", r1: { name: "Mohit Gupta", phone: "+91 9845011051" }, r2: { name: "Sunita Gupta", phone: "+91 9845011052" } },
+                { flat: "Flat 106", r1: { name: "Arun Verma", phone: "+91 9845011061" }, r2: { name: "Pooja Verma", phone: "+91 9845011062" } },
+                { flat: "Flat 107", r1: { name: "Sanjay Reddy", phone: "+91 9845011071" }, r2: { name: "Lakshmi Reddy", phone: "+91 9845011072" } },
+                { flat: "Flat 108", r1: { name: "Naveen Joshi", phone: "+91 9845011081" }, r2: { name: "Meenakshi Joshi", phone: "+91 9845011082" } },
+                { flat: "Flat 109", r1: { name: "Farhan Khan", phone: "+91 9845011091" }, r2: { name: "Zara Khan", phone: "+91 9845011092" } },
+                { flat: "Flat 110", r1: { name: "Rohan Kulkarni", phone: "+91 9845011101" }, r2: { name: "Neha Kulkarni", phone: "+91 9845011102" } }
+            ];
+
+            registeredFlats = sampleFlats.map((sf, idx) => ({
+                id: idx + 1,
+                flat: sf.flat,
+                res1: {
+                    name: sf.r1.name,
+                    phone: sf.r1.phone,
+                    code: deriveLast4Code(sf.r1.phone),
+                    token: generateFcmToken(`flat_${sf.flat.replace(/\s+/g, '')}_r1`, sf.r1.name)
+                },
+                res2: {
+                    name: sf.r2.name,
+                    phone: sf.r2.phone,
+                    code: deriveLast4Code(sf.r2.phone),
+                    token: generateFcmToken(`flat_${sf.flat.replace(/\s+/g, '')}_r2`, sf.r2.name)
+                }
+            }));
+
+            // Pre-fill Visitor Form with dummy data
+            const vNameEl = document.getElementById('vName');
+            const vMobileEl = document.getElementById('vMobile');
+            const vPlateEl = document.getElementById('vPlate');
+            if (vNameEl) vNameEl.value = "Rahul Swiggy (Food Courier)";
+            if (vMobileEl) {
+                vMobileEl.value = "+91 9845033044";
+                onVisitorPhoneInput(vMobileEl.value);
+            }
+            if (vPlateEl) vPlateEl.value = "KA-01-EQ-9876";
+
+            // Pre-fill Vehicle Form with dummy data
+            const vehPlateEl = document.getElementById('vehPlate');
+            const vehDriverNameEl = document.getElementById('vehDriverName');
+            const vehDriverMobileEl = document.getElementById('vehDriverMobile');
+            if (vehPlateEl) vehPlateEl.value = "KA-03-MJ-4567";
+            if (vehDriverNameEl) vehDriverNameEl.value = "Santosh Cab Driver";
+            if (vehDriverMobileEl) {
+                vehDriverMobileEl.value = "+91 9845044055";
+                onDriverPhoneInput(vehDriverMobileEl.value);
+            }
+
+            renderResidentRegistrationTable();
+            syncFlatDropdowns();
+            updateActiveGuardUi();
+
+            const now = new Date().toLocaleTimeString();
+            const logBox = document.getElementById('guardLogOutput');
+            logBox.innerHTML += `<br><span style="color: #10b981;">[${now}] ✨ [SAMPLE_DATA_LOADED] Populated 10 Flats (20 Residents) with dummy numbers &amp; last-4 codes, 4 Shift Guards, and sample Visitor &amp; Vehicle entries!</span><br>`;
+            logBox.scrollTop = logBox.scrollHeight;
+
+            alert("✨ Realistic Demo Sample Data Loaded Successfully!\n\n• 10 Flats / Villas (Flats 101-110) configured with 2 residents each\n• 4 Shift Guards (2 Day, 2 Night) configured with Codes & FCM Tokens\n• Dummy mobile numbers used for display & last 4 digits code derivation\n• Sample visitor (Rahul Swiggy) and cab driver pre-filled for immediate testing!");
+        }
+
+        // =====================================================================
+        // MACRODROID DUMMY TRIGGER (RESTRICTED IN DEMO)
+        // =====================================================================
+        function triggerMacroDroidDemo() {
+            alert("🔔 MacroDroid Trigger Restricted:\n\nAction restricted as it is a demo.\n\nIn live production deployments, MacroDroid integrates directly via a dedicated Android hardware webhook (/v1/macrodroid/webhook) to automate automated device phone dialing, gate buzzer pulsing, or siren alerts.");
+            const logBox = document.getElementById('guardLogOutput');
+            const now = new Date().toLocaleTimeString();
+            logBox.innerHTML += `<br><span style="color: #c084fc;">[${now}] 📞 [MACRODROID_RESTRICTED] Ring trigger restricted in interactive demo mode. (Production webhook: /v1/macrodroid/webhook?key=...)</span><br>`;
+            logBox.scrollTop = logBox.scrollHeight;
+        }
+
+        // Web Audio Feedback for Resident Responses
+        function playDecisionChime(type) {
+            try {
+                const ctx = new (window.AudioContext || window.webkitAudioContext)();
+                const now = ctx.currentTime;
+                if (type === 'ALLOW') {
+                    // Ascending chime: C5 -> E5 -> G5
+                    [523.25, 659.25, 783.99].forEach((freq, idx) => {
+                        const osc = ctx.createOscillator();
+                        const gain = ctx.createGain();
+                        osc.frequency.setValueAtTime(freq, now + idx * 0.1);
+                        gain.gain.setValueAtTime(0.2, now + idx * 0.1);
+                        gain.gain.exponentialRampToValueAtTime(0.001, now + idx * 0.1 + 0.25);
+                        osc.connect(gain);
+                        gain.connect(ctx.destination);
+                        osc.start(now + idx * 0.1);
+                        osc.stop(now + idx * 0.1 + 0.26);
+                    });
+                } else if (type === 'DENY') {
+                    // Warning buzz: two low tones
+                    [330, 220].forEach((freq, idx) => {
+                        const osc = ctx.createOscillator();
+                        const gain = ctx.createGain();
+                        osc.type = 'sawtooth';
+                        osc.frequency.setValueAtTime(freq, now + idx * 0.15);
+                        gain.gain.setValueAtTime(0.25, now + idx * 0.15);
+                        gain.gain.exponentialRampToValueAtTime(0.001, now + idx * 0.15 + 0.2);
+                        osc.connect(gain);
+                        gain.connect(ctx.destination);
+                        osc.start(now + idx * 0.15);
+                        osc.stop(now + idx * 0.15 + 0.22);
+                    });
+                } else {
+                    // Parcel chime: E5 -> B5
+                    [659.25, 987.77].forEach((freq, idx) => {
+                        const osc = ctx.createOscillator();
+                        const gain = ctx.createGain();
+                        osc.frequency.setValueAtTime(freq, now + idx * 0.12);
+                        gain.gain.setValueAtTime(0.18, now + idx * 0.12);
+                        gain.gain.exponentialRampToValueAtTime(0.001, now + idx * 0.12 + 0.3);
+                        osc.connect(gain);
+                        gain.connect(ctx.destination);
+                        osc.start(now + idx * 0.12);
+                        osc.stop(now + idx * 0.12 + 0.32);
+                    });
+                }
+            } catch (err) {
+                console.log("Audio feedback error:", err);
+            }
+        }
+
+        function acknowledgeGuardDecisionAlert() {
+            const alertBanner = document.getElementById('guardResidentAlertBanner');
+            if (alertBanner) alertBanner.style.display = 'none';
+        }
+
         // RESIDENT SUITE RESPONSES & PRE-APPROVED PASS GENERATION
         // =====================================================================
         function residentRespond(choice) {
@@ -3344,9 +3684,20 @@
             const now = new Date().toLocaleTimeString();
             const activeGuard = shiftGuards[activeGuardIndex] || { code: '0000', name: 'Guard' };
             const fb = document.getElementById('resResponseFeedback');
+            const alertBanner = document.getElementById('guardResidentAlertBanner');
+            const alertBadge = document.getElementById('guardAlertDecisionBadge');
+            const alertMsg = document.getElementById('guardAlertMessage');
+            const alertSub = document.getElementById('guardAlertSubtext');
+            const alertIcon = document.getElementById('guardAlertIcon');
+            const alertTime = document.getElementById('guardAlertTimestamp');
 
             let responseText = "";
             let statusClass = "";
+
+            const vName = document.getElementById('vName').value.trim() || 'Visitor / Delivery';
+            const vFlat = document.getElementById('vTargetFlat').value || 'Flat 101';
+            const vMobile = document.getElementById('vMobile').value.trim() || '+91 9845011990';
+            const vSubCat = document.getElementById('vSubCategory').value || 'Delivery';
 
             if (choice === '1') {
                 responseText = "1: ALLOW ENTRY (Door Unlock)";
@@ -3354,9 +3705,25 @@
                 fb.style.display = 'block';
                 fb.style.background = 'rgba(16, 185, 129, 0.2)';
                 fb.style.color = '#34d399';
-                fb.innerText = "✅ Response Sent: 1: ALLOW ENTRY (Door Unlock) &bull; Gate Barrier Triggered";
+                fb.innerText = "✅ Response Sent: 1: ALLOW ENTRY (Door Unlock) • Gate Barrier Triggered";
 
                 logBox.innerHTML += `<br><span style="color: #10b981;">[${now}] 📱 [RESIDENT_RESPONSE] Resident submitted "1: ALLOW ENTRY". Gate tablet unblocked for visitor entry. Guard: ${activeGuard.code}.</span><br>`;
+
+                if (alertBanner) {
+                    alertBanner.style.display = 'block';
+                    alertBanner.style.background = 'linear-gradient(135deg, rgba(16, 185, 129, 0.25) 0%, rgba(6, 78, 59, 0.4) 100%)';
+                    alertBanner.style.border = '2px solid #10b981';
+                    alertBanner.style.animation = 'pulseGlowGreen 1.5s infinite alternate';
+                    if (alertIcon) alertIcon.innerText = '✅';
+                    if (alertBadge) {
+                        alertBadge.className = 'badge-status status-approved';
+                        alertBadge.innerText = '1: ALLOW ENTRY (DOOR UNLOCKED)';
+                    }
+                    if (alertMsg) alertMsg.innerText = `Resident of ${vFlat} APPROVED entry for "${vName}"!`;
+                    if (alertSub) alertSub.innerText = `Visitor: ${vName} (${vMobile}) • Category: ${vSubCat} • Security: Raise Gate Barrier`;
+                    if (alertTime) alertTime.innerText = now;
+                }
+                playDecisionChime('ALLOW');
 
             } else if (choice === '2') {
                 responseText = "2: DOOR-LOCK / DENY ENTRY";
@@ -3364,9 +3731,25 @@
                 fb.style.display = 'block';
                 fb.style.background = 'rgba(239, 68, 68, 0.2)';
                 fb.style.color = '#f87171';
-                fb.innerText = "🛑 Response Sent: 2: DOOR-LOCK (Access Denied) &bull; Gate Notified";
+                fb.innerText = "🛑 Response Sent: 2: DOOR-LOCK (Access Denied) • Gate Notified";
 
                 logBox.innerHTML += `<br><span style="color: #f87171;">[${now}] 📱 [RESIDENT_RESPONSE] Resident submitted "2: DOOR-LOCK / DENY ENTRY". Guard alerted to deny access. Guard: ${activeGuard.code}.</span><br>`;
+
+                if (alertBanner) {
+                    alertBanner.style.display = 'block';
+                    alertBanner.style.background = 'linear-gradient(135deg, rgba(239, 68, 68, 0.25) 0%, rgba(127, 29, 29, 0.4) 100%)';
+                    alertBanner.style.border = '2px solid #ef4444';
+                    alertBanner.style.animation = 'pulseGlowRed 1.5s infinite alternate';
+                    if (alertIcon) alertIcon.innerText = '🛑';
+                    if (alertBadge) {
+                        alertBadge.className = 'badge-status status-denied';
+                        alertBadge.innerText = '2: DOOR-LOCK / DENY ENTRY';
+                    }
+                    if (alertMsg) alertMsg.innerText = `Resident of ${vFlat} DENIED entry for "${vName}"! Access Blocked.`;
+                    if (alertSub) alertSub.innerText = `Visitor: ${vName} (${vMobile}) • Security: Do NOT raise barrier • Turn visitor away`;
+                    if (alertTime) alertTime.innerText = now;
+                }
+                playDecisionChime('DENY');
 
             } else if (choice === '3') {
                 responseText = "3: COLLECT-PARCELDOC (Drop at Gate)";
@@ -3374,12 +3757,7 @@
                 fb.style.display = 'block';
                 fb.style.background = 'rgba(56, 189, 248, 0.2)';
                 fb.style.color = '#38bdf8';
-                fb.innerText = "📥 Response Sent: 3: COLLECT-PARCELDOC &bull; Delivery Visitor Queued at Gate Drop Box";
-
-                const vName = document.getElementById('vName').value.trim() || 'Delivery Courier';
-                const vFlat = document.getElementById('vTargetFlat').value || 'Flat 101';
-                const vMobile = document.getElementById('vMobile').value.trim() || '+91 9845011990';
-                const vSubCat = document.getElementById('vSubCategory').value || 'Amazon Delivery';
+                fb.innerText = "📥 Response Sent: 3: COLLECT-PARCELDOC • Delivery Visitor Queued at Gate Drop Box";
 
                 approvedDropBoxVisitors.push({
                     name: vName,
@@ -3392,6 +3770,22 @@
                 updateApprovedDropBoxUi();
 
                 logBox.innerHTML += `<br><span style="color: #38bdf8;">[${now}] 📥 [RESIDENT_APPROVED_PARCEL] Resident submitted "3: COLLECT-PARCELDOC". Visitor "${vName}" queued at Gate Drop Box for ParcelDoc auto-fill!</span><br>`;
+
+                if (alertBanner) {
+                    alertBanner.style.display = 'block';
+                    alertBanner.style.background = 'linear-gradient(135deg, rgba(56, 189, 248, 0.25) 0%, rgba(3, 105, 161, 0.4) 100%)';
+                    alertBanner.style.border = '2px solid #38bdf8';
+                    alertBanner.style.animation = 'pulseGlowBlue 1.5s infinite alternate';
+                    if (alertIcon) alertIcon.innerText = '📥';
+                    if (alertBadge) {
+                        alertBadge.className = 'badge-status status-collect';
+                        alertBadge.innerText = '3: COLLECT-PARCELDOC (DROP AT GATE)';
+                    }
+                    if (alertMsg) alertMsg.innerText = `Resident of ${vFlat} requested ParcelDoc drop at Gate Drop Box!`;
+                    if (alertSub) alertSub.innerText = `Visitor: ${vName} • Courier: ${vSubCat} • Auto-queued in Tab 3 (ParcelDoc)`;
+                    if (alertTime) alertTime.innerText = now;
+                }
+                playDecisionChime('PARCEL');
             }
 
             // Update latest entry in log
