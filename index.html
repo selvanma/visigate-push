@@ -1450,6 +1450,428 @@
                 padding: 30px 12px 90px !important;
             }
         }
+    
+        /* =====================================================================
+           REALISTIC DUAL-DEVICE LIVE SIMULATOR & SUPER-ADMIN CONSOLE STYLES
+           ===================================================================== */
+        .sim-showcase-wrap {
+            width: 100%;
+        }
+
+        .sim-view-toggle-bar {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 12px;
+            margin-bottom: 20px;
+            background: rgba(15, 23, 42, 0.85);
+            border: 1px solid var(--border-glass);
+            border-radius: 12px;
+            padding: 8px 14px;
+        }
+
+        .sim-view-btn-group {
+            display: inline-flex;
+            gap: 6px;
+            background: rgba(2, 6, 23, 0.6);
+            padding: 4px;
+            border-radius: 8px;
+            border: 1px solid rgba(255, 255, 255, 0.06);
+        }
+
+        .sim-view-btn {
+            background: transparent;
+            border: none;
+            color: var(--text-secondary);
+            font-size: 12px;
+            font-weight: 700;
+            padding: 6px 12px;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .sim-view-btn.active {
+            background: linear-gradient(135deg, #0284c7, #2563eb);
+            color: #ffffff;
+            box-shadow: 0 2px 8px rgba(2, 132, 199, 0.4);
+        }
+
+        .sim-split-layout {
+            display: grid;
+            grid-template-columns: 1.15fr 0.85fr;
+            gap: 24px;
+            align-items: start;
+        }
+
+        @media (max-width: 980px) {
+            .sim-split-layout {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* Guard Tablet Frame */
+        .guard-tablet-frame {
+            background: #0b1120;
+            border: 1px solid var(--border-glass);
+            border-radius: 18px;
+            padding: 18px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+            position: relative;
+        }
+
+        .guard-tablet-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding-bottom: 12px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+            margin-bottom: 14px;
+        }
+
+        .quick-clearance-pills {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 6px;
+            margin-bottom: 14px;
+        }
+
+        .qc-pill {
+            background: rgba(15, 23, 42, 0.9);
+            border: 1px solid rgba(255, 255, 255, 0.12);
+            color: #e2e8f0;
+            font-size: 11px;
+            font-weight: 600;
+            padding: 5px 9px;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: all 0.15s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+        }
+
+        .qc-pill:hover {
+            border-color: #38bdf8;
+            background: rgba(56, 189, 248, 0.12);
+            color: #ffffff;
+            transform: translateY(-1px);
+        }
+
+        .sim-cat-chips {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 6px;
+            margin-bottom: 14px;
+        }
+
+        .sim-cat-chip {
+            background: rgba(30, 41, 59, 0.6);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            color: #94a3b8;
+            font-size: 11px;
+            font-weight: 600;
+            padding: 6px 10px;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: all 0.15s ease;
+        }
+
+        .sim-cat-chip.active {
+            background: rgba(16, 185, 129, 0.18);
+            border-color: #10b981;
+            color: #10b981;
+            font-weight: 700;
+        }
+
+        .sim-input-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+            margin-bottom: 10px;
+        }
+
+        .sim-field {
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+        }
+
+        .sim-field label {
+            font-size: 11px;
+            font-weight: 700;
+            color: #94a3b8;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .sim-input, .sim-select {
+            background: #030712;
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            border-radius: 8px;
+            color: #ffffff;
+            font-size: 12px;
+            padding: 8px 10px;
+            font-family: inherit;
+            outline: none;
+            transition: border-color 0.2s ease;
+        }
+
+        .sim-input:focus, .sim-select:focus {
+            border-color: #38bdf8;
+            box-shadow: 0 0 0 2px rgba(56, 189, 248, 0.2);
+        }
+
+        .btn-sim-log {
+            width: 100%;
+            background: linear-gradient(135deg, #0284c7, #2563eb);
+            color: #ffffff;
+            border: none;
+            border-radius: 10px;
+            padding: 12px;
+            font-size: 13px;
+            font-weight: 800;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            box-shadow: 0 4px 14px rgba(2, 132, 199, 0.4);
+            transition: all 0.2s ease;
+            margin-top: 6px;
+        }
+
+        .btn-sim-log:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 6px 18px rgba(2, 132, 199, 0.5);
+        }
+
+        .barrier-status-bar {
+            margin-top: 12px;
+            padding: 8px 12px;
+            border-radius: 8px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 11px;
+            font-weight: 700;
+            transition: all 0.3s ease;
+        }
+
+        .barrier-locked {
+            background: rgba(239, 68, 68, 0.15);
+            border: 1px solid rgba(239, 68, 68, 0.3);
+            color: #f87171;
+        }
+
+        .barrier-lifted {
+            background: rgba(16, 185, 129, 0.18);
+            border: 1px solid rgba(16, 185, 129, 0.4);
+            color: #34d399;
+            box-shadow: 0 0 12px rgba(16, 185, 129, 0.2);
+        }
+
+        /* Audit Log Stream Table */
+        .sim-audit-log-box {
+            margin-top: 24px;
+            background: #080d1a;
+            border: 1px solid var(--border-glass);
+            border-radius: 14px;
+            padding: 16px;
+        }
+
+        .audit-table-wrap {
+            overflow-x: auto;
+            margin-top: 10px;
+        }
+
+        .audit-table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 11px;
+            text-align: left;
+        }
+
+        .audit-table th {
+            padding: 8px 10px;
+            background: rgba(15, 23, 42, 0.7);
+            color: #94a3b8;
+            font-weight: 700;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+            white-space: nowrap;
+        }
+
+        .audit-table td {
+            padding: 8px 10px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+            color: #e2e8f0;
+            white-space: nowrap;
+        }
+
+        .badge-status-approved {
+            background: rgba(16, 185, 129, 0.18);
+            color: #34d399;
+            border: 1px solid rgba(16, 185, 129, 0.3);
+            padding: 3px 8px;
+            border-radius: 4px;
+            font-weight: 700;
+            font-size: 10px;
+        }
+
+        .badge-status-denied {
+            background: rgba(239, 68, 68, 0.18);
+            color: #f87171;
+            border: 1px solid rgba(239, 68, 68, 0.3);
+            padding: 3px 8px;
+            border-radius: 4px;
+            font-weight: 700;
+            font-size: 10px;
+        }
+
+        .badge-status-pending {
+            background: rgba(245, 158, 11, 0.18);
+            color: #fbbf24;
+            border: 1px solid rgba(245, 158, 11, 0.3);
+            padding: 3px 8px;
+            border-radius: 4px;
+            font-weight: 700;
+            font-size: 10px;
+        }
+
+        /* Super-Admin Client Management Styles */
+        .admin-kpi-row {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            gap: 14px;
+            margin: 20px 0;
+        }
+
+        .admin-kpi-card {
+            background: rgba(15, 23, 42, 0.75);
+            border: 1px solid var(--border-glass);
+            border-radius: 12px;
+            padding: 14px 18px;
+        }
+
+        .admin-kpi-val {
+            font-family: var(--font-display);
+            font-size: 22px;
+            font-weight: 800;
+            color: #ffffff;
+            margin-top: 4px;
+        }
+
+        .admin-kpi-sub {
+            font-size: 11px;
+            color: var(--text-muted);
+            margin-top: 2px;
+        }
+
+        .admin-client-card {
+            background: #090e1a;
+            border: 1px solid var(--border-accent);
+            border-radius: 16px;
+            padding: 22px;
+            margin: 22px 0;
+            box-shadow: 0 12px 32px rgba(0, 0, 0, 0.6);
+        }
+
+        .admin-client-table-wrap {
+            overflow-x: auto;
+            margin-top: 14px;
+        }
+
+        .client-table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 12px;
+            text-align: left;
+        }
+
+        .client-table th {
+            padding: 10px 12px;
+            background: rgba(15, 23, 42, 0.85);
+            color: #94a3b8;
+            font-weight: 700;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            white-space: nowrap;
+        }
+
+        .client-table td {
+            padding: 12px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+            color: #f1f5f9;
+            vertical-align: middle;
+            white-space: nowrap;
+        }
+
+        .btn-table-action {
+            background: rgba(255, 255, 255, 0.06);
+            border: 1px solid rgba(255, 255, 255, 0.12);
+            color: #cbd5e1;
+            font-size: 11px;
+            font-weight: 600;
+            padding: 4px 8px;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: all 0.15s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+        }
+
+        .btn-table-action:hover {
+            background: rgba(56, 189, 248, 0.15);
+            border-color: #38bdf8;
+            color: #38bdf8;
+        }
+
+        /* Modal Overlay for Add Client */
+        .vg-modal-overlay {
+            position: fixed;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: rgba(0, 0, 0, 0.82);
+            backdrop-filter: blur(6px);
+            z-index: 10000;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            padding: 16px;
+        }
+
+        .vg-modal-box {
+            background: #0b1120;
+            border: 1px solid var(--accent-cyan);
+            border-radius: 18px;
+            width: 100%;
+            max-width: 640px;
+            max-height: 90vh;
+            overflow-y: auto;
+            box-shadow: 0 25px 60px rgba(0, 0, 0, 0.8);
+            padding: 24px;
+            position: relative;
+        }
+
+        .vg-modal-close {
+            position: absolute;
+            top: 16px;
+            right: 18px;
+            background: transparent;
+            border: none;
+            color: #94a3b8;
+            font-size: 20px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        .vg-modal-close:hover {
+            color: #ffffff;
+        }
+
     </style>
 </head>
 
@@ -1473,19 +1895,15 @@
                 </a>
 
                 <nav class="nav-links">
-                    <a href="/demo.html" style="color: var(--accent-amber); font-weight: 700;">🎭 Society Demo</a>
+                    <a href="/demo.html" style="color: var(--accent-amber); font-weight: 700;">🎭 Live Society Demo</a>
                     <a href="#portals">Access Portals</a>
-                    <a href="#triple-alerts">Triple-Channel Alerts</a>
                     <a href="#simulator">Live Simulator</a>
-                    <a href="#admin-hub">⚙️ Master Router</a>
+                    <a href="#admin-hub">⚙️ Super-Admin Hub</a>
                     <a href="#features">Key Features</a>
                     <a href="#architecture">Architecture</a>
                 </nav>
 
                 <div class="header-actions">
-                    <a href="/demo.html"
-                        style="background: rgba(245, 158, 11, 0.15); border: 1px solid rgba(245, 158, 11, 0.4); color: #fbbf24; padding: 7px 12px; border-radius: 8px; text-decoration: none; font-size: 12px; font-weight: 700; display: inline-flex; align-items: center; gap: 5px;">🎭
-                        Demo Suite</a>
                     <div class="status-pill">
                         <span class="status-dot"></span>
                         <span>Systems Active</span>
@@ -1646,67 +2064,140 @@
         </section>
 
         <!-- Spotlight: The Triple-Channel Notification Engine -->
+                <!-- Triple-Channel Alerts & Enhanced Live Realistic Simulator -->
         <section class="section-wrap" id="triple-alerts">
             <div class="spotlight-card">
-                <div class="spotlight-grid">
-                    <div class="spotlight-text">
+                <!-- Top Architecture Context -->
+                <div style="margin-bottom: 24px;">
+                    <div class="section-header" style="text-align: left; margin-bottom: 16px;">
                         <span class="section-tag">Zero Missed Alerts</span>
-                        <h3>Triple-Channel Notification Engine: Firebase WebPush + WhatsApp + MacroDroid</h3>
-                        <p>Most community apps fail because residents keep notifications muted, run out of phone storage
-                            to install apps, or miss alerts. VisiGate Alerts solves this with an omnichannel
-                            triple-channel dispatch pipeline:</p>
-
-                        <ul class="feature-bullets">
-                            <li>
-                                <span class="bullet-icon">🔥</span>
-                                <div>
-                                    <strong>100% Free Firebase WebPush:</strong> Sends an instant native system push
-                                    notification directly through the phone's browser (Android Chrome & iOS Safari PWA).
-                                    Zero app install required, zero Meta conversation fees, and completely free forever.
-                                </div>
-                            </li>
-                            <li>
-                                <span class="bullet-icon">💬</span>
-                                <div>
-                                    <strong>Meta Cloud WhatsApp API:</strong> Simultaneously delivers an interactive
-                                    WhatsApp message with live <code>[Approve Entry]</code> and
-                                    <code>[Deny Entry]</code> buttons directly to the resident's WhatsApp chat.
-                                </div>
-                            </li>
-                            <li>
-                                <span class="bullet-icon">🔔</span>
-                                <div>
-                                    <strong>Automated MacroDroid Phone Rings:</strong> Fires an automated device webhook
-                                    via Master Router to audibly ring the resident's phone with a custom gate chime,
-                                    guaranteeing immediate attention even if the screen is off.
-                                </div>
-                            </li>
-                            <li>
-                                <span class="bullet-icon">⚡</span>
-                                <div>
-                                    <strong>Sub-Second Gate Barrier Sync:</strong> Whether the resident approves via
-                                    Firebase WebPush or WhatsApp, the gate barrier unlocks in under 1 second.
-                                </div>
-                            </li>
-                        </ul>
+                        <h2 class="section-title" style="font-size: clamp(24px, 3.2vw, 34px);">Triple-Channel Notification Engine: Firebase WebPush + WhatsApp + MacroDroid</h2>
+                        <p class="section-subtitle" style="text-align: left; margin: 0; max-width: 900px;">
+                            Most community security apps fail because residents keep apps muted, run out of phone storage, or miss notifications.
+                            VisiGate Alerts guarantees 100% alert reception with a synchronized triple-channel dispatch pipeline:
+                            <strong>Free Native Firebase WebPush</strong>, <strong>Meta Verified WhatsApp Cards</strong>, and <strong>Automated Audible MacroDroid Phone Rings</strong>.
+                        </p>
                     </div>
 
-                    <!-- Enhanced 3-Tab Interactive Smartphone Simulator Box -->
-                    <div class="sim-container" id="simulator">
-                        <div class="sim-tabs-header">
-                            <button class="sim-tab-btn active" id="tabBtnVisitor" onclick="selectSimTab('visitor')">
-                                <span>👤 Visitor</span>
+                    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 14px; margin-top: 14px;">
+                        <div style="background: rgba(15, 23, 42, 0.7); border: 1px solid rgba(255, 255, 255, 0.08); border-radius: 10px; padding: 12px 14px;">
+                            <div style="font-size: 16px; margin-bottom: 4px;">🔥 <strong style="color: #38bdf8; font-size: 13px;">100% Free Firebase WebPush</strong></div>
+                            <div style="font-size: 11px; color: var(--text-secondary); line-height: 1.5;">Native system push via browser. Zero app download required, zero Meta conversation cost forever.</div>
+                        </div>
+                        <div style="background: rgba(15, 23, 42, 0.7); border: 1px solid rgba(255, 255, 255, 0.08); border-radius: 10px; padding: 12px 14px;">
+                            <div style="font-size: 16px; margin-bottom: 4px;">💬 <strong style="color: #10b981; font-size: 13px;">Interactive WhatsApp Cards</strong></div>
+                            <div style="font-size: 11px; color: var(--text-secondary); line-height: 1.5;">Direct to WhatsApp chat with live <code>[Approve]</code> and <code>[Deny]</code> 1-click buttons with camera photo.</div>
+                        </div>
+                        <div style="background: rgba(15, 23, 42, 0.7); border: 1px solid rgba(255, 255, 255, 0.08); border-radius: 10px; padding: 12px 14px;">
+                            <div style="font-size: 16px; margin-bottom: 4px;">🔔 <strong style="color: #f59e0b; font-size: 13px;">MacroDroid Audible Chimes</strong></div>
+                            <div style="font-size: 11px; color: var(--text-secondary); line-height: 1.5;">Fires automated device webhooks to audibly ring the resident's phone even if screen is off.</div>
+                        </div>
+                        <div style="background: rgba(15, 23, 42, 0.7); border: 1px solid rgba(255, 255, 255, 0.08); border-radius: 10px; padding: 12px 14px;">
+                            <div style="font-size: 16px; margin-bottom: 4px;">⚡ <strong style="color: #a855f7; font-size: 13px;">Sub-Second Gate Barrier Sync</strong></div>
+                            <div style="font-size: 11px; color: var(--text-secondary); line-height: 1.5;">Boom barrier raises in under 0.4 seconds upon resident click. Guard screen reflects decision instantly.</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- REALISTIC INTERACTIVE DUAL-DEVICE LIVE SIMULATOR -->
+                <div class="sim-container" id="simulator" style="padding: 20px; border-radius: 20px;">
+                    <!-- Simulator Header Bar -->
+                    <div class="sim-view-toggle-bar">
+                        <div style="display: flex; align-items: center; gap: 10px;">
+                            <span style="font-size: 20px;">🎮</span>
+                            <div>
+                                <strong style="color: #ffffff; font-size: 14px;">Interactive Live Gate Simulator</strong>
+                                <span style="font-size: 11px; color: #10b981; margin-left: 8px; font-weight: 700;">● REALISTIC LIVE APP SIMULATION</span>
+                            </div>
+                        </div>
+                        <div class="sim-view-btn-group">
+                            <button class="sim-view-btn active" id="btnViewDual" onclick="setSimView('dual')">⚡ Dual Split View</button>
+                            <button class="sim-view-btn" id="btnViewGuard" onclick="setSimView('guard')">🛡️ Guard Terminal</button>
+                            <button class="sim-view-btn" id="btnViewResident" onclick="setSimView('resident')">📱 Resident Smartphone</button>
+                        </div>
+                    </div>
+
+                    <!-- Dual Split Layout -->
+                    <div class="sim-split-layout" id="simSplitGrid">
+                        <!-- LEFT PANEL: GUARD CHECKPOINT TABLET -->
+                        <div class="guard-tablet-frame" id="simGuardPanel">
+                            <div class="guard-tablet-header">
+                                <div>
+                                    <span style="font-size: 10px; color: var(--accent-cyan); font-weight: 800; letter-spacing: 0.5px;">CHECKPOINT GATE 1 TERMINAL</span>
+                                    <div style="font-size: 13px; font-weight: 700; color: #ffffff;">Guard on Duty: Ram Singh (Day Shift)</div>
+                                </div>
+                                <div style="display: flex; align-items: center; gap: 6px;">
+                                    <span class="status-dot"></span>
+                                    <span style="font-size: 10px; color: #10b981; font-weight: 700;">SYSTEM ONLINE</span>
+                                </div>
+                            </div>
+
+                            <!-- 1-Click 2-Sec Speed Clearance Pills -->
+                            <div style="font-size: 10px; font-weight: 700; color: #94a3b8; margin-bottom: 6px;">⚡ 2-SEC QUICK CLEARANCE (TAP TO AUTOFILL):</div>
+                            <div class="quick-clearance-pills">
+                                <button type="button" class="qc-pill" onclick="quickFillSim('Zomato Delivery', 'delivery', 'Flat 402', '9876543210', 'KA 03 EA 4412')">🍕 Zomato</button>
+                                <button type="button" class="qc-pill" onclick="quickFillSim('Swiggy Instamart', 'quick_comm', 'Flat 101', '9811223344', 'KA 04 MM 9021')">🍔 Swiggy</button>
+                                <button type="button" class="qc-pill" onclick="quickFillSim('Blinkit Courier', 'quick_comm', 'Flat 204', '9822334455', 'KA 01 TR 3301')">⚡ Blinkit</button>
+                                <button type="button" class="qc-pill" onclick="quickFillSim('Uber Cab Driver', 'cab', 'Flat 301', '9833445566', 'KA 05 XY 7788')">🚖 Uber Cab</button>
+                                <button type="button" class="qc-pill" onclick="quickFillSim('Amazon Delivery Agent', 'courier', 'Flat 502', '9844556677', 'KA 02 AB 1234')">📦 Amazon</button>
+                                <button type="button" class="qc-pill" onclick="quickFillSim('Urban Company AC Tech', 'service', 'Flat 201', '9855667788', 'KA 03 MN 5566')">🛠️ Urban Company</button>
+                            </div>
+
+                            <!-- Live Categories Chips -->
+                            <div style="font-size: 10px; font-weight: 700; color: #94a3b8; margin-bottom: 6px;">SELECT CATEGORY:</div>
+                            <div class="sim-cat-chips">
+                                <button type="button" class="sim-cat-chip active" id="chipGuest" onclick="selectSimCategory('guest')">👤 Guest / Visitor</button>
+                                <button type="button" class="sim-cat-chip" id="chipCab" onclick="selectSimCategory('cab')">🚗 Cab / Taxi</button>
+                                <button type="button" class="sim-cat-chip" id="chipDelivery" onclick="selectSimCategory('delivery')">🍕 Delivery / Food</button>
+                                <button type="button" class="sim-cat-chip" id="chipQuick" onclick="selectSimCategory('quick_comm')">⚡ Quick Commerce</button>
+                                <button type="button" class="sim-cat-chip" id="chipCourier" onclick="selectSimCategory('courier')">📦 Courier / Parcel</button>
+                                <button type="button" class="sim-cat-chip" id="chipService" onclick="selectSimCategory('service')">🛠️ Service Tech</button>
+                            </div>
+
+                            <!-- Guard Form Inputs -->
+                            <div class="sim-input-row">
+                                <div class="sim-field">
+                                    <label>Visitor Name</label>
+                                    <input type="text" id="simVisitorName" class="sim-input" value="Rahul Sharma">
+                                </div>
+                                <div class="sim-field">
+                                    <label>Destination Unit</label>
+                                    <select id="simTargetUnit" class="sim-select" onchange="updateResidentProfileDisplay()">
+                                        <option value="Tower B - Flat 402" selected>Tower B - Flat 402 (Dr. A. Sharma)</option>
+                                        <option value="Tower A - Flat 101">Tower A - Flat 101 (Mr. V. Verma)</option>
+                                        <option value="Tower A - Flat 204">Tower A - Flat 204 (Mrs. P. Nair)</option>
+                                        <option value="Tower B - Flat 201">Tower B - Flat 201 (Mr. K. Menon)</option>
+                                        <option value="Tower B - Flat 301">Tower B - Flat 301 (Mrs. S. Gupta)</option>
+                                        <option value="Tower C - Flat 108">Tower C - Flat 108 (Mr. R. Iyer)</option>
+                                        <option value="Tower C - Flat 502">Tower C - Flat 502 (Ms. T. Sen)</option>
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div class="sim-input-row">
+                                <div class="sim-field">
+                                    <label>10-Digit WhatsApp Mobile</label>
+                                    <input type="tel" id="simVisitorPhone" class="sim-input" value="9876543210" placeholder="10-digit number (no +91)" maxlength="10">
+                                </div>
+                                <div class="sim-field">
+                                    <label>Vehicle Reg Number</label>
+                                    <input type="text" id="simVehicleNo" class="sim-input" value="KA 03 XX 1024" placeholder="e.g. KA 03 XX 1024">
+                                </div>
+                            </div>
+
+                            <button type="button" class="btn-sim-log" id="btnLogVisitor" onclick="triggerSimulateDispatch()">
+                                <span>🚨 LOG VISITOR &amp; DISPATCH INSTANT ALERTS</span>
                             </button>
-                            <button class="sim-tab-btn" id="tabBtnVehicle" onclick="selectSimTab('vehicle')">
-                                <span>🚗 Vehicle</span>
-                            </button>
-                            <button class="sim-tab-btn" id="tabBtnParcel" onclick="selectSimTab('parcel')">
-                                <span>📦 Parcel / Doc</span>
-                            </button>
+
+                            <!-- Boom Barrier Indicator -->
+                            <div class="barrier-status-bar barrier-locked" id="barrierIndicator">
+                                <span>🚧 Gate 1 Boom Barrier: <strong id="barrierText">BARRIER CLOSED &amp; LOCKED</strong></span>
+                                <span id="barrierLatencyBadge">Awaiting Resident Action</span>
+                            </div>
                         </div>
 
-                        <!-- Smartphone Mockup -->
-                        <div class="phone-mockup-frame">
+                        <!-- RIGHT PANEL: RESIDENT SMARTPHONE -->
+                        <div class="phone-mockup-frame" id="simResidentPanel" style="max-width: 100%;">
                             <div class="phone-notch">
                                 <div class="notch-camera"></div>
                                 <div style="width: 36px; height: 4px; background: #1e293b; border-radius: 4px;"></div>
@@ -1720,28 +2211,24 @@
                                 </div>
                             </div>
 
-                            <div class="phone-screen">
-                                <!-- Native Firebase WebPush System Notification Banner -->
-                                <div class="firebase-webpush-banner"
+                            <div class="phone-screen" style="min-height: 480px; display: flex; flex-direction: column;">
+                                <!-- Native Firebase WebPush System Banner -->
+                                <div class="firebase-webpush-banner" id="simWebpushBanner"
                                     style="background: rgba(15, 23, 42, 0.96); border: 1px solid rgba(56, 189, 248, 0.4); border-radius: 12px; padding: 10px 12px; margin: 8px 10px 10px; box-shadow: 0 4px 15px rgba(0,0,0,0.6); display: flex; align-items: center; gap: 10px;">
-                                    <div
-                                        style="font-size: 20px; background: rgba(56, 189, 248, 0.2); border-radius: 8px; width: 32px; height: 32px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">
-                                        🔥</div>
+                                    <div style="font-size: 20px; background: rgba(56, 189, 248, 0.2); border-radius: 8px; width: 32px; height: 32px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">🔥</div>
                                     <div style="flex: 1; min-width: 0;">
-                                        <div
-                                            style="display: flex; justify-content: space-between; align-items: center;">
-                                            <strong style="font-size: 11px; color: #38bdf8;">Firebase WebPush
-                                                Alert</strong>
-                                            <span style="font-size: 9px; color: #94a3b8;">Just Now</span>
+                                        <div style="display: flex; justify-content: space-between; align-items: center;">
+                                            <strong style="font-size: 11px; color: #38bdf8;">Firebase WebPush Alert</strong>
+                                            <span style="font-size: 9px; color: #94a3b8;" id="webpushTime">Just Now</span>
                                         </div>
-                                        <div style="font-size: 11px; color: #f8fafc; font-weight: 600; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;"
-                                            id="webpushNotificationText">Gate Alert: Visitor Rahul Sharma at Gate 1
+                                        <div style="font-size: 11px; color: #f8fafc; font-weight: 600; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;" id="webpushNotificationText">
+                                            Gate Alert: Rahul Sharma at Gate 1
                                         </div>
-                                        <div style="font-size: 9px; color: #10b981;">● Native Browser Push &bull; 100%
-                                            Free Zero Meta Fee</div>
+                                        <div style="font-size: 9px; color: #10b981;">● Native Browser Push &bull; 100% Free Forever</div>
                                     </div>
                                 </div>
 
+                                <!-- WhatsApp Chat Header -->
                                 <div class="wa-chat-header">
                                     <div class="wa-profile-info">
                                         <span style="font-size: 14px; color: #8696a0;">←</span>
@@ -1761,158 +2248,137 @@
                                     </div>
                                 </div>
 
-                                <div class="wa-chat-body">
-                                    <!-- TAB 1: VISITOR SCENARIO -->
-                                    <div id="simCardVisitor" class="wa-bubble-card">
+                                <!-- WhatsApp Chat Body with Dynamic Visitor Card -->
+                                <div class="wa-chat-body" style="flex: 1;">
+                                    <div class="wa-bubble-card" id="simLiveVisitorCard">
                                         <div class="wa-bubble-heading">
-                                            <span>🚨 VISITOR ENTRY REQUEST</span>
+                                            <span id="cardHeadingText">🚨 VISITOR ENTRY REQUEST</span>
                                             <span style="font-size: 10px; color: #10b981; font-weight: 700;">LIVE</span>
                                         </div>
-                                        <div
-                                            style="background: rgba(56, 189, 248, 0.12); padding: 5px 8px; border-radius: 6px; font-size: 11px; color: #38bdf8; margin-bottom: 8px;">
-                                            📸 Photo Captured at Main Gate 1
+
+                                        <!-- Simulated Camera Snapshot -->
+                                        <div style="background: rgba(15, 23, 42, 0.85); border: 1px dashed rgba(56, 189, 248, 0.3); border-radius: 8px; padding: 8px; display: flex; align-items: center; gap: 10px; margin-bottom: 10px;">
+                                            <div style="width: 44px; height: 44px; background: rgba(56, 189, 248, 0.15); border-radius: 6px; display: flex; align-items: center; justify-content: center; font-size: 22px;" id="simPhotoIcon">👤</div>
+                                            <div style="font-size: 11px;">
+                                                <div style="color: #38bdf8; font-weight: 700;">📸 Camera Facial Snapshot Captured</div>
+                                                <div style="color: #94a3b8; font-size: 10px;">Gate 1 Optical Scanner &bull; Verified ID</div>
+                                            </div>
                                         </div>
+
                                         <div class="wa-data-row">
                                             <span class="wa-data-label">Visitor:</span>
-                                            <span class="wa-data-val">Rahul Sharma (Food Delivery Courier)</span>
+                                            <span class="wa-data-val" id="dispVisitorName">Rahul Sharma</span>
+                                        </div>
+                                        <div class="wa-data-row">
+                                            <span class="wa-data-label">Category:</span>
+                                            <span class="wa-data-val" id="dispCategory" style="color: #38bdf8;">Guest / Visitor</span>
                                         </div>
                                         <div class="wa-data-row">
                                             <span class="wa-data-label">Visiting:</span>
-                                            <span class="wa-data-val">Tower B - Flat 402</span>
+                                            <span class="wa-data-val" id="dispTargetUnit">Tower B - Flat 402</span>
                                         </div>
                                         <div class="wa-data-row">
                                             <span class="wa-data-label">Vehicle:</span>
-                                            <span class="wa-data-val">KA 03 XX 1024</span>
+                                            <span class="wa-data-val" id="dispVehicleNo">KA 03 XX 1024</span>
                                         </div>
                                         <div class="wa-data-row">
-                                            <span class="wa-data-label">Time:</span>
-                                            <span class="wa-data-val">Just now • Gate 1 Checkpoint</span>
+                                            <span class="wa-data-label">Check-in:</span>
+                                            <span class="wa-data-val" id="dispTimestamp">Just now &bull; Gate 1</span>
                                         </div>
 
-                                        <div class="wa-actions-column" id="visitorActionGroup">
-                                            <button class="btn-wa-interactive wa-btn-green"
-                                                onclick="handleSimAction('VISITOR_APPROVED')">
-                                                <span>✓ APPROVE ENTRY</span>
+                                        <!-- Interactive Action Buttons -->
+                                        <div class="wa-actions-column" id="simResidentActionGroup">
+                                            <button class="btn-wa-interactive wa-btn-green" onclick="handleInteractiveSimAction('APPROVE')">
+                                                <span>✓ APPROVE ENTRY &amp; LIFT BARRIER</span>
                                             </button>
-                                            <button class="btn-wa-interactive wa-btn-red"
-                                                onclick="handleSimAction('VISITOR_DENIED')">
-                                                <span>✕ DENY ENTRY</span>
+                                            <button class="btn-wa-interactive wa-btn-red" onclick="handleInteractiveSimAction('DENY')">
+                                                <span>✕ DENY ENTRY / FLAG SECURITY</span>
+                                            </button>
+                                            <button class="btn-wa-interactive wa-btn-blue" onclick="handleInteractiveSimAction('LOCKER')">
+                                                <span>📦 LEAVE AT GATE LOCKER / HOLD</span>
                                             </button>
                                         </div>
 
-                                        <div id="visitorResultBox"
-                                            style="display: none; margin-top: 10px; padding: 10px; border-radius: 8px; font-size: 12px; text-align: center; font-weight: 700;">
-                                        </div>
+                                        <div id="simResidentDecisionResult" style="display: none; margin-top: 10px; padding: 10px; border-radius: 8px; font-size: 12px; text-align: center; font-weight: 700;"></div>
                                     </div>
 
-                                    <!-- TAB 2: VEHICLE SCENARIO -->
-                                    <div id="simCardVehicle" class="wa-bubble-card" style="display: none;">
-                                        <div class="wa-bubble-heading">
-                                            <span>🚗 VEHICLE GATE PASS & PARKING</span>
-                                            <span style="font-size: 10px; color: #f59e0b; font-weight: 700;">GATE
-                                                1</span>
-                                        </div>
-                                        <div class="license-plate-graphic">KA • 03 • XX • 1024</div>
-                                        <div class="wa-data-row">
-                                            <span class="wa-data-label">Vehicle:</span>
-                                            <span class="wa-data-val">White Sedan (Prepaid Cab / Taxi)</span>
-                                        </div>
-                                        <div class="wa-data-row">
-                                            <span class="wa-data-label">Visiting:</span>
-                                            <span class="wa-data-val">Tower A - Flat 204</span>
-                                        </div>
-                                        <div class="wa-data-row">
-                                            <span class="wa-data-label">Parking:</span>
-                                            <span class="wa-data-val" style="color: #38bdf8;">Guest Bay #V-12
-                                                Allocated</span>
-                                        </div>
-
-                                        <div class="wa-actions-column" id="vehicleActionGroup">
-                                            <button class="btn-wa-interactive wa-btn-green"
-                                                onclick="handleSimAction('VEHICLE_APPROVED')">
-                                                <span>✓ ISSUE DIGITAL PASS & RAISE BARRIER</span>
-                                            </button>
-                                            <button class="btn-wa-interactive wa-btn-red"
-                                                onclick="handleSimAction('VEHICLE_DENIED')">
-                                                <span>🚫 FLAG UNAUTHORIZED VEHICLE</span>
-                                            </button>
-                                        </div>
-
-                                        <div id="vehicleResultBox"
-                                            style="display: none; margin-top: 10px; padding: 10px; border-radius: 8px; font-size: 12px; text-align: center; font-weight: 700;">
-                                        </div>
-                                    </div>
-
-                                    <!-- TAB 3: PARCEL / DOC SCENARIO -->
-                                    <div id="simCardParcel" class="wa-bubble-card" style="display: none;">
-                                        <div class="wa-bubble-heading">
-                                            <span>📦 PARCEL / DOCUMENT ARRIVAL</span>
-                                            <span
-                                                style="font-size: 10px; color: #a855f7; font-weight: 700;">LOCKER</span>
-                                        </div>
-                                        <div class="parcel-locker-slot">🗄️ Security Locker Slot: Box #SL-14</div>
-                                        <div class="wa-data-row">
-                                            <span class="wa-data-label">Courier:</span>
-                                            <span class="wa-data-val">Express Courier Service (Courier Agent)</span>
-                                        </div>
-                                        <div class="wa-data-row">
-                                            <span class="wa-data-label">Flat:</span>
-                                            <span class="wa-data-val">Tower C - Flat 108</span>
-                                        </div>
-                                        <div class="wa-data-row">
-                                            <span class="wa-data-label">Pickup PIN:</span>
-                                            <span class="wa-data-val"
-                                                style="color: #a7f3d0; font-family: monospace; font-size: 14px;">[ 4 8 2
-                                                1 ]</span>
-                                        </div>
-
-                                        <div class="wa-actions-column" id="parcelActionGroup">
-                                            <button class="btn-wa-interactive wa-btn-green"
-                                                onclick="handleSimAction('PARCEL_LOCKER')">
-                                                <span>📦 ACCEPT & KEEP IN GATE LOCKER</span>
-                                            </button>
-                                            <button class="btn-wa-interactive wa-btn-blue"
-                                                onclick="handleSimAction('PARCEL_DOORSTEP')">
-                                                <span>🏠 ALLOW DOORSTEP DELIVERY</span>
-                                            </button>
-                                            <button class="btn-wa-interactive wa-btn-red"
-                                                onclick="handleSimAction('PARCEL_REJECT')">
-                                                <span>✕ REJECT / WRONG ADDRESS</span>
-                                            </button>
-                                        </div>
-
-                                        <div id="parcelResultBox"
-                                            style="display: none; margin-top: 10px; padding: 10px; border-radius: 8px; font-size: 12px; text-align: center; font-weight: 700;">
-                                        </div>
-                                    </div>
-
-                                    <!-- MacroDroid Phone Ring Bar -->
+                                    <!-- MacroDroid Ring Bar -->
                                     <div class="macrodroid-ring-indicator" id="macrodroidIndicator">
                                         <span>🔔</span>
-                                        <span>MacroDroid Ring Signal: Resident Phone Alert Active</span>
+                                        <span id="macrodroidText">MacroDroid Ring Signal: Resident Phone Alert Synced</span>
                                     </div>
                                 </div>
                             </div>
                         </div>
+                    </div>
 
-                        <!-- Real-Time Telemetry Monitor -->
-                        <div class="sim-telemetry-box" id="simTelemetryBox">
-                            <div
-                                style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px;">
-                                <span style="color: var(--accent-cyan); font-weight: 700;">⚡ Dual-Channel Dispatch
-                                    Telemetry:</span>
-                                <span id="telemetryLatency" style="color: #10b981; font-weight: 700;">0.42s
-                                    latency</span>
+                    <!-- BOTTOM PANEL: REAL-TIME GATE AUDIT LOG -->
+                    <div class="sim-audit-log-box">
+                        <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 10px;">
+                            <div style="display: flex; align-items: center; gap: 8px;">
+                                <span style="font-size: 16px;">📜</span>
+                                <strong style="font-size: 13px; color: #ffffff;">Real-Time Gate Security Audit Log</strong>
+                                <span style="font-size: 10px; background: rgba(56, 189, 248, 0.15); color: #38bdf8; padding: 2px 8px; border-radius: 4px; font-weight: 700;">LIVE DISPATCH STREAM</span>
                             </div>
-                            <div id="telemetryStatusText">
-                                [READY] Meta Cloud API & MacroDroid Webhooks active for all 3 scenarios.
+                            <button onclick="clearSimAuditLog()" style="background: transparent; border: 1px solid rgba(255, 255, 255, 0.1); color: var(--text-muted); font-size: 10px; padding: 4px 8px; border-radius: 4px; cursor: pointer;">
+                                🔄 Clear Stream
+                            </button>
+                        </div>
+
+                        <div class="audit-table-wrap">
+                            <table class="audit-table">
+                                <thead>
+                                    <tr>
+                                        <th>Timestamp</th>
+                                        <th>Visitor / Delivery</th>
+                                        <th>Category</th>
+                                        <th>Unit</th>
+                                        <th>Gate / Guard</th>
+                                        <th>Status</th>
+                                        <th>Gate Barrier Action</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="simAuditLogBody">
+                                    <tr>
+                                        <td>Just Now</td>
+                                        <td><strong>Rahul Sharma</strong> (KA 03 XX 1024)</td>
+                                        <td><span style="color: #38bdf8;">Guest / Visitor</span></td>
+                                        <td>Tower B - Flat 402</td>
+                                        <td>Gate 1 (Ram Singh)</td>
+                                        <td><span class="badge-status-pending" id="badgePendingSim">PENDING ⏳</span></td>
+                                        <td id="barrierActionSim">Awaiting Resident Tap</td>
+                                    </tr>
+                                    <tr>
+                                        <td>2 mins ago</td>
+                                        <td><strong>Zomato Rider</strong> (KA 04 EA 9921)</td>
+                                        <td><span style="color: #f59e0b;">Food Delivery</span></td>
+                                        <td>Tower A - Flat 101</td>
+                                        <td>Gate 1 (Ram Singh)</td>
+                                        <td><span class="badge-status-approved">APPROVED ✓</span></td>
+                                        <td>Barrier Raised in 0.38s</td>
+                                    </tr>
+                                    <tr>
+                                        <td>7 mins ago</td>
+                                        <td><strong>Suspicious Salesman</strong> (Walk-in)</td>
+                                        <td><span style="color: #ef4444;">Commercial</span></td>
+                                        <td>Tower C - Flat 108</td>
+                                        <td>Gate 2 (Shyam Das)</td>
+                                        <td><span class="badge-status-denied">DENIED ✕</span></td>
+                                        <td>Barrier Locked &bull; Turned Away</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+
+                        <!-- Showcase Limitations Callout -->
+                        <div style="margin-top: 14px; background: rgba(15, 23, 42, 0.6); border: 1px solid rgba(245, 158, 11, 0.3); border-radius: 8px; padding: 10px 14px; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 10px;">
+                            <div style="font-size: 11px; color: #fbbf24; line-height: 1.4;">
+                                <strong>🔒 Interactive Showcase Sandbox Mode:</strong> Pre-configured with 10 demo flats and 4 shift guards. Data resets on page refresh.<br>
+                                For permanent society deployment with your society's custom Google Sheet, unlimited flats, and live WhatsApp numbers, launch the Live Society Demo.
                             </div>
-                            <div style="margin-top: 10px; text-align: right;">
-                                <button onclick="resetCurrentSim()"
-                                    style="background: transparent; border: 1px solid var(--border-glass); color: var(--text-secondary); padding: 5px 10px; border-radius: 6px; font-size: 11px; cursor: pointer;">
-                                    🔄 Reset & Test Another
-                                </button>
-                            </div>
+                            <a href="/demo.html" style="background: rgba(245, 158, 11, 0.2); border: 1px solid #f59e0b; color: #fbbf24; font-size: 11px; font-weight: 700; padding: 6px 12px; border-radius: 6px; text-decoration: none;">
+                                Launch Society Demo &rarr;
+                            </a>
                         </div>
                     </div>
                 </div>
@@ -1998,6 +2464,228 @@
                                 style="color: #f59e0b;">Listening</strong></div>
                         <div style="margin-top: 4px;">🌐 Platform Uptime: <strong
                                 style="color: #10b981;">99.98%</strong></div>
+                    </div>
+                </div>
+
+                
+                <!-- SUPER-ADMIN CLIENT MANAGEMENT & ONBOARDING CONSOLE -->
+                <div class="admin-client-card" id="adminClientPortfolio">
+                    <div style="display: flex; justify-content: space-between; align-items: flex-start; flex-wrap: wrap; gap: 14px; border-bottom: 1px solid rgba(255, 255, 255, 0.08); padding-bottom: 16px;">
+                        <div>
+                            <span style="font-size: 11px; color: var(--accent-emerald); font-weight: 800; letter-spacing: 0.5px;">PLATFORM CLIENT GOVERNANCE</span>
+                            <h3 style="font-family: var(--font-display); font-size: 20px; font-weight: 800; color: #ffffff; margin-top: 4px;">
+                                Registered Client Housing Societies &amp; Billing Ledger
+                            </h3>
+                            <p style="font-size: 13px; color: var(--text-secondary); margin-top: 4px; max-width: 720px;">
+                                Manage onboarded societies, provision dedicated Google Sheet databases, track advance subscription deposit balances, monitor daily per-flat burn rates, and generate Master Router configuration entries.
+                            </p>
+                        </div>
+                        <div style="display: flex; gap: 10px; flex-wrap: wrap;">
+                            <button type="button" class="btn-admin-tool" onclick="openAddClientModal()" style="background: rgba(16, 185, 129, 0.2); border-color: var(--accent-emerald); color: #34d399; font-weight: 700;">
+                                <span>➕ Onboard New Client Society</span>
+                            </button>
+                            <button type="button" class="btn-admin-tool" onclick="exportMasterRouterConfig()" style="border-color: var(--accent-cyan); color: #38bdf8;">
+                                <span>📋 Export Router JSON</span>
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Key Platform Financial & Operational Metrics -->
+                    <div class="admin-kpi-row">
+                        <div class="admin-kpi-card">
+                            <span style="font-size: 11px; color: #94a3b8; font-weight: 700;">ACTIVE CLIENT SOCIETIES</span>
+                            <div class="admin-kpi-val" id="kpiTotalSocieties" style="color: #38bdf8;">3 Live</div>
+                            <div class="admin-kpi-sub">Across 3 Metro Cities</div>
+                        </div>
+                        <div class="admin-kpi-card">
+                            <span style="font-size: 11px; color: #94a3b8; font-weight: 700;">MANAGED UNITS (FLATS)</span>
+                            <div class="admin-kpi-val" id="kpiTotalUnits" style="color: #34d399;">595 Units</div>
+                            <div class="admin-kpi-sub">Avg 198 flats / society</div>
+                        </div>
+                        <div class="admin-kpi-card">
+                            <span style="font-size: 11px; color: #94a3b8; font-weight: 700;">ADVANCE TRUST BALANCE</span>
+                            <div class="admin-kpi-val" id="kpiTotalAdvance" style="color: #fbbf24;">₹26,248</div>
+                            <div class="admin-kpi-sub">Total operational runway</div>
+                        </div>
+                        <div class="admin-kpi-card">
+                            <span style="font-size: 11px; color: #94a3b8; font-weight: 700;">MONTHLY RECURRING BURN</span>
+                            <div class="admin-kpi-val" id="kpiMonthlyBurn" style="color: #a855f7;">₹18,499 /mo</div>
+                            <div class="admin-kpi-sub">Deducted bulk / daily</div>
+                        </div>
+                    </div>
+
+                    <!-- Client Societies Directory Table -->
+                    <div class="admin-client-table-wrap">
+                        <table class="client-table">
+                            <thead>
+                                <tr>
+                                    <th>Society Name &amp; Code</th>
+                                    <th>City &amp; Checkpoints</th>
+                                    <th>Units (Flats)</th>
+                                    <th>Subscription Plan</th>
+                                    <th>Advance Balance</th>
+                                    <th>Runway (Days)</th>
+                                    <th>Status</th>
+                                    <th>Admin Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody id="clientSocietiesTableBody">
+                                <!-- Populated dynamically by renderClientSocieties() -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <!-- ADD NEW CLIENT SOCIETY MODAL -->
+                <div class="vg-modal-overlay" id="addClientModal">
+                    <div class="vg-modal-box">
+                        <button type="button" class="vg-modal-close" onclick="closeAddClientModal()">&times;</button>
+                        
+                        <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 6px;">
+                            <span style="font-size: 22px;">🏢</span>
+                            <h3 style="font-family: var(--font-display); font-size: 20px; font-weight: 800; color: #ffffff;">Onboard New Client Society</h3>
+                        </div>
+                        <p style="font-size: 12px; color: var(--text-secondary); margin-bottom: 18px;">
+                            Provision a new residential gated community on VisiGate Alerts. This will allocate their dedicated Google Sheet database ID, register their billing rate, and create the Master Router routing rule.
+                        </p>
+
+                        <form id="onboardClientForm" onsubmit="handleOnboardClientSubmit(event)">
+                            <div class="sim-input-row">
+                                <div class="sim-field">
+                                    <label>Society / Apartment Name *</label>
+                                    <input type="text" id="newSocName" class="sim-input" placeholder="e.g. Palm Meadows Heights" required>
+                                </div>
+                                <div class="sim-field">
+                                    <label>Society Code (3-4 Caps) *</label>
+                                    <input type="text" id="newSocCode" class="sim-input" placeholder="e.g. PMH" maxlength="5" style="text-transform: uppercase;" required>
+                                </div>
+                            </div>
+
+                            <div class="sim-input-row">
+                                <div class="sim-field">
+                                    <label>City &amp; State *</label>
+                                    <input type="text" id="newSocCity" class="sim-input" placeholder="e.g. Bengaluru, Karnataka" required>
+                                </div>
+                                <div class="sim-field">
+                                    <label>Total Units / Flats *</label>
+                                    <input type="number" id="newSocUnits" class="sim-input" placeholder="e.g. 240" min="5" max="5000" required>
+                                </div>
+                            </div>
+
+                            <div class="sim-input-row">
+                                <div class="sim-field">
+                                    <label>Number of Gates *</label>
+                                    <input type="number" id="newSocGates" class="sim-input" placeholder="e.g. 2" min="1" max="10" value="2" required>
+                                </div>
+                                <div class="sim-field">
+                                    <label>Primary Admin / RWA President Name</label>
+                                    <input type="text" id="newSocAdminName" class="sim-input" placeholder="e.g. Rajesh Nair" required>
+                                </div>
+                            </div>
+
+                            <div class="sim-input-row">
+                                <div class="sim-field">
+                                    <label>Admin 10-Digit WhatsApp Mobile *</label>
+                                    <input type="tel" id="newSocAdminPhone" class="sim-input" placeholder="e.g. 9876543210 (No +91)" maxlength="10" required>
+                                </div>
+                                <div class="sim-field">
+                                    <label>Admin Notification Email *</label>
+                                    <input type="email" id="newSocAdminEmail" class="sim-input" placeholder="e.g. rwa@palmmeadows.com" required>
+                                </div>
+                            </div>
+
+                            <div class="sim-field" style="margin-bottom: 12px;">
+                                <label>Dedicated Google Sheet Database ID</label>
+                                <div style="display: flex; gap: 8px;">
+                                    <input type="text" id="newSocSheetId" class="sim-input" style="flex: 1;" value="1BxiMVs0XRA5nFMdKvBdBZjgmUUqptlbs74OgvE2upms">
+                                    <button type="button" onclick="generateNewTemplateSheetId()" style="background: rgba(56, 189, 248, 0.15); border: 1px solid #38bdf8; color: #38bdf8; font-size: 11px; font-weight: 700; padding: 0 10px; border-radius: 8px; cursor: pointer;">
+                                        Auto-ID
+                                    </button>
+                                </div>
+                                <span style="font-size: 10px; color: var(--text-muted); margin-top: 2px;">Google Sheet ID duplicated from master template via visigatealerts@gmail.com Drive API</span>
+                            </div>
+
+                            <div class="sim-input-row">
+                                <div class="sim-field">
+                                    <label>Subscription Billing Model *</label>
+                                    <select id="newSocBillingModel" class="sim-select" onchange="updateBillingRateHelper()">
+                                        <option value="per_flat_per_day" selected>Option A: Per-Flat Per-Day Burn Rate (₹1.25 / flat / day)</option>
+                                        <option value="monthly_bulk">Option B: Monthly Bulk Advance (₹4,999 / month flat)</option>
+                                        <option value="trial">Free Trial: 14-Day Full Access (₹0)</option>
+                                    </select>
+                                </div>
+                                <div class="sim-field">
+                                    <label>Initial Advance Deposit (₹) *</label>
+                                    <input type="number" id="newSocAdvanceDeposit" class="sim-input" placeholder="e.g. 15000" min="0" value="15000" required>
+                                </div>
+                            </div>
+
+                            <div class="sim-input-row">
+                                <div class="sim-field">
+                                    <label>Payment Mode / UTR Reference No.</label>
+                                    <input type="text" id="newSocPaymentUtr" class="sim-input" placeholder="e.g. UPI / HDFC / UTR-9821734" value="UPI/RAZORPAY/DEP-01">
+                                </div>
+                                <div class="sim-field">
+                                    <label>Initial Status *</label>
+                                    <select id="newSocStatus" class="sim-select">
+                                        <option value="ACTIVE" selected>ACTIVE (Live Operational)</option>
+                                        <option value="TRIAL">TRIAL (14-Day Sandbox)</option>
+                                        <option value="PENDING">PENDING ONBOARDING</option>
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div style="margin-top: 18px; display: flex; gap: 10px;">
+                                <button type="submit" class="btn-sim-log" style="flex: 1; background: linear-gradient(135deg, #059669, #10b981);">
+                                    <span>🚀 PROVISION SOCIETY &amp; GENERATE ROUTER RULE</span>
+                                </button>
+                                <button type="button" onclick="closeAddClientModal()" class="sim-input" style="background: transparent; cursor: pointer; padding: 10px 16px;">
+                                    Cancel
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+
+                <!-- CLIENT RECHARGE MODAL -->
+                <div class="vg-modal-overlay" id="rechargeModal">
+                    <div class="vg-modal-box" style="max-width: 480px;">
+                        <button type="button" class="vg-modal-close" onclick="closeRechargeModal()">&times;</button>
+                        <h3 style="font-family: var(--font-display); font-size: 18px; font-weight: 800; color: #ffffff; margin-bottom: 6px;">
+                            💳 Add Advance Deposit / Recharge
+                        </h3>
+                        <p style="font-size: 12px; color: var(--text-secondary); margin-bottom: 14px;" id="rechargeSocNameDisplay">
+                            Society: Greenwood Residency (GWR)
+                        </p>
+
+                        <form id="rechargeForm" onsubmit="handleRechargeSubmit(event)">
+                            <input type="hidden" id="rechargeSocCode">
+                            <div class="sim-field" style="margin-bottom: 12px;">
+                                <label>Recharge Amount (₹) *</label>
+                                <input type="number" id="rechargeAmount" class="sim-input" placeholder="e.g. 10000" min="100" required>
+                            </div>
+                            <div class="sim-field" style="margin-bottom: 14px;">
+                                <label>Payment Reference / UTR Number *</label>
+                                <input type="text" id="rechargeUtr" class="sim-input" placeholder="e.g. UPI/HDFC/UTR-9821834" required>
+                            </div>
+                            <button type="submit" class="btn-sim-log" style="background: linear-gradient(135deg, #059669, #10b981);">
+                                <span>✓ CREDIT ADVANCE BALANCE</span>
+                            </button>
+                        </form>
+                    </div>
+                </div>
+
+                <!-- CLIENT LEDGER STATEMENT MODAL -->
+                <div class="vg-modal-overlay" id="ledgerModal">
+                    <div class="vg-modal-box" style="max-width: 600px;">
+                        <button type="button" class="vg-modal-close" onclick="closeLedgerModal()">&times;</button>
+                        <h3 style="font-family: var(--font-display); font-size: 18px; font-weight: 800; color: #ffffff; margin-bottom: 4px;">
+                            📊 Society Ledger &amp; Consumption Statement
+                        </h3>
+                        <p style="font-size: 12px; color: var(--text-secondary); margin-bottom: 14px;" id="ledgerSocSub">
+                            Audit trail of advance deposits received and daily burn deductions.
+                        </p>
+                        <div id="ledgerContent" style="font-size: 12px; color: #e2e8f0;"></div>
                     </div>
                 </div>
 
@@ -2265,7 +2953,600 @@
     </div>
 
     <!-- Firebase SDK Scripts for Optional WebPush -->
-    <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-app-compat.js">
+        // =====================================================================
+        // REALISTIC DUAL-DEVICE LIVE SIMULATOR LOGIC (Point 2)
+        // =====================================================================
+        let currentSimCategory = 'guest';
+
+        function setSimView(view) {
+            const grid = document.getElementById('simSplitGrid');
+            const guard = document.getElementById('simGuardPanel');
+            const res = document.getElementById('simResidentPanel');
+
+            document.getElementById('btnViewDual').classList.toggle('active', view === 'dual');
+            document.getElementById('btnViewGuard').classList.toggle('active', view === 'guard');
+            document.getElementById('btnViewResident').classList.toggle('active', view === 'resident');
+
+            if (view === 'dual') {
+                grid.style.display = 'grid';
+                guard.style.display = 'block';
+                res.style.display = 'block';
+            } else if (view === 'guard') {
+                grid.style.display = 'block';
+                guard.style.display = 'block';
+                res.style.display = 'none';
+            } else {
+                grid.style.display = 'block';
+                guard.style.display = 'none';
+                res.style.display = 'block';
+            }
+        }
+
+        function selectSimCategory(cat) {
+            currentSimCategory = cat;
+            const chips = ['chipGuest', 'chipCab', 'chipDelivery', 'chipQuick', 'chipCourier', 'chipService'];
+            chips.forEach(id => {
+                const el = document.getElementById(id);
+                if (el) el.classList.remove('active');
+            });
+
+            const activeMap = {
+                'guest': 'chipGuest',
+                'cab': 'chipCab',
+                'delivery': 'chipDelivery',
+                'quick_comm': 'chipQuick',
+                'courier': 'chipCourier',
+                'service': 'chipService'
+            };
+            if (activeMap[cat]) {
+                const activeEl = document.getElementById(activeMap[cat]);
+                if (activeEl) activeEl.classList.add('active');
+            }
+
+            const catTitles = {
+                'guest': { title: 'Guest / Visitor', icon: '👤', card: '🚨 VISITOR ENTRY REQUEST' },
+                'cab': { title: 'Cab / Taxi Driver', icon: '🚗', card: '🚗 CAB ARRIVAL GATE PASS' },
+                'delivery': { title: 'Food Delivery Partner', icon: '🍕', card: '🍕 FOOD DELIVERY ARRIVAL' },
+                'quick_comm': { title: 'Quick Commerce Courier', icon: '⚡', card: '⚡ 10-MIN GROCERY DELIVERY' },
+                'courier': { title: 'Courier / Parcel Agent', icon: '📦', card: '📦 PARCEL / DOCUMENT ARRIVAL' },
+                'service': { title: 'Service Technician / Maintenance', icon: '🛠️', card: '🛠️ SERVICE VISIT AUTHORIZATION' }
+            };
+
+            const info = catTitles[cat] || catTitles['guest'];
+            document.getElementById('dispCategory').innerText = info.title;
+            document.getElementById('simPhotoIcon').innerText = info.icon;
+            document.getElementById('cardHeadingText').innerText = info.card;
+        }
+
+        function quickFillSim(name, cat, unit, phone, vehicle) {
+            document.getElementById('simVisitorName').value = name;
+            document.getElementById('simVisitorPhone').value = phone;
+            document.getElementById('simVehicleNo').value = vehicle;
+
+            const unitSelect = document.getElementById('simTargetUnit');
+            for (let i = 0; i < unitSelect.options.length; i++) {
+                if (unitSelect.options[i].value.includes(unit)) {
+                    unitSelect.selectedIndex = i;
+                    break;
+                }
+            }
+
+            selectSimCategory(cat);
+            triggerSimulateDispatch();
+        }
+
+        function updateResidentProfileDisplay() {
+            const unit = document.getElementById('simTargetUnit').value;
+            document.getElementById('dispTargetUnit').innerText = unit;
+        }
+
+        function triggerSimulateDispatch() {
+            const name = document.getElementById('simVisitorName').value.trim() || 'Visitor';
+            const unit = document.getElementById('simTargetUnit').value;
+            const phone = document.getElementById('simVisitorPhone').value.trim() || '9876543210';
+            const vehicle = document.getElementById('simVehicleNo').value.trim() || 'Walk-in';
+
+            // Update Resident Phone Display
+            document.getElementById('dispVisitorName').innerText = name;
+            document.getElementById('dispTargetUnit').innerText = unit;
+            document.getElementById('dispVehicleNo').innerText = vehicle;
+            document.getElementById('dispTimestamp').innerText = 'Just now • Gate 1 Checkpoint';
+            document.getElementById('webpushNotificationText').innerText = `Gate Alert: ${name} visiting ${unit}`;
+
+            // Reset action buttons and status
+            document.getElementById('simResidentActionGroup').style.display = 'flex';
+            const decBox = document.getElementById('simResidentDecisionResult');
+            decBox.style.display = 'none';
+
+            // Reset barrier
+            const barrier = document.getElementById('barrierIndicator');
+            barrier.className = 'barrier-status-bar barrier-locked';
+            document.getElementById('barrierText').innerText = 'BARRIER CLOSED & LOCKED';
+            document.getElementById('barrierLatencyBadge').innerText = 'Waiting for resident tap...';
+
+            // Simulate MacroDroid audible ring wave
+            const md = document.getElementById('macrodroidText');
+            md.innerHTML = 'MacroDroid Ring Signal: <strong style="color: #38bdf8;">Resident Phone Ringing 🔔</strong>';
+            setTimeout(() => {
+                md.innerText = 'MacroDroid Ring Signal: Resident Phone Alert Synced';
+            }, 3000);
+
+            // Add or update pending entry in Audit Log
+            addAuditLogEntry(name, document.getElementById('dispCategory').innerText, unit, 'Gate 1 (Ram Singh)', 'PENDING ⏳', 'Awaiting Resident Tap');
+        }
+
+        function handleInteractiveSimAction(action) {
+            const group = document.getElementById('simResidentActionGroup');
+            group.style.display = 'none';
+
+            const decBox = document.getElementById('simResidentDecisionResult');
+            decBox.style.display = 'block';
+
+            const barrier = document.getElementById('barrierIndicator');
+            const barrierText = document.getElementById('barrierText');
+            const latencyBadge = document.getElementById('barrierLatencyBadge');
+
+            const name = document.getElementById('dispVisitorName').innerText;
+            const unit = document.getElementById('dispTargetUnit').innerText;
+            const cat = document.getElementById('dispCategory').innerText;
+
+            if (action === 'APPROVE') {
+                decBox.style.background = 'rgba(16, 185, 129, 0.2)';
+                decBox.style.border = '1px solid #10b981';
+                decBox.style.color = '#34d399';
+                decBox.innerHTML = '✅ ENTRY APPROVED (0.38s)<br><span style="font-size: 11px; font-weight: normal; color: #a7f3d0;">Gate 1 Boom Barrier Raised. Safe access permitted.</span>';
+
+                barrier.className = 'barrier-status-bar barrier-lifted';
+                barrierText.innerHTML = '🟢 BARRIER RAISED (OPEN)';
+                latencyBadge.innerHTML = '⚡ Sync Latency: <strong>0.38s</strong>';
+
+                addAuditLogEntry(name, cat, unit, 'Gate 1 (Ram Singh)', 'APPROVED ✓', 'Barrier Lifted in 0.38s');
+            } else if (action === 'DENY') {
+                decBox.style.background = 'rgba(239, 68, 68, 0.2)';
+                decBox.style.border = '1px solid #ef4444';
+                decBox.style.color = '#f87171';
+                decBox.innerHTML = '🚫 ENTRY DENIED<br><span style="font-size: 11px; font-weight: normal; color: #fca5a5;">Guard terminal alerted: "Do not permit visitor inside complex."</span>';
+
+                barrier.className = 'barrier-status-bar barrier-locked';
+                barrierText.innerHTML = '🔴 BARRIER LOCKED (DENIED)';
+                latencyBadge.innerHTML = 'Security Alert Dispatched';
+
+                addAuditLogEntry(name, cat, unit, 'Gate 1 (Ram Singh)', 'DENIED ✕', 'Barrier Locked & Visitor Turned Away');
+            } else if (action === 'LOCKER') {
+                decBox.style.background = 'rgba(56, 189, 248, 0.2)';
+                decBox.style.border = '1px solid #38bdf8';
+                decBox.style.color = '#38bdf8';
+                decBox.innerHTML = '📦 GATE LOCKER HOLD #SL-14<br><span style="font-size: 11px; font-weight: normal; color: #bae6fd;">Resident pickup PIN [4821] generated. Guard storing safely.</span>';
+
+                barrier.className = 'barrier-status-bar barrier-locked';
+                barrierText.innerHTML = '🔒 GATE LOCKER DEPOSIT';
+                latencyBadge.innerHTML = 'PIN [4821] Dispatched';
+
+                addAuditLogEntry(name, cat, unit, 'Gate 1 (Ram Singh)', 'LOCKER 📦', 'Stored in Security Locker #SL-14');
+            }
+        }
+
+        function addAuditLogEntry(name, cat, unit, gate, status, actionText) {
+            const tbody = document.getElementById('simAuditLogBody');
+            if (!tbody) return;
+
+            let badgeClass = 'badge-status-pending';
+            if (status.includes('APPROVED')) badgeClass = 'badge-status-approved';
+            else if (status.includes('DENIED')) badgeClass = 'badge-status-denied';
+            else if (status.includes('LOCKER')) badgeClass = 'badge-status-approved';
+
+            const row = document.createElement('tr');
+            row.innerHTML = `
+                <td>Just Now</td>
+                <td><strong>${name}</strong></td>
+                <td><span style="color: #38bdf8;">${cat}</span></td>
+                <td>${unit}</td>
+                <td>${gate}</td>
+                <td><span class="${badgeClass}">${status}</span></td>
+                <td>${actionText}</td>
+            `;
+
+            // Insert at the top of the log
+            tbody.insertBefore(row, tbody.firstChild);
+
+            // Keep max 6 rows
+            while (tbody.children.length > 6) {
+                tbody.removeChild(tbody.lastChild);
+            }
+        }
+
+        function clearSimAuditLog() {
+            const tbody = document.getElementById('simAuditLogBody');
+            if (tbody) tbody.innerHTML = '';
+        }
+
+        // =====================================================================
+        // SUPER-ADMIN CLIENT ONBOARDING & PORTFOLIO ENGINE (Point 4)
+        // =====================================================================
+        const DEFAULT_CLIENTS = [
+            {
+                code: 'GWR',
+                name: 'Greenwood Residency',
+                city: 'Bengaluru, KA',
+                units: 180,
+                gates: 2,
+                adminName: 'Rajesh Nair (RWA Pres)',
+                adminPhone: '9876543210',
+                adminEmail: 'rwa@greenwoodres.in',
+                sheetId: '1BxiMVs0XRA5nFMdKvBdBZjgmUUqptlbs74OgvE2upms',
+                billingModel: 'per_flat_per_day',
+                ratePerDay: 225, // 180 flats * 1.25
+                advanceBalance: 14250,
+                status: 'ACTIVE'
+            },
+            {
+                code: 'PMH',
+                name: 'Palm Meadows Heights',
+                city: 'Hyderabad, TS',
+                units: 320,
+                gates: 4,
+                adminName: 'K. S. Rao (Estate Secy)',
+                adminPhone: '9848022334',
+                adminEmail: 'estate@palmmeadows.org',
+                sheetId: '14wZ3PMH_Hyder924Klsn02-99LKSnd89201948',
+                billingModel: 'monthly_bulk',
+                ratePerDay: 199.96, // 5999 / 30
+                advanceBalance: 11998,
+                status: 'ACTIVE'
+            },
+            {
+                code: 'PSC',
+                name: 'Prestige Silver Crest',
+                city: 'Chennai, TN',
+                units: 95,
+                gates: 1,
+                adminName: 'M. Sridhar (Manager)',
+                adminPhone: '9840199887',
+                adminEmail: 'manager@silverscrest.com',
+                sheetId: '190Kms0921-PSC-ChennaiDatabaseGoogleSheet',
+                billingModel: 'trial',
+                ratePerDay: 0,
+                advanceBalance: 0,
+                status: 'TRIAL'
+            }
+        ];
+
+        function getStoredClients() {
+            try {
+                const stored = localStorage.getItem('vg_registered_clients');
+                if (stored) return JSON.parse(stored);
+            } catch(e) {}
+            return DEFAULT_CLIENTS;
+        }
+
+        function saveStoredClients(clients) {
+            try {
+                localStorage.setItem('vg_registered_clients', JSON.stringify(clients));
+            } catch(e) {}
+        }
+
+        function renderClientSocieties() {
+            const clients = getStoredClients();
+            const tbody = document.getElementById('clientSocietiesTableBody');
+            if (!tbody) return;
+
+            tbody.innerHTML = '';
+
+            let totalUnits = 0;
+            let totalAdvance = 0;
+            let totalMonthlyBurn = 0;
+
+            clients.forEach(c => {
+                totalUnits += parseInt(c.units || 0);
+                totalAdvance += parseFloat(c.advanceBalance || 0);
+
+                let planLabel = '';
+                let dailyBurn = 0;
+                if (c.billingModel === 'per_flat_per_day') {
+                    dailyBurn = parseFloat(c.ratePerDay) || (c.units * 1.25);
+                    planLabel = `Per-Flat (₹1.25/day = ₹${dailyBurn.toFixed(0)}/day)`;
+                    totalMonthlyBurn += (dailyBurn * 30);
+                } else if (c.billingModel === 'monthly_bulk') {
+                    planLabel = 'Monthly Bulk (₹4,999/mo)';
+                    dailyBurn = 4999 / 30;
+                    totalMonthlyBurn += 4999;
+                } else {
+                    planLabel = '14-Day Free Trial (₹0)';
+                    dailyBurn = 0;
+                }
+
+                const runwayDays = (dailyBurn > 0) ? Math.floor(c.advanceBalance / dailyBurn) : (c.billingModel === 'trial' ? 9 : 999);
+
+                let statusBadge = '<span class="badge-status-approved">ACTIVE</span>';
+                if (c.status === 'TRIAL') statusBadge = '<span class="badge-status-pending">TRIAL</span>';
+                else if (c.status === 'PENDING') statusBadge = '<span class="badge-status-denied">PENDING</span>';
+                else if (runwayDays < 15) statusBadge = '<span class="badge-status-denied" style="color: #fbbf24;">LOW BALANCE ⚠️</span>';
+
+                const tr = document.createElement('tr');
+                tr.innerHTML = `
+                    <td>
+                        <strong style="color: #ffffff;">${c.name}</strong>
+                        <div style="font-size: 10px; color: var(--accent-cyan); font-family: monospace;">CODE: [${c.code}]</div>
+                    </td>
+                    <td>
+                        ${c.city}
+                        <div style="font-size: 10px; color: var(--text-muted);">${c.gates} Gates Checked</div>
+                    </td>
+                    <td><strong>${c.units}</strong> Flats</td>
+                    <td><span style="font-size: 11px; color: #cbd5e1;">${planLabel}</span></td>
+                    <td><strong style="color: #10b981;">₹${parseFloat(c.advanceBalance).toLocaleString('en-IN')}</strong></td>
+                    <td>
+                        <span style="font-weight: 700; color: ${runwayDays < 15 ? '#fbbf24' : '#a7f3d0'};">
+                            ${runwayDays > 500 ? 'Permanent' : runwayDays + ' Days'}
+                        </span>
+                    </td>
+                    <td>${statusBadge}</td>
+                    <td>
+                        <div style="display: flex; gap: 5px; flex-wrap: wrap;">
+                            <button class="btn-table-action" onclick="copyClientRouterConfig('${c.code}')" title="Copy Master Router Config JSON">📋 Config</button>
+                            <button class="btn-table-action" onclick="openRechargeModal('${c.code}', '${c.name}')" title="Add Advance Balance">💳 Add Cash</button>
+                            <button class="btn-table-action" onclick="viewClientLedger('${c.code}')" title="View Ledger Statement">📊 Ledger</button>
+                            <button class="btn-table-action" onclick="closeClientAccountSettlement('${c.code}')" title="Close Account & Settle Refund" style="color: #f87171;">🔒 Settle</button>
+                        </div>
+                    </td>
+                `;
+                tbody.appendChild(tr);
+            });
+
+            // Update KPI cards
+            const socEl = document.getElementById('kpiTotalSocieties');
+            if (socEl) socEl.innerText = `${clients.length} Live`;
+            const unitsEl = document.getElementById('kpiTotalUnits');
+            if (unitsEl) unitsEl.innerText = `${totalUnits} Units`;
+            const advEl = document.getElementById('kpiTotalAdvance');
+            if (advEl) advEl.innerText = `₹${Math.round(totalAdvance).toLocaleString('en-IN')}`;
+            const burnEl = document.getElementById('kpiMonthlyBurn');
+            if (burnEl) burnEl.innerText = `₹${Math.round(totalMonthlyBurn).toLocaleString('en-IN')} /mo`;
+        }
+
+        function openAddClientModal() {
+            const modal = document.getElementById('addClientModal');
+            if (modal) modal.style.display = 'flex';
+        }
+
+        function closeAddClientModal() {
+            const modal = document.getElementById('addClientModal');
+            if (modal) modal.style.display = 'none';
+        }
+
+        function generateNewTemplateSheetId() {
+            const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789-_';
+            let id = '1VgTemplate-';
+            for (let i = 0; i < 28; i++) {
+                id += chars.charAt(Math.floor(Math.random() * chars.length));
+            }
+            document.getElementById('newSocSheetId').value = id;
+        }
+
+        function updateBillingRateHelper() {
+            const model = document.getElementById('newSocBillingModel').value;
+            const advInput = document.getElementById('newSocAdvanceDeposit');
+            if (model === 'monthly_bulk') {
+                advInput.value = '4999';
+            } else if (model === 'trial') {
+                advInput.value = '0';
+            } else {
+                advInput.value = '15000';
+            }
+        }
+
+        function handleOnboardClientSubmit(e) {
+            e.preventDefault();
+            const code = document.getElementById('newSocCode').value.trim().toUpperCase();
+            const name = document.getElementById('newSocName').value.trim();
+            const city = document.getElementById('newSocCity').value.trim();
+            const units = parseInt(document.getElementById('newSocUnits').value) || 100;
+            const gates = parseInt(document.getElementById('newSocGates').value) || 1;
+            const adminName = document.getElementById('newSocAdminName').value.trim();
+            const adminPhone = document.getElementById('newSocAdminPhone').value.trim();
+            const adminEmail = document.getElementById('newSocAdminEmail').value.trim();
+            const sheetId = document.getElementById('newSocSheetId').value.trim();
+            const billingModel = document.getElementById('newSocBillingModel').value;
+            const advanceBalance = parseFloat(document.getElementById('newSocAdvanceDeposit').value) || 0;
+            const status = document.getElementById('newSocStatus').value;
+
+            const ratePerDay = (billingModel === 'per_flat_per_day') ? (units * 1.25) : (billingModel === 'monthly_bulk' ? (4999 / 30) : 0);
+
+            const newClient = {
+                code, name, city, units, gates, adminName, adminPhone, adminEmail, sheetId, billingModel, ratePerDay, advanceBalance, status
+            };
+
+            const clients = getStoredClients();
+            // Check if code exists
+            const existingIdx = clients.findIndex(c => c.code === code);
+            if (existingIdx !== -1) {
+                clients[existingIdx] = newClient;
+            } else {
+                clients.push(newClient);
+            }
+
+            saveStoredClients(clients);
+            renderClientSocieties();
+            closeAddClientModal();
+
+            // Display Master Router JSON Code snippet
+            const jsonSnippet = JSON.stringify({
+                [code]: {
+                    name,
+                    sheetId,
+                    flats: units,
+                    gates,
+                    adminPhone,
+                    ratePerDay: Math.round(ratePerDay),
+                    advanceBalance,
+                    status
+                }
+            }, null, 2);
+
+            alert(`🎉 Society [${name} - ${code}] Onboarded Successfully!\n\nMaster Router Configuration Entry:\n${jsonSnippet}\n\nThis society is now registered in your platform console.`);
+        }
+
+        function copyClientRouterConfig(code) {
+            const clients = getStoredClients();
+            const c = clients.find(item => item.code === code);
+            if (!c) return;
+
+            const configObj = {
+                [c.code]: {
+                    name: c.name,
+                    sheetId: c.sheetId,
+                    flats: c.units,
+                    gates: c.gates,
+                    adminWhatsApp: c.adminPhone,
+                    billingModel: c.billingModel,
+                    dailyBurn: Math.round(c.ratePerDay),
+                    advanceBalance: c.advanceBalance,
+                    status: c.status
+                }
+            };
+
+            const text = JSON.stringify(configObj, null, 2);
+            navigator.clipboard.writeText(text).then(() => {
+                alert(`📋 Master Router JSON for [${c.name}] copied to clipboard!\n\nYou can paste this directly into visigatemasterrouter.js.`);
+            }).catch(() => {
+                prompt("Copy Master Router Config JSON:", text);
+            });
+        }
+
+        function exportMasterRouterConfig() {
+            const clients = getStoredClients();
+            const fullConfig = {};
+            clients.forEach(c => {
+                fullConfig[c.code] = {
+                    name: c.name,
+                    sheetId: c.sheetId,
+                    flats: c.units,
+                    gates: c.gates,
+                    adminWhatsApp: c.adminPhone,
+                    ratePerDay: Math.round(c.ratePerDay),
+                    advanceBalance: c.advanceBalance,
+                    status: c.status
+                };
+            });
+            const text = JSON.stringify(fullConfig, null, 2);
+            prompt("Master Router Universal Society Registry JSON:", text);
+        }
+
+        function openRechargeModal(code, name) {
+            document.getElementById('rechargeSocCode').value = code;
+            document.getElementById('rechargeSocNameDisplay').innerText = `Society: ${name} (${code})`;
+            document.getElementById('rechargeAmount').value = '';
+            document.getElementById('rechargeUtr').value = '';
+            document.getElementById('rechargeModal').style.display = 'flex';
+        }
+
+        function closeRechargeModal() {
+            document.getElementById('rechargeModal').style.display = 'none';
+        }
+
+        function handleRechargeSubmit(e) {
+            e.preventDefault();
+            const code = document.getElementById('rechargeSocCode').value;
+            const amount = parseFloat(document.getElementById('rechargeAmount').value) || 0;
+            const utr = document.getElementById('rechargeUtr').value.trim();
+
+            if (amount <= 0) return;
+
+            const clients = getStoredClients();
+            const c = clients.find(item => item.code === code);
+            if (c) {
+                c.advanceBalance = (parseFloat(c.advanceBalance) || 0) + amount;
+                saveStoredClients(clients);
+                renderClientSocieties();
+                closeRechargeModal();
+                alert(`✅ Advance Deposit of ₹${amount.toLocaleString('en-IN')} successfully credited to [${c.name}]!\nRef/UTR: ${utr}\nNew Balance: ₹${c.advanceBalance.toLocaleString('en-IN')}`);
+            }
+        }
+
+        function viewClientLedger(code) {
+            const clients = getStoredClients();
+            const c = clients.find(item => item.code === code);
+            if (!c) return;
+
+            const modal = document.getElementById('ledgerModal');
+            document.getElementById('ledgerSocSub').innerText = `${c.name} (${c.code}) • Plan: ${c.billingModel} • Balance: ₹${c.advanceBalance.toLocaleString('en-IN')}`;
+
+            const dailyBurn = c.ratePerDay || (c.units * 1.25);
+            const runway = (dailyBurn > 0) ? Math.floor(c.advanceBalance / dailyBurn) : 999;
+
+            document.getElementById('ledgerContent').innerHTML = `
+                <div style="background: rgba(15, 23, 42, 0.8); border: 1px solid rgba(255, 255, 255, 0.08); border-radius: 10px; padding: 14px; margin-bottom: 12px;">
+                    <div style="display: flex; justify-content: space-between; margin-bottom: 6px;">
+                        <span>Current Advance Balance:</span>
+                        <strong style="color: #10b981; font-size: 14px;">₹${c.advanceBalance.toLocaleString('en-IN')}</strong>
+                    </div>
+                    <div style="display: flex; justify-content: space-between; margin-bottom: 6px;">
+                        <span>Daily Deduction Burn:</span>
+                        <strong style="color: #38bdf8;">₹${Math.round(dailyBurn)} / day</strong>
+                    </div>
+                    <div style="display: flex; justify-content: space-between; margin-bottom: 6px;">
+                        <span>Estimated Operational Runway:</span>
+                        <strong style="color: #fbbf24;">${runway} Days Remaining</strong>
+                    </div>
+                    <div style="display: flex; justify-content: space-between;">
+                        <span>Dedicated Google Sheet ID:</span>
+                        <code style="color: #a7f3d0; font-size: 11px;">${c.sheetId.substring(0, 16)}...</code>
+                    </div>
+                </div>
+
+                <div style="font-weight: 700; color: #ffffff; margin-bottom: 8px;">Recent Transaction Audit Trail:</div>
+                <table style="width: 100%; border-collapse: collapse; font-size: 11px;">
+                    <tr style="background: rgba(255,255,255,0.05); color: #94a3b8;">
+                        <th style="padding: 6px;">Date</th>
+                        <th style="padding: 6px;">Type</th>
+                        <th style="padding: 6px;">Description / Ref</th>
+                        <th style="padding: 6px; text-align: right;">Amount</th>
+                    </tr>
+                    <tr>
+                        <td style="padding: 6px; border-bottom: 1px solid rgba(255,255,255,0.04);">25-Oct-2026</td>
+                        <td style="padding: 6px; border-bottom: 1px solid rgba(255,255,255,0.04); color: #10b981;">CREDIT</td>
+                        <td style="padding: 6px; border-bottom: 1px solid rgba(255,255,255,0.04);">Advance Subscription Deposit (Bank UTR)</td>
+                        <td style="padding: 6px; border-bottom: 1px solid rgba(255,255,255,0.04); text-align: right; color: #10b981;">+₹15,000</td>
+                    </tr>
+                    <tr>
+                        <td style="padding: 6px; border-bottom: 1px solid rgba(255,255,255,0.04);">25-Oct-2026</td>
+                        <td style="padding: 6px; border-bottom: 1px solid rgba(255,255,255,0.04); color: #f87171;">DEBIT</td>
+                        <td style="padding: 6px; border-bottom: 1px solid rgba(255,255,255,0.04);">Daily Operational Burn (${c.units} Flats @ ₹1.25)</td>
+                        <td style="padding: 6px; border-bottom: 1px solid rgba(255,255,255,0.04); text-align: right; color: #f87171;">-₹${Math.round(dailyBurn)}</td>
+                    </tr>
+                </table>
+            `;
+            modal.style.display = 'flex';
+        }
+
+        function closeLedgerModal() {
+            document.getElementById('ledgerModal').style.display = 'none';
+        }
+
+        function closeClientAccountSettlement(code) {
+            const clients = getStoredClients();
+            const c = clients.find(item => item.code === code);
+            if (!c) return;
+
+            const bal = parseFloat(c.advanceBalance) || 0;
+            const confirmClose = confirm(`⚠️ ACCOUNT CLOSURE & REFUND SETTLEMENT\n\nSociety: ${c.name} (${c.code})\nUnconsumed Advance Balance: ₹${bal.toLocaleString('en-IN')}\n\nTerminating this account will stop gate alerts and refund the unspent balance back to the society's registered RWA bank account.\n\nDo you wish to proceed with account settlement?`);
+            if (confirmClose) {
+                c.status = 'PENDING';
+                c.advanceBalance = 0;
+                saveStoredClients(clients);
+                renderClientSocieties();
+                alert(`✅ Account closed for [${c.name}].\nRefund Statement Generated: ₹${bal.toLocaleString('en-IN')} processed for remittance to RWA account.`);
+            }
+        }
+
+        // Initialize Client Societies on page load
+        document.addEventListener('DOMContentLoaded', () => {
+            renderClientSocieties();
+        });
+        setTimeout(renderClientSocieties, 300);
+
+    </script>
     <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-messaging-compat.js"></script>
     <script src="/firebase-config.js"></script>
 
