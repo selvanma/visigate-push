@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, viewport-fit=cover">
     <title>VisiGate Alerts | Intelligent Gated Community Security & Real-Time Resident Alerts</title>
     <meta name="description" content="Next-generation visitor management system for gated societies with WhatsApp Meta Cloud API approvals, automated MacroDroid phone rings, parcel management, and zero hardware setup.">
     <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🛡️</text></svg>">
@@ -46,7 +46,7 @@
             --shadow-card: 0 10px 30px -10px rgba(0, 0, 0, 0.5);
         }
 
-        * {
+        *, *::before, *::after {
             box-sizing: border-box;
             margin: 0;
             padding: 0;
@@ -55,6 +55,14 @@
         html {
             scroll-behavior: smooth;
             -webkit-tap-highlight-color: transparent;
+            -webkit-text-size-adjust: 100%;
+        }
+
+        html, body {
+            width: 100%;
+            max-width: 100vw;
+            overflow-x: hidden;
+            position: relative;
         }
 
         body {
@@ -62,8 +70,16 @@
             color: var(--text-primary);
             font-family: var(--font-body);
             line-height: 1.6;
-            overflow-x: hidden;
             -webkit-font-smoothing: antialiased;
+        }
+
+        img, svg, video, canvas, audio, iframe {
+            max-width: 100%;
+        }
+
+        h1, h2, h3, h4, h5, h6, p, span, a, code {
+            overflow-wrap: break-word;
+            word-wrap: break-word;
         }
 
         /* Fullscreen Dedicated App Frame (For Subdomains) */
@@ -722,6 +738,26 @@
             line-height: 1.6;
         }
 
+        /* Architecture Box & Grid */
+        .arch-box {
+            background: var(--bg-card);
+            border: 1px solid var(--border-glass);
+            border-radius: 16px;
+            padding: 36px;
+            backdrop-filter: blur(12px);
+        }
+
+        .arch-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 24px;
+            text-align: center;
+        }
+
+        .arch-item {
+            padding: 16px;
+        }
+
         /* Footer */
         footer.site-footer {
             border-top: 1px solid var(--border-glass);
@@ -799,24 +835,276 @@
             100% { filter: drop-shadow(0 0 16px rgba(56, 189, 248, 0.8)); }
         }
 
-        /* Responsive Styles */
+        /* Comprehensive Mobile & Cross-Device Responsive Overhaul */
+        @media (max-width: 900px) {
+            .portals-grid {
+                grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+            }
+        }
+
         @media (max-width: 768px) {
-            nav.nav-links { display: none; }
-            .hero-buttons { flex-direction: column; width: 100%; }
-            .btn-primary, .btn-secondary { width: 100%; justify-content: center; }
-            .spotlight-card { padding: 24px; }
-            .footer-container { grid-template-columns: 1fr; }
+            /* Hide desktop top nav links & status pill to preserve header spacing */
+            nav.nav-links { display: none !important; }
+            .status-pill { display: none !important; }
+
+            /* Header */
+            .nav-container {
+                padding: 12px 16px;
+            }
+            .brand-icon { font-size: 24px; }
+            .brand-text span.brand-title { font-size: 18px; }
+            .brand-text span.brand-subtitle { font-size: 9px; letter-spacing: 1.2px; }
+            .btn-portal-launch {
+                padding: 7px 12px;
+                font-size: 12px;
+                white-space: nowrap;
+            }
+
+            /* Mobile Quick-Navigation Pills Bar */
+            .mobile-nav-bar {
+                display: flex !important;
+                gap: 8px;
+                overflow-x: auto;
+                padding: 10px 16px;
+                background: rgba(15, 23, 42, 0.85);
+                border-bottom: 1px solid var(--border-glass);
+                -webkit-overflow-scrolling: touch;
+                scrollbar-width: none;
+            }
+            .mobile-nav-bar::-webkit-scrollbar { display: none; }
+            .m-pill {
+                white-space: nowrap;
+                padding: 6px 12px;
+                border-radius: 9999px;
+                background: rgba(255, 255, 255, 0.06);
+                border: 1px solid var(--border-glass);
+                color: var(--text-secondary);
+                text-decoration: none;
+                font-size: 12px;
+                font-weight: 500;
+            }
+            .m-pill:hover, .m-pill:active {
+                background: rgba(56, 189, 248, 0.2);
+                border-color: var(--accent-cyan);
+                color: var(--text-primary);
+            }
+
+            /* Hero Section */
+            section.hero {
+                padding: 35px 16px 25px;
+            }
+            .badge-hero {
+                font-size: 11px;
+                padding: 5px 12px;
+                margin-bottom: 16px;
+            }
+            h1.hero-title {
+                font-size: 27px !important;
+                letter-spacing: -0.5px;
+                line-height: 1.25;
+                margin-bottom: 14px;
+            }
+            p.hero-desc {
+                font-size: 14px !important;
+                line-height: 1.5;
+                margin-bottom: 22px;
+            }
+            .hero-buttons {
+                flex-direction: column;
+                width: 100%;
+                gap: 10px;
+                margin-bottom: 28px;
+            }
+            .btn-primary, .btn-secondary {
+                width: 100%;
+                justify-content: center;
+                padding: 13px 20px;
+                font-size: 15px;
+            }
+
+            /* Hero Stats: Clean 2x2 grid */
+            .hero-stats {
+                grid-template-columns: 1fr 1fr !important;
+                gap: 10px;
+                margin-bottom: 35px;
+            }
+            .stat-card {
+                padding: 12px 10px;
+            }
+            .stat-number {
+                font-size: 20px;
+            }
+            .stat-label {
+                font-size: 11px;
+            }
+
+            /* Section Padding */
+            .section-wrap {
+                padding: 35px 16px;
+            }
+            .section-header {
+                margin-bottom: 28px;
+            }
+            h2.section-title {
+                font-size: 25px !important;
+                margin-bottom: 10px;
+            }
+            p.section-subtitle {
+                font-size: 14px;
+            }
+
+            /* Portals Grid: Single Column on Mobile */
+            .portals-grid {
+                grid-template-columns: 1fr !important;
+                gap: 16px;
+                margin-bottom: 30px;
+            }
+            .portal-card {
+                padding: 20px 16px;
+            }
+
+            /* Spotlight & Simulator: Single Column Stack */
+            .spotlight-card {
+                padding: 20px 16px;
+                border-radius: 16px;
+                margin-bottom: 35px;
+            }
+            .spotlight-grid {
+                grid-template-columns: 1fr !important;
+                gap: 22px;
+            }
+            .spotlight-text h3 {
+                font-size: 21px !important;
+            }
+
+            /* Simulator Frame */
+            .sim-container {
+                padding: 14px 10px;
+                border-radius: 14px;
+            }
+            .sim-phone-frame {
+                padding: 12px 10px;
+            }
+            .sim-controls {
+                flex-direction: column;
+                gap: 8px;
+            }
+
+            /* Features Grid: Single Column */
+            .features-grid {
+                grid-template-columns: 1fr !important;
+                gap: 14px;
+            }
+            .feature-card {
+                padding: 20px 16px;
+            }
+
+            /* Architecture */
+            .arch-box {
+                padding: 20px 14px !important;
+            }
+            .arch-grid {
+                grid-template-columns: 1fr 1fr !important;
+                gap: 12px !important;
+            }
+            .arch-item {
+                padding: 10px 6px !important;
+            }
+
+            /* Footer */
+            footer.site-footer {
+                padding: 35px 16px 85px; /* 85px bottom padding for floating mobile bar */
+            }
+            .footer-container {
+                grid-template-columns: 1fr !important;
+                gap: 24px;
+            }
+
+            /* Mobile Bottom Floating Action Bar */
+            .mobile-bottom-bar {
+                display: flex !important;
+                position: fixed;
+                bottom: 0;
+                left: 0;
+                right: 0;
+                z-index: 9999;
+                background: rgba(7, 13, 25, 0.95);
+                backdrop-filter: blur(16px);
+                -webkit-backdrop-filter: blur(16px);
+                border-top: 1px solid var(--border-glass);
+                padding: 8px 14px calc(8px + env(safe-area-inset-bottom, 0px));
+                gap: 10px;
+            }
+            .mobile-bottom-bar a {
+                flex: 1;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                gap: 6px;
+                min-height: 44px;
+                padding: 10px;
+                border-radius: 8px;
+                text-decoration: none;
+                font-size: 13px;
+                font-weight: 700;
+                color: #ffffff;
+            }
+            .btn-mob-guard {
+                background: linear-gradient(135deg, #dc2626, #ef4444);
+                box-shadow: 0 4px 12px rgba(239, 68, 68, 0.3);
+            }
+            .btn-mob-resident {
+                background: linear-gradient(135deg, #059669, #10b981);
+                box-shadow: 0 4px 12px rgba(16, 185, 129, 0.3);
+            }
         }
 
         @media (max-width: 480px) {
-            section.hero { padding: 45px 16px 40px; }
-            .section-wrap { padding: 40px 16px; }
-            .portal-card { padding: 20px 18px; }
-            .spotlight-card { padding: 20px 16px; }
-            .sim-container { padding: 16px 12px; }
-            .sim-controls { flex-direction: column; }
-            .nav-container { padding: 12px 16px; }
-            .status-pill { display: none; }
+            .arch-grid {
+                grid-template-columns: 1fr !important;
+                gap: 14px !important;
+            }
+            .hero-stats {
+                gap: 8px !important;
+            }
+            .stat-card {
+                padding: 10px 8px !important;
+            }
+            .stat-number {
+                font-size: 18px !important;
+            }
+            .stat-label {
+                font-size: 10px !important;
+                line-height: 1.3 !important;
+            }
+            h1.hero-title {
+                font-size: 24px !important;
+            }
+            p.hero-desc {
+                font-size: 13px !important;
+            }
+            .btn-primary, .btn-secondary {
+                font-size: 14px !important;
+                padding: 12px 14px !important;
+            }
+            .section-wrap {
+                padding: 28px 12px !important;
+            }
+            .spotlight-card {
+                padding: 16px 12px !important;
+            }
+            .sim-container {
+                padding: 12px 8px !important;
+            }
+            .portal-card {
+                padding: 18px 14px !important;
+            }
+            .feature-card {
+                padding: 18px 14px !important;
+            }
+            footer.site-footer {
+                padding: 30px 12px 90px !important;
+            }
         }
     </style>
 </head>
@@ -856,6 +1144,15 @@
                 </div>
             </div>
         </header>
+
+        <!-- Mobile Horizontal Quick Navigation Bar -->
+        <div class="mobile-nav-bar" style="display: none;">
+            <a href="#portals" class="m-pill">🛡️ Portals</a>
+            <a href="#dual-alerts" class="m-pill">⚡ Dual Alerts</a>
+            <a href="#simulator" class="m-pill">📲 Simulator</a>
+            <a href="#features" class="m-pill">✨ Features</a>
+            <a href="#architecture" class="m-pill">🏗️ Architecture</a>
+        </div>
 
         <!-- Hero Section -->
         <section class="hero">
@@ -1111,24 +1408,24 @@
                 <p class="section-subtitle">High reliability, sub-second latency, and automatic failovers.</p>
             </div>
 
-            <div style="background: var(--bg-card); border: 1px solid var(--border-glass); border-radius: 16px; padding: 36px; backdrop-filter: blur(12px);">
-                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 24px; text-align: center;">
-                    <div style="padding: 16px;">
+            <div class="arch-box">
+                <div class="arch-grid">
+                    <div class="arch-item">
                         <div style="font-size: 28px; margin-bottom: 8px;">🌐</div>
                         <h4 style="font-size: 16px; color: #ffffff; margin-bottom: 6px;">Firebase Edge CDN</h4>
                         <p style="font-size: 13px; color: var(--text-secondary);">Custom domain routing for <code>visigatealerts.in</code> with automated Google SSL.</p>
                     </div>
-                    <div style="padding: 16px;">
+                    <div class="arch-item">
                         <div style="font-size: 28px; margin-bottom: 8px;">⚡</div>
                         <h4 style="font-size: 16px; color: #ffffff; margin-bottom: 6px;">Master Router @31</h4>
                         <p style="font-size: 13px; color: var(--text-secondary);">Central dispatch engine linking MacroDroid, WhatsApp webhooks, and multi-gate synchronization.</p>
                     </div>
-                    <div style="padding: 16px;">
+                    <div class="arch-item">
                         <div style="font-size: 28px; margin-bottom: 8px;">🛡️</div>
                         <h4 style="font-size: 16px; color: #ffffff; margin-bottom: 6px;">Guard App @611</h4>
                         <p style="font-size: 13px; color: var(--text-secondary);">High-concurrency gate checkpoint interface with camera and scanner pipelines.</p>
                     </div>
-                    <div style="padding: 16px;">
+                    <div class="arch-item">
                         <div style="font-size: 28px; margin-bottom: 8px;">📄</div>
                         <h4 style="font-size: 16px; color: #ffffff; margin-bottom: 6px;">Google Sheets Core</h4>
                         <p style="font-size: 13px; color: var(--text-secondary);">Single source of truth with real-time audit logging and complete privacy ownership.</p>
@@ -1192,6 +1489,12 @@
 
     </div>
 
+    <!-- Mobile Floating Quick-Launch Bottom Bar -->
+    <div class="mobile-bottom-bar" id="mobileBottomBar" style="display: none;">
+        <a href="https://guard.visigatealerts.in" class="btn-mob-guard" id="mobBtnGuard">🛡️ Guard App</a>
+        <a href="https://resident.visigatealerts.in" class="btn-mob-resident" id="mobBtnResident">📱 Resident Portal</a>
+    </div>
+
     <!-- Firebase SDK Scripts for Optional WebPush -->
     <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-messaging-compat.js"></script>
@@ -1236,6 +1539,8 @@
             }
             appFrame.src = targetUrl;
             document.title = "VisiGate " + activePortal.toUpperCase() + " App";
+            const mobBar = document.getElementById('mobileBottomBar');
+            if (mobBar) mobBar.style.display = 'none';
         } else {
             // We are on visigatealerts.in (Root Domain): Dynamically adapt links
             let baseDomain = host.includes('visigatealerts.in') ? 'visigatealerts.in' : (host.includes('visigate.in') ? 'visigate.in' : null);
@@ -1251,6 +1556,8 @@
                 setHref('cardLinkMc', 'mc');
                 setHref('cardLinkManager', 'manager');
                 setHref('cardLinkAdmin', 'admin');
+                setHref('mobBtnGuard', 'guard');
+                setHref('mobBtnResident', 'resident');
             }
         }
 
