@@ -3,8 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, viewport-fit=cover">
-    <title>Society Manager Interactive Live Demo & Sandbox | VisiGate Alerts</title>
-    <meta name="description" content="Configure and test-drive VisiGate Alerts for your housing society. Launch an interactive live sandbox with Guard App, Resident Suite, MC Analytics, and Manager Portal using realistic dummy data.">
+    <title>Society Interactive Live Demo & Multi-App Testbed | VisiGate Alerts</title>
+    <meta name="description" content="Configure and test-drive VisiGate Alerts for your housing society. Test Guard Tablet, Resident Suite, MC Analytics, and Estate Manager with custom society branding and full manual entry workflows.">
     <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🛡️</text></svg>">
     
     <!-- Google Fonts: Outfit & Plus Jakarta Sans -->
@@ -60,18 +60,19 @@
             z-index: 1000;
             backdrop-filter: blur(16px);
             -webkit-backdrop-filter: blur(16px);
-            background: rgba(7, 13, 25, 0.92);
+            background: rgba(7, 13, 25, 0.94);
             border-bottom: 1px solid var(--border-glass);
-            padding: 14px 20px;
+            padding: 12px 20px;
         }
 
         .header-wrap {
-            max-width: 1240px;
+            max-width: 1280px;
             margin: 0 auto;
             display: flex;
             align-items: center;
             justify-content: space-between;
             gap: 16px;
+            flex-wrap: wrap;
         }
 
         .brand-box {
@@ -94,72 +95,86 @@
         .sandbox-society-pill {
             display: inline-flex;
             align-items: center;
-            gap: 6px;
+            gap: 8px;
             background: rgba(16, 185, 129, 0.12);
-            border: 1px solid rgba(16, 185, 129, 0.3);
+            border: 1px solid rgba(16, 185, 129, 0.35);
             color: var(--accent-emerald);
             padding: 6px 14px;
             border-radius: 9999px;
-            font-size: 12px;
+            font-size: 13px;
             font-weight: 700;
         }
 
-        .back-link {
-            color: var(--text-secondary);
+        .header-actions {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .btn-top-action {
+            background: rgba(56, 189, 248, 0.15);
+            border: 1px solid rgba(56, 189, 248, 0.3);
+            color: var(--accent-cyan);
+            padding: 6px 14px;
+            border-radius: 8px;
+            font-size: 12px;
+            font-weight: 700;
             text-decoration: none;
-            font-size: 13px;
-            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s;
             display: inline-flex;
             align-items: center;
             gap: 6px;
-            transition: color 0.2s;
         }
-        .back-link:hover { color: var(--accent-cyan); }
+        .btn-top-action:hover {
+            background: rgba(56, 189, 248, 0.25);
+            color: #ffffff;
+        }
 
         /* Hero */
         .demo-hero {
             max-width: 1100px;
-            margin: 36px auto 24px;
+            margin: 28px auto 20px;
             padding: 0 20px;
             text-align: center;
         }
 
         .demo-badge-pill {
             display: inline-block;
-            font-size: 12px;
+            font-size: 11px;
             font-weight: 700;
             letter-spacing: 1.5px;
             color: var(--accent-amber);
             text-transform: uppercase;
-            background: rgba(245, 158, 11, 0.1);
-            border: 1px solid rgba(245, 158, 11, 0.3);
-            padding: 6px 16px;
+            background: rgba(245, 158, 11, 0.12);
+            border: 1px solid rgba(245, 158, 11, 0.35);
+            padding: 5px 16px;
             border-radius: 9999px;
-            margin-bottom: 16px;
+            margin-bottom: 14px;
         }
 
         h1.demo-title {
             font-family: var(--font-display);
-            font-size: clamp(26px, 4.2vw, 44px);
+            font-size: clamp(24px, 4vw, 42px);
             font-weight: 800;
             line-height: 1.25;
-            margin-bottom: 14px;
+            margin-bottom: 12px;
             letter-spacing: -0.5px;
         }
 
         p.demo-subtitle {
-            font-size: clamp(14px, 1.8vw, 16px);
+            font-size: clamp(14px, 1.6vw, 16px);
             color: var(--text-secondary);
-            max-width: 820px;
-            margin: 0 auto 28px;
+            max-width: 860px;
+            margin: 0 auto 24px;
         }
 
         /* Onboarding Configuration Card */
         .config-card {
-            max-width: 1040px;
-            margin: 0 auto 40px;
-            padding: 28px 24px;
-            background: linear-gradient(135deg, rgba(15, 23, 42, 0.95) 0%, rgba(30, 41, 59, 0.8) 100%);
+            max-width: 1240px;
+            margin: 0 auto 36px;
+            padding: 24px;
+            background: linear-gradient(135deg, rgba(15, 23, 42, 0.95) 0%, rgba(30, 41, 59, 0.85) 100%);
             border: 1px solid var(--border-accent);
             border-radius: 20px;
             box-shadow: 0 10px 40px rgba(0, 0, 0, 0.6);
@@ -171,14 +186,14 @@
             justify-content: space-between;
             flex-wrap: wrap;
             gap: 12px;
-            margin-bottom: 20px;
+            margin-bottom: 18px;
             padding-bottom: 14px;
             border-bottom: 1px solid rgba(255, 255, 255, 0.08);
         }
 
         .config-title {
             font-family: var(--font-display);
-            font-size: 20px;
+            font-size: 18px;
             font-weight: 700;
             color: #ffffff;
             display: flex;
@@ -188,8 +203,8 @@
 
         .config-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-            gap: 16px;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 14px;
             text-align: left;
         }
 
@@ -198,23 +213,24 @@
             font-size: 11px;
             font-weight: 700;
             color: var(--text-secondary);
-            margin-bottom: 6px;
+            margin-bottom: 5px;
             text-transform: uppercase;
             letter-spacing: 0.5px;
         }
 
-        .form-input, .form-select {
+        .form-input, .form-select, .form-textarea {
             width: 100%;
             background: rgba(15, 23, 42, 0.85);
             border: 1px solid var(--border-glass);
             color: #ffffff;
-            padding: 11px 14px;
+            padding: 10px 12px;
             border-radius: 8px;
-            font-size: 14px;
+            font-size: 13px;
+            font-family: var(--font-body);
             outline: none;
             transition: all 0.2s;
         }
-        .form-input:focus, .form-select:focus {
+        .form-input:focus, .form-select:focus, .form-textarea:focus {
             border-color: var(--accent-cyan);
             box-shadow: 0 0 12px rgba(56, 189, 248, 0.25);
         }
@@ -222,17 +238,17 @@
         .btn-launch-sandbox {
             background: linear-gradient(135deg, #0284c7, #2563eb);
             color: #ffffff;
-            padding: 13px 24px;
+            padding: 12px 20px;
             border-radius: 10px;
             border: none;
             font-weight: 700;
-            font-size: 15px;
+            font-size: 14px;
             cursor: pointer;
             width: 100%;
             display: flex;
             align-items: center;
             justify-content: center;
-            gap: 10px;
+            gap: 8px;
             box-shadow: 0 6px 20px rgba(37, 99, 235, 0.4);
             transition: all 0.2s;
         }
@@ -241,9 +257,55 @@
             transform: translateY(-1px);
         }
 
-        /* Live Sandbox Showcase Container */
+        /* Society Test Deployment Links Strip */
+        .deployment-links-strip {
+            max-width: 1240px;
+            margin: 0 auto 30px;
+            padding: 18px 24px;
+            background: rgba(15, 23, 42, 0.7);
+            border: 1px solid var(--border-glass);
+            border-radius: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 16px;
+        }
+
+        .deployment-title-box {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .deployment-buttons {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
+        .btn-dep-app {
+            padding: 8px 14px;
+            border-radius: 8px;
+            font-size: 12px;
+            font-weight: 700;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            transition: all 0.2s;
+            border: 1px solid transparent;
+        }
+        .btn-dep-guard { background: rgba(239, 68, 68, 0.15); border-color: rgba(239, 68, 68, 0.35); color: #f87171; }
+        .btn-dep-resident { background: rgba(16, 185, 129, 0.15); border-color: rgba(16, 185, 129, 0.35); color: #34d399; }
+        .btn-dep-mc { background: rgba(168, 85, 247, 0.15); border-color: rgba(168, 85, 247, 0.35); color: #c084fc; }
+        .btn-dep-manager { background: rgba(249, 115, 22, 0.15); border-color: rgba(249, 115, 22, 0.35); color: #fb923c; }
+        .btn-dep-app:hover { filter: brightness(1.2); transform: translateY(-1px); }
+
+        /* Main Sandbox Container */
         .sandbox-container {
-            max-width: 1200px;
+            max-width: 1280px;
             margin: 0 auto 60px;
             padding: 0 20px;
         }
@@ -285,15 +347,13 @@
             background: var(--bg-card);
             border: 1px solid var(--border-glass);
             border-radius: 20px;
-            padding: 28px;
+            padding: 24px;
             backdrop-filter: blur(16px);
             -webkit-backdrop-filter: blur(16px);
             box-shadow: 0 20px 40px -15px rgba(0, 0, 0, 0.7);
         }
 
-        .app-panel {
-            display: none;
-        }
+        .app-panel { display: none; }
         .app-panel.active {
             display: block;
             animation: panelFade 0.3s ease;
@@ -308,7 +368,7 @@
             display: flex;
             align-items: center;
             justify-content: space-between;
-            margin-bottom: 22px;
+            margin-bottom: 20px;
             padding-bottom: 14px;
             border-bottom: 1px solid rgba(255, 255, 255, 0.08);
             flex-wrap: wrap;
@@ -334,25 +394,52 @@
             font-weight: 700;
         }
 
-        /* 2-Column Split in Panels */
+        /* Internal Sub-Tabs inside Guard & Other Apps */
+        .guard-sub-nav {
+            display: flex;
+            gap: 8px;
+            margin-bottom: 18px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+            padding-bottom: 10px;
+            flex-wrap: wrap;
+        }
+
+        .sub-tab-btn {
+            background: rgba(15, 23, 42, 0.7);
+            border: 1px solid var(--border-glass);
+            color: var(--text-secondary);
+            padding: 8px 14px;
+            border-radius: 8px;
+            font-size: 12px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        .sub-tab-btn.active {
+            background: rgba(56, 189, 248, 0.2);
+            border-color: var(--accent-cyan);
+            color: var(--accent-cyan);
+        }
+
+        /* Layouts */
         .panel-layout-split {
             display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 24px;
+            grid-template-columns: 1.1fr 0.9fr;
+            gap: 22px;
         }
 
         .inner-action-card {
             background: rgba(15, 23, 42, 0.85);
             border: 1px solid var(--border-glass);
             border-radius: 14px;
-            padding: 20px;
+            padding: 18px;
         }
 
         .inner-log-card {
             background: rgba(15, 23, 42, 0.85);
             border: 1px solid var(--border-glass);
             border-radius: 14px;
-            padding: 20px;
+            padding: 18px;
             display: flex;
             flex-direction: column;
             justify-content: space-between;
@@ -367,8 +454,8 @@
             font-size: 12px;
             color: #a7f3d0;
             line-height: 1.6;
-            min-height: 200px;
-            max-height: 280px;
+            min-height: 220px;
+            max-height: 340px;
             overflow-y: auto;
         }
 
@@ -377,15 +464,15 @@
             background: #020617;
             border: 1px dashed rgba(56, 189, 248, 0.4);
             border-radius: 10px;
-            padding: 16px;
+            padding: 14px;
             text-align: center;
             margin-bottom: 14px;
             position: relative;
         }
         .viewfinder-corner {
             position: absolute;
-            width: 14px;
-            height: 14px;
+            width: 12px;
+            height: 12px;
             border-color: var(--accent-cyan);
             border-style: solid;
         }
@@ -394,24 +481,103 @@
         .bottom-left { bottom: 6px; left: 6px; border-width: 0 0 2px 2px; }
         .bottom-right { bottom: 6px; right: 6px; border-width: 0 2px 2px 0; }
 
+        /* Form Multi-Column Grid */
+        .manual-form-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 12px;
+            margin-bottom: 14px;
+        }
+        .manual-form-grid.three-col {
+            grid-template-columns: repeat(3, 1fr);
+        }
+        .full-width { grid-column: 1 / -1; }
+
+        /* Data Tables for Live Entries & Parcel Tracking */
+        .table-responsive {
+            width: 100%;
+            overflow-x: auto;
+            margin-top: 14px;
+            border-radius: 8px;
+            border: 1px solid var(--border-glass);
+        }
+
+        table.demo-table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 12px;
+            text-align: left;
+            white-space: nowrap;
+        }
+
+        table.demo-table th {
+            background: rgba(15, 23, 42, 0.95);
+            padding: 10px 12px;
+            color: var(--text-secondary);
+            font-weight: 700;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            text-transform: uppercase;
+            font-size: 11px;
+            letter-spacing: 0.5px;
+        }
+
+        table.demo-table td {
+            padding: 10px 12px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+            color: #ffffff;
+        }
+
+        table.demo-table tr:hover td {
+            background: rgba(56, 189, 248, 0.04);
+        }
+
+        .badge-status {
+            display: inline-block;
+            padding: 3px 8px;
+            border-radius: 4px;
+            font-size: 11px;
+            font-weight: 700;
+        }
+        .status-inside { background: rgba(245, 158, 11, 0.15); color: #f59e0b; border: 1px solid rgba(245, 158, 11, 0.3); }
+        .status-out { background: rgba(148, 163, 184, 0.15); color: #94a3b8; }
+        .status-approved { background: rgba(16, 185, 129, 0.15); color: #10b981; border: 1px solid rgba(16, 185, 129, 0.3); }
+        .status-denied { background: rgba(239, 68, 68, 0.15); color: #ef4444; border: 1px solid rgba(239, 68, 68, 0.3); }
+        .status-locker { background: rgba(56, 189, 248, 0.15); color: #38bdf8; border: 1px solid rgba(56, 189, 248, 0.3); }
+
+        .btn-table-action {
+            background: rgba(239, 68, 68, 0.2);
+            border: 1px solid rgba(239, 68, 68, 0.4);
+            color: #fca5a5;
+            padding: 4px 10px;
+            border-radius: 6px;
+            font-size: 11px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        .btn-table-action:hover {
+            background: #ef4444;
+            color: #ffffff;
+        }
+
         /* Stats Grid */
         .stats-quad-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
-            gap: 14px;
-            margin-bottom: 22px;
+            grid-template-columns: repeat(auto-fit, minmax(170px, 1fr));
+            gap: 12px;
+            margin-bottom: 20px;
         }
 
         .quad-card {
             background: rgba(15, 23, 42, 0.85);
             border: 1px solid var(--border-glass);
-            padding: 16px;
+            padding: 14px;
             border-radius: 12px;
         }
 
         .quad-num {
             font-family: var(--font-display);
-            font-size: 24px;
+            font-size: 22px;
             font-weight: 700;
             color: #ffffff;
         }
@@ -459,10 +625,11 @@
         .btn-wa-green { background: #10b981; color: #ffffff; }
         .btn-wa-red { background: #ef4444; color: #ffffff; }
 
-        @media (max-width: 768px) {
+        @media (max-width: 900px) {
             .panel-layout-split { grid-template-columns: 1fr; }
-            .sandbox-screen-box { padding: 18px 12px; }
-            .quad-num { font-size: 20px; }
+            .manual-form-grid, .manual-form-grid.three-col { grid-template-columns: 1fr; }
+            .sandbox-screen-box { padding: 16px 12px; }
+            .config-card { padding: 18px 14px; }
         }
     </style>
 </head>
@@ -477,22 +644,27 @@
             </a>
 
             <div class="sandbox-society-pill" id="headerSocietyBadge">
-                <span>🏢</span>
-                <span id="badgeSocietyName">Demo Residential Society (Live Sandbox)</span>
+                <span id="badgeSocietyLogo">🏢</span>
+                <span id="badgeSocietyName">Blossom Enclave (Live Testbed)</span>
             </div>
 
-            <a href="/" class="back-link">
-                <span>← Main Platform</span>
-            </a>
+            <div class="header-actions">
+                <a href="#configSection" class="btn-top-action">
+                    <span>⚙️ Change Society</span>
+                </a>
+                <a href="/" class="btn-top-action" style="background: transparent; border-color: var(--border-glass); color: var(--text-secondary);">
+                    <span>← Main Platform</span>
+                </a>
+            </div>
         </div>
     </header>
 
     <!-- Hero -->
     <section class="demo-hero">
-        <span class="demo-badge-pill">Interactive Live Demonstration</span>
-        <h1 class="demo-title">Experience VisiGate Alerts in Real-Time</h1>
+        <span class="demo-badge-pill">Interactive Live Demonstration & Testbed</span>
+        <h1 class="demo-title">Test-Drive VisiGate for Your Society</h1>
         <p class="demo-subtitle">
-            Configure your society parameters below to immediately launch an interactive testbed. Test the Guard Tablet, Resident Mobile Suite, Management Committee Dashboard, and Estate Manager Suite with completely safe dummy data.
+            Configure your society parameters below. Test individual apps with realistic manual entry: Visitor & Vehicle logging, In/Out times, Guard & Resident codes, Vehicle bay assignments, and ParcelDoc inbound & return tracking!
         </p>
     </section>
 
@@ -500,10 +672,10 @@
     <section class="config-card" id="configSection">
         <div class="config-header">
             <div class="config-title">
-                <span>⚙️ Configure Your Society Testbed</span>
+                <span>🏢 Custom Society Test Deployment Setup</span>
             </div>
             <span style="font-size: 12px; color: var(--accent-cyan); font-weight: 600;">
-                ⚡ Instantly generates your live sandbox with zero waiting
+                ⚡ Dynamically brands Guard, Resident, MC & Manager apps below
             </span>
         </div>
 
@@ -511,39 +683,75 @@
             <div class="config-grid">
                 <div>
                     <label class="form-label">Society / Apartment Name</label>
-                    <input type="text" id="cfgSocietyName" class="form-input" value="Demo Residential Society" placeholder="e.g. Blossom Enclave" required>
+                    <input type="text" id="cfgSocietyName" class="form-input" value="Blossom Enclave" placeholder="e.g. Prestige Palms, Green Valley" required>
                 </div>
                 <div>
-                    <label class="form-label">Number of Flats / Units</label>
+                    <label class="form-label">Society Logo / Crest Icon</label>
+                    <select id="cfgSocietyLogo" class="form-select">
+                        <option value="🏢" selected>🏢 High-Rise Crest</option>
+                        <option value="🏰">🏰 Luxury Estate Crest</option>
+                        <option value="🌿">🌿 Eco Enclave Leaf</option>
+                        <option value="🛡️">🛡️ Royal Security Shield</option>
+                        <option value="⭐">⭐ Premier Residency Star</option>
+                    </select>
+                </div>
+                <div>
+                    <label class="form-label">Total Flats in Society</label>
                     <input type="number" id="cfgFlatsCount" class="form-input" value="120" min="10" max="2500" required>
                 </div>
                 <div>
                     <label class="form-label">Security Checkpoint Gate</label>
                     <select id="cfgGateName" class="form-select">
-                        <option value="Gate 1 (Main Entrance)" selected>Gate 1 (Main Entrance)</option>
-                        <option value="Gate 2 (Rear Checkpoint)">Gate 2 (Rear Checkpoint)</option>
-                        <option value="North Gate Tower Block">North Gate Tower Block</option>
+                        <option value="Main Gate Checkpoint" selected>Main Gate Checkpoint</option>
+                        <option value="Gate 2 (North Entry)">Gate 2 (North Entry)</option>
+                        <option value="Tower Block A Gate">Tower Block A Gate</option>
+                        <option value="Basement Service Gate">Basement Service Gate</option>
                     </select>
                 </div>
                 <div>
-                    <label class="form-label">Tester / Manager Name</label>
-                    <input type="text" id="cfgManagerName" class="form-input" value="Kishore (Estate Manager)" placeholder="e.g. Kishore" required>
-                </div>
-                <div>
-                    <label class="form-label">Demo Phone / WhatsApp</label>
-                    <input type="text" id="cfgTesterPhone" class="form-input" value="+91 98000 00000" placeholder="+91 98XXX XXXXX" required>
+                    <label class="form-label">Current Guard ID & Name</label>
+                    <input type="text" id="cfgGuardCode" class="form-input" value="G-101 (Guard Ramesh)" required>
                 </div>
                 <div style="display: flex; align-items: flex-end;">
                     <button type="submit" class="btn-launch-sandbox">
-                        <span>🚀 Launch Live Multi-App Sandbox</span>
+                        <span>🚀 Apply Society Branding to All Apps</span>
                     </button>
                 </div>
             </div>
         </form>
     </section>
 
-    <!-- Interactive Multi-App Sandbox Showcase -->
+    <!-- Society Test Deployment Links Strip -->
+    <div class="deployment-links-strip">
+        <div class="deployment-title-box">
+            <span style="font-size: 20px;" id="stripSocietyLogo">🏢</span>
+            <div>
+                <strong style="color: #ffffff; font-size: 14px;" id="stripSocietyName">Blossom Enclave</strong>
+                <div style="font-size: 11px; color: var(--text-secondary);">Direct Launch Test Links for this Society:</div>
+            </div>
+        </div>
+        <div class="deployment-buttons">
+            <button onclick="switchAppTab('guard')" class="btn-dep-app btn-dep-guard">
+                <span>🛡️ Guard App</span>
+            </button>
+            <button onclick="switchAppTab('resident')" class="btn-dep-app btn-dep-resident">
+                <span>📱 Resident App</span>
+            </button>
+            <button onclick="switchAppTab('mc')" class="btn-dep-app btn-dep-mc">
+                <span>🏛️ MC Dashboard</span>
+            </button>
+            <button onclick="switchAppTab('manager')" class="btn-dep-app btn-dep-manager">
+                <span>📋 Manager Suite</span>
+            </button>
+            <button onclick="switchAppTab('router')" class="btn-dep-app" style="background: rgba(56, 189, 248, 0.15); border-color: rgba(56, 189, 248, 0.35); color: #38bdf8;">
+                <span>⚡ Master Router</span>
+            </button>
+        </div>
+    </div>
+
+    <!-- Main Sandbox Container -->
     <div class="sandbox-container" id="sandboxWorkspace">
+        
         <!-- App Switcher Tabs -->
         <div class="sandbox-app-switcher">
             <button class="app-tab-btn active" id="tabNavGuard" onclick="switchAppTab('guard')">
@@ -567,92 +775,374 @@
         <!-- Sandbox Display Box -->
         <div class="sandbox-screen-box">
             
-            <!-- TAB 1: GUARD CHECKPOINT APP -->
+            <!-- ========================================== -->
+            <!-- TAB 1: GUARD CHECKPOINT APP               -->
+            <!-- ========================================== -->
             <div id="panel-guard" class="app-panel active">
                 <div class="panel-meta-bar">
                     <div class="panel-heading">
-                        <span>🛡️ Guard Gate Checkpoint Tablet</span>
+                        <span id="guardAppBrandIcon">🏢</span>
+                        <span><strong id="guardAppSocietyTitle" style="color: #ffffff;">Blossom Enclave</strong> &bull; Guard Checkpoint Tablet</span>
                         <span class="badge-live-tag">CONNECTED</span>
                     </div>
                     <div style="font-size: 12px; color: var(--text-secondary);">
-                        <strong id="displayGateLabel" style="color: #fff;">Gate 1 (Main Entrance)</strong> &bull; Latency: <strong>32ms</strong>
+                        <strong id="displayGateLabel" style="color: #fff;">Main Gate Checkpoint</strong> &bull; Guard on Duty: <strong id="displayGuardCode" style="color: #38bdf8;">G-101 (Guard Ramesh)</strong>
                     </div>
                 </div>
 
-                <div class="panel-layout-split">
-                    <!-- Left: Guard Action Form -->
-                    <div class="inner-action-card">
-                        <h4 style="font-size: 15px; color: #ffffff; margin-bottom: 12px;">Log New Visitor / Delivery Check-In</h4>
+                <!-- Guard Sub-Navigation: Visitor Entry vs ParcelDoc vs Active Inside -->
+                <div class="guard-sub-nav">
+                    <button class="sub-tab-btn active" id="btnSubVisitor" onclick="switchGuardSubTab('visitor')">
+                        <span>👤 Visitor & Vehicle Entry</span>
+                    </button>
+                    <button class="sub-tab-btn" id="btnSubParcel" onclick="switchGuardSubTab('parcel')">
+                        <span>📦 ParcelDoc Desk (Inbound & Return)</span>
+                    </button>
+                    <button class="sub-tab-btn" id="btnSubActive" onclick="switchGuardSubTab('active')">
+                        <span>📋 Active Inside & Mark OUT (<span id="activeCountBadge">2</span>)</span>
+                    </button>
+                </div>
 
-                        <!-- Simulated Camera Viewfinder -->
-                        <div class="camera-viewfinder">
-                            <div class="viewfinder-corner top-left"></div>
-                            <div class="viewfinder-corner top-right"></div>
-                            <div class="viewfinder-corner bottom-left"></div>
-                            <div class="viewfinder-corner bottom-right"></div>
-                            <div style="font-size: 28px; margin-bottom: 4px;">📷</div>
-                            <div style="font-size: 11px; color: var(--accent-cyan); font-weight: 700;">Live Gate Camera: Motion Detected</div>
-                            <div style="font-size: 10px; color: var(--text-muted);">Facial Snapshot Prepared for WhatsApp Payload</div>
+                <!-- SUB-VIEW A: VISITOR & VEHICLE MANUAL ENTRY -->
+                <div id="guardSubViewVisitor">
+                    <div class="panel-layout-split">
+                        <!-- Left: Manual Entry Form with all fields -->
+                        <div class="inner-action-card">
+                            <h4 style="font-size: 15px; color: #ffffff; margin-bottom: 12px;">Manual Check-In Form (Live Gate Workflow)</h4>
+
+                            <!-- Camera Viewfinder -->
+                            <div class="camera-viewfinder">
+                                <div class="viewfinder-corner top-left"></div>
+                                <div class="viewfinder-corner top-right"></div>
+                                <div class="viewfinder-corner bottom-left"></div>
+                                <div class="viewfinder-corner bottom-right"></div>
+                                <div style="font-size: 26px; margin-bottom: 2px;">📷</div>
+                                <div style="font-size: 11px; color: var(--accent-cyan); font-weight: 700;">Facial Camera: Optical Ready</div>
+                                <div style="font-size: 10px; color: var(--text-muted);">Visitor photo encoded for instant WhatsApp/WebPush payload</div>
+                            </div>
+
+                            <form id="guardManualEntryForm" onsubmit="handleGuardSubmit(event)">
+                                <div class="manual-form-grid">
+                                    <div>
+                                        <label class="form-label">Main Category</label>
+                                        <select id="vMainCategory" class="form-select" onchange="onMainCategoryChange()">
+                                            <option value="Delivery" selected>Delivery / Courier</option>
+                                            <option value="Guest">Guest / Personal Visitor</option>
+                                            <option value="Cab">Cab / Taxi Driver</option>
+                                            <option value="Domestic Staff">Domestic Staff / Helper</option>
+                                            <option value="Vendor">Vendor / Service / Repair</option>
+                                            <option value="Emergency">Emergency Services</option>
+                                        </select>
+                                    </div>
+                                    <div>
+                                        <label class="form-label">Sub Category</label>
+                                        <select id="vSubCategory" class="form-select">
+                                            <option value="Swiggy">Swiggy (Food)</option>
+                                            <option value="Zomato">Zomato (Food)</option>
+                                            <option value="Amazon">Amazon Delivery</option>
+                                            <option value="Blinkit">Blinkit (Quick Commerce)</option>
+                                            <option value="Zepto">Zepto</option>
+                                            <option value="Flipkart">Flipkart</option>
+                                            <option value="Courier Other">Courier Other</option>
+                                        </select>
+                                    </div>
+                                </div>
+
+                                <div class="manual-form-grid">
+                                    <div>
+                                        <label class="form-label">Visitor / Driver Full Name</label>
+                                        <input type="text" id="vName" class="form-input" value="Suresh Kumar" placeholder="e.g. Suresh Kumar" required>
+                                    </div>
+                                    <div>
+                                        <label class="form-label">Mobile / WhatsApp Number</label>
+                                        <input type="tel" id="vMobile" class="form-input" value="+91 98450 11223" placeholder="+91 98XXX XXXXX" required>
+                                    </div>
+                                </div>
+
+                                <div class="manual-form-grid three-col">
+                                    <div>
+                                        <label class="form-label">Target Flat Number</label>
+                                        <select id="vTargetFlat" class="form-select">
+                                            <option value="Flat A-101" selected>Flat A-101 (Mr. R. Sharma)</option>
+                                            <option value="Flat B-204">Flat B-204 (Mrs. S. Rao)</option>
+                                            <option value="Flat C-302">Flat C-302 (Dr. V. Mehta)</option>
+                                            <option value="Flat D-405">Flat D-405 (Mr. K. Anand)</option>
+                                            <option value="Flat E-501">Flat E-501 (Ms. P. Verma)</option>
+                                        </select>
+                                    </div>
+                                    <div>
+                                        <label class="form-label">Head Count (Persons)</label>
+                                        <input type="number" id="vHeadCount" class="form-input" value="1" min="1" max="10" required>
+                                    </div>
+                                    <div>
+                                        <label class="form-label">Visit Count</label>
+                                        <input type="text" id="vVisitCount" class="form-input" value="Visit #3" readonly style="background: rgba(15, 23, 42, 0.5); color: var(--accent-cyan);">
+                                    </div>
+                                </div>
+
+                                <div class="manual-form-grid three-col">
+                                    <div>
+                                        <label class="form-label">Vehicle Reg. Number</label>
+                                        <input type="text" id="vPlate" class="form-input" value="KA-01-XX-1024" placeholder="KA-XX-XX-XXXX">
+                                    </div>
+                                    <div>
+                                        <label class="form-label">Vehicle Parking Area</label>
+                                        <select id="vParkingSlot" class="form-select">
+                                            <option value="Guest Visitor Bay" selected>Guest Visitor Bay</option>
+                                            <option value="Basement 1 Parking">Basement 1 Parking</option>
+                                            <option value="Basement 2 Parking">Basement 2 Parking</option>
+                                            <option value="No Parking (Drop Only)">No Parking (Drop Only)</option>
+                                        </select>
+                                    </div>
+                                    <div>
+                                        <label class="form-label">Slot Number</label>
+                                        <input type="text" id="vSlotNumber" class="form-input" value="Bay #V-12" placeholder="e.g. #V-12">
+                                    </div>
+                                </div>
+
+                                <div class="manual-form-grid" style="margin-bottom: 16px;">
+                                    <div>
+                                        <label class="form-label">IN Time (Automatic)</label>
+                                        <input type="text" id="vInTime" class="form-input" value="" readonly style="background: rgba(15, 23, 42, 0.5);">
+                                    </div>
+                                    <div>
+                                        <label class="form-label">Guard On Duty Code</label>
+                                        <input type="text" id="vGuardCodeDisplay" class="form-input" value="G-101" readonly style="background: rgba(15, 23, 42, 0.5); color: #a7f3d0;">
+                                    </div>
+                                </div>
+
+                                <button type="submit" class="btn-launch-sandbox">
+                                    <span>⚡ Log Check-In & Dispatch Triple Alert</span>
+                                    <span>&rarr;</span>
+                                </button>
+                            </form>
                         </div>
 
-                        <label class="form-label">Visitor Type</label>
-                        <select id="guardVisitorType" class="form-select" onchange="updateVisitorDefaults()">
-                            <option value="Food Courier" selected>Food Delivery Courier</option>
-                            <option value="Parcel Courier">Express Parcel Courier</option>
-                            <option value="Guest">Personal / Guest Visitor</option>
-                            <option value="Cab Driver">Cab / Taxi Driver</option>
-                            <option value="Service Technician">Service Technician / Vendor</option>
-                        </select>
+                        <!-- Right: Terminal Live Telemetry -->
+                        <div class="inner-log-card">
+                            <div>
+                                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;">
+                                    <h4 style="font-size: 15px; color: #ffffff;">Guard Terminal Telemetry</h4>
+                                    <span style="font-size: 11px; color: var(--accent-emerald);">● Synchronized</span>
+                                </div>
+                                <div class="log-terminal-output" id="guardLogOutput">
+                                    [SYSTEM] Checkpoint tablet booted.<br>
+                                    [CONFIG] Society: Blossom Enclave &bull; Gate: Main Gate Checkpoint.<br>
+                                    [STAFF] Active Gate Officer: G-101 (Guard Ramesh).<br>
+                                    [READY] Camera optical pipeline active. Awaiting manual visitor entry...<br>
+                                </div>
+                            </div>
+                            <div style="margin-top: 14px; font-size: 12px; color: var(--accent-cyan); line-height: 1.4;">
+                                💡 <em>On clicking <strong>Log Check-In</strong>, switch to the <strong>Resident Mobile Suite</strong> tab to view the incoming alert with photo, WhatsApp card, and approve/deny actions!</em>
+                            </div>
+                        </div>
+                    </div>
+                </div>
 
-                        <label class="form-label">Dummy Visitor Name</label>
-                        <input type="text" id="guardVisitorName" class="form-input" value="Suresh Kumar (Food Courier)">
+                <!-- SUB-VIEW B: PARCELDOC & RETURN PARCELDOC -->
+                <div id="guardSubViewParcel" style="display: none;">
+                    <div class="panel-layout-split">
+                        <!-- Left: Inbound or Return Parcel Form -->
+                        <div class="inner-action-card">
+                            <div style="display: flex; gap: 8px; margin-bottom: 14px;">
+                                <button type="button" class="sub-tab-btn active" id="btnParcelInbound" onclick="setParcelMode('INBOUND')">
+                                    <span>📥 Inbound ParcelDoc (Gate Locker)</span>
+                                </button>
+                                <button type="button" class="sub-tab-btn" id="btnParcelReturn" onclick="setParcelMode('RETURN')">
+                                    <span>📤 Return ParcelDoc (Pickup by Courier)</span>
+                                </button>
+                            </div>
 
-                        <label class="form-label">Destination Flat</label>
-                        <select id="guardTargetFlat" class="form-select">
-                            <option value="Flat 101" selected>Flat 101 (Mr. R. Sharma)</option>
-                            <option value="Flat 204">Flat 204 (Mrs. S. Rao)</option>
-                            <option value="Flat 302">Flat 302 (Dr. V. Mehta)</option>
-                            <option value="Flat 405">Flat 405 (Mr. K. Anand)</option>
-                        </select>
+                            <!-- INBOUND PARCEL FORM -->
+                            <form id="parcelInboundForm" onsubmit="handleInboundParcel(event)">
+                                <div class="manual-form-grid">
+                                    <div>
+                                        <label class="form-label">Courier Company</label>
+                                        <select id="pCourierCompany" class="form-select">
+                                            <option value="Amazon Logistics" selected>Amazon Logistics</option>
+                                            <option value="Blue Dart Express">Blue Dart Express</option>
+                                            <option value="DTDC Courier">DTDC Courier</option>
+                                            <option value="Delhivery">Delhivery</option>
+                                            <option value="Flipkart Ekart">Flipkart Ekart</option>
+                                            <option value="India Post SpeedPost">India Post SpeedPost</option>
+                                        </select>
+                                    </div>
+                                    <div>
+                                        <label class="form-label">Tracking / AWB Number</label>
+                                        <input type="text" id="pAwbNumber" class="form-input" value="AWB-984210384" required>
+                                    </div>
+                                </div>
 
-                        <label class="form-label">Dummy Vehicle Plate</label>
-                        <input type="text" id="guardVehiclePlate" class="form-input" value="KA-01-XX-1024">
+                                <div class="manual-form-grid">
+                                    <div>
+                                        <label class="form-label">Target Flat Number</label>
+                                        <select id="pTargetFlat" class="form-select">
+                                            <option value="Flat A-101" selected>Flat A-101 (Mr. R. Sharma)</option>
+                                            <option value="Flat B-204">Flat B-204 (Mrs. S. Rao)</option>
+                                            <option value="Flat C-302">Flat C-302 (Dr. V. Mehta)</option>
+                                            <option value="Flat D-405">Flat D-405 (Mr. K. Anand)</option>
+                                        </select>
+                                    </div>
+                                    <div>
+                                        <label class="form-label">Parcel Category</label>
+                                        <select id="pCategory" class="form-select">
+                                            <option value="Standard Carton Box" selected>Standard Carton Box</option>
+                                            <option value="Confidential Document / Envelope">Confidential Document / Envelope</option>
+                                            <option value="Medicine / Perishable">Medicine / Perishable</option>
+                                            <option value="Fragile Electronics">Fragile Electronics</option>
+                                        </select>
+                                    </div>
+                                </div>
 
-                        <button class="btn-launch-sandbox" onclick="guardDispatchEntry()">
-                            <span>📷 Capture Photo & Dispatch WhatsApp Alert</span>
-                            <span>&rarr;</span>
-                        </button>
+                                <div class="manual-form-grid">
+                                    <div>
+                                        <label class="form-label">Locker Bay / Shelf</label>
+                                        <input type="text" id="pLockerSlot" class="form-input" value="Locker Shelf #B-04" required>
+                                    </div>
+                                    <div>
+                                        <label class="form-label">Pickup OTP (Generated)</label>
+                                        <input type="text" id="pGeneratedOtp" class="form-input" value="5821" readonly style="background: rgba(15, 23, 42, 0.5); color: #38bdf8; font-weight: 700;">
+                                    </div>
+                                </div>
+
+                                <button type="submit" class="btn-launch-sandbox" style="background: linear-gradient(135deg, #059669, #10b981);">
+                                    <span>📦 Store in Gate Locker & Dispatch WhatsApp OTP</span>
+                                    <span>&rarr;</span>
+                                </button>
+                            </form>
+
+                            <!-- RETURN PARCEL FORM (Hidden by default) -->
+                            <form id="parcelReturnForm" style="display: none;" onsubmit="handleReturnParcel(event)">
+                                <div class="manual-form-grid">
+                                    <div>
+                                        <label class="form-label">Resident Flat (Return Source)</label>
+                                        <select id="rFlat" class="form-select">
+                                            <option value="Flat A-101" selected>Flat A-101 (Resident Code: R-101-A)</option>
+                                            <option value="Flat B-204">Flat B-204 (Resident Code: R-204-B)</option>
+                                            <option value="Flat C-302">Flat C-302 (Resident Code: R-302-A)</option>
+                                        </select>
+                                    </div>
+                                    <div>
+                                        <label class="form-label">Return Courier Agency</label>
+                                        <select id="rCourier" class="form-select">
+                                            <option value="Amazon Return Pickup" selected>Amazon Return Pickup</option>
+                                            <option value="Blue Dart Reverse">Blue Dart Reverse</option>
+                                            <option value="Delhivery Reverse">Delhivery Reverse</option>
+                                            <option value="Myntra Return Agent">Myntra Return Agent</option>
+                                        </select>
+                                    </div>
+                                </div>
+
+                                <div class="manual-form-grid">
+                                    <div>
+                                        <label class="form-label">Return AWB / RMA Code</label>
+                                        <input type="text" id="rAwb" class="form-input" value="RET-77041289" required>
+                                    </div>
+                                    <div>
+                                        <label class="form-label">Courier Pickup Agent Name & ID</label>
+                                        <input type="text" id="rAgent" class="form-input" value="Vikas (Agent #AZ-902)" required>
+                                    </div>
+                                </div>
+
+                                <div class="manual-form-grid full-width">
+                                    <div>
+                                        <label class="form-label">Return Reason / Item Note</label>
+                                        <input type="text" id="rReason" class="form-input" value="Wrong size footwear replacement" required>
+                                    </div>
+                                </div>
+
+                                <button type="submit" class="btn-launch-sandbox" style="background: linear-gradient(135deg, #d97706, #f59e0b);">
+                                    <span>📤 Hand Over Return Parcel & Record Guard Exit Code</span>
+                                    <span>&rarr;</span>
+                                </button>
+                            </form>
+                        </div>
+
+                        <!-- Right: Parcel Locker Status -->
+                        <div class="inner-log-card">
+                            <h4 style="font-size: 15px; color: #ffffff; margin-bottom: 10px;">ParcelDoc Locker Status</h4>
+                            <div class="table-responsive">
+                                <table class="demo-table" id="parcelTable">
+                                    <thead>
+                                        <tr>
+                                            <th>Code</th>
+                                            <th>Courier / AWB</th>
+                                            <th>Flat</th>
+                                            <th>IN (Guard)</th>
+                                            <th>Pickup OTP</th>
+                                            <th>Status</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="parcelTableBody">
+                                        <tr>
+                                            <td><code style="color: #38bdf8;">PCL-101</code></td>
+                                            <td>Amazon / AWB-984210384</td>
+                                            <td>Flat A-101</td>
+                                            <td>06:30 PM (G-101)</td>
+                                            <td><strong style="color: #10b981;">#5821</strong></td>
+                                            <td><span class="badge-status status-locker">In Gate Locker</span></td>
+                                        </tr>
+                                        <tr>
+                                            <td><code style="color: #38bdf8;">PCL-102</code></td>
+                                            <td>Blue Dart / AWB-44129031</td>
+                                            <td>Flat B-204</td>
+                                            <td>04:15 PM (G-101)</td>
+                                            <td><strong style="color: #10b981;">#1940</strong></td>
+                                            <td><span class="badge-status status-locker">In Gate Locker</span></td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                            <div style="margin-top: 12px; font-size: 11px; color: var(--text-muted);">
+                                💡 Residents pick up parcels by providing their 4-digit OTP at the security gate.
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- SUB-VIEW C: ACTIVE INSIDE PREMISES & MARK OUT -->
+                <div id="guardSubViewActive" style="display: none;">
+                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
+                        <h4 style="font-size: 15px; color: #ffffff;">Visitors & Vehicles Currently Inside Society Premises</h4>
+                        <span style="font-size: 12px; color: var(--text-secondary);">Click <strong>Mark OUT</strong> when the visitor or cab exits through the gate.</span>
                     </div>
 
-                    <!-- Right: Guard Terminal Activity Log -->
-                    <div class="inner-log-card">
-                        <div>
-                            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;">
-                                <h4 style="font-size: 15px; color: #ffffff;">Terminal Activity Feed</h4>
-                                <span style="font-size: 11px; color: var(--accent-emerald);">● Synchronized</span>
-                            </div>
-                            <div class="log-terminal-output" id="guardLogOutput">
-                                [READY] Gate terminal online & connected to Master Router.<br>
-                                [CONFIG] Society: Demo Residential Society &bull; Gate 1 Checkpoint.<br>
-                                [MONITOR] Standing by for incoming visitors, cabs, or couriers...<br>
-                            </div>
-                        </div>
-                        <div style="margin-top: 14px; font-size: 12px; color: var(--accent-cyan); line-height: 1.4;">
-                            💡 <em>When you click Dispatch above, switch to the <strong>Resident Mobile Suite</strong> tab to see the incoming alert!</em>
-                        </div>
+                    <div class="table-responsive">
+                        <table class="demo-table" id="activeEntriesTable">
+                            <thead>
+                                <tr>
+                                    <th>Visitor Code</th>
+                                    <th>Name</th>
+                                    <th>Category</th>
+                                    <th>Flat</th>
+                                    <th>Mobile</th>
+                                    <th>Vehicle & Slot</th>
+                                    <th>Head Count</th>
+                                    <th>IN Time (Guard)</th>
+                                    <th>Resident Response</th>
+                                    <th>Action</th>
+                                </tr>
+                            </thead>
+                            <tbody id="activeEntriesBody">
+                                <!-- Populated dynamically by JS -->
+                            </tbody>
+                        </table>
                     </div>
                 </div>
             </div>
 
-            <!-- TAB 2: RESIDENT MOBILE SUITE -->
+            <!-- ========================================== -->
+            <!-- TAB 2: RESIDENT MOBILE SUITE              -->
+            <!-- ========================================== -->
             <div id="panel-resident" class="app-panel">
                 <div class="panel-meta-bar">
                     <div class="panel-heading">
-                        <span>📱 Resident Smartphone Interface</span>
-                        <span class="badge-live-tag">WHATSAPP & APP SYNC</span>
+                        <span id="resAppBrandIcon">🏢</span>
+                        <span><strong id="resAppSocietyTitle" style="color: #ffffff;">Blossom Enclave</strong> &bull; Resident Mobile Suite</span>
+                        <span class="badge-live-tag">META VERIFIED & FCM PUSH</span>
                     </div>
                     <div style="font-size: 12px; color: var(--text-secondary);">
-                        Simulating: <strong style="color: #fff;" id="residentFlatLabel">Flat 101</strong> &bull; Meta Verified Channel
+                        Simulating Resident: <strong style="color: #fff;" id="residentFlatLabel">Flat A-101 (Resident Code: R-101-A)</strong>
                     </div>
                 </div>
 
@@ -661,7 +1151,7 @@
                     <div>
                         <div class="resident-phone-shell">
                             <div style="display: flex; justify-content: space-between; font-size: 11px; color: #94a3b8; margin-bottom: 12px; padding: 0 4px;">
-                                <span>9:41</span>
+                                <span id="phoneClock">7:15 PM</span>
                                 <span>5G 📶 100% 🔋</span>
                             </div>
 
@@ -701,15 +1191,16 @@
                                     📸 Photo Snapshot captured at Main Gate
                                 </div>
                                 <div style="font-size: 12px; line-height: 1.5; color: #e2e8f0; margin-bottom: 10px;" id="resVisitorDetails">
-                                    <strong>Visitor:</strong> Suresh Kumar (Food Courier)<br>
-                                    <strong>Visiting:</strong> Flat 101<br>
-                                    <strong>Vehicle:</strong> KA-01-XX-1024<br>
-                                    <strong>Checkpoint:</strong> Gate 1 (Main Entrance)
+                                    <strong>Visitor Code:</strong> V-1024<br>
+                                    <strong>Name:</strong> Suresh Kumar (Delivery / Swiggy)<br>
+                                    <strong>Destination:</strong> Flat A-101 (Mr. R. Sharma)<br>
+                                    <strong>Vehicle:</strong> KA-01-XX-1024 &bull; Bay #V-12<br>
+                                    <strong>IN Time:</strong> Just Now &bull; Guard G-101
                                 </div>
 
                                 <div id="resButtonContainer">
                                     <button class="btn-wa-opt btn-wa-green" onclick="residentRespond('APPROVE')">
-                                        <span>✓ APPROVE ENTRY</span>
+                                        <span>✓ ALLOW ENTRY (Resident Code: R-101-A)</span>
                                     </button>
                                     <button class="btn-wa-opt btn-wa-red" onclick="residentRespond('DENY')">
                                         <span>✕ DENY ENTRY</span>
@@ -721,31 +1212,44 @@
                         </div>
                     </div>
 
-                    <!-- Resident Self-Service Tools: Pre-Approved Guest Passes & Domestic Staff -->
+                    <!-- Resident Self-Service Tools: Pre-Approved Guest Passes & Parcel Locker -->
                     <div style="display: flex; flex-direction: column; gap: 16px;">
                         <div class="inner-action-card">
-                            <h4 style="font-size: 15px; color: #ffffff; margin-bottom: 10px;">🎫 Issue Pre-Approved Digital Guest Pass</h4>
+                            <h4 style="font-size: 15px; color: #ffffff; margin-bottom: 8px;">🎫 Issue Pre-Approved Digital Guest Pass</h4>
                             <p style="font-size: 12px; color: var(--text-secondary); margin-bottom: 12px;">
-                                Create an instant digital pass for invited dinner guests or repair technicians to bypass gate delays.
+                                Create an instant digital pass for invited dinner guests or repair technicians to bypass gate clearance delays.
                             </p>
-                            <label class="form-label">Guest / Invitee Name</label>
-                            <input type="text" id="resGuestName" class="form-input" value="Rohan Verma (Dinner Guest)">
+                            <div class="manual-form-grid">
+                                <div>
+                                    <label class="form-label">Guest / Invitee Name</label>
+                                    <input type="text" id="resGuestName" class="form-input" value="Rohan Verma (Dinner Guest)">
+                                </div>
+                                <div>
+                                    <label class="form-label">Expected Date & Time</label>
+                                    <input type="text" id="resExpectedTime" class="form-input" value="Tonight 8:00 PM">
+                                </div>
+                            </div>
                             <button class="btn-launch-sandbox" style="padding: 10px;" onclick="residentCreatePass()">
                                 <span>Generate Instant 4-Digit Pass PIN</span>
                             </button>
                             <div id="passCodeDisplay" style="display: none; margin-top: 10px; padding: 10px; background: rgba(16, 185, 129, 0.15); border: 1px solid var(--accent-emerald); border-radius: 8px; font-size: 13px; color: #a7f3d0;"></div>
                         </div>
 
+                        <!-- Parcel Locker Inbound Notification -->
                         <div class="inner-action-card">
-                            <h4 style="font-size: 15px; color: #ffffff; margin-bottom: 10px;">👩‍🍳 Domestic Staff Attendance Status</h4>
-                            <div style="display: flex; flex-direction: column; gap: 8px; font-size: 12px;">
-                                <div style="background: rgba(30, 41, 59, 0.7); padding: 8px 12px; border-radius: 6px; display: flex; justify-content: space-between; align-items: center;">
-                                    <div><strong>Maid Sunita</strong> (Pass #ST-102)</div>
-                                    <span style="color: #10b981; font-weight: 700;">INSIDE (08:30 AM)</span>
-                                </div>
-                                <div style="background: rgba(30, 41, 59, 0.7); padding: 8px 12px; border-radius: 6px; display: flex; justify-content: space-between; align-items: center;">
-                                    <div><strong>Driver Rajesh</strong> (Pass #ST-109)</div>
-                                    <span style="color: #94a3b8; font-weight: 700;">EXITED (05:15 PM)</span>
+                            <h4 style="font-size: 15px; color: #ffffff; margin-bottom: 8px;">📦 My Gate Parcel Locker</h4>
+                            <p style="font-size: 12px; color: var(--text-secondary); margin-bottom: 12px;">
+                                Present this 4-digit security PIN to the guard at the gate checkpoint to retrieve your parcel.
+                            </p>
+                            <div style="background: rgba(30, 41, 59, 0.7); padding: 12px; border-radius: 8px; border: 1px solid rgba(56, 189, 248, 0.3);">
+                                <div style="display: flex; justify-content: space-between; align-items: center;">
+                                    <div>
+                                        <strong style="color: #ffffff; font-size: 13px;">Amazon Logistics &bull; AWB-984210384</strong>
+                                        <div style="font-size: 11px; color: var(--text-muted);">Stored at Gate Checkpoint Locker #B-04</div>
+                                    </div>
+                                    <div style="background: rgba(16, 185, 129, 0.2); border: 1px solid var(--accent-emerald); color: #10b981; padding: 6px 10px; border-radius: 6px; font-weight: 700; font-size: 14px;">
+                                        OTP #5821
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -753,15 +1257,18 @@
                 </div>
             </div>
 
-            <!-- TAB 3: MANAGEMENT COMMITTEE (MC) DASHBOARD -->
+            <!-- ========================================== -->
+            <!-- TAB 3: MANAGEMENT COMMITTEE (MC) DASHBOARD-->
+            <!-- ========================================== -->
             <div id="panel-mc" class="app-panel">
                 <div class="panel-meta-bar">
                     <div class="panel-heading">
-                        <span>🏛️ Management Committee Security Analytics</span>
+                        <span id="mcAppBrandIcon">🏢</span>
+                        <span><strong id="mcAppSocietyTitle" style="color: #ffffff;">Blossom Enclave</strong> &bull; MC Security Analytics</span>
                         <span class="badge-live-tag">EXECUTIVE VIEW</span>
                     </div>
                     <div style="font-size: 12px; color: var(--text-secondary);">
-                        Society: <strong style="color: #fff;" class="displaySocietyText">Demo Residential Society</strong>
+                        Society: <strong style="color: #fff;" class="displaySocietyText">Blossom Enclave</strong> &bull; Active Cluster
                     </div>
                 </div>
 
@@ -775,19 +1282,49 @@
                         <div class="quad-sub">Total Gate Check-Ins Today</div>
                     </div>
                     <div class="quad-card">
-                        <div class="quad-num" style="color: var(--accent-amber);" id="mcActiveInsideNum">9 Active</div>
+                        <div class="quad-num" style="color: var(--accent-amber);" id="mcActiveInsideNum">2 Active</div>
                         <div class="quad-sub">Visitors Inside Premises Now</div>
                     </div>
                     <div class="quad-card">
-                        <div class="quad-num" style="color: var(--accent-purple);">94.5%</div>
-                        <div class="quad-sub">Maintenance Dues Realized</div>
+                        <div class="quad-num" style="color: var(--accent-purple);" id="mcParcelCount">2 Parcels</div>
+                        <div class="quad-sub">Parcels in Gate Locker</div>
+                    </div>
+                </div>
+
+                <!-- Comprehensive Society Master Audit Log Table -->
+                <div class="inner-action-card" style="margin-bottom: 20px;">
+                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px; flex-wrap: wrap; gap: 8px;">
+                        <h4 style="font-size: 15px; color: #ffffff;">Real-Time Comprehensive Gate Audit Log</h4>
+                        <span style="font-size: 12px; color: var(--accent-cyan);">Syncs instantly with Google Sheets Master Database</span>
+                    </div>
+
+                    <div class="table-responsive">
+                        <table class="demo-table">
+                            <thead>
+                                <tr>
+                                    <th>Code</th>
+                                    <th>Name</th>
+                                    <th>Mobile / WhatsApp</th>
+                                    <th>Category</th>
+                                    <th>Sub-Cat</th>
+                                    <th>Flat Code</th>
+                                    <th>IN (Guard)</th>
+                                    <th>Resident Response</th>
+                                    <th>OUT (Guard)</th>
+                                    <th>Vehicle & Slot</th>
+                                </tr>
+                            </thead>
+                            <tbody id="mcAuditTableBody">
+                                <!-- Populated dynamically by JS -->
+                            </tbody>
+                        </table>
                     </div>
                 </div>
 
                 <div class="inner-action-card">
                     <h4 style="font-size: 15px; color: #ffffff; margin-bottom: 8px;">📢 Society Emergency Broadcast Console</h4>
                     <p style="font-size: 13px; color: var(--text-secondary); margin-bottom: 12px;">
-                        Dispatch high-priority notices (e.g., water shutdown, generator maintenance) directly to all resident WhatsApp devices in one click.
+                        Dispatch high-priority notices (water supply maintenance, lift servicing, security alert) directly to all resident WhatsApp devices in one click.
                     </p>
                     <label class="form-label">Broadcast Message Content</label>
                     <input type="text" id="mcBroadcastMsg" class="form-input" value="Notice: Routine elevator maintenance scheduled tomorrow between 11 AM - 1 PM.">
@@ -798,15 +1335,18 @@
                 </div>
             </div>
 
-            <!-- TAB 4: ESTATE MANAGER PORTAL -->
+            <!-- ========================================== -->
+            <!-- TAB 4: ESTATE MANAGER PORTAL              -->
+            <!-- ========================================== -->
             <div id="panel-manager" class="app-panel">
                 <div class="panel-meta-bar">
                     <div class="panel-heading">
-                        <span>📋 Estate Manager Facility & AMC Operations</span>
-                        <span class="badge-live-tag">FACILITY COMMAND</span>
+                        <span id="mgrAppBrandIcon">🏢</span>
+                        <span><strong id="mgrAppSocietyTitle" style="color: #ffffff;">Blossom Enclave</strong> &bull; Estate Manager Portal</span>
+                        <span class="badge-live-tag">FACILITY OPERATIONS</span>
                     </div>
                     <div style="font-size: 12px; color: var(--text-secondary);">
-                        Officer: <strong style="color: #fff;" id="displayManagerName">Kishore (Estate Manager)</strong>
+                        Officer: <strong style="color: #fff;">Estate Manager Desk</strong> &bull; Multi-Tenant Database
                     </div>
                 </div>
 
@@ -836,14 +1376,14 @@
                         <div style="display: flex; flex-direction: column; gap: 10px; font-size: 13px;" id="complaintsList">
                             <div style="background: rgba(30, 41, 59, 0.7); padding: 10px; border-radius: 8px; display: flex; justify-content: space-between; align-items: center;">
                                 <div>
-                                    <div style="font-weight: 600;">Flat 204: Water Pressure Issue</div>
+                                    <div style="font-weight: 600;">Flat B-204: Water Pressure Issue</div>
                                     <div style="font-size: 11px; color: var(--text-muted);">Assigned to Plumber</div>
                                 </div>
                                 <button onclick="toggleComplaint(this)" style="background: rgba(245, 158, 11, 0.2); border: 1px solid var(--accent-amber); color: #f59e0b; padding: 4px 10px; border-radius: 6px; font-size: 11px; font-weight: 700; cursor: pointer;">IN PROGRESS</button>
                             </div>
                             <div style="background: rgba(30, 41, 59, 0.7); padding: 10px; border-radius: 8px; display: flex; justify-content: space-between; align-items: center;">
                                 <div>
-                                    <div style="font-weight: 600;">Flat 302: Intercom Tone Check</div>
+                                    <div style="font-weight: 600;">Flat C-302: Intercom Tone Check</div>
                                     <div style="font-size: 11px; color: var(--text-muted);">Attended by Electrician</div>
                                 </div>
                                 <span style="color: #10b981; font-weight: 700;">RESOLVED</span>
@@ -853,7 +1393,9 @@
                 </div>
             </div>
 
-            <!-- TAB 5: MASTER ROUTER TELEMETRY -->
+            <!-- ========================================== -->
+            <!-- TAB 5: MASTER ROUTER TELEMETRY             -->
+            <!-- ========================================== -->
             <div id="panel-router" class="app-panel">
                 <div class="panel-meta-bar">
                     <div class="panel-heading">
@@ -872,51 +1414,13 @@
                         [META_CLOUD_API] Webhook endpoint: https://graph.facebook.com/v19.0/messages -> CONNECTED<br>
                         [MACRODROID_RELAY] Device ring relay endpoint: https://trigger.macrodroid.com/ -> LISTENING<br>
                         [MULTI_SOCIETY_CLUSTERS] Multi-tenancy registry active:<br>
-                        &bull; Cluster-Alpha-01 (Active Residential Cluster - Encrypted ID)<br>
-                        &bull; Cluster-Beta-02 (Interactive Sandbox Cluster - Active)<br>
-                        &bull; Cluster-Gamma-03 (Standard Residential Enclave)<br>
+                        &bull; Blossom Enclave (Active Dedicated Database &bull; ID: BLOSSOM-01)<br>
+                        &bull; Sandbox Testbed Cluster (Active)<br>
                         [DISPATCH_READY] Complete database isolation across independent Google Sheet repositories.<br>
                     </div>
                 </div>
             </div>
 
-        </div>
-
-        <!-- Launch Actual Live Production Engines -->
-        <div style="margin-top: 32px; background: rgba(15, 23, 42, 0.85); border: 1px solid var(--border-accent); border-radius: 16px; padding: 24px;">
-            <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 12px; margin-bottom: 16px;">
-                <div>
-                    <h3 style="font-family: var(--font-display); font-size: 18px; color: #ffffff; display: flex; align-items: center; gap: 8px;">
-                        <span>🚀 Launch Actual Live Production Engines</span>
-                    </h3>
-                    <p style="font-size: 13px; color: var(--text-secondary); margin-top: 4px;">
-                        Want to test the actual full-screen live apps deployed on Google Cloud Edge? Open them directly below in your browser:
-                    </p>
-                </div>
-                <span class="badge-live-tag">LIVE CLOUD PWA</span>
-            </div>
-
-            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 12px;">
-                <a href="https://guard.visigatealerts.in" target="_blank" class="btn-launch-sandbox" style="background: linear-gradient(135deg, #dc2626, #ef4444); text-decoration: none; font-size: 13px; padding: 12px;">
-                    <span>🛡️ Launch Actual Guard App</span>
-                    <span>&rarr;</span>
-                </a>
-                <a href="https://resident.visigatealerts.in" target="_blank" class="btn-launch-sandbox" style="background: linear-gradient(135deg, #059669, #10b981); text-decoration: none; font-size: 13px; padding: 12px;">
-                    <span>📱 Launch Actual Resident App</span>
-                    <span>&rarr;</span>
-                </a>
-                <a href="https://mc.visigatealerts.in" target="_blank" class="btn-launch-sandbox" style="background: linear-gradient(135deg, #7c3aed, #a855f7); text-decoration: none; font-size: 13px; padding: 12px;">
-                    <span>🏛️ Launch Actual MC Dashboard</span>
-                    <span>&rarr;</span>
-                </a>
-                <a href="https://manager.visigatealerts.in" target="_blank" class="btn-launch-sandbox" style="background: linear-gradient(135deg, #ea580c, #f97316); text-decoration: none; font-size: 13px; padding: 12px;">
-                    <span>📋 Launch Actual Manager Suite</span>
-                    <span>&rarr;</span>
-                </a>
-            </div>
-            <div style="margin-top: 14px; font-size: 12px; color: var(--text-muted); text-align: center;">
-                💡 <em>The live production apps run as progressive web apps (PWA) with camera integration, Google Sheet database synchronization, and Firebase WebPush service workers.</em>
-            </div>
         </div>
     </div>
 
@@ -929,25 +1433,166 @@
 
     <script>
         // State variables for the live interactive sandbox
-        let currentSociety = "Demo Residential Society";
+        let currentSociety = "Blossom Enclave";
+        let currentLogo = "🏢";
         let currentFlats = 120;
-        let currentGate = "Gate 1 (Main Entrance)";
-        let currentManager = "Kishore (Estate Manager)";
-        let activeInsideCount = 9;
+        let currentGate = "Main Gate Checkpoint";
+        let currentGuardCode = "G-101";
+        let currentGuardName = "Guard Ramesh";
+        let activeInsideCount = 2;
         let totalEntriesToday = 48;
+        let parcelCount = 2;
+
+        // Sample Master Records of Visitors & Vehicles
+        let entriesLog = [
+            {
+                code: "V-1021",
+                name: "Rahul Verma",
+                mobile: "+91 98450 11990",
+                mainCategory: "Guest",
+                subCategory: "Personal Guest",
+                flat: "Flat A-101",
+                headCount: 2,
+                vehicle: "KA-03-XX-4040",
+                parkingSlot: "Guest Visitor Bay",
+                slotNumber: "Bay #V-08",
+                inTime: "05:15 PM",
+                inGuard: "G-101",
+                response: "ALLOWED (R-101-A)",
+                outTime: "06:45 PM",
+                outGuard: "G-101",
+                status: "OUT"
+            },
+            {
+                code: "V-1022",
+                name: "Karan Johar (Amazon)",
+                mobile: "+91 98112 33445",
+                mainCategory: "Delivery",
+                subCategory: "Amazon",
+                flat: "Flat B-204",
+                headCount: 1,
+                vehicle: "KA-05-AB-9912",
+                parkingSlot: "No Parking (Drop Only)",
+                slotNumber: "-",
+                inTime: "06:20 PM",
+                inGuard: "G-101",
+                response: "ALLOWED (R-204-B)",
+                outTime: "06:32 PM",
+                outGuard: "G-101",
+                status: "OUT"
+            },
+            {
+                code: "V-1023",
+                name: "Arjun Singh (Prepaid Taxi)",
+                mobile: "+91 98220 55667",
+                mainCategory: "Cab",
+                subCategory: "Uber",
+                flat: "Flat C-302",
+                headCount: 1,
+                vehicle: "KA-04-XY-8811",
+                parkingSlot: "No Parking (Drop Only)",
+                slotNumber: "-",
+                inTime: "06:55 PM",
+                inGuard: "G-101",
+                response: "ALLOWED (R-302-A)",
+                outTime: "--",
+                outGuard: "--",
+                status: "INSIDE"
+            },
+            {
+                code: "V-1024",
+                name: "Suresh Kumar",
+                mobile: "+91 98450 11223",
+                mainCategory: "Delivery",
+                subCategory: "Swiggy",
+                flat: "Flat A-101",
+                headCount: 1,
+                vehicle: "KA-01-XX-1024",
+                parkingSlot: "Guest Visitor Bay",
+                slotNumber: "Bay #V-12",
+                inTime: "07:15 PM",
+                inGuard: "G-101",
+                response: "PENDING (Waiting Resident)",
+                outTime: "--",
+                outGuard: "--",
+                status: "INSIDE"
+            }
+        ];
+
+        // Initialize on load
+        window.addEventListener('DOMContentLoaded', () => {
+            updateLiveTime();
+            setInterval(updateLiveTime, 30000);
+            renderTables();
+        });
+
+        function updateLiveTime() {
+            const now = new Date();
+            const timeStr = now.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+            const inTimeInput = document.getElementById('vInTime');
+            if (inTimeInput) inTimeInput.value = timeStr;
+            const phoneClock = document.getElementById('phoneClock');
+            if (phoneClock) phoneClock.innerText = timeStr;
+        }
+
+        function onMainCategoryChange() {
+            const main = document.getElementById('vMainCategory').value;
+            const sub = document.getElementById('vSubCategory');
+            sub.innerHTML = '';
+
+            let options = [];
+            if (main === 'Delivery') {
+                options = ['Swiggy (Food)', 'Zomato (Food)', 'Amazon Delivery', 'Blinkit (Quick)', 'Zepto', 'Flipkart', 'Courier Other'];
+            } else if (main === 'Cab') {
+                options = ['Uber Taxi', 'Ola Cabs', 'Rapido Auto', 'Private Taxi'];
+            } else if (main === 'Guest') {
+                options = ['Family Guest', 'Friend / Personal', 'Relative', 'Business Visitor'];
+            } else if (main === 'Domestic Staff') {
+                options = ['House Maid / Helper', 'Cook / Chef', 'Personal Driver', 'Gardener'];
+            } else if (main === 'Vendor') {
+                options = ['Electrician', 'Plumber', 'Carpenter', 'Appliance Repair', 'Pest Control'];
+            } else {
+                options = ['Police / Emergency', 'Government / Legal', 'Other Official'];
+            }
+
+            options.forEach(opt => {
+                const el = document.createElement('option');
+                el.value = opt.split(' ')[0];
+                el.innerText = opt;
+                sub.appendChild(el);
+            });
+        }
 
         function applySandboxConfig(e) {
             e.preventDefault();
-            currentSociety = document.getElementById('cfgSocietyName').value || "Demo Residential Society";
+            currentSociety = document.getElementById('cfgSocietyName').value || "Blossom Enclave";
+            currentLogo = document.getElementById('cfgSocietyLogo').value || "🏢";
             currentFlats = parseInt(document.getElementById('cfgFlatsCount').value) || 120;
             currentGate = document.getElementById('cfgGateName').value;
-            currentManager = document.getElementById('cfgManagerName').value || "Kishore (Estate Manager)";
+            const guardVal = document.getElementById('cfgGuardCode').value || "G-101 (Guard Ramesh)";
+            currentGuardCode = guardVal.split(' ')[0] || "G-101";
+            currentGuardName = guardVal;
 
-            // Update UI elements across all 4 apps
-            document.getElementById('badgeSocietyName').innerText = currentSociety + " (Live Sandbox)";
+            // Update Header & Deployment Links Strip
+            document.getElementById('badgeSocietyName').innerText = `${currentSociety} (Live Testbed)`;
+            document.getElementById('badgeSocietyLogo').innerText = currentLogo;
+            document.getElementById('stripSocietyName').innerText = currentSociety;
+            document.getElementById('stripSocietyLogo').innerText = currentLogo;
+
+            // Update Titles across all 4 apps
+            document.getElementById('guardAppSocietyTitle').innerText = currentSociety;
+            document.getElementById('guardAppBrandIcon').innerText = currentLogo;
+            document.getElementById('resAppSocietyTitle').innerText = currentSociety;
+            document.getElementById('resAppBrandIcon').innerText = currentLogo;
+            document.getElementById('mcAppSocietyTitle').innerText = currentSociety;
+            document.getElementById('mcAppBrandIcon').innerText = currentLogo;
+            document.getElementById('mgrAppSocietyTitle').innerText = currentSociety;
+            document.getElementById('mgrAppBrandIcon').innerText = currentLogo;
+
             document.querySelectorAll('.displaySocietyText').forEach(el => el.innerText = currentSociety);
             document.getElementById('displayGateLabel').innerText = currentGate;
-            document.getElementById('displayManagerName').innerText = currentManager;
+            document.getElementById('displayGuardCode').innerText = currentGuardName;
+            document.getElementById('vGuardCodeDisplay').value = currentGuardCode;
 
             // Recalculate MC numbers
             const occupied = Math.floor(currentFlats * 0.95);
@@ -956,8 +1601,13 @@
             // Add confirmation log into Guard App terminal
             const now = new Date().toLocaleTimeString();
             const logBox = document.getElementById('guardLogOutput');
-            logBox.innerHTML += `<br><span style="color: #38bdf8;">[${now}] 🚀 Sandbox configured for "${currentSociety}" (${currentFlats} Flats, ${currentGate}).</span><br>`;
+            logBox.innerHTML += `<br><span style="color: #38bdf8;">[${now}] 🚀 Testbed rebranded for: "${currentSociety}" (${currentFlats} Flats, Gate: ${currentGate}, Officer: ${currentGuardCode}).</span><br>`;
             logBox.scrollTop = logBox.scrollHeight;
+
+            // Router log
+            const rLog = document.getElementById('routerLogOutput');
+            rLog.innerHTML += `[${now}] [REBRAND_SYNC] Cluster updated: "${currentSociety}" &bull; Total Units: ${currentFlats} &bull; Security Node: ${currentGate}<br>`;
+            rLog.scrollTop = rLog.scrollHeight;
 
             // Smooth scroll to sandbox workspace
             document.getElementById('sandboxWorkspace').scrollIntoView({ behavior: 'smooth' });
@@ -979,55 +1629,86 @@
             }
         }
 
-        function updateVisitorDefaults() {
-            const type = document.getElementById('guardVisitorType').value;
-            const nameInput = document.getElementById('guardVisitorName');
-            const plateInput = document.getElementById('guardVehiclePlate');
+        function switchGuardSubTab(sub) {
+            document.querySelectorAll('.sub-tab-btn').forEach(b => b.classList.remove('active'));
+            document.getElementById('guardSubViewVisitor').style.display = (sub === 'visitor') ? 'block' : 'none';
+            document.getElementById('guardSubViewParcel').style.display = (sub === 'parcel') ? 'block' : 'none';
+            document.getElementById('guardSubViewActive').style.display = (sub === 'active') ? 'block' : 'none';
 
-            if (type === 'Food Courier') {
-                nameInput.value = 'Suresh Kumar (Food Delivery)';
-                plateInput.value = 'KA-01-XX-1024';
-            } else if (type === 'Parcel Courier') {
-                nameInput.value = 'Manish Verma (Express Courier)';
-                plateInput.value = 'MH-02-AB-3344';
-            } else if (type === 'Guest') {
-                nameInput.value = 'Rohan Gupta (Personal Guest)';
-                plateInput.value = 'DL-04-XY-8899';
-            } else if (type === 'Cab Driver') {
-                nameInput.value = 'Arjun Singh (Prepaid Taxi)';
-                plateInput.value = 'KA-03-XX-5566';
-            } else {
-                nameInput.value = 'Santosh Electrician (Vendor)';
-                plateInput.value = 'KA-05-ZZ-9911';
-            }
+            if (sub === 'visitor') document.getElementById('btnSubVisitor').classList.add('active');
+            else if (sub === 'parcel') document.getElementById('btnSubParcel').classList.add('active');
+            else if (sub === 'active') document.getElementById('btnSubActive').classList.add('active');
         }
 
-        function guardDispatchEntry() {
-            const visitorName = document.getElementById('guardVisitorName').value;
-            const targetFlat = document.getElementById('guardTargetFlat').value;
-            const plate = document.getElementById('guardVehiclePlate').value;
-            const logBox = document.getElementById('guardLogOutput');
-            const now = new Date().toLocaleTimeString();
+        function setParcelMode(mode) {
+            document.getElementById('btnParcelInbound').classList.toggle('active', mode === 'INBOUND');
+            document.getElementById('btnParcelReturn').classList.toggle('active', mode === 'RETURN');
+            document.getElementById('parcelInboundForm').style.display = (mode === 'INBOUND') ? 'block' : 'none';
+            document.getElementById('parcelReturnForm').style.display = (mode === 'RETURN') ? 'block' : 'none';
+        }
 
-            // Guard activity log entry
-            logBox.innerHTML += `<br>[${now}] 📸 Camera photo captured for: <strong>${visitorName}</strong><br>`;
-            logBox.innerHTML += `[${now}] ⚡ Meta Cloud API &rarr; WhatsApp alert dispatched to ${targetFlat}<br>`;
-            logBox.innerHTML += `[${now}] 🔔 MacroDroid &rarr; Device ring webhook triggered for ${targetFlat}<br>`;
+        function handleGuardSubmit(e) {
+            e.preventDefault();
+            const name = document.getElementById('vName').value;
+            const mobile = document.getElementById('vMobile').value;
+            const mainCat = document.getElementById('vMainCategory').value;
+            const subCat = document.getElementById('vSubCategory').value;
+            const flat = document.getElementById('vTargetFlat').value;
+            const headCount = parseInt(document.getElementById('vHeadCount').value) || 1;
+            const plate = document.getElementById('vPlate').value || 'None';
+            const slotArea = document.getElementById('vParkingSlot').value;
+            const slotNum = document.getElementById('vSlotNumber').value || '-';
+            const inTime = document.getElementById('vInTime').value;
+
+            const newCode = "V-" + (1020 + entriesLog.length + 1);
+
+            const newEntry = {
+                code: newCode,
+                name: name,
+                mobile: mobile,
+                mainCategory: mainCat,
+                subCategory: subCat,
+                flat: flat,
+                headCount: headCount,
+                vehicle: plate,
+                parkingSlot: slotArea,
+                slotNumber: slotNum,
+                inTime: inTime,
+                inGuard: currentGuardCode,
+                response: "PENDING (Waiting Resident)",
+                outTime: "--",
+                outGuard: "--",
+                status: "INSIDE"
+            };
+
+            entriesLog.unshift(newEntry);
+            activeInsideCount++;
+            totalEntriesToday++;
+
+            renderTables();
+
+            // Terminal log
+            const now = new Date().toLocaleTimeString();
+            const logBox = document.getElementById('guardLogOutput');
+            logBox.innerHTML += `<br>[${now}] 📸 Camera photo captured for: <strong>${name}</strong> (${newCode})<br>`;
+            logBox.innerHTML += `[${now}] 🚗 Vehicle: <strong>${plate}</strong> &bull; Assigned: ${slotArea} (${slotNum})<br>`;
+            logBox.innerHTML += `[${now}] ⚡ Meta Cloud API &rarr; WhatsApp alert dispatched to ${flat}<br>`;
+            logBox.innerHTML += `[${now}] 🔔 MacroDroid &rarr; Device ring webhook triggered for ${flat}<br>`;
             logBox.scrollTop = logBox.scrollHeight;
 
-            // Push details into Resident App tab
+            // Sync to Resident App tab
             document.getElementById('resVisitorDetails').innerHTML = 
-                `<strong>Visitor:</strong> ${visitorName}<br>` +
-                `<strong>Visiting:</strong> ${targetFlat}<br>` +
-                `<strong>Vehicle:</strong> ${plate}<br>` +
-                `<strong>Checkpoint:</strong> ${currentGate}`;
+                `<strong>Visitor Code:</strong> ${newCode}<br>` +
+                `<strong>Name:</strong> ${name} (${mainCat} / ${subCat})<br>` +
+                `<strong>Destination:</strong> ${flat}<br>` +
+                `<strong>Vehicle:</strong> ${plate} &bull; ${slotNum}<br>` +
+                `<strong>IN Time:</strong> ${inTime} &bull; Guard ${currentGuardCode}`;
 
             const wpBanner = document.getElementById('resWebpushBanner');
-            if (wpBanner) wpBanner.innerText = 'Gate Alert: ' + visitorName + ' at ' + currentGate;
+            if (wpBanner) wpBanner.innerText = `Gate Alert: ${name} (${subCat}) at ${currentGate}`;
 
             document.getElementById('resButtonContainer').style.display = 'block';
-            const feedback = document.getElementById('resResponseFeedback');
-            feedback.style.display = 'none';
+            document.getElementById('resResponseFeedback').style.display = 'none';
 
             // Show badge on Resident Tab to alert user!
             const badge = document.getElementById('resAlertBadge');
@@ -1035,8 +1716,11 @@
 
             // Router Telemetry log
             const rLog = document.getElementById('routerLogOutput');
-            rLog.innerHTML += `[${now}] [DISPATCH_SYNC] Alert -> ${targetFlat} &bull; Latency: 0.32s &bull; Status: PENDING_RESIDENT_ACTION<br>`;
+            rLog.innerHTML += `[${now}] [DISPATCH_SYNC] ${newCode} -> ${flat} &bull; Latency: 0.31s &bull; Status: PENDING_RESIDENT_ACTION<br>`;
             rLog.scrollTop = rLog.scrollHeight;
+
+            // Switch to Active Inside sub-tab in Guard App
+            switchGuardSubTab('active');
         }
 
         function residentRespond(action) {
@@ -1048,28 +1732,142 @@
             btnGroup.style.display = 'none';
             feedback.style.display = 'block';
 
+            if (entriesLog.length > 0 && entriesLog[0].status === "INSIDE") {
+                if (action === 'APPROVE') {
+                    entriesLog[0].response = "ALLOWED (R-101-A)";
+                } else {
+                    entriesLog[0].response = "DENIED (R-101-A)";
+                }
+            }
+
+            renderTables();
+
             if (action === 'APPROVE') {
                 feedback.style.background = 'rgba(16, 185, 129, 0.2)';
                 feedback.style.color = '#10b981';
-                feedback.innerHTML = '✅ ENTRY APPROVED (0.34s)<br><span style="font-size: 11px; font-weight: normal;">Gate 1 barrier unlocked. WhatsApp confirmation recorded.</span>';
+                feedback.innerHTML = '✅ ENTRY APPROVED by Flat A-101 (R-101-A)<br><span style="font-size: 11px; font-weight: normal;">Gate 1 barrier unlocked. WhatsApp confirmation recorded.</span>';
 
-                // Sync to Guard Log
-                logBox.innerHTML += `<span style="color: #10b981; font-weight: 700;">[${now}] ✅ RESIDENT APPROVED ENTRY &bull; Gate barrier raised & pass issued (0.34s)</span><br>`;
-                
-                // Update MC stats
-                activeInsideCount++;
-                totalEntriesToday++;
-                document.getElementById('mcActiveInsideNum').innerText = activeInsideCount + " Active";
-                document.getElementById('mcEntriesNum').innerText = totalEntriesToday + " Entries";
+                logBox.innerHTML += `<span style="color: #10b981; font-weight: 700;">[${now}] ✅ RESIDENT APPROVED ENTRY (Resident Code: R-101-A) &bull; Gate barrier raised (0.34s)</span><br>`;
             } else {
                 feedback.style.background = 'rgba(239, 68, 68, 0.2)';
                 feedback.style.color = '#ef4444';
-                feedback.innerHTML = '🚫 ENTRY DENIED<br><span style="font-size: 11px; font-weight: normal;">Guard alerted: Do not permit visitor inside.</span>';
+                feedback.innerHTML = '🚫 ENTRY DENIED by Flat A-101 (R-101-A)<br><span style="font-size: 11px; font-weight: normal;">Guard alerted: Do not permit visitor inside.</span>';
 
-                // Sync to Guard Log
                 logBox.innerHTML += `<span style="color: #ef4444; font-weight: 700;">[${now}] 🚫 RESIDENT DENIED ENTRY &bull; Turn visitor away at gate.</span><br>`;
             }
             logBox.scrollTop = logBox.scrollHeight;
+        }
+
+        function markVisitorOut(code) {
+            const entry = entriesLog.find(e => e.code === code);
+            if (entry && entry.status === "INSIDE") {
+                const now = new Date();
+                const timeStr = now.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+                entry.outTime = timeStr;
+                entry.outGuard = currentGuardCode;
+                entry.status = "OUT";
+                activeInsideCount = Math.max(0, activeInsideCount - 1);
+                renderTables();
+
+                const logBox = document.getElementById('guardLogOutput');
+                logBox.innerHTML += `<span style="color: #f59e0b;">[${timeStr}] 🚪 VISITOR EXITED &bull; Code ${code} (${entry.name}) marked OUT by ${currentGuardCode}.</span><br>`;
+                logBox.scrollTop = logBox.scrollHeight;
+            }
+        }
+
+        function handleInboundParcel(e) {
+            e.preventDefault();
+            const courier = document.getElementById('pCourierCompany').value;
+            const awb = document.getElementById('pAwbNumber').value;
+            const flat = document.getElementById('pTargetFlat').value;
+            const locker = document.getElementById('pLockerSlot').value;
+            const otp = document.getElementById('pGeneratedOtp').value;
+
+            const now = new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+            const table = document.getElementById('parcelTableBody');
+            const row = document.createElement('tr');
+            const pclCode = "PCL-" + (100 + table.children.length + 1);
+
+            row.innerHTML = `
+                <td><code style="color: #38bdf8;">${pclCode}</code></td>
+                <td>${courier} / ${awb}</td>
+                <td>${flat}</td>
+                <td>${now} (${currentGuardCode})</td>
+                <td><strong style="color: #10b981;">#${otp}</strong></td>
+                <td><span class="badge-status status-locker">In Gate Locker</span></td>
+            `;
+            table.prepend(row);
+            parcelCount++;
+            document.getElementById('mcParcelCount').innerText = parcelCount + " Parcels";
+
+            const logBox = document.getElementById('guardLogOutput');
+            logBox.innerHTML += `<br>[${now}] 📦 Inbound parcel logged: <strong>${pclCode}</strong> (${courier}) for ${flat}. Stored in ${locker}. WhatsApp OTP #${otp} sent to resident.<br>`;
+            logBox.scrollTop = logBox.scrollHeight;
+
+            alert(`Parcel stored in Gate Locker!\nCode: ${pclCode}\nWhatsApp pickup alert with OTP #${otp} dispatched to ${flat}.`);
+        }
+
+        function handleReturnParcel(e) {
+            e.preventDefault();
+            const flat = document.getElementById('rFlat').value;
+            const courier = document.getElementById('rCourier').value;
+            const awb = document.getElementById('rAwb').value;
+            const agent = document.getElementById('rAgent').value;
+            const reason = document.getElementById('rReason').value;
+            const now = new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+
+            const logBox = document.getElementById('guardLogOutput');
+            logBox.innerHTML += `<br>[${now}] 📤 Return Parcel Handover: ${awb} from ${flat} handed over to ${agent} (${courier}). Exit confirmed by ${currentGuardCode}.<br>`;
+            logBox.scrollTop = logBox.scrollHeight;
+
+            alert(`Return Parcel Handover Recorded!\nAWB: ${awb}\nCourier: ${courier}\nAgent: ${agent}\nExit verified by Guard Code: ${currentGuardCode}`);
+        }
+
+        function renderTables() {
+            // Render Active Inside Table
+            const activeTbody = document.getElementById('activeEntriesBody');
+            const activeList = entriesLog.filter(e => e.status === "INSIDE");
+            document.getElementById('activeCountBadge').innerText = activeList.length;
+            document.getElementById('mcActiveInsideNum').innerText = activeList.length + " Active";
+            document.getElementById('mcEntriesNum').innerText = totalEntriesToday + " Entries";
+
+            if (activeList.length === 0) {
+                activeTbody.innerHTML = '<tr><td colspan="10" style="text-align: center; color: var(--text-muted); padding: 18px;">No visitors currently inside the premises.</td></tr>';
+            } else {
+                activeTbody.innerHTML = activeList.map(item => `
+                    <tr>
+                        <td><code style="color: #38bdf8; font-weight: 700;">${item.code}</code></td>
+                        <td><strong>${item.name}</strong></td>
+                        <td>${item.mainCategory} &bull; ${item.subCategory}</td>
+                        <td><span style="color: var(--accent-cyan); font-weight: 600;">${item.flat}</span></td>
+                        <td>${item.mobile}</td>
+                        <td>${item.vehicle} &bull; <span style="color: #fbbf24;">${item.slotNumber}</span></td>
+                        <td>${item.headCount} Pers</td>
+                        <td>${item.inTime} (${item.inGuard})</td>
+                        <td><span class="badge-status ${item.response.includes('ALLOWED') ? 'status-approved' : (item.response.includes('DENIED') ? 'status-denied' : 'status-inside')}">${item.response}</span></td>
+                        <td>
+                            <button class="btn-table-action" onclick="markVisitorOut('${item.code}')">🚪 Mark OUT</button>
+                        </td>
+                    </tr>
+                `).join('');
+            }
+
+            // Render MC Audit Log Table (All entries)
+            const mcTbody = document.getElementById('mcAuditTableBody');
+            mcTbody.innerHTML = entriesLog.map(item => `
+                <tr>
+                    <td><code style="color: #38bdf8;">${item.code}</code></td>
+                    <td><strong>${item.name}</strong></td>
+                    <td>${item.mobile}</td>
+                    <td>${item.mainCategory}</td>
+                    <td>${item.subCategory}</td>
+                    <td>${item.flat}</td>
+                    <td>${item.inTime} (${item.inGuard})</td>
+                    <td><span class="badge-status ${item.response.includes('ALLOWED') ? 'status-approved' : (item.response.includes('DENIED') ? 'status-denied' : 'status-inside')}">${item.response}</span></td>
+                    <td>${item.outTime !== '--' ? item.outTime + ' (' + item.outGuard + ')' : '<span style="color: #f59e0b;">INSIDE</span>'}</td>
+                    <td>${item.vehicle} &bull; ${item.slotNumber}</td>
+                </tr>
+            `).join('');
         }
 
         function residentCreatePass() {
