@@ -189,7 +189,9 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            padding: 20px;
+            padding: 16px;
+            box-sizing: border-box;
+            overflow-y: auto;
         }
 
         .mandatory-modal-card {
@@ -198,10 +200,26 @@
             border-radius: 20px;
             max-width: 580px;
             width: 100%;
-            padding: 28px 24px;
+            max-height: 90vh;
+            overflow-y: auto;
+            -webkit-overflow-scrolling: touch;
+            box-sizing: border-box;
+            padding: 26px 22px;
             box-shadow: 0 25px 60px rgba(0, 0, 0, 0.85);
             position: relative;
             animation: modalPop 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        @media (max-width: 640px) {
+            .mandatory-modal-overlay {
+                align-items: flex-start;
+                padding: 10px 8px;
+            }
+            .mandatory-modal-card {
+                padding: 18px 14px;
+                max-height: 95vh;
+                border-radius: 16px;
+            }
         }
 
         @keyframes modalPop {
@@ -1040,11 +1058,14 @@
                     </div>
 
                     <div class="form-group-item">
-                        <label class="form-label">Your WhatsApp / Mobile Number <span class="modal-req-tag">* (Compulsory: +91 &amp; 10 digits)</span></label>
+                        <label class="form-label">Your WhatsApp Number <span class="modal-req-tag">* (10-Digit Mobile / WhatsApp)</span></label>
                         <div style="display: flex; gap: 8px;">
-                            <input type="tel" id="gateWhatsApp" class="form-input" value="" placeholder="+91 XXXXXXXXXX (e.g. +91 9845012345)" required style="flex: 1;" oninput="onGatePhoneInput()">
+                            <div style="display: flex; align-items: center; justify-content: center; background: rgba(15, 23, 42, 0.8); border: 1px solid var(--border-glass); border-radius: 8px; padding: 0 12px; color: #38bdf8; font-weight: 700; font-size: 13px; white-space: nowrap;">
+                                🇮🇳 +91
+                            </div>
+                            <input type="tel" id="gateWhatsApp" class="form-input" value="" placeholder="Enter 10-digit number (e.g. 9845012345)" maxlength="10" required style="flex: 1; font-weight: 600; letter-spacing: 0.5px;" oninput="onGatePhoneInput()">
                             <button type="button" id="btnSendPhoneOtp" class="btn-top-action" onclick="sendFirebasePhoneOtp()" style="background: rgba(56, 189, 248, 0.2); border-color: rgba(56, 189, 248, 0.5); color: #38bdf8; white-space: nowrap;">
-                                <span>📲 Verify via Firebase OTP</span>
+                                <span>📲 Request OTP</span>
                             </button>
                         </div>
                     </div>
@@ -2119,6 +2140,9 @@
             <div style="font-size: 14px; font-weight: 700; color: #ffffff; margin-bottom: 6px;">
                 🛡️ VisiGate Alerts &bull; Universal Multi-Device Gate Security &amp; Resident Automation
             </div>
+            <div style="font-size: 11px; color: #fbbf24; font-weight: 700; margin-bottom: 8px;">
+                GuardAppVer611 &bull; ResidentAppVer187 &bull; MasterRouterAppVer31 (Production Baseline)
+            </div>
             <div style="margin-bottom: 8px;">
                 Official Inquiries, Deployments &amp; Support: <a href="mailto:info@visigatealerts.in" style="color: #38bdf8; font-weight: 700; text-decoration: underline;">info@visigatealerts.in</a>
             </div>
@@ -2192,9 +2216,21 @@
         // =====================================================================
         function isValidWhatsApp(phone) {
             if (!phone) return false;
-            // Format: Must start with +91, followed by optional space/hyphen, and exactly 10 digits
-            const re = /^\+91[\s-]?[0-9]{10}$/;
-            return re.test(phone.trim());
+            const digits = String(phone).replace(/\D/g, '');
+            if (digits.length === 10 && /^[6-9]\d{9}$/.test(digits)) return true;
+            if (digits.length === 12 && digits.startsWith('91') && /^[6-9]\d{9}$/.test(digits.slice(2))) return true;
+            return false;
+        }
+
+        function clean10DigitPhone(phone) {
+            if (!phone) return '';
+            const digits = String(phone).replace(/\D/g, '');
+            return digits.slice(-10);
+        }
+
+        function formatWhatsApp(phone) {
+            const clean = clean10DigitPhone(phone);
+            return clean ? `+91 ${clean}` : '';
         }
 
         function isValidEmail(email) {
@@ -2765,38 +2801,53 @@
             }
 
             if (!isValidWhatsApp(phone)) {
-                alert(`Please enter a valid WhatsApp Number with +91 and 10 digits.
-
-Example: +91 9845012345`);
+                alert("Please enter a valid 10-digit WhatsApp / Mobile number.\n\nExample: 9845012345");
                 document.getElementById('gateWhatsApp').focus();
                 return;
             }
 
             if (!isValidEmail(email)) {
-                alert(`Please enter a valid official Email ID ending with @domain.xxx
-
-Example: secretary@greenwoodheights.com`);
+                alert("Please enter a valid official Email ID ending with @domain.xxx\n\nExample: secretary@greenwoodheights.com");
                 document.getElementById('gateEmail').focus();
                 return;
             }
 
-            leadContact = { society, name, phone, email, role, verified: isLeadPhoneVerified || true };
+            const cleanPhone = clean10DigitPhone(phone);
+            const fullPhone = "+91 " + cleanPhone;
+            leadContact = { 
+                society, 
+                name, 
+                phone: fullPhone, 
+                email, 
+                role, 
+                verified: isLeadPhoneVerified || true,
+                timestamp: new Date().toISOString()
+            };
             currentSociety = society;
             localStorage.setItem('visigate_demo_unlocked', 'true');
             localStorage.setItem('visigate_demo_lead', JSON.stringify(leadContact));
             localStorage.setItem('visigate_phone_verified', 'true');
 
+            // Dispatch Lead to Master Router endpoint which emails visigatealerts@gmail.com
+            const leadApiUrl = "https://script.google.com/macros/s/AKfycbwz-eVMRCO7Sd1dGIIVkHgmBXvfTxrbou5WX_lR2bIx3mKocZUAjWbqI_CuSy_dSw3-/exec" +
+                "?action=submitDemoLead" +
+                "&society=" + encodeURIComponent(society) +
+                "&name=" + encodeURIComponent(name) +
+                "&phone=" + encodeURIComponent(fullPhone) +
+                "&email=" + encodeURIComponent(email) +
+                "&role=" + encodeURIComponent(role);
+
+            try {
+                fetch(leadApiUrl, { mode: 'no-cors' }).catch(function(err) {
+                    console.log('Lead dispatch note:', err);
+                });
+            } catch(e) {}
+
             applySocietyNameAcrossUi(currentSociety);
             updateHeaderLeadBadge();
             document.getElementById('mandatoryLeadGate').style.display = 'none';
 
-            alert(`Welcome to VisiGate Sandbox Demo, ${name}!
-
-Society: ${society}
-Phone: ${phone} (Firebase Verified)
-Official Support: info@visigatealerts.in
-
-Full Live Platform Unlocked.`);
+            alert(`Welcome to VisiGate Sandbox Demo, ${name}!\n\nSociety: ${society}\nWhatsApp: ${fullPhone} (Verified)\nOfficial Support: info@visigatealerts.in\n\nFull Live Platform Unlocked.`);
         }
 
         function applySocietyNameAcrossUi(socName) {
@@ -3470,27 +3521,39 @@ Full Live Platform Unlocked.`);
 
         function onGatePhoneInput() {
             isLeadPhoneVerified = false;
+            const input = document.getElementById('gateWhatsApp');
+            if (input) {
+                let val = input.value.replace(/\D/g, '');
+                if (val.length === 12 && val.startsWith('91')) val = val.slice(2);
+                if (val.length === 11 && val.startsWith('0')) val = val.slice(1);
+                if (val.length > 10) val = val.slice(0, 10);
+                input.value = val;
+            }
             const badge = document.getElementById('phoneVerifiedBadge');
             if (badge) badge.style.display = 'none';
         }
 
         function sendFirebasePhoneOtp() {
-            const phone = document.getElementById('gateWhatsApp').value.trim();
-            if (!isValidWhatsApp(phone)) {
-                alert("Please enter a valid WhatsApp / Phone number with +91 and 10 digits before requesting Firebase OTP.\n\nExample: +91 9845012345");
+            const rawPhone = document.getElementById('gateWhatsApp').value.trim();
+            const cleanPhone = clean10DigitPhone(rawPhone);
+            if (!isValidWhatsApp(cleanPhone)) {
+                alert("Please enter a valid 10-digit WhatsApp / Mobile number before requesting OTP.\n\nExample: 9845012345");
                 document.getElementById('gateWhatsApp').focus();
                 return;
             }
 
             leadOtpDispatchedCode = "123456";
             const container = document.getElementById('phoneOtpContainer');
-            if (container) container.style.display = 'block';
+            if (container) {
+                container.style.display = 'block';
+                setTimeout(() => container.scrollIntoView({ behavior: 'smooth', block: 'nearest' }), 50);
+            }
 
             const feedback = document.getElementById('otpFeedbackMsg');
             if (feedback) {
                 feedback.style.display = 'block';
                 feedback.style.color = '#38bdf8';
-                feedback.innerText = `📲 Firebase SMS OTP dispatched to ${phone}. (Sandbox Test Code: 123456)`;
+                feedback.innerText = `📲 Demo OTP generated for +91 ${cleanPhone}. (Sandbox Code: 123456)`;
             }
 
             const otpInput = document.getElementById('gatePhoneOtp');
@@ -3502,19 +3565,28 @@ Full Live Platform Unlocked.`);
 
         function verifyFirebasePhoneOtp() {
             const otp = document.getElementById('gatePhoneOtp').value.trim();
-            const phone = document.getElementById('gateWhatsApp').value.trim();
+            const rawPhone = document.getElementById('gateWhatsApp').value.trim();
+            const cleanPhone = clean10DigitPhone(rawPhone);
             const feedback = document.getElementById('otpFeedbackMsg');
             const badge = document.getElementById('phoneVerifiedBadge');
             const container = document.getElementById('phoneOtpContainer');
+            const unlockBtn = document.getElementById('btnSubmitUnlock');
 
             if (otp === "123456" || (otp.length === 6 && /^\d+$/.test(otp))) {
                 isLeadPhoneVerified = true;
                 if (container) container.style.display = 'none';
                 if (badge) {
                     badge.style.display = 'block';
-                    badge.innerText = `✅ Phone ${phone} Verified via Firebase Phone Auth (reCAPTCHA UID: fb_usr_${phone.slice(-4)})`;
+                    badge.innerText = `✅ Phone +91 ${cleanPhone} Verified (OTP Authenticated)`;
                 }
-                alert(`✅ Firebase Phone Verification Successful!\n\nPhone: ${phone}\nStatus: Authenticated\n\nYou may now unlock the full interactive demo.`);
+                if (unlockBtn) {
+                    setTimeout(() => {
+                        unlockBtn.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                        unlockBtn.style.boxShadow = '0 0 25px rgba(16, 185, 129, 0.9)';
+                        unlockBtn.style.borderColor = '#10b981';
+                    }, 100);
+                }
+                alert(`✅ Phone Verification Successful!\n\nPhone: +91 ${cleanPhone}\nStatus: Verified\n\nPlease tap "Unlock & Access Full Interactive Demo" below.`);
             } else {
                 if (feedback) {
                     feedback.style.display = 'block';
