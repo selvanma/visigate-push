@@ -1606,7 +1606,7 @@
                                         </div>
                                         <div class="wa-data-row">
                                             <span class="wa-data-label">Visitor:</span>
-                                            <span class="wa-data-val">Rahul Sharma (Swiggy Delivery)</span>
+                                            <span class="wa-data-val">Rahul Sharma (Food Delivery Courier)</span>
                                         </div>
                                         <div class="wa-data-row">
                                             <span class="wa-data-label">Visiting:</span>
@@ -1614,7 +1614,7 @@
                                         </div>
                                         <div class="wa-data-row">
                                             <span class="wa-data-label">Vehicle:</span>
-                                            <span class="wa-data-val">KA 03 MB 4512</span>
+                                            <span class="wa-data-val">KA 03 XX 1024</span>
                                         </div>
                                         <div class="wa-data-row">
                                             <span class="wa-data-label">Time:</span>
@@ -1639,10 +1639,10 @@
                                             <span>🚗 VEHICLE GATE PASS & PARKING</span>
                                             <span style="font-size: 10px; color: #f59e0b; font-weight: 700;">GATE 1</span>
                                         </div>
-                                        <div class="license-plate-graphic">KA • 03 • MB • 4512</div>
+                                        <div class="license-plate-graphic">KA • 03 • XX • 1024</div>
                                         <div class="wa-data-row">
                                             <span class="wa-data-label">Vehicle:</span>
-                                            <span class="wa-data-val">White Honda City (Cab / Uber)</span>
+                                            <span class="wa-data-val">White Sedan (Prepaid Cab / Taxi)</span>
                                         </div>
                                         <div class="wa-data-row">
                                             <span class="wa-data-label">Visiting:</span>
@@ -1674,7 +1674,7 @@
                                         <div class="parcel-locker-slot">🗄️ Security Locker Slot: Box #SL-14</div>
                                         <div class="wa-data-row">
                                             <span class="wa-data-label">Courier:</span>
-                                            <span class="wa-data-val">BlueDart Express (Agent Sunil Yadav)</span>
+                                            <span class="wa-data-val">Express Courier Service (Courier Agent)</span>
                                         </div>
                                         <div class="wa-data-row">
                                             <span class="wa-data-label">Flat:</span>
@@ -1758,7 +1758,7 @@
                     <div style="font-size: 32px; margin-bottom: 12px;">🎭</div>
                     <h3 style="font-size: 18px; color: #ffffff; margin-bottom: 8px;">Online Manager Showcase Demo</h3>
                     <p style="font-size: 14px; color: var(--text-secondary); line-height: 1.6;">
-                        Pitching VisiGate to your RWA or Management Committee? Use our neutral demo society (Greenfield Heights) to show live camera logging and pass generation without revealing private resident data.
+                        Pitching VisiGate to your RWA or Management Committee? Use our interactive sandbox environment (Demo Gated Community) to test live camera logging and pass generation with realistic dummy records.
                     </p>
                     <div style="margin-top: 14px;">
                         <a href="/demo.html" style="color: var(--accent-amber); font-size: 13px; font-weight: 700; text-decoration: none;">Launch Society Manager Demo &rarr;</a>
@@ -2102,15 +2102,15 @@
             if (tab === 'visitor') {
                 macrodroid.innerHTML = '<span>🔔</span><span>MacroDroid Ring Signal: Resident Phone Alert Active</span>';
                 latency.innerText = '0.42s latency';
-                status.innerText = '[SIMULATOR] Ready: Gate 1 camera facial photo captured for Swiggy Delivery.';
+                status.innerText = '[SIMULATOR] Ready: Gate 1 camera facial photo captured for Food Delivery Courier.';
             } else if (tab === 'vehicle') {
-                macrodroid.innerHTML = '<span>🚗</span><span>MacroDroid Relay: Plate KA-03-MB-4512 Verified</span>';
+                macrodroid.innerHTML = '<span>🚗</span><span>MacroDroid Relay: Plate KA-03-XX-1024 Verified</span>';
                 latency.innerText = '0.36s latency';
                 status.innerText = '[SIMULATOR] Ready: Vehicle scan matched Guest Parking Bay #V-12.';
             } else {
                 macrodroid.innerHTML = '<span>📦</span><span>MacroDroid Relay: Parcel Locker Alert Dispatched</span>';
                 latency.innerText = '0.45s latency';
-                status.innerText = '[SIMULATOR] Ready: BlueDart Courier Box awaiting PIN verification [4821].';
+                status.innerText = '[SIMULATOR] Ready: Express Courier Box awaiting PIN verification [4821].';
             }
         }
 
@@ -2142,7 +2142,7 @@
                 res.style.background = 'rgba(16, 185, 129, 0.2)';
                 res.style.color = '#10b981';
                 res.innerHTML = '✅ DIGITAL PASS ISSUED (Bay #V-12)<br><span style="font-size: 11px; font-weight: normal; color: #a7f3d0;">Boom barrier raised. Digital parking pass sent to driver WhatsApp.</span>';
-                telemetry.innerHTML = '⚡ <strong>Vehicle Clearance:</strong> Plate KA-03-MB-4512 cleared. Boom barrier raised. Bay #V-12 reserved.';
+                telemetry.innerHTML = '⚡ <strong>Vehicle Clearance:</strong> Plate KA-03-XX-1024 cleared. Boom barrier raised. Bay #V-12 reserved.';
             } else if (decision === 'VEHICLE_DENIED') {
                 document.getElementById('vehicleActionGroup').style.display = 'none';
                 const res = document.getElementById('vehicleResultBox');

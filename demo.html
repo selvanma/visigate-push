@@ -3,8 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, viewport-fit=cover">
-    <title>Society Manager Live Demo Showcase | VisiGate Alerts</title>
-    <meta name="description" content="Interactive live demonstration of VisiGate Alerts for Society Managers, RWAs, and Management Committees. Test Guard, Resident, MC, Manager, and Master Router portals online.">
+    <title>Society Manager Interactive Live Demo & Sandbox | VisiGate Alerts</title>
+    <meta name="description" content="Configure and test-drive VisiGate Alerts for your housing society. Launch an interactive live sandbox with Guard App, Resident Suite, MC Analytics, and Manager Portal using realistic dummy data.">
     <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🛡️</text></svg>">
     
     <!-- Google Fonts: Outfit & Plus Jakarta Sans -->
@@ -17,6 +17,7 @@
             --bg-primary: #070d19;
             --bg-secondary: #0f172a;
             --bg-card: rgba(30, 41, 59, 0.7);
+            --bg-card-hover: rgba(51, 65, 85, 0.85);
             --border-glass: rgba(255, 255, 255, 0.08);
             --border-accent: rgba(56, 189, 248, 0.3);
             
@@ -52,14 +53,16 @@
             -webkit-font-smoothing: antialiased;
         }
 
+        /* Sticky Navigation Header */
         header.demo-header {
             position: sticky;
             top: 0;
             z-index: 1000;
             backdrop-filter: blur(16px);
-            background: rgba(7, 13, 25, 0.9);
+            -webkit-backdrop-filter: blur(16px);
+            background: rgba(7, 13, 25, 0.92);
             border-bottom: 1px solid var(--border-glass);
-            padding: 14px 24px;
+            padding: 14px 20px;
         }
 
         .header-wrap {
@@ -88,17 +91,17 @@
             -webkit-text-fill-color: transparent;
         }
 
-        .society-badge {
+        .sandbox-society-pill {
             display: inline-flex;
             align-items: center;
             gap: 6px;
             background: rgba(16, 185, 129, 0.12);
             border: 1px solid rgba(16, 185, 129, 0.3);
             color: var(--accent-emerald);
-            padding: 5px 12px;
+            padding: 6px 14px;
             border-radius: 9999px;
             font-size: 12px;
-            font-weight: 600;
+            font-weight: 700;
         }
 
         .back-link {
@@ -111,20 +114,17 @@
             gap: 6px;
             transition: color 0.2s;
         }
-
-        .back-link:hover {
-            color: var(--accent-cyan);
-        }
+        .back-link:hover { color: var(--accent-cyan); }
 
         /* Hero */
         .demo-hero {
             max-width: 1100px;
-            margin: 40px auto 30px;
+            margin: 36px auto 24px;
             padding: 0 20px;
             text-align: center;
         }
 
-        .demo-tag {
+        .demo-badge-pill {
             display: inline-block;
             font-size: 12px;
             font-weight: 700;
@@ -133,137 +133,70 @@
             text-transform: uppercase;
             background: rgba(245, 158, 11, 0.1);
             border: 1px solid rgba(245, 158, 11, 0.3);
-            padding: 5px 14px;
+            padding: 6px 16px;
             border-radius: 9999px;
             margin-bottom: 16px;
         }
 
         h1.demo-title {
             font-family: var(--font-display);
-            font-size: clamp(28px, 4.5vw, 48px);
+            font-size: clamp(26px, 4.2vw, 44px);
             font-weight: 800;
-            line-height: 1.2;
-            margin-bottom: 16px;
-            letter-spacing: -1px;
+            line-height: 1.25;
+            margin-bottom: 14px;
+            letter-spacing: -0.5px;
         }
 
         p.demo-subtitle {
-            font-size: clamp(14px, 1.8vw, 17px);
+            font-size: clamp(14px, 1.8vw, 16px);
             color: var(--text-secondary);
-            max-width: 780px;
-            margin: 0 auto 30px;
+            max-width: 820px;
+            margin: 0 auto 28px;
         }
 
-        /* Interactive Portal Showcase Tabs */
-        .showcase-container {
-            max-width: 1200px;
-            margin: 0 auto 60px;
-            padding: 0 20px;
-        }
-
-        .portal-nav-tabs {
-            display: flex;
-            gap: 10px;
-            overflow-x: auto;
-            padding-bottom: 12px;
-            margin-bottom: 24px;
-            scrollbar-width: none;
-        }
-        .portal-nav-tabs::-webkit-scrollbar { display: none; }
-
-        .p-tab {
-            padding: 12px 20px;
-            border-radius: 10px;
-            background: rgba(30, 41, 59, 0.6);
-            border: 1px solid var(--border-glass);
-            color: var(--text-secondary);
-            font-size: 14px;
-            font-weight: 600;
-            cursor: pointer;
-            white-space: nowrap;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            transition: all 0.2s;
-        }
-
-        .p-tab.active {
-            background: linear-gradient(135deg, #0284c7, #2563eb);
-            color: #ffffff;
-            border-color: var(--accent-cyan);
-            box-shadow: 0 4px 15px rgba(2, 132, 199, 0.4);
-        }
-
-        /* Demo Screen Box */
-        .demo-screen-box {
-            background: var(--bg-card);
-            border: 1px solid var(--border-glass);
+        /* Onboarding Configuration Card */
+        .config-card {
+            max-width: 1040px;
+            margin: 0 auto 40px;
+            padding: 28px 24px;
+            background: linear-gradient(135deg, rgba(15, 23, 42, 0.95) 0%, rgba(30, 41, 59, 0.8) 100%);
+            border: 1px solid var(--border-accent);
             border-radius: 20px;
-            padding: 32px;
-            backdrop-filter: blur(16px);
-            box-shadow: 0 20px 40px -15px rgba(0, 0, 0, 0.7);
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.6);
         }
 
-        .demo-panel {
-            display: none;
-        }
-        .demo-panel.active {
-            display: block;
-            animation: fadeIn 0.3s ease;
-        }
-
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(6px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-
-        .panel-header {
+        .config-header {
             display: flex;
             align-items: center;
             justify-content: space-between;
-            margin-bottom: 24px;
-            padding-bottom: 16px;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.08);
             flex-wrap: wrap;
             gap: 12px;
+            margin-bottom: 20px;
+            padding-bottom: 14px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.08);
         }
 
-        .panel-title {
+        .config-title {
             font-family: var(--font-display);
-            font-size: 22px;
+            font-size: 20px;
             font-weight: 700;
+            color: #ffffff;
             display: flex;
             align-items: center;
             gap: 10px;
         }
 
-        .panel-badge {
-            background: rgba(56, 189, 248, 0.15);
-            border: 1px solid var(--border-accent);
-            color: var(--accent-cyan);
-            padding: 4px 10px;
-            border-radius: 6px;
-            font-size: 12px;
-            font-weight: 600;
-        }
-
-        .demo-grid-2 {
+        .config-grid {
             display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 24px;
-        }
-
-        .interactive-form-card {
-            background: rgba(15, 23, 42, 0.8);
-            border: 1px solid var(--border-glass);
-            border-radius: 14px;
-            padding: 22px;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 16px;
+            text-align: left;
         }
 
         .form-label {
             display: block;
-            font-size: 12px;
-            font-weight: 600;
+            font-size: 11px;
+            font-weight: 700;
             color: var(--text-secondary);
             margin-bottom: 6px;
             text-transform: uppercase;
@@ -272,119 +205,264 @@
 
         .form-input, .form-select {
             width: 100%;
-            background: rgba(30, 41, 59, 0.8);
+            background: rgba(15, 23, 42, 0.85);
             border: 1px solid var(--border-glass);
             color: #ffffff;
-            padding: 10px 14px;
+            padding: 11px 14px;
             border-radius: 8px;
             font-size: 14px;
-            margin-bottom: 16px;
             outline: none;
-            transition: border-color 0.2s;
+            transition: all 0.2s;
         }
-
         .form-input:focus, .form-select:focus {
             border-color: var(--accent-cyan);
+            box-shadow: 0 0 12px rgba(56, 189, 248, 0.25);
         }
 
-        .btn-action-primary {
+        .btn-launch-sandbox {
             background: linear-gradient(135deg, #0284c7, #2563eb);
             color: #ffffff;
-            padding: 12px 20px;
-            border-radius: 8px;
+            padding: 13px 24px;
+            border-radius: 10px;
             border: none;
             font-weight: 700;
-            font-size: 14px;
+            font-size: 15px;
             cursor: pointer;
             width: 100%;
             display: flex;
             align-items: center;
             justify-content: center;
-            gap: 8px;
-            transition: transform 0.1s;
+            gap: 10px;
+            box-shadow: 0 6px 20px rgba(37, 99, 235, 0.4);
+            transition: all 0.2s;
         }
-
-        .btn-action-primary:hover {
+        .btn-launch-sandbox:hover {
             filter: brightness(1.1);
+            transform: translateY(-1px);
         }
 
-        .interactive-feed-card {
-            background: rgba(15, 23, 42, 0.8);
+        /* Live Sandbox Showcase Container */
+        .sandbox-container {
+            max-width: 1200px;
+            margin: 0 auto 60px;
+            padding: 0 20px;
+        }
+
+        .sandbox-app-switcher {
+            display: flex;
+            gap: 8px;
+            overflow-x: auto;
+            padding-bottom: 12px;
+            margin-bottom: 20px;
+            scrollbar-width: none;
+        }
+        .sandbox-app-switcher::-webkit-scrollbar { display: none; }
+
+        .app-tab-btn {
+            padding: 12px 18px;
+            border-radius: 10px;
+            background: rgba(30, 41, 59, 0.6);
+            border: 1px solid var(--border-glass);
+            color: var(--text-secondary);
+            font-size: 13px;
+            font-weight: 700;
+            cursor: pointer;
+            white-space: nowrap;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            transition: all 0.2s;
+        }
+        .app-tab-btn.active {
+            background: linear-gradient(135deg, #0284c7, #2563eb);
+            color: #ffffff;
+            border-color: var(--accent-cyan);
+            box-shadow: 0 4px 15px rgba(2, 132, 199, 0.4);
+        }
+
+        /* Screen Display Box */
+        .sandbox-screen-box {
+            background: var(--bg-card);
+            border: 1px solid var(--border-glass);
+            border-radius: 20px;
+            padding: 28px;
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            box-shadow: 0 20px 40px -15px rgba(0, 0, 0, 0.7);
+        }
+
+        .app-panel {
+            display: none;
+        }
+        .app-panel.active {
+            display: block;
+            animation: panelFade 0.3s ease;
+        }
+
+        @keyframes panelFade {
+            from { opacity: 0; transform: translateY(6px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .panel-meta-bar {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 22px;
+            padding-bottom: 14px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+            flex-wrap: wrap;
+            gap: 12px;
+        }
+
+        .panel-heading {
+            font-family: var(--font-display);
+            font-size: 20px;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .badge-live-tag {
+            background: rgba(16, 185, 129, 0.15);
+            border: 1px solid rgba(16, 185, 129, 0.3);
+            color: var(--accent-emerald);
+            padding: 4px 10px;
+            border-radius: 6px;
+            font-size: 11px;
+            font-weight: 700;
+        }
+
+        /* 2-Column Split in Panels */
+        .panel-layout-split {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 24px;
+        }
+
+        .inner-action-card {
+            background: rgba(15, 23, 42, 0.85);
             border: 1px solid var(--border-glass);
             border-radius: 14px;
-            padding: 22px;
+            padding: 20px;
+        }
+
+        .inner-log-card {
+            background: rgba(15, 23, 42, 0.85);
+            border: 1px solid var(--border-glass);
+            border-radius: 14px;
+            padding: 20px;
             display: flex;
             flex-direction: column;
             justify-content: space-between;
         }
 
-        .feed-log-box {
+        .log-terminal-output {
             background: #090e1a;
             border: 1px solid rgba(255, 255, 255, 0.05);
-            border-radius: 10px;
-            padding: 14px;
+            border-radius: 8px;
+            padding: 12px;
             font-family: monospace;
             font-size: 12px;
             color: #a7f3d0;
             line-height: 1.6;
-            min-height: 180px;
-            max-height: 240px;
+            min-height: 200px;
+            max-height: 280px;
             overflow-y: auto;
         }
 
-        /* Stats Cards */
-        .stats-row-4 {
+        /* Camera Viewfinder Simulator */
+        .camera-viewfinder {
+            background: #020617;
+            border: 1px dashed rgba(56, 189, 248, 0.4);
+            border-radius: 10px;
+            padding: 16px;
+            text-align: center;
+            margin-bottom: 14px;
+            position: relative;
+        }
+        .viewfinder-corner {
+            position: absolute;
+            width: 14px;
+            height: 14px;
+            border-color: var(--accent-cyan);
+            border-style: solid;
+        }
+        .top-left { top: 6px; left: 6px; border-width: 2px 0 0 2px; }
+        .top-right { top: 6px; right: 6px; border-width: 2px 2px 0 0; }
+        .bottom-left { bottom: 6px; left: 6px; border-width: 0 0 2px 2px; }
+        .bottom-right { bottom: 6px; right: 6px; border-width: 0 2px 2px 0; }
+
+        /* Stats Grid */
+        .stats-quad-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 16px;
-            margin-bottom: 24px;
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            gap: 14px;
+            margin-bottom: 22px;
         }
 
-        .s-card {
-            background: rgba(15, 23, 42, 0.8);
+        .quad-card {
+            background: rgba(15, 23, 42, 0.85);
             border: 1px solid var(--border-glass);
-            padding: 18px;
+            padding: 16px;
             border-radius: 12px;
         }
 
-        .s-num {
+        .quad-num {
             font-family: var(--font-display);
-            font-size: 26px;
+            font-size: 24px;
             font-weight: 700;
             color: #ffffff;
         }
 
-        .s-lbl {
-            font-size: 12px;
+        .quad-sub {
+            font-size: 11px;
             color: var(--text-muted);
             margin-top: 4px;
         }
 
-        /* Lead Capture Section */
-        .onboard-section {
-            max-width: 900px;
-            margin: 60px auto;
-            padding: 40px 24px;
-            background: linear-gradient(135deg, rgba(15, 23, 42, 0.95) 0%, rgba(30, 41, 59, 0.8) 100%);
-            border: 1px solid var(--border-accent);
-            border-radius: 20px;
-            box-shadow: 0 0 40px rgba(56, 189, 248, 0.15);
-            text-align: center;
+        /* Resident Phone Mockup inside Resident Tab */
+        .resident-phone-shell {
+            max-width: 360px;
+            margin: 0 auto;
+            background: #0b1329;
+            border: 2px solid rgba(255, 255, 255, 0.1);
+            border-radius: 28px;
+            padding: 14px 12px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.8);
         }
 
-        .onboard-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 16px;
-            text-align: left;
-            margin-top: 24px;
+        .phone-bubble {
+            background: #1e293b;
+            border: 1px solid var(--border-glass);
+            border-radius: 12px;
+            padding: 14px;
+            margin-bottom: 12px;
+            font-size: 13px;
         }
+
+        .btn-wa-opt {
+            width: 100%;
+            padding: 10px;
+            border-radius: 6px;
+            border: none;
+            font-weight: 700;
+            font-size: 13px;
+            cursor: pointer;
+            margin-top: 6px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+        }
+        .btn-wa-green { background: #10b981; color: #ffffff; }
+        .btn-wa-red { background: #ef4444; color: #ffffff; }
 
         @media (max-width: 768px) {
-            .demo-grid-2 { grid-template-columns: 1fr; }
-            .onboard-grid { grid-template-columns: 1fr; }
-            .demo-screen-box { padding: 20px 14px; }
-            .s-num { font-size: 20px; }
+            .panel-layout-split { grid-template-columns: 1fr; }
+            .sandbox-screen-box { padding: 18px 12px; }
+            .quad-num { font-size: 20px; }
         }
     </style>
 </head>
@@ -394,13 +472,13 @@
     <header class="demo-header">
         <div class="header-wrap">
             <a href="/" class="brand-box">
-                <span style="font-size: 24px;">🛡️</span>
+                <span style="font-size: 22px;">🛡️</span>
                 <span class="brand-logo-text">VisiGate Alerts</span>
             </a>
 
-            <div class="society-badge">
+            <div class="sandbox-society-pill" id="headerSocietyBadge">
                 <span>🏢</span>
-                <span>Active Demo: Greenfield Heights (180 Flats)</span>
+                <span id="badgeSocietyName">Demo Residential Society (Live Sandbox)</span>
             </div>
 
             <a href="/" class="back-link">
@@ -411,214 +489,341 @@
 
     <!-- Hero -->
     <section class="demo-hero">
-        <span class="demo-tag">Society Manager Online Showcase</span>
-        <h1 class="demo-title">Test Drive VisiGate Alerts For Your Housing Society</h1>
+        <span class="demo-badge-pill">Interactive Live Demonstration</span>
+        <h1 class="demo-title">Experience VisiGate Alerts in Real-Time</h1>
         <p class="demo-subtitle">
-            See how Greenfield Heights Residences (180 flats, 4 towers, 2 security gates) manages visitor authentication, camera photo logging, WhatsApp approvals, parcel lockers, and staff attendance with zero hardware.
+            Configure your society parameters below to immediately launch an interactive testbed. Test the Guard Tablet, Resident Mobile Suite, Management Committee Dashboard, and Estate Manager Suite with completely safe dummy data.
         </p>
     </section>
 
-    <!-- Showcase Container -->
-    <div class="showcase-container">
-        <!-- Navigation Tabs -->
-        <div class="portal-nav-tabs">
-            <button class="p-tab active" onclick="switchPortalTab('guard')">🛡️ 1. Guard Checkpoint Demo</button>
-            <button class="p-tab" onclick="switchPortalTab('resident')">📱 2. Resident Mobile Suite Demo</button>
-            <button class="p-tab" onclick="switchPortalTab('mc')">🏛️ 3. MC Security Analytics Demo</button>
-            <button class="p-tab" onclick="switchPortalTab('manager')">📋 4. Estate Manager Portal Demo</button>
-            <button class="p-tab" onclick="switchPortalTab('router')">⚡ 5. Master Router Telemetry Demo</button>
+    <!-- Minimum Requirements Entry & Instant Sandbox Provisioner -->
+    <section class="config-card" id="configSection">
+        <div class="config-header">
+            <div class="config-title">
+                <span>⚙️ Configure Your Society Testbed</span>
+            </div>
+            <span style="font-size: 12px; color: var(--accent-cyan); font-weight: 600;">
+                ⚡ Instantly generates your live sandbox with zero waiting
+            </span>
         </div>
 
-        <!-- Portal 1: Guard App Demo -->
-        <div class="demo-screen-box">
-            <div id="panel-guard" class="demo-panel active">
-                <div class="panel-header">
-                    <div class="panel-title">
-                        <span>🛡️ Gate Guard Checkpoint App</span>
-                        <span class="panel-badge">High-Concurrency Gate Tablet</span>
+        <form id="sandboxConfigForm" onsubmit="applySandboxConfig(event)">
+            <div class="config-grid">
+                <div>
+                    <label class="form-label">Society / Apartment Name</label>
+                    <input type="text" id="cfgSocietyName" class="form-input" value="Demo Residential Society" placeholder="e.g. Blossom Enclave" required>
+                </div>
+                <div>
+                    <label class="form-label">Number of Flats / Units</label>
+                    <input type="number" id="cfgFlatsCount" class="form-input" value="120" min="10" max="2500" required>
+                </div>
+                <div>
+                    <label class="form-label">Security Checkpoint Gate</label>
+                    <select id="cfgGateName" class="form-select">
+                        <option value="Gate 1 (Main Entrance)" selected>Gate 1 (Main Entrance)</option>
+                        <option value="Gate 2 (Rear Checkpoint)">Gate 2 (Rear Checkpoint)</option>
+                        <option value="North Gate Tower Block">North Gate Tower Block</option>
+                    </select>
+                </div>
+                <div>
+                    <label class="form-label">Tester / Manager Name</label>
+                    <input type="text" id="cfgManagerName" class="form-input" value="Kishore (Estate Manager)" placeholder="e.g. Kishore" required>
+                </div>
+                <div>
+                    <label class="form-label">Demo Phone / WhatsApp</label>
+                    <input type="text" id="cfgTesterPhone" class="form-input" value="+91 98000 00000" placeholder="+91 98XXX XXXXX" required>
+                </div>
+                <div style="display: flex; align-items: flex-end;">
+                    <button type="submit" class="btn-launch-sandbox">
+                        <span>🚀 Launch Live Multi-App Sandbox</span>
+                    </button>
+                </div>
+            </div>
+        </form>
+    </section>
+
+    <!-- Interactive Multi-App Sandbox Showcase -->
+    <div class="sandbox-container" id="sandboxWorkspace">
+        <!-- App Switcher Tabs -->
+        <div class="sandbox-app-switcher">
+            <button class="app-tab-btn active" id="tabNavGuard" onclick="switchAppTab('guard')">
+                <span>🛡️ 1. Guard Checkpoint App</span>
+            </button>
+            <button class="app-tab-btn" id="tabNavResident" onclick="switchAppTab('resident')">
+                <span>📱 2. Resident Mobile Suite</span>
+                <span id="resAlertBadge" style="display: none; background: #ef4444; color: #fff; border-radius: 9999px; font-size: 10px; padding: 1px 6px;">1</span>
+            </button>
+            <button class="app-tab-btn" id="tabNavMc" onclick="switchAppTab('mc')">
+                <span>🏛️ 3. MC Security Analytics</span>
+            </button>
+            <button class="app-tab-btn" id="tabNavManager" onclick="switchAppTab('manager')">
+                <span>📋 4. Estate Manager Portal</span>
+            </button>
+            <button class="app-tab-btn" id="tabNavRouter" onclick="switchAppTab('router')">
+                <span>⚡ 5. Master Router Telemetry</span>
+            </button>
+        </div>
+
+        <!-- Sandbox Display Box -->
+        <div class="sandbox-screen-box">
+            
+            <!-- TAB 1: GUARD CHECKPOINT APP -->
+            <div id="panel-guard" class="app-panel active">
+                <div class="panel-meta-bar">
+                    <div class="panel-heading">
+                        <span>🛡️ Guard Gate Checkpoint Tablet</span>
+                        <span class="badge-live-tag">CONNECTED</span>
                     </div>
-                    <span style="font-size: 13px; color: var(--text-secondary);">Gate 1 Main Gate • Security Officer Manoj</span>
+                    <div style="font-size: 12px; color: var(--text-secondary);">
+                        <strong id="displayGateLabel" style="color: #fff;">Gate 1 (Main Entrance)</strong> &bull; Latency: <strong>32ms</strong>
+                    </div>
                 </div>
 
-                <div class="demo-grid-2">
-                    <div class="interactive-form-card">
-                        <h4 style="margin-bottom: 14px; font-size: 15px; color: #ffffff;">Simulate New Gate Visitor Entry</h4>
-                        
-                        <label class="form-label">Visitor Full Name</label>
-                        <input type="text" id="demoVisitorName" class="form-input" value="Ramesh Kumar (Swiggy Delivery)">
+                <div class="panel-layout-split">
+                    <!-- Left: Guard Action Form -->
+                    <div class="inner-action-card">
+                        <h4 style="font-size: 15px; color: #ffffff; margin-bottom: 12px;">Log New Visitor / Delivery Check-In</h4>
 
-                        <label class="form-label">Target Flat Number</label>
-                        <select id="demoTargetFlat" class="form-select">
-                            <option value="Tower A - Flat 104">Tower A - Flat 104 (Mr. Sharma)</option>
-                            <option value="Tower B - Flat 301" selected>Tower B - Flat 301 (Mr. Malhotra)</option>
-                            <option value="Tower C - Flat 202">Tower C - Flat 202 (Mrs. Iyer)</option>
-                            <option value="Tower D - Flat 405">Tower D - Flat 405 (Dr. Patel)</option>
+                        <!-- Simulated Camera Viewfinder -->
+                        <div class="camera-viewfinder">
+                            <div class="viewfinder-corner top-left"></div>
+                            <div class="viewfinder-corner top-right"></div>
+                            <div class="viewfinder-corner bottom-left"></div>
+                            <div class="viewfinder-corner bottom-right"></div>
+                            <div style="font-size: 28px; margin-bottom: 4px;">📷</div>
+                            <div style="font-size: 11px; color: var(--accent-cyan); font-weight: 700;">Live Gate Camera: Motion Detected</div>
+                            <div style="font-size: 10px; color: var(--text-muted);">Facial Snapshot Prepared for WhatsApp Payload</div>
+                        </div>
+
+                        <label class="form-label">Visitor Type</label>
+                        <select id="guardVisitorType" class="form-select" onchange="updateVisitorDefaults()">
+                            <option value="Food Courier" selected>Food Delivery Courier</option>
+                            <option value="Parcel Courier">Express Parcel Courier</option>
+                            <option value="Guest">Personal / Guest Visitor</option>
+                            <option value="Cab Driver">Cab / Taxi Driver</option>
+                            <option value="Service Technician">Service Technician / Vendor</option>
                         </select>
 
-                        <label class="form-label">Visitor Vehicle Plate (Optional)</label>
-                        <input type="text" id="demoVehiclePlate" class="form-input" value="KA-03-MB-4512">
+                        <label class="form-label">Dummy Visitor Name</label>
+                        <input type="text" id="guardVisitorName" class="form-input" value="Suresh Kumar (Food Courier)">
 
-                        <button class="btn-action-primary" onclick="simulateGuardEntry()">
+                        <label class="form-label">Destination Flat</label>
+                        <select id="guardTargetFlat" class="form-select">
+                            <option value="Flat 101" selected>Flat 101 (Mr. R. Sharma)</option>
+                            <option value="Flat 204">Flat 204 (Mrs. S. Rao)</option>
+                            <option value="Flat 302">Flat 302 (Dr. V. Mehta)</option>
+                            <option value="Flat 405">Flat 405 (Mr. K. Anand)</option>
+                        </select>
+
+                        <label class="form-label">Dummy Vehicle Plate</label>
+                        <input type="text" id="guardVehiclePlate" class="form-input" value="KA-01-XX-1024">
+
+                        <button class="btn-launch-sandbox" onclick="guardDispatchEntry()">
                             <span>📷 Capture Photo & Dispatch WhatsApp Alert</span>
                             <span>&rarr;</span>
                         </button>
                     </div>
 
-                    <div class="interactive-feed-card">
+                    <!-- Right: Guard Terminal Activity Log -->
+                    <div class="inner-log-card">
                         <div>
-                            <h4 style="margin-bottom: 10px; font-size: 15px; color: #ffffff;">Live Gate Terminal Activity Log</h4>
-                            <div class="feed-log-box" id="guardLogBox">
-                                [15:40:02] Gate 1 Terminal Online (Greenfield Heights)<br>
-                                [15:40:05] Master Router Link: Established (32ms latency)<br>
-                                [15:40:12] Ready for visitor camera check-in...<br>
+                            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;">
+                                <h4 style="font-size: 15px; color: #ffffff;">Terminal Activity Feed</h4>
+                                <span style="font-size: 11px; color: var(--accent-emerald);">● Synchronized</span>
+                            </div>
+                            <div class="log-terminal-output" id="guardLogOutput">
+                                [READY] Gate terminal online & connected to Master Router.<br>
+                                [CONFIG] Society: Demo Residential Society &bull; Gate 1 Checkpoint.<br>
+                                [MONITOR] Standing by for incoming visitors, cabs, or couriers...<br>
                             </div>
                         </div>
-                        <div style="margin-top: 14px; font-size: 12px; color: var(--accent-emerald);">
-                            ⚡ Average approval dispatch speed: 0.8 seconds via Meta Cloud API
+                        <div style="margin-top: 14px; font-size: 12px; color: var(--accent-cyan); line-height: 1.4;">
+                            💡 <em>When you click Dispatch above, switch to the <strong>Resident Mobile Suite</strong> tab to see the incoming alert!</em>
                         </div>
                     </div>
                 </div>
             </div>
 
-            <!-- Portal 2: Resident Suite Demo -->
-            <div id="panel-resident" class="demo-panel">
-                <div class="panel-header">
-                    <div class="panel-title">
-                        <span>📱 Resident Mobile Suite</span>
-                        <span class="panel-badge">Flat 301 • Tower B</span>
+            <!-- TAB 2: RESIDENT MOBILE SUITE -->
+            <div id="panel-resident" class="app-panel">
+                <div class="panel-meta-bar">
+                    <div class="panel-heading">
+                        <span>📱 Resident Smartphone Interface</span>
+                        <span class="badge-live-tag">WHATSAPP & APP SYNC</span>
                     </div>
-                    <span style="font-size: 13px; color: var(--text-secondary);">Resident: Vikram Malhotra • WhatsApp Registered</span>
+                    <div style="font-size: 12px; color: var(--text-secondary);">
+                        Simulating: <strong style="color: #fff;" id="residentFlatLabel">Flat 101</strong> &bull; Meta Verified Channel
+                    </div>
                 </div>
 
-                <div class="demo-grid-2">
-                    <div class="interactive-form-card">
-                        <h4 style="margin-bottom: 14px; font-size: 15px; color: #ffffff;">Pre-Approve Guest Entry Pass</h4>
-                        
-                        <label class="form-label">Guest / Party Invitee Name</label>
-                        <input type="text" id="demoGuestName" class="form-input" value="Kiran Desai (Dinner Guest)">
+                <div class="panel-layout-split">
+                    <!-- Phone Shell with Interactive Incoming WhatsApp Notification -->
+                    <div>
+                        <div class="resident-phone-shell">
+                            <div style="display: flex; justify-content: space-between; font-size: 11px; color: #94a3b8; margin-bottom: 12px; padding: 0 4px;">
+                                <span>9:41</span>
+                                <span>5G 📶 100% 🔋</span>
+                            </div>
 
-                        <label class="form-label">Pass Valid Date</label>
-                        <input type="text" class="form-input" value="Today (Until 11:59 PM)" readonly>
+                            <div style="background: rgba(16, 185, 129, 0.1); border: 1px solid rgba(16, 185, 129, 0.3); padding: 8px 12px; border-radius: 8px; font-size: 11px; color: #a7f3d0; margin-bottom: 10px; display: flex; align-items: center; gap: 6px;">
+                                <span>🔔</span>
+                                <span>MacroDroid Audio Ring: Ready</span>
+                            </div>
 
-                        <button class="btn-action-primary" onclick="simulateGuestPass()">
-                            <span>🎫 Generate Instant Digital Gate Pass</span>
-                        </button>
-                        
-                        <div id="guestPassResult" style="display: none; margin-top: 14px; padding: 12px; background: rgba(16, 185, 129, 0.15); border: 1px solid var(--accent-emerald); border-radius: 8px; font-size: 13px;">
-                            <strong>Gate Pass Issued:</strong> Code <code>#8942</code><br>
-                            <span style="font-size: 11px; color: #a7f3d0;">Guard scans code at gate for 0-second barrier clearance.</span>
+                            <!-- WhatsApp Incoming Approval Card -->
+                            <div class="phone-bubble" id="resIncomingCard">
+                                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
+                                    <strong style="color: #38bdf8; font-size: 12px;">🛡️ GATE SECURITY ALERT</strong>
+                                    <span style="font-size: 10px; color: #10b981; font-weight: 700;">JUST NOW</span>
+                                </div>
+                                <div style="background: rgba(56, 189, 248, 0.15); padding: 4px 8px; border-radius: 4px; font-size: 11px; color: #38bdf8; margin-bottom: 8px;">
+                                    📸 Photo Snapshot captured at Main Gate
+                                </div>
+                                <div style="font-size: 12px; line-height: 1.5; color: #e2e8f0; margin-bottom: 10px;" id="resVisitorDetails">
+                                    <strong>Visitor:</strong> Suresh Kumar (Food Courier)<br>
+                                    <strong>Visiting:</strong> Flat 101<br>
+                                    <strong>Vehicle:</strong> KA-01-XX-1024<br>
+                                    <strong>Checkpoint:</strong> Gate 1 (Main Entrance)
+                                </div>
+
+                                <div id="resButtonContainer">
+                                    <button class="btn-wa-opt btn-wa-green" onclick="residentRespond('APPROVE')">
+                                        <span>✓ APPROVE ENTRY</span>
+                                    </button>
+                                    <button class="btn-wa-opt btn-wa-red" onclick="residentRespond('DENY')">
+                                        <span>✕ DENY ENTRY</span>
+                                    </button>
+                                </div>
+
+                                <div id="resResponseFeedback" style="display: none; padding: 10px; border-radius: 6px; font-weight: 700; text-align: center; font-size: 12px; margin-top: 8px;"></div>
+                            </div>
                         </div>
                     </div>
 
-                    <div class="interactive-feed-card">
-                        <h4 style="margin-bottom: 14px; font-size: 15px; color: #ffffff;">Daily Domestic Staff Attendance</h4>
-                        <div style="background: rgba(30, 41, 59, 0.6); padding: 12px; border-radius: 8px; margin-bottom: 10px; display: flex; justify-content: space-between; align-items: center;">
-                            <div>
-                                <div style="font-weight: 600;">👩‍🍳 Sunita (Cook / Maid)</div>
-                                <div style="font-size: 11px; color: var(--text-muted);">Pass ID #ST-102 • Flat 301</div>
-                            </div>
-                            <span style="background: rgba(16, 185, 129, 0.2); color: #10b981; padding: 4px 8px; border-radius: 6px; font-size: 11px; font-weight: 700;">INSIDE (08:32 AM)</span>
+                    <!-- Resident Self-Service Tools: Pre-Approved Guest Passes & Domestic Staff -->
+                    <div style="display: flex; flex-direction: column; gap: 16px;">
+                        <div class="inner-action-card">
+                            <h4 style="font-size: 15px; color: #ffffff; margin-bottom: 10px;">🎫 Issue Pre-Approved Digital Guest Pass</h4>
+                            <p style="font-size: 12px; color: var(--text-secondary); margin-bottom: 12px;">
+                                Create an instant digital pass for invited dinner guests or repair technicians to bypass gate delays.
+                            </p>
+                            <label class="form-label">Guest / Invitee Name</label>
+                            <input type="text" id="resGuestName" class="form-input" value="Rohan Verma (Dinner Guest)">
+                            <button class="btn-launch-sandbox" style="padding: 10px;" onclick="residentCreatePass()">
+                                <span>Generate Instant 4-Digit Pass PIN</span>
+                            </button>
+                            <div id="passCodeDisplay" style="display: none; margin-top: 10px; padding: 10px; background: rgba(16, 185, 129, 0.15); border: 1px solid var(--accent-emerald); border-radius: 8px; font-size: 13px; color: #a7f3d0;"></div>
                         </div>
-                        <div style="background: rgba(30, 41, 59, 0.6); padding: 12px; border-radius: 8px; display: flex; justify-content: space-between; align-items: center;">
-                            <div>
-                                <div style="font-weight: 600;">🚗 Rajesh (Personal Driver)</div>
-                                <div style="font-size: 11px; color: var(--text-muted);">Pass ID #ST-109 • Flat 301</div>
+
+                        <div class="inner-action-card">
+                            <h4 style="font-size: 15px; color: #ffffff; margin-bottom: 10px;">👩‍🍳 Domestic Staff Attendance Status</h4>
+                            <div style="display: flex; flex-direction: column; gap: 8px; font-size: 12px;">
+                                <div style="background: rgba(30, 41, 59, 0.7); padding: 8px 12px; border-radius: 6px; display: flex; justify-content: space-between; align-items: center;">
+                                    <div><strong>Maid Sunita</strong> (Pass #ST-102)</div>
+                                    <span style="color: #10b981; font-weight: 700;">INSIDE (08:30 AM)</span>
+                                </div>
+                                <div style="background: rgba(30, 41, 59, 0.7); padding: 8px 12px; border-radius: 6px; display: flex; justify-content: space-between; align-items: center;">
+                                    <div><strong>Driver Rajesh</strong> (Pass #ST-109)</div>
+                                    <span style="color: #94a3b8; font-weight: 700;">EXITED (05:15 PM)</span>
+                                </div>
                             </div>
-                            <span style="background: rgba(100, 116, 139, 0.2); color: #94a3b8; padding: 4px 8px; border-radius: 6px; font-size: 11px; font-weight: 700;">EXITED (05:14 PM)</span>
-                        </div>
-                        <div style="margin-top: 16px; font-size: 12px; color: var(--text-secondary);">
-                            🔔 Automatic WhatsApp arrival alert triggered when staff checks in at Gate 1.
                         </div>
                     </div>
                 </div>
             </div>
 
-            <!-- Portal 3: MC Committee Demo -->
-            <div id="panel-mc" class="demo-panel">
-                <div class="panel-header">
-                    <div class="panel-title">
-                        <span>🏛️ Management Committee (MC) Security Analytics</span>
-                        <span class="panel-badge">Society Executive View</span>
+            <!-- TAB 3: MANAGEMENT COMMITTEE (MC) DASHBOARD -->
+            <div id="panel-mc" class="app-panel">
+                <div class="panel-meta-bar">
+                    <div class="panel-heading">
+                        <span>🏛️ Management Committee Security Analytics</span>
+                        <span class="badge-live-tag">EXECUTIVE VIEW</span>
                     </div>
-                    <span style="font-size: 13px; color: var(--text-secondary);">Greenfield Heights RWA Dashboard</span>
-                </div>
-
-                <div class="stats-row-4">
-                    <div class="s-card">
-                        <div class="s-num" style="color: var(--accent-emerald);">174 / 180</div>
-                        <div class="s-lbl">Occupied Apartments (96.6%)</div>
-                    </div>
-                    <div class="s-card">
-                        <div class="s-num" style="color: var(--accent-cyan);">64 Entries</div>
-                        <div class="s-lbl">Today's Total Gate Check-Ins</div>
-                    </div>
-                    <div class="s-card">
-                        <div class="s-num" style="color: var(--accent-amber);">14 Active</div>
-                        <div class="s-lbl">Visitors Currently Inside Society</div>
-                    </div>
-                    <div class="s-card">
-                        <div class="s-num" style="color: var(--accent-purple);">₹ 8,42,000</div>
-                        <div class="s-lbl">Maintenance Dues Cleared (94%)</div>
+                    <div style="font-size: 12px; color: var(--text-secondary);">
+                        Society: <strong style="color: #fff;" class="displaySocietyText">Demo Residential Society</strong>
                     </div>
                 </div>
 
-                <div class="interactive-form-card">
-                    <h4 style="margin-bottom: 12px; font-size: 15px; color: #ffffff;">Society Broadcast Alert Console</h4>
-                    <p style="font-size: 13px; color: var(--text-secondary); margin-bottom: 14px;">
-                        MC members can dispatch an emergency broadcast or water shutdown notice to all 180 registered resident WhatsApp numbers in one tap.
+                <div class="stats-quad-grid">
+                    <div class="quad-card">
+                        <div class="quad-num" style="color: var(--accent-emerald);" id="mcOccupancyNum">114 / 120</div>
+                        <div class="quad-sub">Occupied Apartments (95%)</div>
+                    </div>
+                    <div class="quad-card">
+                        <div class="quad-num" style="color: var(--accent-cyan);" id="mcEntriesNum">48 Entries</div>
+                        <div class="quad-sub">Total Gate Check-Ins Today</div>
+                    </div>
+                    <div class="quad-card">
+                        <div class="quad-num" style="color: var(--accent-amber);" id="mcActiveInsideNum">9 Active</div>
+                        <div class="quad-sub">Visitors Inside Premises Now</div>
+                    </div>
+                    <div class="quad-card">
+                        <div class="quad-num" style="color: var(--accent-purple);">94.5%</div>
+                        <div class="quad-sub">Maintenance Dues Realized</div>
+                    </div>
+                </div>
+
+                <div class="inner-action-card">
+                    <h4 style="font-size: 15px; color: #ffffff; margin-bottom: 8px;">📢 Society Emergency Broadcast Console</h4>
+                    <p style="font-size: 13px; color: var(--text-secondary); margin-bottom: 12px;">
+                        Dispatch high-priority notices (e.g., water shutdown, generator maintenance) directly to all resident WhatsApp devices in one click.
                     </p>
-                    <button class="btn-action-primary" style="background: linear-gradient(135deg, #a855f7, #6366f1);" onclick="simulateBroadcast()">
-                        <span>📢 Dispatch Simulated Broadcast to 180 Residents</span>
+                    <label class="form-label">Broadcast Message Content</label>
+                    <input type="text" id="mcBroadcastMsg" class="form-input" value="Notice: Routine elevator maintenance scheduled tomorrow between 11 AM - 1 PM.">
+                    <button class="btn-launch-sandbox" style="background: linear-gradient(135deg, #a855f7, #6366f1); margin-top: 10px;" onclick="mcDispatchBroadcast()">
+                        <span>📢 Dispatch Simulated Broadcast to All Flats</span>
                     </button>
-                    <div id="broadcastResult" style="display: none; margin-top: 12px; color: #c084fc; font-size: 12px; font-weight: 600;">
-                        ✓ Broadcast sent: 180 WhatsApp deliveries completed with 0 failed deliveries.
-                    </div>
+                    <div id="broadcastAck" style="display: none; margin-top: 12px; padding: 12px; background: rgba(168, 85, 247, 0.15); border: 1px solid var(--accent-purple); border-radius: 8px; font-size: 13px; color: #e9d5ff;"></div>
                 </div>
             </div>
 
-            <!-- Portal 4: Estate Manager Demo -->
-            <div id="panel-manager" class="demo-panel">
-                <div class="panel-header">
-                    <div class="panel-title">
-                        <span>📋 Estate Manager Facility & AMC Suite</span>
-                        <span class="panel-badge">Operations Headquarters</span>
+            <!-- TAB 4: ESTATE MANAGER PORTAL -->
+            <div id="panel-manager" class="app-panel">
+                <div class="panel-meta-bar">
+                    <div class="panel-heading">
+                        <span>📋 Estate Manager Facility & AMC Operations</span>
+                        <span class="badge-live-tag">FACILITY COMMAND</span>
                     </div>
-                    <span style="font-size: 13px; color: var(--text-secondary);">Estate Office • Greenfield Heights</span>
+                    <div style="font-size: 12px; color: var(--text-secondary);">
+                        Officer: <strong style="color: #fff;" id="displayManagerName">Kishore (Estate Manager)</strong>
+                    </div>
                 </div>
 
-                <div class="demo-grid-2">
-                    <div class="interactive-form-card">
-                        <h4 style="margin-bottom: 12px; font-size: 15px; color: #ffffff;">Vendor AMC Contract Status</h4>
+                <div class="panel-layout-split">
+                    <!-- AMC Contracts -->
+                    <div class="inner-action-card">
+                        <h4 style="font-size: 15px; color: #ffffff; margin-bottom: 12px;">Vendor AMC Contract Trackers</h4>
                         <div style="display: flex; flex-direction: column; gap: 10px; font-size: 13px;">
-                            <div style="background: rgba(30, 41, 59, 0.6); padding: 10px; border-radius: 8px; display: flex; justify-content: space-between;">
-                                <span>🛗 Otis Passenger Lifts AMC</span>
-                                <span style="color: #10b981; font-weight: 700;">Valid (142 Days Left)</span>
+                            <div style="background: rgba(30, 41, 59, 0.7); padding: 10px; border-radius: 8px; display: flex; justify-content: space-between;">
+                                <span>🛗 Passenger Elevators & Lifts AMC</span>
+                                <span style="color: #10b981; font-weight: 700;">Valid (164 Days Left)</span>
                             </div>
-                            <div style="background: rgba(30, 41, 59, 0.6); padding: 10px; border-radius: 8px; display: flex; justify-content: space-between;">
-                                <span>⚡ Cummins DG Generator AMC</span>
+                            <div style="background: rgba(30, 41, 59, 0.7); padding: 10px; border-radius: 8px; display: flex; justify-content: space-between;">
+                                <span>⚡ Main Diesel Generator (DG) Backup</span>
                                 <span style="color: #f59e0b; font-weight: 700;">Renewal Due (18 Days)</span>
                             </div>
-                            <div style="background: rgba(30, 41, 59, 0.6); padding: 10px; border-radius: 8px; display: flex; justify-content: space-between;">
-                                <span>🏊 Swimming Pool Filtration AMC</span>
-                                <span style="color: #10b981; font-weight: 700;">Active</span>
+                            <div style="background: rgba(30, 41, 59, 0.7); padding: 10px; border-radius: 8px; display: flex; justify-content: space-between;">
+                                <span>🚒 Fire Safety Systems & Hydrant Line</span>
+                                <span style="color: #10b981; font-weight: 700;">Certified Active</span>
                             </div>
                         </div>
                     </div>
 
-                    <div class="interactive-feed-card">
-                        <h4 style="margin-bottom: 12px; font-size: 15px; color: #ffffff;">Resident Helpdesk Tickets</h4>
-                        <div style="display: flex; flex-direction: column; gap: 10px; font-size: 13px;">
-                            <div style="background: rgba(30, 41, 59, 0.6); padding: 10px; border-radius: 8px; display: flex; justify-content: space-between; align-items: center;">
+                    <!-- Helpdesk Complaints Tracker -->
+                    <div class="inner-action-card">
+                        <h4 style="font-size: 15px; color: #ffffff; margin-bottom: 12px;">Resident Helpdesk Complaints</h4>
+                        <div style="display: flex; flex-direction: column; gap: 10px; font-size: 13px;" id="complaintsList">
+                            <div style="background: rgba(30, 41, 59, 0.7); padding: 10px; border-radius: 8px; display: flex; justify-content: space-between; align-items: center;">
                                 <div>
-                                    <div style="font-weight: 600;">Tower C - Flat 304: Plumbing Leakage</div>
-                                    <div style="font-size: 11px; color: var(--text-muted);">Assigned to Plumber Santosh</div>
+                                    <div style="font-weight: 600;">Flat 204: Water Pressure Issue</div>
+                                    <div style="font-size: 11px; color: var(--text-muted);">Assigned to Plumber</div>
                                 </div>
-                                <span style="color: #f59e0b; font-weight: 700;">IN PROGRESS</span>
+                                <button onclick="toggleComplaint(this)" style="background: rgba(245, 158, 11, 0.2); border: 1px solid var(--accent-amber); color: #f59e0b; padding: 4px 10px; border-radius: 6px; font-size: 11px; font-weight: 700; cursor: pointer;">IN PROGRESS</button>
                             </div>
-                            <div style="background: rgba(30, 41, 59, 0.6); padding: 10px; border-radius: 8px; display: flex; justify-content: space-between; align-items: center;">
+                            <div style="background: rgba(30, 41, 59, 0.7); padding: 10px; border-radius: 8px; display: flex; justify-content: space-between; align-items: center;">
                                 <div>
-                                    <div style="font-weight: 600;">Tower A - Flat 102: Intercom Sound</div>
-                                    <div style="font-size: 11px; color: var(--text-muted);">Resolved by Electrician</div>
+                                    <div style="font-weight: 600;">Flat 302: Intercom Tone Check</div>
+                                    <div style="font-size: 11px; color: var(--text-muted);">Attended by Electrician</div>
                                 </div>
                                 <span style="color: #10b981; font-weight: 700;">RESOLVED</span>
                             </div>
@@ -627,118 +832,214 @@
                 </div>
             </div>
 
-            <!-- Portal 5: Master Router Telemetry Demo -->
-            <div id="panel-router" class="demo-panel">
-                <div class="panel-header">
-                    <div class="panel-title">
-                        <span>⚡ Master Router Dispatcher Telemetry</span>
-                        <span class="panel-badge">Multi-Society Dispatch Core</span>
+            <!-- TAB 5: MASTER ROUTER TELEMETRY -->
+            <div id="panel-router" class="app-panel">
+                <div class="panel-meta-bar">
+                    <div class="panel-heading">
+                        <span>⚡ Master Router Universal Dispatch Engine</span>
+                        <span class="badge-live-tag">ROUTING ENGINE</span>
                     </div>
-                    <span style="font-size: 13px; color: #10b981; font-weight: 700;">🟢 LIVE DISPATCHING</span>
+                    <div style="font-size: 12px; color: #10b981; font-weight: 700;">
+                        🟢 0.34s PIPELINE LATENCY
+                    </div>
                 </div>
 
-                <div class="interactive-feed-card">
-                    <h4 style="margin-bottom: 10px; font-size: 15px; color: #ffffff;">Dual-Channel Webhook Execution Trace</h4>
-                    <div class="feed-log-box" style="color: #38bdf8;">
-                        [ROUTER_PING] Master Router status: 200 OK (Latency: 28ms)<br>
+                <div class="inner-log-card">
+                    <h4 style="font-size: 15px; color: #ffffff; margin-bottom: 10px;">Universal Multi-Society Webhook Diagnostics</h4>
+                    <div class="log-terminal-output" style="color: #38bdf8;" id="routerLogOutput">
+                        [INIT] Master Router JSON Core initialized.<br>
                         [META_CLOUD_API] Webhook endpoint: https://graph.facebook.com/v19.0/messages -> CONNECTED<br>
-                        [MACRODROID_RELAY] Device trigger endpoint: https://trigger.macrodroid.com/ -> LISTENING<br>
-                        [MULTI_SOCIETY_CORE] Registered Apartments: 3 Societies Active<br>
-                        &bull; Ramky Utsav (132 Flats, Production)<br>
-                        &bull; Greenfield Heights (180 Flats, Demo Society)<br>
-                        &bull; Silver Oak Enclave (240 Flats, Pilot)<br>
-                        [DISPATCH_READY] Zero database latency on Google Sheets JSON Engine.
+                        [MACRODROID_RELAY] Device ring relay endpoint: https://trigger.macrodroid.com/ -> LISTENING<br>
+                        [MULTI_SOCIETY_CLUSTERS] Multi-tenancy registry active:<br>
+                        &bull; Cluster-Alpha-01 (Active Residential Cluster - Encrypted ID)<br>
+                        &bull; Cluster-Beta-02 (Interactive Sandbox Cluster - Active)<br>
+                        &bull; Cluster-Gamma-03 (Standard Residential Enclave)<br>
+                        [DISPATCH_READY] Complete database isolation across independent Google Sheet repositories.<br>
                     </div>
                 </div>
             </div>
+
         </div>
     </div>
 
-    <!-- Onboard Your Society Section -->
-    <section class="onboard-section" id="onboard">
-        <span class="demo-tag" style="background: rgba(56, 189, 248, 0.1); border-color: var(--border-accent); color: var(--accent-cyan);">Fast 10-Minute Setup</span>
-        <h2 style="font-family: var(--font-display); font-size: clamp(24px, 3.5vw, 36px); font-weight: 700; margin-bottom: 12px;">Get VisiGate Alerts For Your Housing Society</h2>
-        <p style="color: var(--text-secondary); font-size: 15px; max-width: 650px; margin: 0 auto;">
-            We will configure a dedicated Google Sheet database and custom WhatsApp approval channel for your apartment association. Zero hardware. Zero upfront servers.
-        </p>
-
-        <form onsubmit="handleOnboardSubmit(event)" class="onboard-grid">
-            <div>
-                <label class="form-label">Society / Apartment Name</label>
-                <input type="text" id="onbSociety" class="form-input" placeholder="e.g. Prestige Lakeview" required>
-            </div>
-            <div>
-                <label class="form-label">City / Location</label>
-                <input type="text" id="onbCity" class="form-input" placeholder="e.g. Bengaluru, Karnataka" required>
-            </div>
-            <div>
-                <label class="form-label">Total Flats / Units</label>
-                <input type="number" id="onbFlats" class="form-input" placeholder="e.g. 120" required>
-            </div>
-            <div>
-                <label class="form-label">Manager / MC Member WhatsApp</label>
-                <input type="tel" id="onbPhone" class="form-input" placeholder="+91 98765 43210" required>
-            </div>
-            <div style="grid-column: 1 / -1;">
-                <button type="submit" class="btn-action-primary" style="padding: 14px; font-size: 15px;">
-                    <span>🚀 Launch Free 14-Day Society Pilot</span>
-                </button>
-            </div>
-        </form>
-
-        <div id="onboardSuccess" style="display: none; margin-top: 18px; padding: 14px; background: rgba(16, 185, 129, 0.15); border: 1px solid var(--accent-emerald); border-radius: 8px; color: #a7f3d0; font-size: 14px;">
-            🎉 Thank you! Your pilot request has been recorded. Our technical team will generate your society's dedicated Master Router deployment within 24 hours.
-        </div>
-    </section>
-
     <!-- Footer -->
-    <footer style="text-align: center; padding: 40px 20px; font-size: 12px; color: var(--text-muted); border-top: 1px solid var(--border-glass);">
-        <div>&copy; 2026 VisiGate Alerts &bull; Universal Multi-Society Gated Community Security Engine.</div>
-        <div style="margin-top: 6px;"><a href="/" style="color: var(--accent-cyan); text-decoration: none;">Return to Main visigatealerts.in Platform</a></div>
+    <footer style="text-align: center; padding: 40px 20px 80px; font-size: 12px; color: var(--text-muted); border-top: 1px solid var(--border-glass);">
+        <div>&copy; 2026 VisiGate Alerts &bull; Universal Multi-Device Production Security Engine.</div>
+        <div style="margin-top: 6px;">All sample data is strictly fictitious for simulation purposes. Zero commercial or real-world apartment branding.</div>
+        <div style="margin-top: 8px;"><a href="/" style="color: var(--accent-cyan); text-decoration: none;">Return to Main visigatealerts.in Platform</a></div>
     </footer>
 
     <script>
-        function switchPortalTab(portalId) {
-            document.querySelectorAll('.p-tab').forEach(btn => btn.classList.remove('active'));
-            document.querySelectorAll('.demo-panel').forEach(panel => panel.classList.remove('active'));
+        // State variables for the live interactive sandbox
+        let currentSociety = "Demo Residential Society";
+        let currentFlats = 120;
+        let currentGate = "Gate 1 (Main Entrance)";
+        let currentManager = "Kishore (Estate Manager)";
+        let activeInsideCount = 9;
+        let totalEntriesToday = 48;
 
-            const activeBtn = Array.from(document.querySelectorAll('.p-tab')).find(b => b.textContent.toLowerCase().includes(portalId));
-            if (activeBtn) activeBtn.classList.add('active');
+        function applySandboxConfig(e) {
+            e.preventDefault();
+            currentSociety = document.getElementById('cfgSocietyName').value || "Demo Residential Society";
+            currentFlats = parseInt(document.getElementById('cfgFlatsCount').value) || 120;
+            currentGate = document.getElementById('cfgGateName').value;
+            currentManager = document.getElementById('cfgManagerName').value || "Kishore (Estate Manager)";
 
-            const targetPanel = document.getElementById('panel-' + portalId);
-            if (targetPanel) targetPanel.classList.add('active');
+            // Update UI elements across all 4 apps
+            document.getElementById('badgeSocietyName').innerText = currentSociety + " (Live Sandbox)";
+            document.querySelectorAll('.displaySocietyText').forEach(el => el.innerText = currentSociety);
+            document.getElementById('displayGateLabel').innerText = currentGate;
+            document.getElementById('displayManagerName').innerText = currentManager;
+
+            // Recalculate MC numbers
+            const occupied = Math.floor(currentFlats * 0.95);
+            document.getElementById('mcOccupancyNum').innerText = `${occupied} / ${currentFlats}`;
+
+            // Add confirmation log into Guard App terminal
+            const now = new Date().toLocaleTimeString();
+            const logBox = document.getElementById('guardLogOutput');
+            logBox.innerHTML += `<br><span style="color: #38bdf8;">[${now}] 🚀 Sandbox configured for "${currentSociety}" (${currentFlats} Flats, ${currentGate}).</span><br>`;
+            logBox.scrollTop = logBox.scrollHeight;
+
+            // Smooth scroll to sandbox workspace
+            document.getElementById('sandboxWorkspace').scrollIntoView({ behavior: 'smooth' });
         }
 
-        function simulateGuardEntry() {
-            const visitor = document.getElementById('demoVisitorName').value;
-            const flat = document.getElementById('demoTargetFlat').value;
-            const logBox = document.getElementById('guardLogBox');
+        function switchAppTab(tabId) {
+            document.querySelectorAll('.app-tab-btn').forEach(b => b.classList.remove('active'));
+            document.querySelectorAll('.app-panel').forEach(p => p.classList.remove('active'));
 
+            const navBtn = document.getElementById('tabNav' + tabId.charAt(0).toUpperCase() + tabId.slice(1));
+            if (navBtn) navBtn.classList.add('active');
+
+            const panel = document.getElementById('panel-' + tabId);
+            if (panel) panel.classList.add('active');
+
+            if (tabId === 'resident') {
+                const badge = document.getElementById('resAlertBadge');
+                if (badge) badge.style.display = 'none';
+            }
+        }
+
+        function updateVisitorDefaults() {
+            const type = document.getElementById('guardVisitorType').value;
+            const nameInput = document.getElementById('guardVisitorName');
+            const plateInput = document.getElementById('guardVehiclePlate');
+
+            if (type === 'Food Courier') {
+                nameInput.value = 'Suresh Kumar (Food Delivery)';
+                plateInput.value = 'KA-01-XX-1024';
+            } else if (type === 'Parcel Courier') {
+                nameInput.value = 'Manish Verma (Express Courier)';
+                plateInput.value = 'MH-02-AB-3344';
+            } else if (type === 'Guest') {
+                nameInput.value = 'Rohan Gupta (Personal Guest)';
+                plateInput.value = 'DL-04-XY-8899';
+            } else if (type === 'Cab Driver') {
+                nameInput.value = 'Arjun Singh (Prepaid Taxi)';
+                plateInput.value = 'KA-03-XX-5566';
+            } else {
+                nameInput.value = 'Santosh Electrician (Vendor)';
+                plateInput.value = 'KA-05-ZZ-9911';
+            }
+        }
+
+        function guardDispatchEntry() {
+            const visitorName = document.getElementById('guardVisitorName').value;
+            const targetFlat = document.getElementById('guardTargetFlat').value;
+            const plate = document.getElementById('guardVehiclePlate').value;
+            const logBox = document.getElementById('guardLogOutput');
             const now = new Date().toLocaleTimeString();
-            logBox.innerHTML += `<br>[${now}] 📸 Camera photo captured for ${visitor}<br>`;
-            logBox.innerHTML += `[${now}] ⚡ Meta Cloud API -> Dispatched WhatsApp [Approve/Deny] to ${flat}<br>`;
-            logBox.innerHTML += `[${now}] 🔔 MacroDroid -> Phone Ring signal fired to resident device<br>`;
-            
-            setTimeout(() => {
-                const now2 = new Date().toLocaleTimeString();
-                logBox.innerHTML += `<span style="color: #10b981;">[${now2}] ✅ RESIDENT APPROVED ENTRY (Gate 1 barrier unlocked in 0.78s)</span><br>`;
-                logBox.scrollTop = logBox.scrollHeight;
-            }, 900);
 
+            // Guard activity log entry
+            logBox.innerHTML += `<br>[${now}] 📸 Camera photo captured for: <strong>${visitorName}</strong><br>`;
+            logBox.innerHTML += `[${now}] ⚡ Meta Cloud API &rarr; WhatsApp alert dispatched to ${targetFlat}<br>`;
+            logBox.innerHTML += `[${now}] 🔔 MacroDroid &rarr; Device ring webhook triggered for ${targetFlat}<br>`;
+            logBox.scrollTop = logBox.scrollHeight;
+
+            // Push details into Resident App tab
+            document.getElementById('resVisitorDetails').innerHTML = 
+                `<strong>Visitor:</strong> ${visitorName}<br>` +
+                `<strong>Visiting:</strong> ${targetFlat}<br>` +
+                `<strong>Vehicle:</strong> ${plate}<br>` +
+                `<strong>Checkpoint:</strong> ${currentGate}`;
+
+            document.getElementById('resButtonContainer').style.display = 'block';
+            const feedback = document.getElementById('resResponseFeedback');
+            feedback.style.display = 'none';
+
+            // Show badge on Resident Tab to alert user!
+            const badge = document.getElementById('resAlertBadge');
+            badge.style.display = 'inline-block';
+
+            // Router Telemetry log
+            const rLog = document.getElementById('routerLogOutput');
+            rLog.innerHTML += `[${now}] [DISPATCH_SYNC] Alert -> ${targetFlat} &bull; Latency: 0.32s &bull; Status: PENDING_RESIDENT_ACTION<br>`;
+            rLog.scrollTop = rLog.scrollHeight;
+        }
+
+        function residentRespond(action) {
+            const feedback = document.getElementById('resResponseFeedback');
+            const btnGroup = document.getElementById('resButtonContainer');
+            const logBox = document.getElementById('guardLogOutput');
+            const now = new Date().toLocaleTimeString();
+
+            btnGroup.style.display = 'none';
+            feedback.style.display = 'block';
+
+            if (action === 'APPROVE') {
+                feedback.style.background = 'rgba(16, 185, 129, 0.2)';
+                feedback.style.color = '#10b981';
+                feedback.innerHTML = '✅ ENTRY APPROVED (0.34s)<br><span style="font-size: 11px; font-weight: normal;">Gate 1 barrier unlocked. WhatsApp confirmation recorded.</span>';
+
+                // Sync to Guard Log
+                logBox.innerHTML += `<span style="color: #10b981; font-weight: 700;">[${now}] ✅ RESIDENT APPROVED ENTRY &bull; Gate barrier raised & pass issued (0.34s)</span><br>`;
+                
+                // Update MC stats
+                activeInsideCount++;
+                totalEntriesToday++;
+                document.getElementById('mcActiveInsideNum').innerText = activeInsideCount + " Active";
+                document.getElementById('mcEntriesNum').innerText = totalEntriesToday + " Entries";
+            } else {
+                feedback.style.background = 'rgba(239, 68, 68, 0.2)';
+                feedback.style.color = '#ef4444';
+                feedback.innerHTML = '🚫 ENTRY DENIED<br><span style="font-size: 11px; font-weight: normal;">Guard alerted: Do not permit visitor inside.</span>';
+
+                // Sync to Guard Log
+                logBox.innerHTML += `<span style="color: #ef4444; font-weight: 700;">[${now}] 🚫 RESIDENT DENIED ENTRY &bull; Turn visitor away at gate.</span><br>`;
+            }
             logBox.scrollTop = logBox.scrollHeight;
         }
 
-        function simulateGuestPass() {
-            document.getElementById('guestPassResult').style.display = 'block';
+        function residentCreatePass() {
+            const guest = document.getElementById('resGuestName').value;
+            const code = Math.floor(1000 + Math.random() * 9000);
+            const box = document.getElementById('passCodeDisplay');
+            box.style.display = 'block';
+            box.innerHTML = `<strong>Pass Issued for ${guest}:</strong> PIN Code <code style="font-size: 15px; color: #38bdf8;">#${code}</code><br>` +
+                `<span style="font-size: 11px; color: #a7f3d0;">Guard scans PIN at gate checkpoint for instant 0-second entry clearance.</span>`;
         }
 
-        function simulateBroadcast() {
-            document.getElementById('broadcastResult').style.display = 'block';
+        function mcDispatchBroadcast() {
+            const msg = document.getElementById('mcBroadcastMsg').value;
+            const ack = document.getElementById('broadcastAck');
+            ack.style.display = 'block';
+            ack.innerHTML = `✓ Broadcast dispatched via Meta Cloud API: Delivered to all ${currentFlats} resident devices with 0 failed deliveries.<br>` +
+                `<code>Message: "${msg}"</code>`;
         }
 
-        function handleOnboardSubmit(e) {
-            e.preventDefault();
-            document.getElementById('onboardSuccess').style.display = 'block';
+        function toggleComplaint(btn) {
+            if (btn.innerText === 'IN PROGRESS') {
+                btn.innerText = 'RESOLVED';
+                btn.style.background = 'rgba(16, 185, 129, 0.2)';
+                btn.style.borderColor = '#10b981';
+                btn.style.color = '#10b981';
+            } else {
+                btn.innerText = 'IN PROGRESS';
+                btn.style.background = 'rgba(245, 158, 11, 0.2)';
+                btn.style.borderColor = 'var(--accent-amber)';
+                btn.style.color = '#f59e0b';
+            }
         }
     </script>
 </body>
