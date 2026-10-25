@@ -1360,7 +1360,7 @@
                 <nav class="nav-links">
                     <a href="/demo.html" style="color: var(--accent-amber); font-weight: 700;">🎭 Society Demo</a>
                     <a href="#portals">Access Portals</a>
-                    <a href="#dual-alerts">Dual-Channel Alerts</a>
+                    <a href="#triple-alerts">Triple-Channel Alerts</a>
                     <a href="#simulator">Live Simulator</a>
                     <a href="#admin-hub">⚙️ Master Router</a>
                     <a href="#features">Key Features</a>
@@ -1382,7 +1382,7 @@
         <div class="mobile-nav-bar" style="display: none;">
             <a href="/demo.html" class="m-pill" style="border-color: rgba(245, 158, 11, 0.4); color: #fbbf24;">🎭 Demo</a>
             <a href="#portals" class="m-pill">🛡️ Portals</a>
-            <a href="#dual-alerts" class="m-pill">⚡ Dual Alerts</a>
+            <a href="#triple-alerts" class="m-pill">⚡ Triple Alerts</a>
             <a href="#simulator" class="m-pill">📲 Simulator</a>
             <a href="#admin-hub" class="m-pill">⚙️ Admin</a>
             <a href="#features" class="m-pill">✨ Features</a>
@@ -1392,15 +1392,15 @@
         <!-- Hero Section -->
         <section class="hero">
             <div class="badge-hero">
-                <span>⚡ Real-Time Gate Security & Notification Engine</span>
+                <span>⚡ Real-Time Gate Security & Omnichannel Notification Engine</span>
             </div>
 
             <h1 class="hero-title">
-                Next-Gen Gated Security with <span class="gradient-text">Interactive WhatsApp & Automated Phone Rings</span>
+                Next-Gen Gated Security with <span class="gradient-text">Firebase WebPush, Interactive WhatsApp & Automated Phone Rings</span>
             </h1>
 
             <p class="hero-desc">
-                Transform your society gate into a zero-hardware digital checkpoint. Seamlessly verify visitors with camera photo logging, dispatch instant WhatsApp [Approve/Deny] alerts, and ring resident mobile phones automatically via MacroDroid.
+                Transform your society gate into a zero-hardware digital checkpoint. Seamlessly verify visitors with camera photo logging, dispatch instant 100% free Firebase WebPush alerts, interactive WhatsApp [Approve/Deny] cards, and automated MacroDroid phone rings.
             </p>
 
             <div class="hero-buttons">
@@ -1514,32 +1514,38 @@
             </div>
         </section>
 
-        <!-- Spotlight: The Dual-Channel Alert Engine -->
-        <section class="section-wrap" id="dual-alerts">
+        <!-- Spotlight: The Triple-Channel Notification Engine -->
+        <section class="section-wrap" id="triple-alerts">
             <div class="spotlight-card">
                 <div class="spotlight-grid">
                     <div class="spotlight-text">
                         <span class="section-tag">Zero Missed Alerts</span>
-                        <h3>WhatsApp Meta Cloud API + Automated MacroDroid Phone Rings</h3>
-                        <p>Most community apps fail because residents keep notifications muted or forget to open the app. VisiGate Alerts solves this with a dual-channel dispatch pipeline:</p>
+                        <h3>Triple-Channel Notification Engine: Firebase WebPush + WhatsApp + MacroDroid</h3>
+                        <p>Most community apps fail because residents keep notifications muted, run out of phone storage to install apps, or miss alerts. VisiGate Alerts solves this with an omnichannel triple-channel dispatch pipeline:</p>
                         
                         <ul class="feature-bullets">
                             <li>
+                                <span class="bullet-icon">🔥</span>
+                                <div>
+                                    <strong>100% Free Firebase WebPush:</strong> Sends an instant native system push notification directly through the phone's browser (Android Chrome & iOS Safari PWA). Zero app install required, zero Meta conversation fees, and completely free forever.
+                                </div>
+                            </li>
+                            <li>
                                 <span class="bullet-icon">💬</span>
                                 <div>
-                                    <strong>Meta Cloud WhatsApp API:</strong> Sends an instant interactive WhatsApp message with live <code>[Approve Entry]</code> and <code>[Deny Entry]</code> buttons directly to the resident's WhatsApp.
+                                    <strong>Meta Cloud WhatsApp API:</strong> Simultaneously delivers an interactive WhatsApp message with live <code>[Approve Entry]</code> and <code>[Deny Entry]</code> buttons directly to the resident's WhatsApp chat.
                                 </div>
                             </li>
                             <li>
                                 <span class="bullet-icon">🔔</span>
                                 <div>
-                                    <strong>Automated MacroDroid Phone Rings:</strong> Simultaneously fires an automated webhook via the Master Router to ring the resident's phone with a custom alert tone, guaranteeing immediate attention.
+                                    <strong>Automated MacroDroid Phone Rings:</strong> Fires an automated device webhook via Master Router to audibly ring the resident's phone with a custom gate chime, guaranteeing immediate attention even if the screen is off.
                                 </div>
                             </li>
                             <li>
                                 <span class="bullet-icon">⚡</span>
                                 <div>
-                                    <strong>Sub-Second Gate Sync:</strong> Once the resident clicks Approve on WhatsApp, the Guard App at the gate lights up green in under 1 second.
+                                    <strong>Sub-Second Gate Barrier Sync:</strong> Whether the resident approves via Firebase WebPush or WhatsApp, the gate barrier unlocks in under 1 second.
                                 </div>
                             </li>
                         </ul>
@@ -1575,6 +1581,19 @@
                             </div>
 
                             <div class="phone-screen">
+                                <!-- Native Firebase WebPush System Notification Banner -->
+                                <div class="firebase-webpush-banner" style="background: rgba(15, 23, 42, 0.96); border: 1px solid rgba(56, 189, 248, 0.4); border-radius: 12px; padding: 10px 12px; margin: 8px 10px 10px; box-shadow: 0 4px 15px rgba(0,0,0,0.6); display: flex; align-items: center; gap: 10px;">
+                                    <div style="font-size: 20px; background: rgba(56, 189, 248, 0.2); border-radius: 8px; width: 32px; height: 32px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">🔥</div>
+                                    <div style="flex: 1; min-width: 0;">
+                                        <div style="display: flex; justify-content: space-between; align-items: center;">
+                                            <strong style="font-size: 11px; color: #38bdf8;">Firebase WebPush Alert</strong>
+                                            <span style="font-size: 9px; color: #94a3b8;">Just Now</span>
+                                        </div>
+                                        <div style="font-size: 11px; color: #f8fafc; font-weight: 600; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;" id="webpushNotificationText">Gate Alert: Visitor Rahul Sharma at Gate 1</div>
+                                        <div style="font-size: 9px; color: #10b981;">● Native Browser Push &bull; 100% Free Zero Meta Fee</div>
+                                    </div>
+                                </div>
+
                                 <div class="wa-chat-header">
                                     <div class="wa-profile-info">
                                         <span style="font-size: 14px; color: #8696a0;">←</span>
@@ -2098,16 +2117,20 @@
             const macrodroid = document.getElementById('macrodroidIndicator');
             const latency = document.getElementById('telemetryLatency');
             const status = document.getElementById('telemetryStatusText');
+            const wpText = document.getElementById('webpushNotificationText');
 
             if (tab === 'visitor') {
+                if (wpText) wpText.innerText = 'Gate Alert: Visitor Rahul Sharma at Gate 1 Checkpoint';
                 macrodroid.innerHTML = '<span>🔔</span><span>MacroDroid Ring Signal: Resident Phone Alert Active</span>';
                 latency.innerText = '0.42s latency';
                 status.innerText = '[SIMULATOR] Ready: Gate 1 camera facial photo captured for Food Delivery Courier.';
             } else if (tab === 'vehicle') {
+                if (wpText) wpText.innerText = 'Gate Alert: Vehicle KA-03-XX-1024 at Gate 1 Checkpoint (Bay #V-12)';
                 macrodroid.innerHTML = '<span>🚗</span><span>MacroDroid Relay: Plate KA-03-XX-1024 Verified</span>';
                 latency.innerText = '0.36s latency';
                 status.innerText = '[SIMULATOR] Ready: Vehicle scan matched Guest Parking Bay #V-12.';
             } else {
+                if (wpText) wpText.innerText = 'Gate Alert: Courier Package in Security Locker #SL-14 (PIN 4821)';
                 macrodroid.innerHTML = '<span>📦</span><span>MacroDroid Relay: Parcel Locker Alert Dispatched</span>';
                 latency.innerText = '0.45s latency';
                 status.innerText = '[SIMULATOR] Ready: Express Courier Box awaiting PIN verification [4821].';
