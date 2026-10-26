@@ -2579,15 +2579,15 @@
                             </div>
                             <!-- Manual Exact Numeric Entry Box -->
                             <div style="display: flex; align-items: center; gap: 6px; background: rgba(2, 6, 23, 0.9); border: 1.5px solid #0284c7; border-radius: 10px; padding: 4px 10px; box-shadow: 0 0 14px rgba(2, 132, 199, 0.35);">
-                                <input type="number" id="societyFlatsInput" min="1" max="10000" step="1" value="180"
+                                <input type="number" id="societyFlatsInput" min="1" max="10000" step="1" value="50" autocomplete="off"
                                        style="width: 80px; background: transparent; border: none; color: #ffffff; font-family: monospace; font-size: 18px; font-weight: 900; text-align: right; outline: none;"
                                        title="Type exact number of units"
                                        oninput="onManualUnitInput(this.value)"
                                        onchange="onManualUnitInput(this.value)">
-                                <span style="font-size: 12px; font-weight: 700; color: #38bdf8;" id="dispCalcFlats">Units</span>
+                                <span style="font-size: 12px; font-weight: 700; color: #38bdf8;" id="dispCalcFlats">50 Units</span>
                             </div>
                         </div>
-                        <input type="range" id="societyFlatsRange" min="20" max="1000" step="10" value="180"
+                        <input type="range" id="societyFlatsRange" min="20" max="1000" step="10" value="50" autocomplete="off"
                                style="width: 100%; accent-color: #38bdf8; cursor: pointer;"
                                oninput="updatePricingCalculation(this.value)" onchange="updatePricingCalculation(this.value)">
                         <div style="display: flex; justify-content: space-between; font-size: 11px; color: var(--text-muted); margin-top: 6px;">
@@ -2614,21 +2614,21 @@
                             <strong style="color: #ffffff;">₹1,500.00</strong>
                         </div>
                         <div style="display: flex; justify-content: space-between; font-size: 13px; color: #cbd5e1; margin-bottom: 8px;">
-                            <span>Additional Units (<span id="calcExtraUnits">130</span> @ ₹30 / mo [₹1/day]):</span>
-                            <strong style="color: #38bdf8;">+ ₹<span id="calcExtraFee">3,900.00</span></strong>
+                            <span>Additional Units (<span id="calcExtraUnits">0</span> @ ₹30 / mo [₹1/day]):</span>
+                            <strong style="color: #38bdf8;">+ ₹<span id="calcExtraFee">0.00</span></strong>
                         </div>
                         <div style="display: flex; justify-content: space-between; font-size: 13px; color: #94a3b8; margin-bottom: 8px; border-top: 1px dashed rgba(255,255,255,0.08); padding-top: 8px;">
                             <span>Monthly Subtotal:</span>
-                            <span style="color: #ffffff; font-weight: 700;">₹<span id="calcSubtotal">5,400.00</span></span>
+                            <span style="color: #ffffff; font-weight: 700;">₹<span id="calcSubtotal">1,500.00</span></span>
                         </div>
                         <div style="display: flex; justify-content: space-between; font-size: 13px; color: #94a3b8; margin-bottom: 8px;">
                             <span>GST at 18% (Tax Invoice):</span>
-                            <span style="color: #fbbf24; font-weight: 700;">+ ₹<span id="calcGst">972.00</span></span>
+                            <span style="color: #fbbf24; font-weight: 700;">+ ₹<span id="calcGst">270.00</span></span>
                         </div>
                         <div style="display: flex; justify-content: space-between; align-items: baseline; font-size: 16px; border-top: 1px solid rgba(255,255,255,0.15); padding-top: 10px; margin-top: 6px;">
                             <strong style="color: #ffffff;">Total Monthly Investment:</strong>
                             <span style="font-family: var(--font-display); font-size: 24px; font-weight: 900; color: #10b981;">
-                                ₹<span id="calcTotalMonthly">6,372.00</span>
+                                ₹<span id="calcTotalMonthly">1,770.00</span>
                             </span>
                         </div>
                     </div>
@@ -4100,23 +4100,18 @@
         }
 
     
-        // Initialize Interactive Pricing Calculator
-        document.addEventListener('DOMContentLoaded', () => {
-            const slider = document.getElementById('societyFlatsRange');
-            if (slider) updatePricingCalculation(slider.value);
-        });
-        setTimeout(() => {
-            const slider = document.getElementById('societyFlatsRange');
-            if (slider) updatePricingCalculation(slider.value);
-        }, 400);
-
-
-        // Guaranteed Pricing Slider & Manual Input Event Listeners & Immediate Initialization
+        // Guaranteed Pricing Slider & Manual Input Event Listeners & Reset to 50 on Reload
         function initPricingSlider() {
             var slider = document.getElementById('societyFlatsRange');
             var inputEl = document.getElementById('societyFlatsInput');
 
-            if (slider) {
+            // Always enforce default 50 units on reload
+            if (slider) slider.value = 50;
+            if (inputEl) inputEl.value = 50;
+            updatePricingCalculation(50);
+
+            if (slider && !slider._hasPricingListeners) {
+                slider._hasPricingListeners = true;
                 slider.addEventListener('input', function(e) {
                     if (inputEl && document.activeElement !== inputEl) {
                         inputEl.value = e.target.value;
@@ -4131,7 +4126,8 @@
                 });
             }
 
-            if (inputEl) {
+            if (inputEl && !inputEl._hasPricingListeners) {
+                inputEl._hasPricingListeners = true;
                 inputEl.addEventListener('input', function(e) {
                     onManualUnitInput(e.target.value);
                 });
@@ -4139,19 +4135,17 @@
                     onManualUnitInput(e.target.value);
                 });
             }
-
-            // Initialize display immediately
-            var initialVal = inputEl ? inputEl.value : (slider ? slider.value : 180);
-            updatePricingCalculation(initialVal);
         }
 
+        // Always reset to 50 on load and page restore (bfcache)
+        window.addEventListener('pageshow', initPricingSlider);
         if (document.readyState === 'loading') {
             document.addEventListener('DOMContentLoaded', initPricingSlider);
         } else {
             initPricingSlider();
         }
         setTimeout(initPricingSlider, 100);
-        setTimeout(initPricingSlider, 500);
+        setTimeout(initPricingSlider, 400);
 
     </script>
 </body>
