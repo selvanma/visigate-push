@@ -4481,43 +4481,78 @@
 
         const PROVISIONER_GS_CODE = `// =========================================================================
 // VISIGATE ALERTS: UNIVERSAL HUB & SPOKE SOCIETY PROVISIONING ENGINE
-// Deploy under: visigatealerts@gmail.com as Web App (Access: Anyone)
+// Deploy under: selvanma@gmail.com / visigatealerts@gmail.com as Web App
 // =========================================================================
 
 const MASTER_FOLDER_ID = "1Kaom74nsSpSs3w9o0vu8cUoWoMtvlJPN";       // Folder: VisiGate_Societies_Master
 const GOLDEN_TEMPLATE_ID = "1hG0H_uRucsWTcDUOECz0DO0PSiy33regcMUAPgXCXJQ";  // Clean Blank Master Template Sheet
 
+const FOLDER_DEFS = [
+  { key: "RESIDENT_PHOTO_FOLDER_ID", name: "📸 Resident_Photos", pub: true },
+  { key: "VEHICLE_PHOTO_FOLDER_ID", name: "📸 Vehicle_Photos", pub: true },
+  { key: "PREAPPROVED_VISITOR_PHOTO_FOLDER_ID", name: "📸 Preapproved_Visitor_Photos", pub: true },
+  { key: "PREAPPROVED_VEHICLE_PHOTO_FOLDER_ID", name: "📸 Preapproved_Vehicle_Photos", pub: true },
+  { key: "DAILY_VISITOR_PHOTO_FOLDER_ID", name: "📸 Daily_Visitor_Photos", pub: true },
+  { key: "DAILY_VEHICLE_PHOTO_FOLDER_ID", name: "📸 Daily_Vehicle_Photos", pub: true },
+  { key: "DELIVERY_VISITOR_PHOTO_FOLDER_ID", name: "📸 Delivery_Visitor_Photos", pub: true },
+  { key: "DELIVERY_VEHICLE_PHOTO_FOLDER_ID", name: "📸 Delivery_Vehicle_Photos", pub: true },
+  { key: "SERVICE_VISITOR_PHOTO_FOLDER_ID", name: "📸 Service_Visitor_Photos", pub: true },
+  { key: "SERVICE_VEHICLE_PHOTO_FOLDER_ID", name: "📸 Service_Vehicle_Photos", pub: true },
+  { key: "PARCELDOC_PHOTO_FOLDER_ID", name: "📸 ParcelDoc_Photos", pub: true },
+  { key: "RETURN_PARCELDOC_PHOTO_FOLDER_ID", name: "📸 Return_ParcelDoc_Photos", pub: true },
+  { key: "PUBLIC_VEHICLE_PHOTO_FOLDER_ID", name: "📸 Public_Vehicle_Photos", pub: true },
+  { key: "RESIDENTS_PHOTO_FOLDER_ID", name: "📸 Residents_Photos", pub: true },
+  { key: "RECEIPT_LINK_FOLDER_ID", name: "🧾 Payment_Receipts", pub: false }
+];
+
 function provisionSociety(socCode, socName, city, managerEmail, isDemo) {
   try {
     const masterFolder = DriveApp.getFolderById(MASTER_FOLDER_ID);
     
-    // 1. Create Dedicated Society Folder
-    const cleanName = socName.replace(/[^a-zA-Z0-9 ]/g, "").replace(/\\s+/g, "_");
+    // 1. Create Dedicated Society Master Folder
+    const cleanName = socName.replace(/[^a-zA-Z0-9 ]/g, "").replace(/\s+/g, "_");
     const socFolderName = "VisiGate_" + socCode + "_" + cleanName;
     const socFolder = masterFolder.createFolder(socFolderName);
     
-    // 2. Create Dedicated Subfolders for Photos and Receipts
-    const photosFolder = socFolder.createFolder("📸 Visitor_Photos");
-    const receiptsFolder = socFolder.createFolder("🧾 Payment_Receipts");
-    
-    // Set photos folder to allow view with link for image preview in app
-    photosFolder.setSharing(DriveApp.Access.ANYONE_WITH_LINK, DriveApp.Permission.VIEW);
+    // 2. Create All 15 Dedicated Subfolders for Photos & Receipts
+    const folderIds = {};
+    FOLDER_DEFS.forEach(function(f) {
+      const sub = socFolder.createFolder(f.name);
+      if (f.pub) {
+        sub.setSharing(DriveApp.Access.ANYONE_WITH_LINK, DriveApp.Permission.VIEW);
+      }
+      folderIds[f.key] = sub.getId();
+    });
     
     // 3. Duplicate Clean Golden Master Sheet into Society Folder
     const templateFile = DriveApp.getFileById(GOLDEN_TEMPLATE_ID);
     const newSheetFile = templateFile.makeCopy("VisiGate_Database_" + socCode + "_" + cleanName, socFolder);
     const newSheetId = newSheetFile.getId();
     
-    // 4. Update 'Config' Sheet in New Spreadsheet
+    // 4. Update 'Settings' & 'API_Config' Sheets in New Spreadsheet
     const ss = SpreadsheetApp.openById(newSheetId);
-    const configSheet = ss.getSheetByName("Config") || ss.getSheetByName("Settings");
-    if (configSheet) {
-      configSheet.getRange("B1").setValue(socName);
-      configSheet.getRange("B2").setValue(socCode);
-      configSheet.getRange("B3").setValue(city);
-      configSheet.getRange("B4").setValue(photosFolder.getId());
-      configSheet.getRange("B5").setValue(receiptsFolder.getId());
-      configSheet.getRange("B6").setValue(isDemo ? "TRIAL (Max 10 Flats)" : "ACTIVE");
+    
+    // Settings Tab
+    const settingsSheet = ss.getSheetByName("Settings");
+    if (settingsSheet) {
+      const sData = settingsSheet.getDataRange().getValues();
+      for (let i = 0; i < sData.length; i++) {
+        if (sData[i][0] === "PROPERTY_NAME") settingsSheet.getRange(i + 1, 2).setValue(socName);
+        if (sData[i][0] === "Manager_Email" && managerEmail) settingsSheet.getRange(i + 1, 2).setValue(managerEmail);
+        if (sData[i][0] === "Admin_Email" && managerEmail) settingsSheet.getRange(i + 1, 2).setValue(managerEmail);
+      }
+    }
+    
+    // API_Config Tab (Populate All 15 Folder IDs!)
+    const apiConfigSheet = ss.getSheetByName("API_Config");
+    if (apiConfigSheet) {
+      const aData = apiConfigSheet.getDataRange().getValues();
+      for (let j = 0; j < aData.length; j++) {
+        const k = aData[j][0];
+        if (folderIds[k]) {
+          apiConfigSheet.getRange(j + 1, 2).setValue(folderIds[k]);
+        }
+      }
     }
     
     // 5. Grant Edit Permission to Manager Email
@@ -4532,12 +4567,11 @@ function provisionSociety(socCode, socName, city, managerEmail, isDemo) {
       societyName: socName,
       sheetId: newSheetId,
       folderId: socFolder.getId(),
-      photosFolderId: photosFolder.getId(),
-      receiptsFolderId: receiptsFolder.getId(),
+      subfolders: folderIds,
       sheetUrl: "https://docs.google.com/spreadsheets/d/" + newSheetId + "/edit",
       folderUrl: "https://drive.google.com/drive/folders/" + socFolder.getId(),
       status: isDemo ? "TRIAL" : "ACTIVE",
-      message: "Dedicated Hub & Spoke ecosystem successfully created!"
+      message: "Dedicated Hub & Spoke ecosystem with all 15 photo/receipt folders successfully created!"
     };
   } catch (err) {
     return {
@@ -4565,7 +4599,7 @@ function doGet(e) {
       success: true,
       status: "ONLINE",
       timestamp: new Date().toISOString(),
-      service: "VisiGate Universal Provisioner Engine"
+      service: "VisiGate Universal Provisioner Engine (15 Folders Active)"
     })).setMimeType(ContentService.MimeType.JSON);
   }
   
