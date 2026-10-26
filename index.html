@@ -3042,6 +3042,9 @@
                             <button type="button" class="btn-admin-tool" onclick="openProvisionerEngineModal()" style="border-color: #38bdf8; color: #38bdf8; background: rgba(56, 189, 248, 0.1); font-weight: 700;">
                                 <span>⚙️ Provisioner Engine &amp; Setup</span>
                             </button>
+                            <button type="button" class="btn-admin-tool" onclick="openBackupEngineModal()" style="border-color: #a855f7; color: #c084fc; background: rgba(168, 85, 247, 0.12); font-weight: 700;">
+                                <span>🛡️ Midnight Backup &amp; Recovery</span>
+                            </button>
                             <button type="button" class="btn-admin-tool" onclick="exportMasterRouterConfig()" style="border-color: var(--accent-cyan); color: #cbd5e1;">
                                 <span>📋 Export Router JSON</span>
                             </button>
@@ -4172,6 +4175,7 @@
                 folderId: '1zYDlnR4wVbcvOdA8zVpAy2u17Ik-44Yj',
                 photosFolderId: '1Jp7UhmDKAr9-cob_yVsY_eNPgUmncUe4',
                 receiptsFolderId: '1QAt9oehPilBhjZbgiXDhdgwzMemyKBsb',
+                backupFolderId: '1b8zm54Jw_gL5K9RJfzD0-NTZrt4ud7XZ',
                 billingModel: 'official_plan',
                 ratePerDay: 212.40, // (1500 base + 130*30 extra) * 1.18 / 30 = 6372 / 30 = 212.40
                 advanceBalance: 12744.00,
@@ -4190,6 +4194,7 @@
                 folderId: '1qIWhXr_BXTJVKpUO-H_O1Rb1z5Ep9p_C',
                 photosFolderId: '1jjFYGai0Yy6fo9NARLZ1J8ofRczKZh0u',
                 receiptsFolderId: '1nF1sDpyT7YxBzdy6l1qBqXEG86v55ohz',
+                backupFolderId: '1SQRigiVPolHDfr6dr6GUGl-BpfhBoAoU',
                 billingModel: 'official_plan',
                 ratePerDay: 377.60, // (1500 base + 270*30 extra) * 1.18 / 30 = 11328 / 30 = 377.60
                 advanceBalance: 22656.00,
@@ -4208,6 +4213,7 @@
                 folderId: '1dV5-bZ2fZyw6vaKeR_ao9ZSAymKkgXsf',
                 photosFolderId: '1mzGVRVhl9KDK7t0jyKvYdXw1e4YaD26u',
                 receiptsFolderId: '1i9Y53JRIV7fMrngmqJ5OJTB0xxueiiL-',
+                backupFolderId: '1KySJ7ojlZe0rLk5B9K9j3vwZe-dwV1p7',
                 billingModel: 'trial',
                 ratePerDay: 0,
                 advanceBalance: 0,
@@ -4306,6 +4312,7 @@
                         <div style="display: flex; gap: 4px; flex-wrap: wrap;">
                             <a href="https://docs.google.com/spreadsheets/d/${c.sheetId}/edit" target="_blank" class="spoke-link sheet-link" title="Open Google Sheet Database">📊 Sheet DB</a>
                             <a href="https://drive.google.com/drive/folders/${c.folderId || ''}" target="_blank" class="spoke-link drive-link" title="Open Google Drive Society Folder">📁 Drive Folder</a>
+                            ${c.backupFolderId ? `<a href="https://drive.google.com/drive/folders/${c.backupFolderId}" target="_blank" class="spoke-link" style="background: rgba(168, 85, 247, 0.15); border: 1px solid #c084fc; color: #e9d5ff; font-size: 10px; padding: 2px 6px; border-radius: 4px; text-decoration: none;" title="Open Daily Backups Folder">🛡️ Backups</a>` : ''}
                         </div>
                     </td>
                     <td><strong>${c.units}</strong> Flats ${trialNotice}</td>
@@ -4625,6 +4632,17 @@ function doPost(e) {
   }
   return doGet(e);
 }`;
+
+        
+        function openBackupEngineModal() {
+            const modal = document.getElementById('backupEngineModal');
+            if (modal) modal.style.display = 'flex';
+        }
+
+        function closeBackupEngineModal() {
+            const modal = document.getElementById('backupEngineModal');
+            if (modal) modal.style.display = 'none';
+        }
 
         function openProvisionerEngineModal() {
             const modal = document.getElementById('provisionerEngineModal');
@@ -5093,5 +5111,107 @@ function doPost(e) {
         setTimeout(initPricingSlider, 400);
 
     </script>
+
+                <!-- ======================================================== -->
+                <!-- MODAL: MIDNIGHT BACKUP & DISASTER RECOVERY ENGINE        -->
+                <!-- ======================================================== -->
+                <div class="vg-modal-overlay" id="backupEngineModal" style="display:none; position: fixed; inset: 0; background: rgba(0,0,0,0.85); z-index: 99999; align-items: center; justify-content: center; backdrop-filter: blur(8px);">
+                    <div style="background: #0f172a; border: 1px solid #a855f7; border-radius: 16px; width: 92%; max-width: 900px; max-height: 90vh; overflow-y: auto; padding: 24px; box-shadow: 0 25px 50px -12px rgba(168, 85, 247, 0.25);">
+                        <div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid rgba(168, 85, 247, 0.2); padding-bottom: 14px; margin-bottom: 18px;">
+                            <div>
+                                <h3 style="margin: 0; font-size: 18px; color: #ffffff; display: flex; align-items: center; gap: 8px;">
+                                    <span>🛡️ Universal Midnight Backup &amp; Disaster Recovery Engine</span>
+                                </h3>
+                                <div style="font-size: 12px; color: #c084fc; margin-top: 4px;">
+                                    Automated Daily Snapshots &bull; 100% Standalone &bull; Zero Impact on Core Baseline Apps
+                                </div>
+                            </div>
+                            <button type="button" onclick="closeBackupEngineModal()" style="background: none; border: none; font-size: 24px; color: #94a3b8; cursor: pointer;">&times;</button>
+                        </div>
+
+                        <!-- Live Status Banner -->
+                        <div style="background: rgba(168, 85, 247, 0.1); border: 1px solid rgba(168, 85, 247, 0.3); border-radius: 10px; padding: 14px; margin-bottom: 20px;">
+                            <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 10px;">
+                                <div>
+                                    <span style="font-weight: 700; color: #e9d5ff; font-size: 13px;">● ENGINE STATUS: </span>
+                                    <span style="color: #34d399; font-weight: 800; font-size: 13px;">ACTIVE &amp; DEPLOYED</span>
+                                    <div style="font-size: 11px; color: #cbd5e1; margin-top: 4px;">
+                                        Runs automatically every night at <strong>1:00 AM IST</strong> &bull; Rolling <strong>30-Day Retention</strong> &bull; Multi-Society Spoke Automation
+                                    </div>
+                                </div>
+                                <a href="https://script.google.com/d/1DIszW3otxuUasQPpbGpSz0tKE2z6nySOs9sNuKlDPs6bBYmSJmSsB1Ad/edit" target="_blank" style="background: #a855f7; color: #ffffff; text-decoration: none; padding: 8px 16px; border-radius: 8px; font-size: 12px; font-weight: 700; display: inline-flex; align-items: center; gap: 6px;">
+                                    <span>Open Live Apps Script ↗</span>
+                                </a>
+                            </div>
+                        </div>
+
+                        <!-- 3 Active Societies Backup Health Table -->
+                        <div style="margin-bottom: 20px;">
+                            <h4 style="color: #ffffff; font-size: 14px; margin: 0 0 10px 0;">📁 Society Backup Hubs (Verified Daily Snapshots)</h4>
+                            <div style="overflow-x: auto;">
+                                <table style="width: 100%; border-collapse: collapse; font-size: 12px; text-align: left;">
+                                    <thead>
+                                        <tr style="background: rgba(255,255,255,0.05); color: #94a3b8; border-bottom: 1px solid rgba(255,255,255,0.1);">
+                                            <th style="padding: 10px;">Society</th>
+                                            <th style="padding: 10px;">Code</th>
+                                            <th style="padding: 10px;">Dedicated Backup Folder</th>
+                                            <th style="padding: 10px;">Latest Verified Snapshot</th>
+                                            <th style="padding: 10px;">Safety Status</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody style="color: #e2e8f0;">
+                                        <tr style="border-bottom: 1px solid rgba(255,255,255,0.05);">
+                                            <td style="padding: 10px;"><strong>Greenwood Residency</strong></td>
+                                            <td style="padding: 10px;"><code style="color: #38bdf8;">GWR</code></td>
+                                            <td style="padding: 10px;"><a href="https://drive.google.com/drive/folders/1b8zm54Jw_gL5K9RJfzD0-NTZrt4ud7XZ" target="_blank" style="color: #c084fc; text-decoration: underline;">📁 Daily_Database_Backups</a></td>
+                                            <td style="padding: 10px;"><a href="https://docs.google.com/spreadsheets/d/17dLu46cEAzvc4NjchX0LWa-6KckJOc41Th8uYiQzR2c/edit" target="_blank" style="color: #34d399; text-decoration: underline;">📊 2026-10-26 Snapshot</a></td>
+                                            <td style="padding: 10px;"><span style="color: #34d399; font-weight: 700;">✅ Protected</span></td>
+                                        </tr>
+                                        <tr style="border-bottom: 1px solid rgba(255,255,255,0.05);">
+                                            <td style="padding: 10px;"><strong>Palm Meadows Heights</strong></td>
+                                            <td style="padding: 10px;"><code style="color: #38bdf8;">PMH</code></td>
+                                            <td style="padding: 10px;"><a href="https://drive.google.com/drive/folders/1SQRigiVPolHDfr6dr6GUGl-BpfhBoAoU" target="_blank" style="color: #c084fc; text-decoration: underline;">📁 Daily_Database_Backups</a></td>
+                                            <td style="padding: 10px;"><a href="https://docs.google.com/spreadsheets/d/19WvMUR94jFxHYnpJMtNZDoV9om05FG0trjQl0Uc8nvY/edit" target="_blank" style="color: #34d399; text-decoration: underline;">📊 2026-10-26 Snapshot</a></td>
+                                            <td style="padding: 10px;"><span style="color: #34d399; font-weight: 700;">✅ Protected</span></td>
+                                        </tr>
+                                        <tr>
+                                            <td style="padding: 10px;"><strong>Prestige Silver Crest</strong></td>
+                                            <td style="padding: 10px;"><code style="color: #38bdf8;">PSC</code></td>
+                                            <td style="padding: 10px;"><a href="https://drive.google.com/drive/folders/1KySJ7ojlZe0rLk5B9K9j3vwZe-dwV1p7" target="_blank" style="color: #c084fc; text-decoration: underline;">📁 Daily_Database_Backups</a></td>
+                                            <td style="padding: 10px;"><a href="https://docs.google.com/spreadsheets/d/1PYtAdBSWxt3BSvG5fih0DznthvyeZgBDDIBARk_MDHo/edit" target="_blank" style="color: #34d399; text-decoration: underline;">📊 2026-10-26 Snapshot</a></td>
+                                            <td style="padding: 10px;"><span style="color: #34d399; font-weight: 700;">✅ Protected</span></td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+
+                        <!-- 4 Core Protection Principles -->
+                        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 12px; margin-bottom: 20px;">
+                            <div style="background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.08); border-radius: 8px; padding: 12px;">
+                                <div style="font-weight: 700; color: #38bdf8; margin-bottom: 4px;">1. Version History</div>
+                                <div style="font-size: 11px; color: #94a3b8;">Managers can self-restore deleted rows in 10s via <code>File &gt; Version history</code>.</div>
+                            </div>
+                            <div style="background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.08); border-radius: 8px; padding: 12px;">
+                                <div style="font-weight: 700; color: #34d399; margin-bottom: 4px;">2. Deletion Immunity</div>
+                                <div style="font-size: 11px; color: #94a3b8;">Only owner (<code>selvanma@</code>) can delete. Managers cannot remove files from Drive.</div>
+                            </div>
+                            <div style="background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.08); border-radius: 8px; padding: 12px;">
+                                <div style="font-weight: 700; color: #fbbf24; margin-bottom: 4px;">3. Tab Lockdown</div>
+                                <div style="font-size: 11px; color: #94a3b8;"><code>API_Config</code> and <code>Settings</code> tabs are locked to Owner-Only editing.</div>
+                            </div>
+                            <div style="background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.08); border-radius: 8px; padding: 12px;">
+                                <div style="font-weight: 700; color: #c084fc; margin-bottom: 4px;">4. Midnight Snapshots</div>
+                                <div style="font-size: 11px; color: #94a3b8;">Automated daily copies stored in isolated backup folders for 30 days.</div>
+                            </div>
+                        </div>
+
+                        <!-- Footer -->
+                        <div style="display: flex; justify-content: flex-end; gap: 10px; border-top: 1px solid rgba(255,255,255,0.1); padding-top: 14px;">
+                            <button type="button" onclick="closeBackupEngineModal()" style="background: #1e293b; color: #ffffff; border: 1px solid rgba(255,255,255,0.2); border-radius: 8px; padding: 8px 18px; font-weight: 600; cursor: pointer;">Close</button>
+                        </div>
+                    </div>
+                </div>
+
 </body>
 </html>
