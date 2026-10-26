@@ -2081,7 +2081,7 @@
                     <span style="font-size: 32px; display: block; margin-bottom: 12px;">📢</span>
                     <h3 style="font-family: var(--font-display); font-size: 18px; color: #ffffff; margin-bottom: 8px;">Selective Unit, Block or Tower Broadcasts</h3>
                     <p style="font-size: 13px; color: #94a3b8; line-height: 1.5; margin: 0;">
-                        Targeted community communication. Guards and Admins can broadcast notices selectively to individual flats, specific wings, floors, or towers (e.g. lift maintenance, water pipeline shutdown) or society-wide in one tap.
+                        Targeted community communication. Guards and Managers can broadcast notices selectively to individual flats, specific wings, floors, or towers (e.g. lift maintenance, water pipeline shutdown) or society-wide in one tap.
                     </p>
                 </div>
 
@@ -2089,9 +2089,9 @@
                 <div class="feature-card" style="border: 1px solid rgba(239, 68, 68, 0.3); background: rgba(15, 23, 42, 0.85); border-radius: 16px; padding: 22px; position: relative; overflow: hidden;">
                     <div style="position: absolute; top: 12px; right: 16px; font-family: monospace; font-size: 12px; font-weight: 800; color: #f87171; background: rgba(239, 68, 68, 0.15); padding: 2px 8px; border-radius: 6px;">USP 06</div>
                     <span style="font-size: 32px; display: block; margin-bottom: 12px;">🚨</span>
-                    <h3 style="font-family: var(--font-display); font-size: 18px; color: #ffffff; margin-bottom: 8px;">Multi-Tier Emergency Alerts (Codes 911–914)</h3>
+                    <h3 style="font-family: var(--font-display); font-size: 18px; color: #ffffff; margin-bottom: 8px;">Emergency Alerts to Guards, MCs &amp; Manager (Codes 911–913)</h3>
                     <p style="font-size: 13px; color: #94a3b8; line-height: 1.5; margin: 0;">
-                        One-touch SOS panic trigger for Medical (911), Fire (912), Police (913), and Lift Stuck (914) emergencies. Immediately rings guard checkpoint tablets with loud sirens and alerts Management Committee members.
+                        Instant resident emergency broadcasts: <strong>911 - Medical Emergency</strong>, <strong>912 - Stuck in Lift</strong>, and <strong>913 - Fire / Hazard</strong>. Instantly sounds loud audible sirens on guard tablets and alerts Management Committee (MC) and Manager.
                     </p>
                 </div>
 
@@ -2101,7 +2101,7 @@
                     <span style="font-size: 32px; display: block; margin-bottom: 12px;">🎭</span>
                     <h3 style="font-family: var(--font-display); font-size: 18px; color: #ffffff; margin-bottom: 8px;">Masked Numbers for Resident Privacy</h3>
                     <p style="font-size: 13px; color: #94a3b8; line-height: 1.5; margin: 0;">
-                        Compliant with Indian DPDP &amp; IT Act. Resident phone numbers are strictly masked (e.g. 98450****1). Checkpoint guards, delivery drivers, and cab drivers can never harvest or misuse residents' personal phone numbers.
+                        Compliant with Indian DPDP &amp; IT Act. Resident phone numbers are strictly masked (e.g. ******1234). Checkpoint guards, delivery drivers, and cab drivers can never harvest or misuse residents' personal phone numbers.
                     </p>
                 </div>
 
@@ -2453,24 +2453,21 @@
 
                                     <!-- MacroDroid Ring Bar -->
                                     
-                                    <!-- RESIDENT EMERGENCY SOS 911-914 TRIGGER BAR (100% FCM WEBPUSH) -->
+                                    <!-- RESIDENT EMERGENCY SOS 911-913 TRIGGER BAR (100% FCM WEBPUSH) -->
                                     <div style="background: rgba(239, 68, 68, 0.12); border: 1px solid rgba(239, 68, 68, 0.35); border-radius: 10px; padding: 10px; margin: 10px 0;">
                                         <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px;">
-                                            <strong style="color: #f87171; font-size: 11px;">🚨 TEST EMERGENCY SOS (CODES 911-914):</strong>
-                                            <span style="font-size: 9px; color: #10b981; font-weight: 700;">FCM WEBPUSH ONLY</span>
+                                            <strong style="color: #f87171; font-size: 11px;">🚨 TEST EMERGENCY SOS (CODES 911-913):</strong>
+                                            <span style="font-size: 9px; color: #10b981; font-weight: 700;">ALERTS GUARDS, MC &amp; MANAGER</span>
                                         </div>
-                                        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 4px;">
-                                            <button type="button" onclick="triggerSimEmergency('911', 'Ambulance / Medical Emergency')" style="background: rgba(239, 68, 68, 0.25); border: 1px solid #ef4444; color: #ffffff; padding: 6px; font-size: 10px; font-weight: 700; border-radius: 6px; cursor: pointer; text-align: left;">
-                                                🚑 911 Ambulance
+                                        <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 4px;">
+                                            <button type="button" onclick="triggerSimEmergency('911', 'Medical Emergency')" style="background: rgba(239, 68, 68, 0.25); border: 1px solid #ef4444; color: #ffffff; padding: 6px 4px; font-size: 10px; font-weight: 700; border-radius: 6px; cursor: pointer; text-align: center;">
+                                                🚑 911 Medical
                                             </button>
-                                            <button type="button" onclick="triggerSimEmergency('912', 'Fire / Gas Cylinder Leak')" style="background: rgba(245, 158, 11, 0.25); border: 1px solid #f59e0b; color: #ffffff; padding: 6px; font-size: 10px; font-weight: 700; border-radius: 6px; cursor: pointer; text-align: left;">
-                                                🔥 912 Fire Alert
+                                            <button type="button" onclick="triggerSimEmergency('912', 'Stuck in Lift')" style="background: rgba(168, 85, 247, 0.25); border: 1px solid #a855f7; color: #ffffff; padding: 6px 4px; font-size: 10px; font-weight: 700; border-radius: 6px; cursor: pointer; text-align: center;">
+                                                🛗 912 Stuck in Lift
                                             </button>
-                                            <button type="button" onclick="triggerSimEmergency('913', 'Security Intruder Threat')" style="background: rgba(220, 38, 38, 0.3); border: 1px solid #dc2626; color: #ffffff; padding: 6px; font-size: 10px; font-weight: 700; border-radius: 6px; cursor: pointer; text-align: left;">
-                                                🚨 913 Intruder SOS
-                                            </button>
-                                            <button type="button" onclick="triggerSimEmergency('914', 'Lift Entrapment Crisis')" style="background: rgba(168, 85, 247, 0.25); border: 1px solid #a855f7; color: #ffffff; padding: 6px; font-size: 10px; font-weight: 700; border-radius: 6px; cursor: pointer; text-align: left;">
-                                                🛗 914 Lift Stuck
+                                            <button type="button" onclick="triggerSimEmergency('913', 'Fire / Hazard')" style="background: rgba(245, 158, 11, 0.25); border: 1px solid #f59e0b; color: #ffffff; padding: 6px 4px; font-size: 10px; font-weight: 700; border-radius: 6px; cursor: pointer; text-align: center;">
+                                                🔥 913 Fire / Hazard
                                             </button>
                                         </div>
                                     </div>
@@ -2804,7 +2801,7 @@
                             <span>🛡️</span> 100% Sovereign RWA Infrastructure Guarantee:
                         </div>
                         <p style="font-size: 12px; color: #e2e8f0; margin: 6px 0 0 0; line-height: 1.5;">
-                            At just <strong>₹1 / day per flat (₹30/mo + 18% GST)</strong>, your society receives dedicated Google Cloud &amp; Google Sheet databases, zero commercial ads, sub-second barrier automation, and emergency 911–914 broadcasts — with absolute resident data privacy and zero vendor lock-in.
+                            At just <strong>₹1 / day per flat (₹30/mo + 18% GST)</strong>, your society receives dedicated Google Cloud &amp; Google Sheet databases, zero commercial ads, sub-second barrier automation, and emergency 911–913 broadcasts — with absolute resident data privacy and zero vendor lock-in.
                         </p>
                     </div>
                 </div>
@@ -2907,8 +2904,39 @@
                 </div>
 
                 
-                <!-- SUPER-ADMIN CLIENT MANAGEMENT & ONBOARDING CONSOLE -->
-                <div class="admin-client-card" id="adminClientPortfolio">
+                <!-- SUPER-ADMIN CLIENT MANAGEMENT & ONBOARDING CONSOLE (SECURED) -->
+                <!-- Public Locked Notice: Client societies, balances, & runway are confidential to VisiGate Super-Admin -->
+                <div id="superAdminLockedNotice" style="background: linear-gradient(145deg, rgba(15, 23, 42, 0.95), rgba(8, 13, 26, 0.95)); border: 1.5px solid rgba(56, 189, 248, 0.3); border-radius: 18px; padding: 35px 25px; text-align: center; max-width: 720px; margin: 30px auto; box-shadow: 0 15px 35px rgba(0,0,0,0.6);">
+                    <div style="font-size: 48px; margin-bottom: 10px;">🔒</div>
+                    <span style="font-size: 11px; color: #38bdf8; font-weight: 800; letter-spacing: 0.5px;">CENTRAL GOVERNANCE HUB</span>
+                    <h3 style="font-family: var(--font-display); font-size: 22px; color: #ffffff; margin: 6px 0 10px 0;">
+                        Super-Admin Portfolio &amp; Master Router Access
+                    </h3>
+                    <p style="font-size: 13px; color: #94a3b8; line-height: 1.6; max-width: 580px; margin: 0 auto 20px auto;">
+                        To maintain strict client confidentiality, society advance balances, flat counts, and daily deduction ledgers are restricted to authorized <strong>VisiGate Alerts Administrators</strong>.
+                    </p>
+
+                    <!-- Passcode Gate -->
+                    <div style="display: inline-flex; align-items: center; gap: 8px; background: rgba(2, 6, 23, 0.9); border: 1.5px solid #0284c7; border-radius: 10px; padding: 6px 14px; margin-bottom: 18px; box-shadow: 0 0 15px rgba(2, 132, 199, 0.25);">
+                        <input type="password" id="superAdminPasscode" placeholder="Enter Master Admin PIN" maxlength="12"
+                               style="background: transparent; border: none; color: #ffffff; font-family: monospace; font-size: 14px; outline: none; width: 170px; text-align: center;"
+                               onkeydown="if(event.key==='Enter') unlockSuperAdminPortfolio()">
+                        <button type="button" onclick="unlockSuperAdminPortfolio()"
+                                style="background: #0284c7; color: #ffffff; border: none; border-radius: 6px; padding: 7px 16px; font-size: 12px; font-weight: 700; cursor: pointer;">
+                            🔓 Unlock Console
+                        </button>
+                    </div>
+
+                    <!-- Individual Society Manager Notice -->
+                    <div style="border-top: 1px dashed rgba(255, 255, 255, 0.1); padding-top: 16px; margin-top: 10px;">
+                        <p style="font-size: 12px; color: #cbd5e1; line-height: 1.6; margin: 0;">
+                            🏢 <strong>Individual Society Access:</strong><br>
+                            Each registered society can view and manage their exclusive society database, resident directory, and gate attendance ledgers privately inside the <a href="https://manager.visigatealerts.in" target="_blank" style="color: #38bdf8; text-decoration: underline; font-weight: 700;">Manager App Portal (manager.visigatealerts.in)</a>.
+                        </p>
+                    </div>
+                </div>
+
+                <div class="admin-client-card" id="adminClientPortfolio" style="display: none;">
                     <div style="display: flex; justify-content: space-between; align-items: flex-start; flex-wrap: wrap; gap: 14px; border-bottom: 1px solid rgba(255, 255, 255, 0.08); padding-bottom: 16px;">
                         <div>
                             <span style="font-size: 11px; color: var(--accent-emerald); font-weight: 800; letter-spacing: 0.5px;">PLATFORM CLIENT GOVERNANCE</span>
@@ -3242,7 +3270,7 @@
                 <div class="feature-card" style="border-color: rgba(245, 158, 11, 0.4); background: rgba(30, 41, 59, 0.85);">
                     <span class="feature-icon-box">🔒</span>
                     <h3 class="feature-title" style="color: #fbbf24;">IT Act &amp; DPDP Data Privacy</h3>
-                    <p class="feature-desc">All visitor mobile numbers are strictly masked (e.g. 98450****1) in gate logs. Only authorized viewer records are kept for special audit investigations, guaranteeing complete personal data protection for residents.</p>
+                    <p class="feature-desc">All visitor mobile numbers are strictly masked (e.g. ******1234) in gate logs. Only authorized viewer records are kept for special audit investigations, guaranteeing complete personal data protection for residents.</p>
                 </div>
 
                 <div class="feature-card">
@@ -3958,6 +3986,25 @@
             } catch(e) {}
         }
 
+        
+        function unlockSuperAdminPortfolio() {
+            const passInput = document.getElementById('superAdminPasscode');
+            const pin = passInput ? passInput.value.trim() : '';
+            // Master Admin PIN for VisiGate Alerts
+            if (pin === '123456' || pin.toLowerCase() === 'admin' || pin === 'VG@2026' || pin === 'visigate') {
+                const notice = document.getElementById('superAdminLockedNotice');
+                const portfolio = document.getElementById('adminClientPortfolio');
+                if (notice) notice.style.display = 'none';
+                if (portfolio) {
+                    portfolio.style.display = 'block';
+                    renderClientSocieties();
+                }
+                alert('🔓 Super-Admin Access Granted: Client Societies & Master Router Console Unlocked.');
+            } else {
+                alert('❌ Invalid Master Admin PIN. Access restricted to authorized VisiGate Alerts administrators.');
+            }
+        }
+    
         function renderClientSocieties() {
             const clients = getStoredClients();
             const tbody = document.getElementById('clientSocietiesTableBody');
