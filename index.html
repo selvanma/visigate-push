@@ -1960,6 +1960,171 @@
             color: #ffffff;
         }
 
+    
+        /* Dedicated Society Portal Stack (Boxes Displayed One Below the Other) */
+        .society-hub-banner {
+            background: linear-gradient(135deg, rgba(15, 23, 42, 0.95), rgba(30, 41, 59, 0.95));
+            border: 1.5px solid rgba(56, 189, 248, 0.4);
+            border-radius: 18px;
+            padding: 24px 28px;
+            margin: 20px auto 35px auto;
+            max-width: 960px;
+            box-shadow: 0 20px 45px -10px rgba(0, 0, 0, 0.7), 0 0 25px rgba(56, 189, 248, 0.15);
+        }
+        .society-hub-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 16px;
+            flex-wrap: wrap;
+            padding-bottom: 18px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            margin-bottom: 20px;
+        }
+        .society-badge-pill {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            background: rgba(56, 189, 248, 0.15);
+            border: 1px solid #38bdf8;
+            color: #38bdf8;
+            padding: 4px 12px;
+            border-radius: 9999px;
+            font-size: 12px;
+            font-weight: 800;
+            font-family: monospace;
+            letter-spacing: 0.5px;
+        }
+        .society-portal-stack {
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+            width: 100%;
+        }
+        .portal-stack-box {
+            background: rgba(15, 23, 42, 0.85);
+            border: 1.5px solid var(--box-accent, rgba(56, 189, 248, 0.25));
+            border-radius: 14px;
+            padding: 18px 22px;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+            box-shadow: 0 8px 20px -5px rgba(0, 0, 0, 0.4);
+        }
+        .portal-stack-box:hover {
+            transform: translateY(-2px);
+            border-color: var(--box-hover-border, #38bdf8);
+            box-shadow: 0 15px 35px -5px rgba(2, 132, 199, 0.25);
+        }
+        .portal-box-top {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+        .portal-box-meta {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+        .portal-box-icon {
+            font-size: 26px;
+            line-height: 1;
+        }
+        .portal-box-title {
+            font-family: var(--font-display);
+            font-size: 17px;
+            font-weight: 700;
+            color: #ffffff;
+            margin: 0;
+        }
+        .portal-box-tag {
+            font-size: 11px;
+            font-weight: 700;
+            padding: 2px 8px;
+            border-radius: 6px;
+            background: rgba(255, 255, 255, 0.08);
+            color: #cbd5e1;
+            margin-left: 6px;
+        }
+        .portal-box-actions {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            flex-wrap: wrap;
+        }
+        .btn-portal-launch {
+            background: linear-gradient(135deg, var(--btn-grad-start, #0284c7), var(--btn-grad-end, #0369a1));
+            color: #ffffff;
+            font-size: 12px;
+            font-weight: 700;
+            padding: 7px 16px;
+            border-radius: 8px;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        .btn-portal-launch:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 4px 12px rgba(2, 132, 199, 0.4);
+        }
+        .btn-portal-copy {
+            background: rgba(255, 255, 255, 0.07);
+            border: 1px solid rgba(255, 255, 255, 0.18);
+            color: #e2e8f0;
+            font-size: 12px;
+            font-weight: 600;
+            padding: 7px 12px;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.2s;
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+        }
+        .btn-portal-copy:hover {
+            background: rgba(255, 255, 255, 0.14);
+            color: #ffffff;
+        }
+        .portal-box-desc {
+            font-size: 13px;
+            color: #94a3b8;
+            line-height: 1.5;
+            margin: 0;
+        }
+        .portal-box-url-bar {
+            display: flex;
+            align-items: center;
+            background: rgba(2, 6, 23, 0.7);
+            border: 1px solid rgba(255, 255, 255, 0.06);
+            border-radius: 8px;
+            padding: 8px 12px;
+            font-family: monospace;
+            font-size: 11px;
+            color: #7dd3fc;
+            word-break: break-all;
+        }
+        .portal-box-foot {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            font-size: 11px;
+            color: #64748b;
+            flex-wrap: wrap;
+            gap: 8px;
+            padding-top: 4px;
+        }
+        .portal-box-foot a {
+            color: #38bdf8;
+            text-decoration: underline;
+        }
+
     </style>
 </head>
 
@@ -2016,6 +2181,56 @@
             <a href="#features" class="m-pill">✨ Features</a>
             <a href="#architecture" class="m-pill">🏗️ Architecture</a>
         </div>
+
+        <!-- ======================================================== -->
+        <!-- SOCIETY DEDICATED GATEWAY & APP PORTAL HUB               -->
+        <!-- Displays all 6 Society Spoke Boxes One Below the Other  -->
+        <!-- ======================================================== -->
+        <section id="societyPortalHub" style="display: none; padding: 20px 20px 10px 20px;">
+            <div class="society-hub-banner">
+                <div class="society-hub-header">
+                    <div>
+                        <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 6px; flex-wrap: wrap;">
+                            <span class="society-badge-pill" id="hubSocBadge">SOCIETY [RAM]</span>
+                            <span style="font-size: 11px; padding: 2px 10px; border-radius: 9999px; background: rgba(16, 185, 129, 0.15); color: #34d399; border: 1px solid rgba(16, 185, 129, 0.3); font-weight: 700;" id="hubSocStatus">ACTIVE SPOKE</span>
+                        </div>
+                        <h2 style="font-family: var(--font-display); font-size: 24px; font-weight: 800; color: #ffffff; margin: 0 0 4px 0;" id="hubSocName">RAM Community</h2>
+                        <div style="font-size: 12px; color: #94a3b8;" id="hubSocMeta">Bengaluru, KA &bull; 10 Units &bull; 1 Gate Checkpoint</div>
+                    </div>
+                    <div style="display: flex; gap: 8px; flex-wrap: wrap; align-items: center;">
+                        <select id="hubSocietySwitcher" onchange="switchActiveSociety(this.value)" style="background: #1e293b; border: 1px solid rgba(56, 189, 248, 0.35); color: #38bdf8; font-size: 12px; font-weight: 700; padding: 7px 12px; border-radius: 8px; cursor: pointer;">
+                            <option value="RAM">RAM (RAM Community)</option>
+                            <option value="GWR">GWR (Greenwood Residency)</option>
+                            <option value="PMH">PMH (Palm Meadows)</option>
+                            <option value="PSC">PSC (Prestige Silver)</option>
+                        </select>
+                        <button type="button" onclick="openEditSocAssetsModal(currentHubSocCode)" style="background: rgba(56, 189, 248, 0.12); border: 1px solid #38bdf8; color: #38bdf8; font-size: 12px; font-weight: 700; padding: 7px 12px; border-radius: 8px; cursor: pointer;">
+                            ✏️ Edit Sheet / Drive IDs
+                        </button>
+                        <a href="https://docs.google.com/spreadsheets/d/1hG0H_uRucsWTcDUOECz0DO0PSiy33regcMUAPgXCXJQ/copy" target="_blank" style="background: rgba(16, 185, 129, 0.15); border: 1px solid #10b981; color: #34d399; font-size: 12px; font-weight: 700; padding: 7px 12px; border-radius: 8px; text-decoration: none; display: inline-flex; align-items: center; gap: 4px;">
+                            📋 Copy Blank Master Sheet ↗
+                        </a>
+                        <button type="button" onclick="closeSocietyPortalHub()" style="background: rgba(255, 255, 255, 0.08); border: 1px solid rgba(255, 255, 255, 0.2); color: #cbd5e1; font-size: 12px; font-weight: 600; padding: 7px 12px; border-radius: 8px; cursor: pointer;">
+                            ✕ Main Site
+                        </button>
+                    </div>
+                </div>
+
+                <div style="background: rgba(2, 6, 23, 0.6); border: 1px solid rgba(56, 189, 248, 0.2); border-radius: 10px; padding: 10px 14px; margin-bottom: 20px; font-size: 11px; color: #94a3b8; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 8px;">
+                    <div>
+                        <strong style="color: #e2e8f0;">Preferred Society URLs:</strong> 
+                        <code style="color: #38bdf8;" id="hubDisplaySubdomain">ram.visigatealerts.in</code> &bull; 
+                        <code style="color: #38bdf8;" id="hubDisplayWebApp">visigatealerts.in/?soc=RAM</code>
+                    </div>
+                    <div style="color: #34d399; font-weight: 600;">● Multi-Tenant Routing Active</div>
+                </div>
+
+                <!-- ALL 6 BOXES DISPLAYED ONE BELOW THE OTHER IN A VERTICAL STACK -->
+                <div class="society-portal-stack" id="societyPortalBoxesContainer">
+                    <!-- Populated dynamically by renderSocietyPortalHub() -->
+                </div>
+            </div>
+        </section>
 
         <!-- Hero Section -->
         <section class="hero">
@@ -3681,12 +3896,34 @@
 
         const host = window.location.hostname.toLowerCase();
         const search = window.location.search || '';
+        const urlParams = new URLSearchParams(search);
         const appFrame = document.getElementById('appFrame');
         const siteWrapper = document.getElementById('siteWrapper');
 
-        // Check if current hostname is one of our dedicated subdomains
+        // Universal Society Subdomain & Parameter Detection
+        function detectActiveSociety() {
+            let soc = urlParams.get('soc') || urlParams.get('society') || urlParams.get('code') || '';
+            const parts = host.split('.');
+            // If domain is e.g. ram.visigatealerts.in or ram.visigate-alerts.web.app or ram.visigatealerts.web.app
+            if (parts.length >= 3) {
+                const sub = parts[0].toLowerCase();
+                const reserved = ['www', 'guard', 'resident', 'mc', 'manager', 'admin', 'visigate-alerts', 'visigatealerts', 'localhost'];
+                if (!reserved.includes(sub)) {
+                    soc = sub;
+                }
+            }
+            return soc ? soc.toUpperCase().trim() : '';
+        }
+
+        let detectedSoc = detectActiveSociety();
+        let currentHubSocCode = detectedSoc || 'RAM';
+
+        // Check if current hostname or query parameter requests a dedicated portal iframe
         let activePortal = null;
-        if (host.startsWith('guard.')) {
+        const portalParam = urlParams.get('portal');
+        if (portalParam && ['guard', 'resident', 'mc', 'manager', 'admin'].includes(portalParam.toLowerCase())) {
+            activePortal = portalParam.toLowerCase();
+        } else if (host.startsWith('guard.')) {
             activePortal = 'guard';
         } else if (host.startsWith('resident.')) {
             activePortal = 'resident';
@@ -3698,9 +3935,8 @@
             activePortal = 'admin';
         }
 
-        // If on a dedicated subdomain, launch fullscreen app with ZERO outer Google banners!
+        // If on a dedicated subdomain or portal requested, launch fullscreen app with ZERO outer Google banners!
         if (activePortal === 'admin') {
-            // For admin.visigatealerts.in: Display the dedicated Master Router & Super-Admin Console
             siteWrapper.style.display = 'block';
             appFrame.style.display = 'none';
             document.title = "VisiGate Alerts | Master Router & Super-Admin Console";
@@ -3720,22 +3956,20 @@
             const mobBar = document.getElementById('mobileBottomBar');
             if (mobBar) mobBar.style.display = 'none';
         } else {
-            // We are on visigatealerts.in (Root Domain): Dynamically adapt links
-            let baseDomain = host.includes('visigatealerts.in') ? 'visigatealerts.in' : (host.includes('visigate.in') ? 'visigate.in' : null);
-            if (baseDomain) {
-                const setHref = (id, sub) => {
-                    const el = document.getElementById(id);
-                    if (el) el.href = 'https://' + sub + '.' + baseDomain + search;
-                };
-                setHref('heroBtnGuard', 'guard');
-                setHref('heroBtnResident', 'resident');
-                setHref('cardLinkGuard', 'guard');
-                setHref('cardLinkResident', 'resident');
-                setHref('cardLinkMc', 'mc');
-                setHref('cardLinkManager', 'manager');
-                setHref('mobBtnGuard', 'guard');
-                setHref('mobBtnResident', 'resident');
-            }
+            // Dynamically adapt links across both custom domains and web.app
+            let baseDomain = host.includes('visigatealerts.in') ? 'visigatealerts.in' : (host.includes('visigate.in') ? 'visigate.in' : 'visigatealerts.in');
+            const setHref = (id, sub) => {
+                const el = document.getElementById(id);
+                if (el) el.href = 'https://' + sub + '.' + baseDomain + search;
+            };
+            setHref('heroBtnGuard', 'guard');
+            setHref('heroBtnResident', 'resident');
+            setHref('cardLinkGuard', 'guard');
+            setHref('cardLinkResident', 'resident');
+            setHref('cardLinkMc', 'mc');
+            setHref('cardLinkManager', 'manager');
+            setHref('mobBtnGuard', 'guard');
+            setHref('mobBtnResident', 'resident');
         }
 
         // 3-Tab Live Simulator Logic (Visitor, Vehicle, Parcel/Doc)
@@ -4228,17 +4462,17 @@
             },
             {
                 code: 'RAM',
-                name: 'Ramky Trial Community',
+                name: 'RAM Community',
                 city: 'Bengaluru, KA',
                 units: 10,
                 gates: 1,
                 adminName: 'Society Admin (Trial)',
                 adminPhone: '9876543210',
-                adminEmail: 'admin@ramkytrial.in',
-                sheetId: '1I0c_PXnGLonlcxP6HoIF4SlaLwg1qMugHDyZkM9TPTM', // Live public database for Ramky
-                folderId: '1RxCvs_eYCxPa_cbK_mQTfGlHejKyAcA9',
-                photosFolderId: '1RxCvs_eYCxPa_cbK_mQTfGlHejKyAcA9',
-                receiptsFolderId: '1RxCvs_eYCxPa_cbK_mQTfGlHejKyAcA9',
+                adminEmail: 'admin@ramcommunity.in',
+                sheetId: '1I0c_PXnGLonlcxP6HoIF4SlaLwg1qMugHDyZkM9TPTM', // Golden spoke database for RAM
+                folderId: '1Kaom74nsSpSs3w9o0vu8cUoWoMtvlJPN', // Verified accessible Master Spoke Folder
+                photosFolderId: '1Kaom74nsSpSs3w9o0vu8cUoWoMtvlJPN',
+                receiptsFolderId: '1Kaom74nsSpSs3w9o0vu8cUoWoMtvlJPN',
                 backupFolderId: '1P4nlDhtRFaWeOl30hkhxrcadoaJ0aWqx',
                 billingModel: 'trial',
                 ratePerDay: 0,
@@ -4248,20 +4482,350 @@
             }
         ];
 
+
+        // ========================================================
+        // SOCIETY PORTAL HUB ENGINE: BOXES ONE BELOW THE OTHER
+        // ========================================================
+        function renderSocietyPortalHub(socCode) {
+            currentHubSocCode = (socCode || 'RAM').toUpperCase().trim();
+            const clients = getStoredClients();
+            let c = clients.find(item => item.code.toUpperCase() === currentHubSocCode);
+            if (!c) {
+                c = {
+                    code: currentHubSocCode,
+                    name: currentHubSocCode + ' Community',
+                    city: 'Bengaluru, KA',
+                    units: 10,
+                    gates: 1,
+                    sheetId: '1I0c_PXnGLonlcxP6HoIF4SlaLwg1qMugHDyZkM9TPTM',
+                    folderId: '1Kaom74nsSpSs3w9o0vu8cUoWoMtvlJPN',
+                    status: 'TRIAL'
+                };
+            }
+
+            // Update Header & Status
+            const badgeEl = document.getElementById('hubSocBadge');
+            if (badgeEl) badgeEl.innerText = `SOCIETY [${c.code}]`;
+            const nameEl = document.getElementById('hubSocName');
+            if (nameEl) nameEl.innerText = c.name;
+            const metaEl = document.getElementById('hubSocMeta');
+            if (metaEl) metaEl.innerText = `${c.city || 'Location'} • ${c.units || 10} Units • ${c.gates || 1} Gate Checkpoints`;
+            const statusEl = document.getElementById('hubSocStatus');
+            if (statusEl) {
+                statusEl.innerText = c.status === 'TRIAL' ? '14-DAY TRIAL SPOKE (10 UNITS)' : 'ACTIVE ENTERPRISE SPOKE';
+                statusEl.style.color = c.status === 'TRIAL' ? '#fbbf24' : '#34d399';
+            }
+
+            const subEl = document.getElementById('hubDisplaySubdomain');
+            if (subEl) subEl.innerText = `${c.code.toLowerCase()}.visigatealerts.in`;
+            const webEl = document.getElementById('hubDisplayWebApp');
+            if (webEl) webEl.innerText = `${window.location.host}/?soc=${c.code}`;
+
+            const switcher = document.getElementById('hubSocietySwitcher');
+            if (switcher) switcher.value = c.code;
+
+            // Generate URLs for all 6 boxes
+            const guardUrl = `https://guard.visigatealerts.in/?soc=${encodeURIComponent(c.code)}&sheetId=${encodeURIComponent(c.sheetId)}&aptName=${encodeURIComponent(c.name)}`;
+            const resUrl = `https://resident.visigatealerts.in/?soc=${encodeURIComponent(c.code)}&sheetId=${encodeURIComponent(c.sheetId)}&aptName=${encodeURIComponent(c.name)}`;
+            const mcUrl = `https://mc.visigatealerts.in/?soc=${encodeURIComponent(c.code)}&sheetId=${encodeURIComponent(c.sheetId)}&aptName=${encodeURIComponent(c.name)}`;
+            const mgrUrl = `https://manager.visigatealerts.in/?soc=${encodeURIComponent(c.code)}&sheetId=${encodeURIComponent(c.sheetId)}&aptName=${encodeURIComponent(c.name)}`;
+            
+            const directGuardUrl = `${APPS.guard}?soc=${encodeURIComponent(c.code)}&sheetId=${encodeURIComponent(c.sheetId)}&aptName=${encodeURIComponent(c.name)}`;
+            const directResUrl = `${APPS.resident}?soc=${encodeURIComponent(c.code)}&sheetId=${encodeURIComponent(c.sheetId)}&aptName=${encodeURIComponent(c.name)}`;
+            const directMcUrl = `${APPS.mc}&soc=${encodeURIComponent(c.code)}&sheetId=${encodeURIComponent(c.sheetId)}&aptName=${encodeURIComponent(c.name)}`;
+            const directMgrUrl = `${APPS.manager}&soc=${encodeURIComponent(c.code)}&sheetId=${encodeURIComponent(c.sheetId)}&aptName=${encodeURIComponent(c.name)}`;
+            
+            const sheetUrl = `https://docs.google.com/spreadsheets/d/${c.sheetId}/edit`;
+            const driveUrl = `https://drive.google.com/drive/folders/${c.folderId || '1Kaom74nsSpSs3w9o0vu8cUoWoMtvlJPN'}`;
+
+            const container = document.getElementById('societyPortalBoxesContainer');
+            if (!container) return;
+
+            // Render all 6 boxes stacked vertically ONE BELOW THE OTHER
+            container.innerHTML = `
+                <!-- BOX 1: GUARD APP -->
+                <div class="portal-stack-box" style="--box-accent: rgba(16, 185, 129, 0.35); --box-hover-border: #10b981;">
+                    <div class="portal-box-top">
+                        <div class="portal-box-meta">
+                            <span class="portal-box-icon">🛡️</span>
+                            <div>
+                                <h3 class="portal-box-title">Box 1: Guard App Checkpoint</h3>
+                                <div style="font-size: 11px; color: #34d399; font-weight: 700;">Main Gate Tablet Checkpoint &bull; [${c.code}]</div>
+                            </div>
+                        </div>
+                        <div class="portal-box-actions">
+                            <a href="${guardUrl}" target="_blank" class="btn-portal-launch" style="--btn-grad-start: #059669; --btn-grad-end: #047857;">
+                                <span>🚀 Launch Guard App ↗</span>
+                            </a>
+                            <button type="button" class="btn-portal-copy" onclick="copyPortalUrl('${guardUrl}', 'Guard App')">
+                                <span>📋 Copy Link</span>
+                            </button>
+                        </div>
+                    </div>
+                    <p class="portal-box-desc">Visitor entry logging with live camera facial photo, delivery package check-in, pre-approved digital pass scanner, vehicle license plate logging, and automatic boom barrier alerts.</p>
+                    <div class="portal-box-url-bar">${guardUrl}</div>
+                    <div class="portal-box-foot">
+                        <span>Direct Google Apps Script: <a href="${directGuardUrl}" target="_blank">Open via Google Server ↗</a></span>
+                        <span>Multi-Tenant Sheet Connected: <code>${c.sheetId.substring(0, 16)}...</code></span>
+                    </div>
+                </div>
+
+                <!-- BOX 2: RESIDENT PORTAL -->
+                <div class="portal-stack-box" style="--box-accent: rgba(56, 189, 248, 0.35); --box-hover-border: #38bdf8;">
+                    <div class="portal-box-top">
+                        <div class="portal-box-meta">
+                            <span class="portal-box-icon">📱</span>
+                            <div>
+                                <h3 class="portal-box-title">Box 2: Resident Mobile Suite</h3>
+                                <div style="font-size: 11px; color: #38bdf8; font-weight: 700;">Resident PWA &amp; Self-Service &bull; [${c.code}]</div>
+                            </div>
+                        </div>
+                        <div class="portal-box-actions">
+                            <a href="${resUrl}" target="_blank" class="btn-portal-launch" style="--btn-grad-start: #0284c7; --btn-grad-end: #0369a1;">
+                                <span>🚀 Launch Resident App ↗</span>
+                            </a>
+                            <button type="button" class="btn-portal-copy" onclick="copyPortalUrl('${resUrl}', 'Resident App')">
+                                <span>📋 Copy Link</span>
+                            </button>
+                        </div>
+                    </div>
+                    <p class="portal-box-desc">Zero app download required. Instant visitor approval notifications, pre-approved guest party passes, domestic maid/cook check-in notifications, parcel delivery pickup PINs, and society broadcast notices.</p>
+                    <div class="portal-box-url-bar">${resUrl}</div>
+                    <div class="portal-box-foot">
+                        <span>Direct Google Apps Script: <a href="${directResUrl}" target="_blank">Open via Google Server ↗</a></span>
+                        <span>Zero Advertisements &bull; DPDP Masked Numbers</span>
+                    </div>
+                </div>
+
+                <!-- BOX 3: MANAGEMENT COMMITTEE (MC) -->
+                <div class="portal-stack-box" style="--box-accent: rgba(168, 85, 247, 0.35); --box-hover-border: #a855f7;">
+                    <div class="portal-box-top">
+                        <div class="portal-box-meta">
+                            <span class="portal-box-icon">🏛️</span>
+                            <div>
+                                <h3 class="portal-box-title">Box 3: Management Committee (MC) Dashboard</h3>
+                                <div style="font-size: 11px; color: #c084fc; font-weight: 700;">Executive Security &amp; Attendance Analytics &bull; [${c.code}]</div>
+                            </div>
+                        </div>
+                        <div class="portal-box-actions">
+                            <a href="${mcUrl}" target="_blank" class="btn-portal-launch" style="--btn-grad-start: #7c3aed; --btn-grad-end: #6d28d9;">
+                                <span>🚀 Launch MC Dashboard ↗</span>
+                            </a>
+                            <button type="button" class="btn-portal-copy" onclick="copyPortalUrl('${mcUrl}', 'MC Dashboard')">
+                                <span>📋 Copy Link</span>
+                            </button>
+                        </div>
+                    </div>
+                    <p class="portal-box-desc">Real-time gate security oversight, count of active visitors currently inside the premises, security guard shift logs, emergency siren triggers, and community broadcast announcement center.</p>
+                    <div class="portal-box-url-bar">${mcUrl}</div>
+                    <div class="portal-box-foot">
+                        <span>Direct Google Apps Script: <a href="${directMcUrl}" target="_blank">Open via Google Server (page=mc) ↗</a></span>
+                        <span>Executive Oversight for RWA &amp; Committee</span>
+                    </div>
+                </div>
+
+                <!-- BOX 4: ESTATE MANAGER -->
+                <div class="portal-stack-box" style="--box-accent: rgba(245, 158, 11, 0.35); --box-hover-border: #f59e0b;">
+                    <div class="portal-box-top">
+                        <div class="portal-box-meta">
+                            <span class="portal-box-icon">📋</span>
+                            <div>
+                                <h3 class="portal-box-title">Box 4: Estate Manager &amp; Directory Portal</h3>
+                                <div style="font-size: 11px; color: #fbbf24; font-weight: 700;">Administrative Operations &amp; Ledger &bull; [${c.code}]</div>
+                            </div>
+                        </div>
+                        <div class="portal-box-actions">
+                            <a href="${mgrUrl}" target="_blank" class="btn-portal-launch" style="--btn-grad-start: #d97706; --btn-grad-end: #b45309;">
+                                <span>🚀 Launch Manager Portal ↗</span>
+                            </a>
+                            <button type="button" class="btn-portal-copy" onclick="copyPortalUrl('${mgrUrl}', 'Manager Portal')">
+                                <span>📋 Copy Link</span>
+                            </button>
+                        </div>
+                    </div>
+                    <p class="portal-box-desc">Resident directory &amp; flat allocation, staff biometric/PIN rosters, vendor maintenance AMC contracts, payment receipt upload &amp; audit declarations, and resident complaint resolution.</p>
+                    <div class="portal-box-url-bar">${mgrUrl}</div>
+                    <div class="portal-box-foot">
+                        <span>Direct Google Apps Script: <a href="${directMgrUrl}" target="_blank">Open via Google Server (page=manager) ↗</a></span>
+                        <span>Private Manager Directory &amp; Records</span>
+                    </div>
+                </div>
+
+                <!-- BOX 5: GOOGLE SHEET DATABASE -->
+                <div class="portal-stack-box" style="--box-accent: rgba(16, 185, 129, 0.3); --box-hover-border: #34d399;">
+                    <div class="portal-box-top">
+                        <div class="portal-box-meta">
+                            <span class="portal-box-icon">📊</span>
+                            <div>
+                                <h3 class="portal-box-title">Box 5: Society Google Sheet Database</h3>
+                                <div style="font-size: 11px; color: #34d399; font-weight: 700;">Dedicated Clean Spoke Database &bull; [${c.code}]</div>
+                            </div>
+                        </div>
+                        <div class="portal-box-actions">
+                            <a href="${sheetUrl}" target="_blank" class="btn-portal-launch" style="--btn-grad-start: #059669; --btn-grad-end: #047857;">
+                                <span>📊 Open Google Sheet DB ↗</span>
+                            </a>
+                            <button type="button" class="btn-portal-copy" onclick="openEditSocAssetsModal('${c.code}')">
+                                <span>✏️ Edit Sheet ID</span>
+                            </button>
+                            <button type="button" class="btn-portal-copy" onclick="copyPortalUrl('${sheetUrl}', 'Google Sheet DB')">
+                                <span>📋 Copy Link</span>
+                            </button>
+                        </div>
+                    </div>
+                    <p class="portal-box-desc">Your society's private, encrypted Google Sheets database containing API_Config, Settings, Residents, Visitors, Vehicles, Staff, and Preapproved Passes. Zero database hosting fees and 100% cloud backup.</p>
+                    <div class="portal-box-url-bar">${sheetUrl}</div>
+                    <div class="portal-box-foot">
+                        <span>Need to duplicate a fresh clean template? <a href="https://docs.google.com/spreadsheets/d/1hG0H_uRucsWTcDUOECz0DO0PSiy33regcMUAPgXCXJQ/copy" target="_blank">Duplicate Golden Blank Sheet ↗</a></span>
+                        <span>Raw Sheet ID: <code>${c.sheetId}</code></span>
+                    </div>
+                </div>
+
+                <!-- BOX 6: GOOGLE DRIVE SPOKE FOLDER -->
+                <div class="portal-stack-box" style="--box-accent: rgba(56, 189, 248, 0.3); --box-hover-border: #38bdf8;">
+                    <div class="portal-box-top">
+                        <div class="portal-box-meta">
+                            <span class="portal-box-icon">📁</span>
+                            <div>
+                                <h3 class="portal-box-title">Box 6: Society Google Drive Spoke Folder</h3>
+                                <div style="font-size: 11px; color: #38bdf8; font-weight: 700;">Dedicated Media &amp; Photos Storage &bull; [${c.code}]</div>
+                            </div>
+                        </div>
+                        <div class="portal-box-actions">
+                            <a href="${driveUrl}" target="_blank" class="btn-portal-launch" style="--btn-grad-start: #0284c7; --btn-grad-end: #0369a1;">
+                                <span>📁 Open Drive Spoke Folder ↗</span>
+                            </a>
+                            <button type="button" class="btn-portal-copy" onclick="openEditSocAssetsModal('${c.code}')">
+                                <span>✏️ Edit Folder ID</span>
+                            </button>
+                            <button type="button" class="btn-portal-copy" onclick="copyPortalUrl('${driveUrl}', 'Drive Spoke Folder')">
+                                <span>📋 Copy Link</span>
+                            </button>
+                        </div>
+                    </div>
+                    <p class="portal-box-desc">The central Google Drive folder organizing high-resolution visitor camera photos, parcel document scans, vehicle registration photos, and payment receipts across 15 dedicated subfolders.</p>
+                    <div class="portal-box-url-bar">${driveUrl}</div>
+                    <div class="portal-box-foot">
+                        <span>Spoke Master Folder: <a href="https://drive.google.com/drive/folders/1Kaom74nsSpSs3w9o0vu8cUoWoMtvlJPN" target="_blank">VisiGate Societies Master Folder ↗</a></span>
+                        <span>Raw Folder ID: <code>${c.folderId || '1Kaom74nsSpSs3w9o0vu8cUoWoMtvlJPN'}</code></span>
+                    </div>
+                </div>
+            `;
+
+            // Display Hub Section
+            const hubSec = document.getElementById('societyPortalHub');
+            if (hubSec) {
+                hubSec.style.display = 'block';
+                setTimeout(() => hubSec.scrollIntoView({ behavior: 'smooth' }), 100);
+            }
+        }
+
+        function copyPortalUrl(url, label) {
+            if (navigator.clipboard) {
+                navigator.clipboard.writeText(url).then(() => {
+                    alert(`📋 ${label} URL copied to clipboard:
+
+${url}`);
+                }).catch(() => {
+                    prompt(`Copy ${label} URL:`, url);
+                });
+            } else {
+                prompt(`Copy ${label} URL:`, url);
+            }
+        }
+
+        function switchActiveSociety(code) {
+            if (!code) return;
+            renderSocietyPortalHub(code);
+            try {
+                const newUrl = window.location.pathname + '?soc=' + encodeURIComponent(code);
+                window.history.pushState({ soc: code }, '', newUrl);
+            } catch(e) {}
+        }
+
+        function showSocietyHubForCode(code) {
+            renderSocietyPortalHub(code);
+        }
+
+        function closeSocietyPortalHub() {
+            const hubSec = document.getElementById('societyPortalHub');
+            if (hubSec) hubSec.style.display = 'none';
+            try {
+                window.history.pushState({}, '', window.location.pathname);
+            } catch(e) {}
+        }
+
+        function openEditSocAssetsModal(code) {
+            const clients = getStoredClients();
+            const c = clients.find(item => item.code.toUpperCase() === (code || 'RAM').toUpperCase());
+            if (!c) return;
+
+            document.getElementById('editAssetSocCode').value = c.code;
+            document.getElementById('editAssetTitle').innerText = `Configure Google Assets for [${c.code}] ${c.name}`;
+            document.getElementById('editAssetSheetId').value = c.sheetId || '';
+            document.getElementById('editAssetFolderId').value = c.folderId || '';
+
+            const modal = document.getElementById('editSocAssetModal');
+            if (modal) modal.style.display = 'flex';
+        }
+
+        function closeEditSocAssetsModal() {
+            const modal = document.getElementById('editSocAssetModal');
+            if (modal) modal.style.display = 'none';
+        }
+
+        function handleSaveSocAssets(e) {
+            e.preventDefault();
+            const code = document.getElementById('editAssetSocCode').value.trim().toUpperCase();
+            let rawSheet = document.getElementById('editAssetSheetId').value.trim();
+            let rawFolder = document.getElementById('editAssetFolderId').value.trim();
+
+            // Clean full URLs to extract pure ID if pasted
+            const sheetMatch = rawSheet.match(/\/d\/([a-zA-Z0-9-_]+)/);
+            if (sheetMatch && sheetMatch[1]) rawSheet = sheetMatch[1];
+
+            const folderMatch = rawFolder.match(/\/folders\/([a-zA-Z0-9-_]+)/);
+            if (folderMatch && folderMatch[1]) rawFolder = folderMatch[1];
+
+            const clients = getStoredClients();
+            const c = clients.find(item => item.code.toUpperCase() === code);
+            if (c) {
+                c.sheetId = rawSheet;
+                c.folderId = rawFolder;
+                saveStoredClients(clients);
+                closeEditSocAssetsModal();
+                renderSocietyPortalHub(code);
+                renderClientSocieties();
+                alert(`✅ Google Sheet DB & Drive Spoke IDs updated for [${c.code}]!
+All 6 app portal links refreshed in real-time.`);
+            }
+        }
+
         function getStoredClients() {
             try {
                 const stored = localStorage.getItem('vg_registered_clients');
                 if (stored) {
                     const parsed = JSON.parse(stored);
                     if (Array.isArray(parsed) && parsed.length > 0) {
-                        const hasFakeIds = parsed.some(c => 
-                            !c.sheetId || c.sheetId.startsWith('1VgSheet_') || 
-                            !c.folderId || c.folderId.startsWith('1VgDrive_')
-                        );
-                        if (!hasFakeIds) return parsed;
+                        let hasMod = false;
+                        parsed.forEach(c => {
+                            if (!c.sheetId || c.sheetId.startsWith('1VgSheet_')) {
+                                c.sheetId = '1I0c_PXnGLonlcxP6HoIF4SlaLwg1qMugHDyZkM9TPTM';
+                                hasMod = true;
+                            }
+                            if (!c.folderId || c.folderId.startsWith('1VgDrive_') || c.folderId === '1RxCvs_eYCxPa_cbK_mQTfGlHejKyAcA9') {
+                                c.folderId = '1Kaom74nsSpSs3w9o0vu8cUoWoMtvlJPN';
+                                hasMod = true;
+                            }
+                            if (c.code === 'RAM') {
+                                c.name = 'RAM Community';
+                            }
+                        });
+                        if (hasMod) {
+                            try { localStorage.setItem('vg_registered_clients', JSON.stringify(parsed)); } catch(e) {}
+                        }
+                        return parsed;
                     }
-                    console.log('Sanitizing simulated/stale client cache from localStorage...');
-                    localStorage.removeItem('vg_registered_clients');
                 }
             } catch(e) {}
             return DEFAULT_CLIENTS;
@@ -4399,9 +4963,10 @@
                         <strong style="color: #ffffff; font-size: 13px;">${c.name}</strong>
                         <div style="font-size: 10px; color: var(--accent-cyan); font-family: monospace; margin: 2px 0 6px 0;">SOCIETY CODE: [${c.code}]</div>
                         <div style="display: flex; gap: 4px; flex-wrap: wrap;">
-                            <a href="https://guard.visigatealerts.in/?soc=${encodeURIComponent(c.code)}&sheetId=${encodeURIComponent(c.sheetId)}" target="_blank" class="app-tag-btn guard-tag" title="Launch Guard App for ${c.name}">🛡️ Guard</a>
-                            <a href="https://resident.visigatealerts.in/?soc=${encodeURIComponent(c.code)}&sheetId=${encodeURIComponent(c.sheetId)}" target="_blank" class="app-tag-btn res-tag" title="Launch Resident App for ${c.name}">📱 Resident</a>
-                            <a href="https://manager.visigatealerts.in/?soc=${encodeURIComponent(c.code)}&sheetId=${encodeURIComponent(c.sheetId)}" target="_blank" class="app-tag-btn mgr-tag" title="Launch Manager Portal for ${c.name}">📋 Manager</a>
+                            <a href="https://guard.visigatealerts.in/?soc=${encodeURIComponent(c.code)}&sheetId=${encodeURIComponent(c.sheetId)}&aptName=${encodeURIComponent(c.name)}" target="_blank" class="app-tag-btn guard-tag" title="Launch Guard App for ${c.name}">🛡️ Guard</a>
+                            <a href="https://resident.visigatealerts.in/?soc=${encodeURIComponent(c.code)}&sheetId=${encodeURIComponent(c.sheetId)}&aptName=${encodeURIComponent(c.name)}" target="_blank" class="app-tag-btn res-tag" title="Launch Resident App for ${c.name}">📱 Resident</a>
+                            <a href="https://mc.visigatealerts.in/?soc=${encodeURIComponent(c.code)}&sheetId=${encodeURIComponent(c.sheetId)}&aptName=${encodeURIComponent(c.name)}" target="_blank" class="app-tag-btn" style="background: rgba(168, 85, 247, 0.15); border: 1px solid #c084fc; color: #e9d5ff;" title="Launch MC Dashboard for ${c.name}">🏛️ MC</a>
+                            <a href="https://manager.visigatealerts.in/?soc=${encodeURIComponent(c.code)}&sheetId=${encodeURIComponent(c.sheetId)}&aptName=${encodeURIComponent(c.name)}" target="_blank" class="app-tag-btn mgr-tag" title="Launch Manager Portal for ${c.name}">📋 Manager</a>
                         </div>
                     </td>
                     <td>
@@ -4424,8 +4989,10 @@
                     <td>${statusBadge}</td>
                     <td>
                         <div style="display: flex; gap: 4px; flex-wrap: wrap;">
-                            <button class="btn-table-action" onclick="openSocLinksModal('${c.code}')" title="Test & Copy Dynamic App Launch URLs" style="color: #38bdf8; border-color: rgba(56, 189, 248, 0.4);">⚡ Links</button>
-                            <button class="btn-table-action" onclick="copyClientRouterConfig('${c.code}')" title="Copy Master Router Config JSON">📋 JSON</button>
+                            <button class="btn-table-action" onclick="showSocietyHubForCode('${c.code}')" title="Open Dedicated Hub (Stacked Boxes)" style="color: #34d399; border-color: rgba(52, 211, 153, 0.4);">⚡ Hub</button>
+                            <button class="btn-table-action" onclick="openEditSocAssetsModal('${c.code}')" title="Configure Sheet DB & Drive IDs" style="color: #38bdf8; border-color: rgba(56, 189, 248, 0.4);">✏️ IDs</button>
+                            <button class="btn-table-action" onclick="openSocLinksModal('${c.code}')" title="Test & Copy Dynamic App Launch URLs" style="color: #38bdf8; border-color: rgba(56, 189, 248, 0.4);">📋 Links</button>
+                            <button class="btn-table-action" onclick="copyClientRouterConfig('${c.code}')" title="Copy Master Router Config JSON">⚙️ JSON</button>
                             <button class="btn-table-action" onclick="openRechargeModal('${c.code}', '${c.name}')" title="Add Advance Balance">💳 +Cash</button>
                             <button class="btn-table-action" onclick="viewClientLedger('${c.code}')" title="View Ledger Statement">📊 Ledger</button>
                             <button class="btn-table-action" onclick="closeClientAccountSettlement('${c.code}')" title="Close Account & Settle Refund" style="color: #f87171;">🔒 Settle</button>
@@ -4817,14 +5384,16 @@ function doPost(e) {
             document.getElementById('socLinksModalTitle').innerText = `${c.name} [${c.code}] - Direct Launch Links`;
             document.getElementById('socLinksModalSub').innerText = `Dynamic URL routing active for ${c.city} (${c.gates} Gates, ${c.units} Units).`;
 
-            const guardUrl = `https://guard.visigatealerts.in/?soc=${encodeURIComponent(c.code)}&sheetId=${encodeURIComponent(c.sheetId)}`;
-            const resUrl = `https://resident.visigatealerts.in/?soc=${encodeURIComponent(c.code)}&sheetId=${encodeURIComponent(c.sheetId)}`;
-            const mgrUrl = `https://manager.visigatealerts.in/?soc=${encodeURIComponent(c.code)}&sheetId=${encodeURIComponent(c.sheetId)}`;
-            const directGuardUrl = `${APPS.guard}?soc=${encodeURIComponent(c.code)}&sheetId=${encodeURIComponent(c.sheetId)}`;
-            const directResUrl = `${APPS.resident}?soc=${encodeURIComponent(c.code)}&sheetId=${encodeURIComponent(c.sheetId)}`;
-            const directMgrUrl = `${APPS.manager}&soc=${encodeURIComponent(c.code)}&sheetId=${encodeURIComponent(c.sheetId)}`;
+            const guardUrl = `https://guard.visigatealerts.in/?soc=${encodeURIComponent(c.code)}&sheetId=${encodeURIComponent(c.sheetId)}&aptName=${encodeURIComponent(c.name)}`;
+            const resUrl = `https://resident.visigatealerts.in/?soc=${encodeURIComponent(c.code)}&sheetId=${encodeURIComponent(c.sheetId)}&aptName=${encodeURIComponent(c.name)}`;
+            const mcUrl = `https://mc.visigatealerts.in/?soc=${encodeURIComponent(c.code)}&sheetId=${encodeURIComponent(c.sheetId)}&aptName=${encodeURIComponent(c.name)}`;
+            const mgrUrl = `https://manager.visigatealerts.in/?soc=${encodeURIComponent(c.code)}&sheetId=${encodeURIComponent(c.sheetId)}&aptName=${encodeURIComponent(c.name)}`;
+            const directGuardUrl = `${APPS.guard}?soc=${encodeURIComponent(c.code)}&sheetId=${encodeURIComponent(c.sheetId)}&aptName=${encodeURIComponent(c.name)}`;
+            const directResUrl = `${APPS.resident}?soc=${encodeURIComponent(c.code)}&sheetId=${encodeURIComponent(c.sheetId)}&aptName=${encodeURIComponent(c.name)}`;
+            const directMcUrl = `${APPS.mc}&soc=${encodeURIComponent(c.code)}&sheetId=${encodeURIComponent(c.sheetId)}&aptName=${encodeURIComponent(c.name)}`;
+            const directMgrUrl = `${APPS.manager}&soc=${encodeURIComponent(c.code)}&sheetId=${encodeURIComponent(c.sheetId)}&aptName=${encodeURIComponent(c.name)}`;
             const sheetUrl = `https://docs.google.com/spreadsheets/d/${c.sheetId}/edit`;
-            const driveUrl = `https://drive.google.com/drive/folders/${c.folderId || ''}`;
+            const driveUrl = `https://drive.google.com/drive/folders/${c.folderId || '1Kaom74nsSpSs3w9o0vu8cUoWoMtvlJPN'}`;
 
             const container = document.getElementById('socLinksContainer');
             container.innerHTML = `
@@ -4848,6 +5417,17 @@ function doPost(e) {
                         </div>
                     </div>
                     <div style="font-family: monospace; font-size: 11px; color: #94a3b8; word-break: break-all;">${resUrl}</div>
+                </div>
+
+                <div style="background: rgba(15, 23, 42, 0.85); border: 1px solid rgba(168, 85, 247, 0.3); border-radius: 10px; padding: 12px;">
+                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px;">
+                        <strong style="color: #c084fc; font-size: 13px;">🏛️ Management Committee (MC) Dashboard</strong>
+                        <div style="display: flex; gap: 6px;">
+                            <a href="${mcUrl}" target="_blank" style="background: #7c3aed; color: #ffffff; padding: 3px 8px; border-radius: 5px; font-size: 11px; font-weight: 700; text-decoration: none;">Launch ↗</a>
+                            <button type="button" onclick="navigator.clipboard.writeText('${mcUrl}'); alert('MC Dashboard URL copied!');" style="background: rgba(255,255,255,0.1); color: #cbd5e1; border: 1px solid rgba(255,255,255,0.2); padding: 3px 8px; border-radius: 5px; font-size: 11px; cursor: pointer;">Copy</button>
+                        </div>
+                    </div>
+                    <div style="font-family: monospace; font-size: 11px; color: #94a3b8; word-break: break-all;">${mcUrl}</div>
                 </div>
 
                 <div style="background: rgba(15, 23, 42, 0.85); border: 1px solid rgba(245, 158, 11, 0.3); border-radius: 10px; padding: 12px;">
@@ -5129,9 +5709,25 @@ function doPost(e) {
             }
         }
 
-        // Initialize Client Societies on page load
+        // Initialize Client Societies & Active Society Hub on page load
         document.addEventListener('DOMContentLoaded', () => {
             renderClientSocieties();
+
+            // Populate switcher dropdown with all available societies
+            try {
+                const switcher = document.getElementById('hubSocietySwitcher');
+                if (switcher) {
+                    const clients = getStoredClients();
+                    switcher.innerHTML = clients.map(c => `<option value="${c.code}">${c.code} (${c.name})</option>`).join('');
+                }
+            } catch(e) {}
+
+            // Auto-detect society (from ?soc=RAM or ram.visigatealerts.in or ram.visigate-alerts.web.app)
+            const activeSoc = detectActiveSociety();
+            if (activeSoc) {
+                renderSocietyPortalHub(activeSoc);
+            }
+
             // Auto-unlock if session was authorized
             try {
                 if (sessionStorage.getItem('vg_super_admin_unlocked') === 'true') {
@@ -5363,5 +5959,60 @@ function doPost(e) {
             </div>
         </div>
         
+
+        <!-- ======================================================== -->
+        <!-- MODAL: EDIT SOCIETY ASSET IDS (SHEET DB & DRIVE FOLDER) -->
+        <!-- ======================================================== -->
+        <div class="vg-modal-overlay" id="editSocAssetModal" style="display: none; align-items: center; justify-content: center; position: fixed; inset: 0; background: rgba(0,0,0,0.85); z-index: 99999; backdrop-filter: blur(8px);">
+            <div class="vg-modal-box" style="max-width: 620px; width: 92%; border: 1.5px solid #38bdf8; background: #0f172a; border-radius: 16px; padding: 24px; box-shadow: 0 20px 45px rgba(2, 132, 199, 0.3);">
+                <div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid rgba(255,255,255,0.1); padding-bottom: 12px; margin-bottom: 18px;">
+                    <div>
+                        <h3 style="font-family: var(--font-display); font-size: 19px; color: #ffffff; margin: 0;" id="editAssetTitle">Configure Google Assets for [RAM]</h3>
+                        <div style="font-size: 11px; color: #38bdf8; margin-top: 4px;">Connect verified live Google Sheet DB and Drive Spoke Folders</div>
+                    </div>
+                    <button type="button" class="vg-modal-close" onclick="closeEditSocAssetsModal()" style="background: none; border: none; font-size: 24px; color: #94a3b8; cursor: pointer;">&times;</button>
+                </div>
+
+                <form onsubmit="handleSaveSocAssets(event)">
+                    <input type="hidden" id="editAssetSocCode">
+                    
+                    <div style="margin-bottom: 14px;">
+                        <label style="display: block; font-size: 12px; font-weight: 700; color: #e2e8f0; margin-bottom: 6px;">
+                            📊 Google Sheet Database ID or Full Edit URL:
+                        </label>
+                        <input type="text" id="editAssetSheetId" class="sim-input" placeholder="e.g. 1I0c_PXnGLonlcxP6HoIF4SlaLwg1qMugHDyZkM9TPTM or paste full sheet URL" required style="width: 100%; font-family: monospace; font-size: 12px;">
+                        <div style="font-size: 10px; color: #94a3b8; margin-top: 4px;">
+                            Paste either the raw 44-character Sheet ID or the entire Google Sheet URL from your browser address bar.
+                        </div>
+                    </div>
+
+                    <div style="margin-bottom: 18px;">
+                        <label style="display: block; font-size: 12px; font-weight: 700; color: #e2e8f0; margin-bottom: 6px;">
+                            📁 Google Drive Society Spoke Folder ID or URL:
+                        </label>
+                        <input type="text" id="editAssetFolderId" class="sim-input" placeholder="e.g. 1Kaom74nsSpSs3w9o0vu8cUoWoMtvlJPN or paste full folder URL" required style="width: 100%; font-family: monospace; font-size: 12px;">
+                        <div style="font-size: 10px; color: #94a3b8; margin-top: 4px;">
+                            The main Google Drive folder where visitor photos, documents, and payment receipts are stored.
+                        </div>
+                    </div>
+
+                    <div style="background: rgba(16, 185, 129, 0.1); border: 1px solid rgba(16, 185, 129, 0.3); border-radius: 8px; padding: 10px 14px; margin-bottom: 18px; font-size: 11px; color: #cbd5e1; display: flex; justify-content: space-between; align-items: center;">
+                        <div>
+                            Need a fresh blank master template sheet?<br>
+                            <span style="color: #6ee7b7;">Click to create your own duplicate copy with 1 click.</span>
+                        </div>
+                        <a href="https://docs.google.com/spreadsheets/d/1hG0H_uRucsWTcDUOECz0DO0PSiy33regcMUAPgXCXJQ/copy" target="_blank" style="background: #059669; color: #ffffff; padding: 6px 12px; border-radius: 6px; font-weight: 700; text-decoration: none; font-size: 11px;">
+                            📋 Duplicate Sheet ↗
+                        </a>
+                    </div>
+
+                    <div style="display: flex; justify-content: flex-end; gap: 10px;">
+                        <button type="button" onclick="closeEditSocAssetsModal()" style="background: #1e293b; color: #cbd5e1; border: 1px solid rgba(255,255,255,0.2); padding: 8px 16px; border-radius: 8px; font-size: 12px; cursor: pointer;">Cancel</button>
+                        <button type="submit" style="background: linear-gradient(135deg, #0284c7, #0369a1); color: #ffffff; border: none; padding: 8px 22px; border-radius: 8px; font-size: 12px; font-weight: 700; cursor: pointer;">💾 Save &amp; Update Spoke Links</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+
 </body>
 </html>
