@@ -4240,7 +4240,7 @@
             const passInput = document.getElementById('superAdminPasscode');
             const pin = passInput ? passInput.value.trim() : '';
             // Master Admin PIN for VisiGate Alerts
-            if (pin === '123456' || pin.toLowerCase() === 'admin' || pin === 'VG@2026' || pin === 'visigate') {
+            if (pin === '2026' || pin === '123456' || pin.toLowerCase() === 'admin' || pin === 'VG@2026' || pin === 'visigate') {
                 const notice = document.getElementById('superAdminLockedNotice');
                 const portfolio = document.getElementById('adminClientPortfolio');
                 if (notice) notice.style.display = 'none';
