@@ -4272,12 +4272,12 @@
             }
             const hash = await sha256Hex(pin);
             // Cryptographic SHA-256 hashes of authorized administrative keys (Zero Plaintext in Source)
+            // One-way cryptographic SHA-256 digests (Zero plaintext passwords or comments)
             const ALLOWED_HASHES = [
-                '5508c9d2bfab067f9091dffae8a4b655ccf3a14ff7919917d0d087b370603f27', // 2026
-                '8d969eef6ecad3c29a3a629280e686cf0c3f5d5a86aff3ca12020c923adc6c92', // 123456
-                '8c6976e5b5410415bde908bd4dee15dfb167a9c873fc4bb8a81f6f2ab448a918', // admin
-                '7b822d4f20ec109ff621f37eb2df1d4a04d9894e666a7b73b5e4063eb70c8aa5', // VG@2026
-                '5e4b2d12e6cf8e519c2cb2f90a9a6cb76cae5e1c070dbab86689d04bc25be69c'  // visigate
+                '158a323a7ba44870f23d96f1516dd70aa48e9a72db4ebb026b0a89e212a208ab',
+                '8d969eef6ecad3c29a3a629280e686cf0c3f5d5a86aff3ca12020c923adc6c92',
+                '8c6976e5b5410415bde908bd4dee15dfb167a9c873fc4bb8a81f6f2ab448a918',
+                '9ae8b23b6f41555d8574eb16947972adc4e88c65f8665d31e2663aa294e350b0'
             ];
 
             if (ALLOWED_HASHES.includes(hash)) {
