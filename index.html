@@ -2567,13 +2567,22 @@
 
                     <!-- Slider Control -->
                     <div style="background: rgba(15, 23, 42, 0.85); border: 1px solid var(--border-glass); border-radius: 14px; padding: 18px; margin-bottom: 20px;">
-                        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;">
-                            <label for="societyFlatsRange" style="font-size: 13px; font-weight: 700; color: #ffffff;">
-                                Total Society Units / Flats:
-                            </label>
-                            <span style="background: #0284c7; color: #ffffff; font-family: monospace; font-size: 16px; font-weight: 800; padding: 4px 12px; border-radius: 8px;" id="dispCalcFlats">
-                                180 Flats
-                            </span>
+                        <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 10px; margin-bottom: 12px;">
+                            <div>
+                                <label for="societyFlatsInput" style="font-size: 13px; font-weight: 700; color: #ffffff; display: block;">
+                                    Total Society Flats / Villas / Houses / Units:
+                                </label>
+                                <span style="font-size: 11px; color: #94a3b8;">Enter exact number or drag slider below</span>
+                            </div>
+                            <!-- Manual Exact Numeric Entry Box -->
+                            <div style="display: flex; align-items: center; gap: 6px; background: rgba(2, 6, 23, 0.9); border: 1.5px solid #0284c7; border-radius: 10px; padding: 4px 10px; box-shadow: 0 0 14px rgba(2, 132, 199, 0.35);">
+                                <input type="number" id="societyFlatsInput" min="1" max="10000" step="1" value="180"
+                                       style="width: 80px; background: transparent; border: none; color: #ffffff; font-family: monospace; font-size: 18px; font-weight: 900; text-align: right; outline: none;"
+                                       title="Type exact number of units"
+                                       oninput="onManualUnitInput(this.value)"
+                                       onchange="onManualUnitInput(this.value)">
+                                <span style="font-size: 12px; font-weight: 700; color: #38bdf8;" id="dispCalcFlats">Units</span>
+                            </div>
                         </div>
                         <input type="range" id="societyFlatsRange" min="20" max="1000" step="10" value="180"
                                style="width: 100%; accent-color: #38bdf8; cursor: pointer;"
@@ -3624,10 +3633,27 @@
             };
         }
 
+        function onManualUnitInput(val) {
+            let units = parseInt(val);
+            if (isNaN(units) || units < 1) return;
+
+            // Sync slider position within slider bounds (20 to 1000)
+            const slider = document.getElementById('societyFlatsRange');
+            if (slider) {
+                slider.value = Math.min(1000, Math.max(20, units));
+            }
+
+            updatePricingCalculation(units);
+        }
+
         function setFlatsRange(val) {
             const slider = document.getElementById('societyFlatsRange');
             if (slider) {
                 slider.value = val;
+            }
+            const inputEl = document.getElementById('societyFlatsInput');
+            if (inputEl) {
+                inputEl.value = val;
             }
             updatePricingCalculation(val);
         }
@@ -3641,7 +3667,13 @@
                 if (el) el.innerText = txt;
             };
 
-            setTxt('dispCalcFlats', `${r.units} Flats`);
+            // Sync manual numeric input if user isn't currently typing in it
+            const inputEl = document.getElementById('societyFlatsInput');
+            if (inputEl && document.activeElement !== inputEl) {
+                inputEl.value = r.units;
+            }
+
+            setTxt('dispCalcFlats', `${r.units} Units`);
             setTxt('calcExtraUnits', r.extraUnits);
             setTxt('calcExtraFee', r.extraFee.toFixed(2));
             setTxt('calcSubtotal', r.subtotal.toFixed(2));
@@ -4082,19 +4114,38 @@
         }, 400);
 
 
-        // Guaranteed Pricing Slider Event Listeners & Immediate Initialization
+        // Guaranteed Pricing Slider & Manual Input Event Listeners & Immediate Initialization
         function initPricingSlider() {
             var slider = document.getElementById('societyFlatsRange');
+            var inputEl = document.getElementById('societyFlatsInput');
+
             if (slider) {
                 slider.addEventListener('input', function(e) {
+                    if (inputEl && document.activeElement !== inputEl) {
+                        inputEl.value = e.target.value;
+                    }
                     updatePricingCalculation(e.target.value);
                 });
                 slider.addEventListener('change', function(e) {
+                    if (inputEl && document.activeElement !== inputEl) {
+                        inputEl.value = e.target.value;
+                    }
                     updatePricingCalculation(e.target.value);
                 });
-                // Initialize display immediately
-                updatePricingCalculation(slider.value);
             }
+
+            if (inputEl) {
+                inputEl.addEventListener('input', function(e) {
+                    onManualUnitInput(e.target.value);
+                });
+                inputEl.addEventListener('change', function(e) {
+                    onManualUnitInput(e.target.value);
+                });
+            }
+
+            // Initialize display immediately
+            var initialVal = inputEl ? inputEl.value : (slider ? slider.value : 180);
+            updatePricingCalculation(initialVal);
         }
 
         if (document.readyState === 'loading') {
