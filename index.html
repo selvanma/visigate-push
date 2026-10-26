@@ -3005,7 +3005,7 @@
                     </p>
 
                     <!-- Passcode Gate -->
-                    <div style="display: inline-flex; align-items: center; gap: 8px; background: rgba(2, 6, 23, 0.9); border: 1.5px solid #0284c7; border-radius: 10px; padding: 6px 14px; margin-bottom: 18px; box-shadow: 0 0 15px rgba(2, 132, 199, 0.25);">
+                    <div style="display: inline-flex; align-items: center; gap: 8px; background: rgba(2, 6, 23, 0.9); border: 1.5px solid #0284c7; border-radius: 10px; padding: 6px 14px; margin-bottom: 8px; box-shadow: 0 0 15px rgba(2, 132, 199, 0.25);">
                         <input type="password" id="superAdminPasscode" placeholder="Enter Master Admin PIN" maxlength="12"
                                style="background: transparent; border: none; color: #ffffff; font-family: monospace; font-size: 14px; outline: none; width: 170px; text-align: center;"
                                onkeydown="if(event.key==='Enter') unlockSuperAdminPortfolio()">
@@ -3013,6 +3013,9 @@
                                 style="background: #0284c7; color: #ffffff; border: none; border-radius: 6px; padding: 7px 16px; font-size: 12px; font-weight: 700; cursor: pointer;">
                             🔓 Unlock Console
                         </button>
+                    </div>
+                    <div style="margin-bottom: 18px;">
+                        <a href="javascript:void(0)" onclick="recoverMasterPinByEmail()" style="font-size: 11px; color: #38bdf8; text-decoration: underline; cursor: pointer;">Forgot PIN? Email to visigatealerts@gmail.com</a>
                     </div>
 
                     <!-- Individual Society Manager Notice -->
@@ -4263,6 +4266,17 @@
             return hashArray.map(b => b.toString(16).padStart(2, '0')).join('');
         }
 
+                function recoverMasterPinByEmail() {
+            const confirmed = confirm("Send Master Admin PIN recovery email to visigatealerts@gmail.com?");
+            if (!confirmed) return;
+            const routerUrl = "https://script.google.com/macros/s/AKfycbwo_bc2ztkrmYcat17KYOQuGqFJwJR6VrG7fpMcaYG0BPBOd36tK7w4-nDyTJL-cZMk/exec?action=recoverMasterPin";
+            fetch(routerUrl, { mode: 'no-cors' }).then(() => {
+                alert("📧 PIN Recovery request dispatched to visigatealerts@gmail.com! Please check your Gmail inbox.");
+            }).catch(() => {
+                window.location.href = "mailto:visigatealerts@gmail.com?subject=VisiGate%20Master%20Admin%20PIN%20Recovery&body=Requesting%20PIN%20verification.";
+            });
+        }
+
         async function unlockSuperAdminPortfolio() {
             const passInput = document.getElementById('superAdminPasscode');
             const pin = passInput ? passInput.value.trim() : '';
@@ -4273,11 +4287,9 @@
             const hash = await sha256Hex(pin);
             // Cryptographic SHA-256 hashes of authorized administrative keys (Zero Plaintext in Source)
             // One-way cryptographic SHA-256 digests (Zero plaintext passwords or comments)
+            // Single Active Master Admin PIN: 2026 (One-Way Cryptographic SHA-256 Digest)
             const ALLOWED_HASHES = [
-                '158a323a7ba44870f23d96f1516dd70aa48e9a72db4ebb026b0a89e212a208ab',
-                '8d969eef6ecad3c29a3a629280e686cf0c3f5d5a86aff3ca12020c923adc6c92',
-                '8c6976e5b5410415bde908bd4dee15dfb167a9c873fc4bb8a81f6f2ab448a918',
-                '9ae8b23b6f41555d8574eb16947972adc4e88c65f8665d31e2663aa294e350b0'
+                '158a323a7ba44870f23d96f1516dd70aa48e9a72db4ebb026b0a89e212a208ab'
             ];
 
             if (ALLOWED_HASHES.includes(hash)) {
