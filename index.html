@@ -2577,12 +2577,21 @@
                         </div>
                         <input type="range" id="societyFlatsRange" min="20" max="1000" step="10" value="180"
                                style="width: 100%; accent-color: #38bdf8; cursor: pointer;"
-                               oninput="updatePricingCalculation(this.value)">
+                               oninput="updatePricingCalculation(this.value)" onchange="updatePricingCalculation(this.value)">
                         <div style="display: flex; justify-content: space-between; font-size: 11px; color: var(--text-muted); margin-top: 6px;">
                             <span>20 Flats (Small Community)</span>
                             <span>250 Flats</span>
                             <span>500 Flats</span>
                             <span>1,000 Flats (Mega Complex)</span>
+                        </div>
+                        <div style="display: flex; gap: 6px; flex-wrap: wrap; margin-top: 10px; align-items: center;">
+                            <span style="font-size: 11px; color: #94a3b8; font-weight: 700;">Quick Select:</span>
+                            <button type="button" class="qc-pill" onclick="setFlatsRange(50)">50 Units (Base)</button>
+                            <button type="button" class="qc-pill" onclick="setFlatsRange(100)">100 Units</button>
+                            <button type="button" class="qc-pill" onclick="setFlatsRange(180)">180 Units</button>
+                            <button type="button" class="qc-pill" onclick="setFlatsRange(250)">250 Units</button>
+                            <button type="button" class="qc-pill" onclick="setFlatsRange(500)">500 Units</button>
+                            <button type="button" class="qc-pill" onclick="setFlatsRange(1000)">1,000 Units</button>
                         </div>
                     </div>
 
@@ -3161,8 +3170,221 @@
     </div>
 
     <!-- Firebase SDK Scripts for Optional WebPush -->
-    <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-app-compat.js">
-        // =====================================================================
+    <!-- Firebase SDKs -->
+    <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-messaging-compat.js"></script>
+    <script src="/firebase-config.js"></script>
+
+    <!-- VisiGate Application, Simulator, Pricing Calculator & Super-Admin Engine -->
+    <script>
+// Dedicated App URLs
+        const APPS = {
+            guard: "https://script.google.com/macros/s/AKfycbwAeuMShFKEpa9ZnP_OKl5qzAv8mPrYQ9FVMYJAwYS1zLpvsYHDfanF5xKVH5dS7b8E/exec",
+            resident: "https://script.google.com/macros/s/AKfycbyLY_FQdqqZa9ZpoVTXbzJppMxFp4M3-5bwDD6EJhx3ypXHLkViul-V08CmQ1iZBPAT/exec",
+            mc: "https://script.google.com/macros/s/AKfycbyLY_FQdqqZa9ZpoVTXbzJppMxFp4M3-5bwDD6EJhx3ypXHLkViul-V08CmQ1iZBPAT/exec?page=mc",
+            manager: "https://script.google.com/macros/s/AKfycbyLY_FQdqqZa9ZpoVTXbzJppMxFp4M3-5bwDD6EJhx3ypXHLkViul-V08CmQ1iZBPAT/exec?page=manager",
+            admin: "https://script.google.com/macros/s/AKfycbwz-eVMRCO7Sd1dGIIVkHgmBXvfTxrbou5WX_lR2bIx3mKocZUAjWbqI_CuSy_dSw3-/exec"
+        };
+
+        const host = window.location.hostname.toLowerCase();
+        const search = window.location.search || '';
+        const appFrame = document.getElementById('appFrame');
+        const siteWrapper = document.getElementById('siteWrapper');
+
+        // Check if current hostname is one of our dedicated subdomains
+        let activePortal = null;
+        if (host.startsWith('guard.')) {
+            activePortal = 'guard';
+        } else if (host.startsWith('resident.')) {
+            activePortal = 'resident';
+        } else if (host.startsWith('mc.')) {
+            activePortal = 'mc';
+        } else if (host.startsWith('manager.')) {
+            activePortal = 'manager';
+        } else if (host.startsWith('admin.')) {
+            activePortal = 'admin';
+        }
+
+        // If on a dedicated subdomain, launch fullscreen app with ZERO outer Google banners!
+        if (activePortal === 'admin') {
+            // For admin.visigatealerts.in: Display the dedicated Master Router & Super-Admin Console
+            siteWrapper.style.display = 'block';
+            appFrame.style.display = 'none';
+            document.title = "VisiGate Alerts | Master Router & Super-Admin Console";
+            const adminSec = document.getElementById('admin-hub');
+            if (adminSec) {
+                setTimeout(() => adminSec.scrollIntoView({ behavior: 'smooth' }), 200);
+            }
+        } else if (activePortal && APPS[activePortal]) {
+            siteWrapper.style.display = 'none';
+            appFrame.style.display = 'block';
+            let targetUrl = APPS[activePortal];
+            if (search) {
+                targetUrl += (targetUrl.includes('?') ? '&' : '?') + search.substring(1);
+            }
+            appFrame.src = targetUrl;
+            document.title = "VisiGate " + activePortal.toUpperCase() + " App";
+            const mobBar = document.getElementById('mobileBottomBar');
+            if (mobBar) mobBar.style.display = 'none';
+        } else {
+            // We are on visigatealerts.in (Root Domain): Dynamically adapt links
+            let baseDomain = host.includes('visigatealerts.in') ? 'visigatealerts.in' : (host.includes('visigate.in') ? 'visigate.in' : null);
+            if (baseDomain) {
+                const setHref = (id, sub) => {
+                    const el = document.getElementById(id);
+                    if (el) el.href = 'https://' + sub + '.' + baseDomain + search;
+                };
+                setHref('heroBtnGuard', 'guard');
+                setHref('heroBtnResident', 'resident');
+                setHref('cardLinkGuard', 'guard');
+                setHref('cardLinkResident', 'resident');
+                setHref('cardLinkMc', 'mc');
+                setHref('cardLinkManager', 'manager');
+                setHref('mobBtnGuard', 'guard');
+                setHref('mobBtnResident', 'resident');
+            }
+        }
+
+        // 3-Tab Live Simulator Logic (Visitor, Vehicle, Parcel/Doc)
+        let currentSimTab = 'visitor';
+
+        function selectSimTab(tab) {
+            currentSimTab = tab;
+            document.getElementById('tabBtnVisitor').classList.toggle('active', tab === 'visitor');
+            document.getElementById('tabBtnVehicle').classList.toggle('active', tab === 'vehicle');
+            document.getElementById('tabBtnParcel').classList.toggle('active', tab === 'parcel');
+
+            document.getElementById('simCardVisitor').style.display = (tab === 'visitor') ? 'block' : 'none';
+            document.getElementById('simCardVehicle').style.display = (tab === 'vehicle') ? 'block' : 'none';
+            document.getElementById('simCardParcel').style.display = (tab === 'parcel') ? 'block' : 'none';
+
+            const macrodroid = document.getElementById('macrodroidIndicator');
+            const latency = document.getElementById('telemetryLatency');
+            const status = document.getElementById('telemetryStatusText');
+            const wpText = document.getElementById('webpushNotificationText');
+
+            if (tab === 'visitor') {
+                if (wpText) wpText.innerText = 'Gate Alert: Visitor Rahul Sharma at Gate 1 Checkpoint';
+                macrodroid.innerHTML = '<span>🔔</span><span>MacroDroid Ring Signal: Resident Phone Alert Active</span>';
+                latency.innerText = '0.42s latency';
+                status.innerText = '[SIMULATOR] Ready: Gate 1 camera facial photo captured for Food Delivery Courier.';
+            } else if (tab === 'vehicle') {
+                if (wpText) wpText.innerText = 'Gate Alert: Vehicle KA-03-XX-1024 at Gate 1 Checkpoint (Bay #V-12)';
+                macrodroid.innerHTML = '<span>🚗</span><span>MacroDroid Relay: Plate KA-03-XX-1024 Verified</span>';
+                latency.innerText = '0.36s latency';
+                status.innerText = '[SIMULATOR] Ready: Vehicle scan matched Guest Parking Bay #V-12.';
+            } else {
+                if (wpText) wpText.innerText = 'Gate Alert: Courier Package in Security Locker #SL-14 (PIN 4821)';
+                macrodroid.innerHTML = '<span>📦</span><span>MacroDroid Relay: Parcel Locker Alert Dispatched</span>';
+                latency.innerText = '0.45s latency';
+                status.innerText = '[SIMULATOR] Ready: Express Courier Box awaiting PIN verification [4821].';
+            }
+        }
+
+        function handleSimAction(decision) {
+            const telemetry = document.getElementById('telemetryStatusText');
+            const latency = document.getElementById('telemetryLatency');
+
+            if (decision === 'VISITOR_APPROVED') {
+                document.getElementById('visitorActionGroup').style.display = 'none';
+                const res = document.getElementById('visitorResultBox');
+                res.style.display = 'block';
+                res.style.background = 'rgba(16, 185, 129, 0.2)';
+                res.style.color = '#10b981';
+                res.innerHTML = '✅ VISITOR ENTRY APPROVED (0.38s)<br><span style="font-size: 11px; font-weight: normal; color: #a7f3d0;">Gate 1 barrier unlocked. WhatsApp confirmation sent to resident & visitor.</span>';
+                latency.innerText = '0.38s (Sub-second)';
+                telemetry.innerHTML = '⚡ <strong>Dispatch Pipeline SUCCESS:</strong> Meta Cloud API (0.24s) &bull; MacroDroid Ring (0.08s) &bull; Gate Barrier Unlocked (0.06s).';
+            } else if (decision === 'VISITOR_DENIED') {
+                document.getElementById('visitorActionGroup').style.display = 'none';
+                const res = document.getElementById('visitorResultBox');
+                res.style.display = 'block';
+                res.style.background = 'rgba(239, 68, 68, 0.2)';
+                res.style.color = '#ef4444';
+                res.innerHTML = '🚫 VISITOR ENTRY DENIED<br><span style="font-size: 11px; font-weight: normal; color: #fca5a5;">Guard terminal alerted immediately: "Resident Denied Entry. Do not allow visitor inside."</span>';
+                telemetry.innerHTML = '🚫 <strong>Security Alert:</strong> Entry denied by resident. Guard terminal alerted to turn away visitor.';
+            } else if (decision === 'VEHICLE_APPROVED') {
+                document.getElementById('vehicleActionGroup').style.display = 'none';
+                const res = document.getElementById('vehicleResultBox');
+                res.style.display = 'block';
+                res.style.background = 'rgba(16, 185, 129, 0.2)';
+                res.style.color = '#10b981';
+                res.innerHTML = '✅ DIGITAL PASS ISSUED (Bay #V-12)<br><span style="font-size: 11px; font-weight: normal; color: #a7f3d0;">Boom barrier raised. Digital parking pass sent to driver WhatsApp.</span>';
+                telemetry.innerHTML = '⚡ <strong>Vehicle Clearance:</strong> Plate KA-03-XX-1024 cleared. Boom barrier raised. Bay #V-12 reserved.';
+            } else if (decision === 'VEHICLE_DENIED') {
+                document.getElementById('vehicleActionGroup').style.display = 'none';
+                const res = document.getElementById('vehicleResultBox');
+                res.style.display = 'block';
+                res.style.background = 'rgba(239, 68, 68, 0.2)';
+                res.style.color = '#ef4444';
+                res.innerHTML = '🚫 UNAUTHORIZED VEHICLE FLAGGED<br><span style="font-size: 11px; font-weight: normal; color: #fca5a5;">Barrier locked. Guard directed vehicle to external visitor waiting lane.</span>';
+                telemetry.innerHTML = '🚫 <strong>Vehicle Blocked:</strong> Gate barrier remains down. Guard alerted.';
+            } else if (decision === 'PARCEL_LOCKER') {
+                document.getElementById('parcelActionGroup').style.display = 'none';
+                const res = document.getElementById('parcelResultBox');
+                res.style.display = 'block';
+                res.style.background = 'rgba(16, 185, 129, 0.2)';
+                res.style.color = '#10b981';
+                res.innerHTML = '📦 STORED IN GATE LOCKER #SL-14<br><span style="font-size: 11px; font-weight: normal; color: #a7f3d0;">Resident notified with 4-Digit Pickup PIN [4821]. Safe custody confirmed.</span>';
+                telemetry.innerHTML = '⚡ <strong>Locker Deposit Confirmed:</strong> Parcel stored in Locker Box #SL-14. Pickup PIN [4821] confirmed.';
+            } else if (decision === 'PARCEL_DOORSTEP') {
+                document.getElementById('parcelActionGroup').style.display = 'none';
+                const res = document.getElementById('parcelResultBox');
+                res.style.display = 'block';
+                res.style.background = 'rgba(56, 189, 248, 0.2)';
+                res.style.color = '#38bdf8';
+                res.innerHTML = '🏠 DOORSTEP DELIVERY AUTHORIZED<br><span style="font-size: 11px; font-weight: normal; color: #bae6fd;">Delivery agent permitted to proceed to Tower C - Flat 108.</span>';
+                telemetry.innerHTML = '⚡ <strong>Doorstep Pass Issued:</strong> Agent authorized for Tower C entry.';
+            } else if (decision === 'PARCEL_REJECT') {
+                document.getElementById('parcelActionGroup').style.display = 'none';
+                const res = document.getElementById('parcelResultBox');
+                res.style.display = 'block';
+                res.style.background = 'rgba(239, 68, 68, 0.2)';
+                res.style.color = '#ef4444';
+                res.innerHTML = '✕ PARCEL REJECTED<br><span style="font-size: 11px; font-weight: normal; color: #fca5a5;">Resident does not recognize order. Guard returned parcel to courier.</span>';
+                telemetry.innerHTML = '🚫 <strong>Parcel Rejected:</strong> Handover aborted. Courier notified.';
+            }
+        }
+
+        function resetCurrentSim() {
+            document.getElementById('visitorActionGroup').style.display = 'flex';
+            document.getElementById('vehicleActionGroup').style.display = 'flex';
+            document.getElementById('parcelActionGroup').style.display = 'flex';
+
+            document.getElementById('visitorResultBox').style.display = 'none';
+            document.getElementById('vehicleResultBox').style.display = 'none';
+            document.getElementById('parcelResultBox').style.display = 'none';
+
+            selectSimTab(currentSimTab);
+        }
+
+        // Master Router & Super-Admin Webhook Diagnostics
+        function testAdminWebhook(type) {
+            const out = document.getElementById('adminDiagOutput');
+            out.style.display = 'block';
+            const now = new Date().toISOString();
+
+            if (type === 'WHATSAPP') {
+                out.innerHTML = `[${now}] PING &rarr; https://graph.facebook.com/v19.0/messages/webhooks<br>` +
+                    `&bull; HTTP Status: <strong>200 OK</strong> &bull; Latency: <strong>31ms</strong><br>` +
+                    `&bull; Meta Verified Business Channel: VisiGate Gate Dispatcher (#1084291)<br>` +
+                    `&bull; ACK Payload: <code>{"messaging_product":"whatsapp","contacts":[{"wa_id":"919876543210"}],"messages":[{"id":"wamid.HBgMOTE5ODc2NTQ..."}],"status":"DISPATCHED"}</code>`;
+            } else {
+                out.innerHTML = `[${now}] PING &rarr; https://trigger.macrodroid.com/visigate-alert/ring<br>` +
+                    `&bull; HTTP Status: <strong>200 OK</strong> &bull; Latency: <strong>24ms</strong><br>` +
+                    `&bull; Device Relay Status: Webhook received & custom gate audio tone triggered.<br>` +
+                    `&bull; ACK Payload: <code>{"device_status":"LISTENING","ring_duration_sec":15,"action":"AUDIBLE_RING_TRIGGERED"}</code>`;
+            }
+        }
+
+        // Initialize Firebase WebPush Registration if configured
+        if ('serviceWorker' in navigator && (!activePortal)) {
+            navigator.serviceWorker.register('/firebase-messaging-sw.js')
+                .catch(function (err) {
+                    // Silently handle if sw isn't present
+                });
+        }
+
+// =====================================================================
         // REALISTIC DUAL-DEVICE LIVE SIMULATOR LOGIC (Point 2)
         // =====================================================================
         let currentSimCategory = 'guest';
@@ -3402,23 +3624,36 @@
             };
         }
 
+        function setFlatsRange(val) {
+            const slider = document.getElementById('societyFlatsRange');
+            if (slider) {
+                slider.value = val;
+            }
+            updatePricingCalculation(val);
+        }
+
         function updatePricingCalculation(val) {
             const units = parseInt(val) || 50;
             const r = calculateSocietyRate(units);
 
-            document.getElementById('dispCalcFlats').innerText = `${r.units} Flats`;
-            document.getElementById('calcExtraUnits').innerText = r.extraUnits;
-            document.getElementById('calcExtraFee').innerText = r.extraFee.toFixed(2);
-            document.getElementById('calcSubtotal').innerText = r.subtotal.toFixed(2);
-            document.getElementById('calcGst').innerText = r.gst.toFixed(2);
-            document.getElementById('calcTotalMonthly').innerText = r.totalMonthly.toLocaleString('en-IN', { minimumFractionDigits: 2 });
-            document.getElementById('calcPerFlatMonth').innerText = r.perFlatMonth.toFixed(2);
-            document.getElementById('calcPerFlatDay').innerText = r.perFlatDay.toFixed(2);
+            const setTxt = (id, txt) => {
+                const el = document.getElementById(id);
+                if (el) el.innerText = txt;
+            };
+
+            setTxt('dispCalcFlats', `${r.units} Flats`);
+            setTxt('calcExtraUnits', r.extraUnits);
+            setTxt('calcExtraFee', r.extraFee.toFixed(2));
+            setTxt('calcSubtotal', r.subtotal.toFixed(2));
+            setTxt('calcGst', r.gst.toFixed(2));
+            setTxt('calcTotalMonthly', r.totalMonthly.toLocaleString('en-IN', { minimumFractionDigits: 2 }));
+            setTxt('calcPerFlatMonth', r.perFlatMonth.toFixed(2));
+            setTxt('calcPerFlatDay', r.perFlatDay.toFixed(2));
 
             // Competitor savings comparison: Competitors charge avg Rs. 22/flat/mo or min Rs. 15,000/mo
             const competitorMonthly = Math.max(15000, units * 22);
             const annualSavings = Math.max(0, (competitorMonthly - r.totalMonthly) * 12);
-            document.getElementById('calcAnnualSavings').innerText = Math.round(annualSavings).toLocaleString('en-IN');
+            setTxt('calcAnnualSavings', Math.round(annualSavings).toLocaleString('en-IN'));
         }
 
         const DEFAULT_CLIENTS = [
@@ -3846,218 +4081,30 @@
             if (slider) updatePricingCalculation(slider.value);
         }, 400);
 
-    </script>
-    <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-messaging-compat.js"></script>
-    <script src="/firebase-config.js"></script>
 
-    <script>
-        // Dedicated App URLs
-        const APPS = {
-            guard: "https://script.google.com/macros/s/AKfycbwAeuMShFKEpa9ZnP_OKl5qzAv8mPrYQ9FVMYJAwYS1zLpvsYHDfanF5xKVH5dS7b8E/exec",
-            resident: "https://script.google.com/macros/s/AKfycbyLY_FQdqqZa9ZpoVTXbzJppMxFp4M3-5bwDD6EJhx3ypXHLkViul-V08CmQ1iZBPAT/exec",
-            mc: "https://script.google.com/macros/s/AKfycbyLY_FQdqqZa9ZpoVTXbzJppMxFp4M3-5bwDD6EJhx3ypXHLkViul-V08CmQ1iZBPAT/exec?page=mc",
-            manager: "https://script.google.com/macros/s/AKfycbyLY_FQdqqZa9ZpoVTXbzJppMxFp4M3-5bwDD6EJhx3ypXHLkViul-V08CmQ1iZBPAT/exec?page=manager",
-            admin: "https://script.google.com/macros/s/AKfycbwz-eVMRCO7Sd1dGIIVkHgmBXvfTxrbou5WX_lR2bIx3mKocZUAjWbqI_CuSy_dSw3-/exec"
-        };
-
-        const host = window.location.hostname.toLowerCase();
-        const search = window.location.search || '';
-        const appFrame = document.getElementById('appFrame');
-        const siteWrapper = document.getElementById('siteWrapper');
-
-        // Check if current hostname is one of our dedicated subdomains
-        let activePortal = null;
-        if (host.startsWith('guard.')) {
-            activePortal = 'guard';
-        } else if (host.startsWith('resident.')) {
-            activePortal = 'resident';
-        } else if (host.startsWith('mc.')) {
-            activePortal = 'mc';
-        } else if (host.startsWith('manager.')) {
-            activePortal = 'manager';
-        } else if (host.startsWith('admin.')) {
-            activePortal = 'admin';
-        }
-
-        // If on a dedicated subdomain, launch fullscreen app with ZERO outer Google banners!
-        if (activePortal === 'admin') {
-            // For admin.visigatealerts.in: Display the dedicated Master Router & Super-Admin Console
-            siteWrapper.style.display = 'block';
-            appFrame.style.display = 'none';
-            document.title = "VisiGate Alerts | Master Router & Super-Admin Console";
-            const adminSec = document.getElementById('admin-hub');
-            if (adminSec) {
-                setTimeout(() => adminSec.scrollIntoView({ behavior: 'smooth' }), 200);
-            }
-        } else if (activePortal && APPS[activePortal]) {
-            siteWrapper.style.display = 'none';
-            appFrame.style.display = 'block';
-            let targetUrl = APPS[activePortal];
-            if (search) {
-                targetUrl += (targetUrl.includes('?') ? '&' : '?') + search.substring(1);
-            }
-            appFrame.src = targetUrl;
-            document.title = "VisiGate " + activePortal.toUpperCase() + " App";
-            const mobBar = document.getElementById('mobileBottomBar');
-            if (mobBar) mobBar.style.display = 'none';
-        } else {
-            // We are on visigatealerts.in (Root Domain): Dynamically adapt links
-            let baseDomain = host.includes('visigatealerts.in') ? 'visigatealerts.in' : (host.includes('visigate.in') ? 'visigate.in' : null);
-            if (baseDomain) {
-                const setHref = (id, sub) => {
-                    const el = document.getElementById(id);
-                    if (el) el.href = 'https://' + sub + '.' + baseDomain + search;
-                };
-                setHref('heroBtnGuard', 'guard');
-                setHref('heroBtnResident', 'resident');
-                setHref('cardLinkGuard', 'guard');
-                setHref('cardLinkResident', 'resident');
-                setHref('cardLinkMc', 'mc');
-                setHref('cardLinkManager', 'manager');
-                setHref('mobBtnGuard', 'guard');
-                setHref('mobBtnResident', 'resident');
-            }
-        }
-
-        // 3-Tab Live Simulator Logic (Visitor, Vehicle, Parcel/Doc)
-        let currentSimTab = 'visitor';
-
-        function selectSimTab(tab) {
-            currentSimTab = tab;
-            document.getElementById('tabBtnVisitor').classList.toggle('active', tab === 'visitor');
-            document.getElementById('tabBtnVehicle').classList.toggle('active', tab === 'vehicle');
-            document.getElementById('tabBtnParcel').classList.toggle('active', tab === 'parcel');
-
-            document.getElementById('simCardVisitor').style.display = (tab === 'visitor') ? 'block' : 'none';
-            document.getElementById('simCardVehicle').style.display = (tab === 'vehicle') ? 'block' : 'none';
-            document.getElementById('simCardParcel').style.display = (tab === 'parcel') ? 'block' : 'none';
-
-            const macrodroid = document.getElementById('macrodroidIndicator');
-            const latency = document.getElementById('telemetryLatency');
-            const status = document.getElementById('telemetryStatusText');
-            const wpText = document.getElementById('webpushNotificationText');
-
-            if (tab === 'visitor') {
-                if (wpText) wpText.innerText = 'Gate Alert: Visitor Rahul Sharma at Gate 1 Checkpoint';
-                macrodroid.innerHTML = '<span>🔔</span><span>MacroDroid Ring Signal: Resident Phone Alert Active</span>';
-                latency.innerText = '0.42s latency';
-                status.innerText = '[SIMULATOR] Ready: Gate 1 camera facial photo captured for Food Delivery Courier.';
-            } else if (tab === 'vehicle') {
-                if (wpText) wpText.innerText = 'Gate Alert: Vehicle KA-03-XX-1024 at Gate 1 Checkpoint (Bay #V-12)';
-                macrodroid.innerHTML = '<span>🚗</span><span>MacroDroid Relay: Plate KA-03-XX-1024 Verified</span>';
-                latency.innerText = '0.36s latency';
-                status.innerText = '[SIMULATOR] Ready: Vehicle scan matched Guest Parking Bay #V-12.';
-            } else {
-                if (wpText) wpText.innerText = 'Gate Alert: Courier Package in Security Locker #SL-14 (PIN 4821)';
-                macrodroid.innerHTML = '<span>📦</span><span>MacroDroid Relay: Parcel Locker Alert Dispatched</span>';
-                latency.innerText = '0.45s latency';
-                status.innerText = '[SIMULATOR] Ready: Express Courier Box awaiting PIN verification [4821].';
-            }
-        }
-
-        function handleSimAction(decision) {
-            const telemetry = document.getElementById('telemetryStatusText');
-            const latency = document.getElementById('telemetryLatency');
-
-            if (decision === 'VISITOR_APPROVED') {
-                document.getElementById('visitorActionGroup').style.display = 'none';
-                const res = document.getElementById('visitorResultBox');
-                res.style.display = 'block';
-                res.style.background = 'rgba(16, 185, 129, 0.2)';
-                res.style.color = '#10b981';
-                res.innerHTML = '✅ VISITOR ENTRY APPROVED (0.38s)<br><span style="font-size: 11px; font-weight: normal; color: #a7f3d0;">Gate 1 barrier unlocked. WhatsApp confirmation sent to resident & visitor.</span>';
-                latency.innerText = '0.38s (Sub-second)';
-                telemetry.innerHTML = '⚡ <strong>Dispatch Pipeline SUCCESS:</strong> Meta Cloud API (0.24s) &bull; MacroDroid Ring (0.08s) &bull; Gate Barrier Unlocked (0.06s).';
-            } else if (decision === 'VISITOR_DENIED') {
-                document.getElementById('visitorActionGroup').style.display = 'none';
-                const res = document.getElementById('visitorResultBox');
-                res.style.display = 'block';
-                res.style.background = 'rgba(239, 68, 68, 0.2)';
-                res.style.color = '#ef4444';
-                res.innerHTML = '🚫 VISITOR ENTRY DENIED<br><span style="font-size: 11px; font-weight: normal; color: #fca5a5;">Guard terminal alerted immediately: "Resident Denied Entry. Do not allow visitor inside."</span>';
-                telemetry.innerHTML = '🚫 <strong>Security Alert:</strong> Entry denied by resident. Guard terminal alerted to turn away visitor.';
-            } else if (decision === 'VEHICLE_APPROVED') {
-                document.getElementById('vehicleActionGroup').style.display = 'none';
-                const res = document.getElementById('vehicleResultBox');
-                res.style.display = 'block';
-                res.style.background = 'rgba(16, 185, 129, 0.2)';
-                res.style.color = '#10b981';
-                res.innerHTML = '✅ DIGITAL PASS ISSUED (Bay #V-12)<br><span style="font-size: 11px; font-weight: normal; color: #a7f3d0;">Boom barrier raised. Digital parking pass sent to driver WhatsApp.</span>';
-                telemetry.innerHTML = '⚡ <strong>Vehicle Clearance:</strong> Plate KA-03-XX-1024 cleared. Boom barrier raised. Bay #V-12 reserved.';
-            } else if (decision === 'VEHICLE_DENIED') {
-                document.getElementById('vehicleActionGroup').style.display = 'none';
-                const res = document.getElementById('vehicleResultBox');
-                res.style.display = 'block';
-                res.style.background = 'rgba(239, 68, 68, 0.2)';
-                res.style.color = '#ef4444';
-                res.innerHTML = '🚫 UNAUTHORIZED VEHICLE FLAGGED<br><span style="font-size: 11px; font-weight: normal; color: #fca5a5;">Barrier locked. Guard directed vehicle to external visitor waiting lane.</span>';
-                telemetry.innerHTML = '🚫 <strong>Vehicle Blocked:</strong> Gate barrier remains down. Guard alerted.';
-            } else if (decision === 'PARCEL_LOCKER') {
-                document.getElementById('parcelActionGroup').style.display = 'none';
-                const res = document.getElementById('parcelResultBox');
-                res.style.display = 'block';
-                res.style.background = 'rgba(16, 185, 129, 0.2)';
-                res.style.color = '#10b981';
-                res.innerHTML = '📦 STORED IN GATE LOCKER #SL-14<br><span style="font-size: 11px; font-weight: normal; color: #a7f3d0;">Resident notified with 4-Digit Pickup PIN [4821]. Safe custody confirmed.</span>';
-                telemetry.innerHTML = '⚡ <strong>Locker Deposit Confirmed:</strong> Parcel stored in Locker Box #SL-14. Pickup PIN [4821] confirmed.';
-            } else if (decision === 'PARCEL_DOORSTEP') {
-                document.getElementById('parcelActionGroup').style.display = 'none';
-                const res = document.getElementById('parcelResultBox');
-                res.style.display = 'block';
-                res.style.background = 'rgba(56, 189, 248, 0.2)';
-                res.style.color = '#38bdf8';
-                res.innerHTML = '🏠 DOORSTEP DELIVERY AUTHORIZED<br><span style="font-size: 11px; font-weight: normal; color: #bae6fd;">Delivery agent permitted to proceed to Tower C - Flat 108.</span>';
-                telemetry.innerHTML = '⚡ <strong>Doorstep Pass Issued:</strong> Agent authorized for Tower C entry.';
-            } else if (decision === 'PARCEL_REJECT') {
-                document.getElementById('parcelActionGroup').style.display = 'none';
-                const res = document.getElementById('parcelResultBox');
-                res.style.display = 'block';
-                res.style.background = 'rgba(239, 68, 68, 0.2)';
-                res.style.color = '#ef4444';
-                res.innerHTML = '✕ PARCEL REJECTED<br><span style="font-size: 11px; font-weight: normal; color: #fca5a5;">Resident does not recognize order. Guard returned parcel to courier.</span>';
-                telemetry.innerHTML = '🚫 <strong>Parcel Rejected:</strong> Handover aborted. Courier notified.';
-            }
-        }
-
-        function resetCurrentSim() {
-            document.getElementById('visitorActionGroup').style.display = 'flex';
-            document.getElementById('vehicleActionGroup').style.display = 'flex';
-            document.getElementById('parcelActionGroup').style.display = 'flex';
-
-            document.getElementById('visitorResultBox').style.display = 'none';
-            document.getElementById('vehicleResultBox').style.display = 'none';
-            document.getElementById('parcelResultBox').style.display = 'none';
-
-            selectSimTab(currentSimTab);
-        }
-
-        // Master Router & Super-Admin Webhook Diagnostics
-        function testAdminWebhook(type) {
-            const out = document.getElementById('adminDiagOutput');
-            out.style.display = 'block';
-            const now = new Date().toISOString();
-
-            if (type === 'WHATSAPP') {
-                out.innerHTML = `[${now}] PING &rarr; https://graph.facebook.com/v19.0/messages/webhooks<br>` +
-                    `&bull; HTTP Status: <strong>200 OK</strong> &bull; Latency: <strong>31ms</strong><br>` +
-                    `&bull; Meta Verified Business Channel: VisiGate Gate Dispatcher (#1084291)<br>` +
-                    `&bull; ACK Payload: <code>{"messaging_product":"whatsapp","contacts":[{"wa_id":"919876543210"}],"messages":[{"id":"wamid.HBgMOTE5ODc2NTQ..."}],"status":"DISPATCHED"}</code>`;
-            } else {
-                out.innerHTML = `[${now}] PING &rarr; https://trigger.macrodroid.com/visigate-alert/ring<br>` +
-                    `&bull; HTTP Status: <strong>200 OK</strong> &bull; Latency: <strong>24ms</strong><br>` +
-                    `&bull; Device Relay Status: Webhook received & custom gate audio tone triggered.<br>` +
-                    `&bull; ACK Payload: <code>{"device_status":"LISTENING","ring_duration_sec":15,"action":"AUDIBLE_RING_TRIGGERED"}</code>`;
-            }
-        }
-
-        // Initialize Firebase WebPush Registration if configured
-        if ('serviceWorker' in navigator && (!activePortal)) {
-            navigator.serviceWorker.register('/firebase-messaging-sw.js')
-                .catch(function (err) {
-                    // Silently handle if sw isn't present
+        // Guaranteed Pricing Slider Event Listeners & Immediate Initialization
+        function initPricingSlider() {
+            var slider = document.getElementById('societyFlatsRange');
+            if (slider) {
+                slider.addEventListener('input', function(e) {
+                    updatePricingCalculation(e.target.value);
                 });
+                slider.addEventListener('change', function(e) {
+                    updatePricingCalculation(e.target.value);
+                });
+                // Initialize display immediately
+                updatePricingCalculation(slider.value);
+            }
         }
+
+        if (document.readyState === 'loading') {
+            document.addEventListener('DOMContentLoaded', initPricingSlider);
+        } else {
+            initPricingSlider();
+        }
+        setTimeout(initPricingSlider, 100);
+        setTimeout(initPricingSlider, 500);
+
     </script>
 </body>
-
 </html>
