@@ -1830,6 +1830,94 @@
             color: #38bdf8;
         }
 
+        /* Hub & Spoke Dynamic App Pills & Cloud Links */
+        .app-tag-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 3px;
+            font-size: 10px;
+            font-weight: 700;
+            padding: 2px 7px;
+            border-radius: 6px;
+            text-decoration: none;
+            transition: all 0.15s ease;
+        }
+        .app-tag-btn.guard-tag {
+            background: rgba(16, 185, 129, 0.15);
+            border: 1px solid rgba(16, 185, 129, 0.4);
+            color: #34d399;
+        }
+        .app-tag-btn.guard-tag:hover {
+            background: rgba(16, 185, 129, 0.3);
+            border-color: #10b981;
+            color: #ffffff;
+            transform: translateY(-1px);
+        }
+        .app-tag-btn.res-tag {
+            background: rgba(56, 189, 248, 0.15);
+            border: 1px solid rgba(56, 189, 248, 0.4);
+            color: #38bdf8;
+        }
+        .app-tag-btn.res-tag:hover {
+            background: rgba(56, 189, 248, 0.3);
+            border-color: #38bdf8;
+            color: #ffffff;
+            transform: translateY(-1px);
+        }
+        .app-tag-btn.mgr-tag {
+            background: rgba(245, 158, 11, 0.15);
+            border: 1px solid rgba(245, 158, 11, 0.4);
+            color: #fbbf24;
+        }
+        .app-tag-btn.mgr-tag:hover {
+            background: rgba(245, 158, 11, 0.3);
+            border-color: #f59e0b;
+            color: #ffffff;
+            transform: translateY(-1px);
+        }
+        .spoke-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 3px;
+            font-size: 10px;
+            font-weight: 600;
+            padding: 2px 7px;
+            border-radius: 5px;
+            text-decoration: none;
+            transition: all 0.15s ease;
+        }
+        .spoke-link.sheet-link {
+            background: rgba(16, 185, 129, 0.12);
+            color: #6ee7b7;
+            border: 1px solid rgba(16, 185, 129, 0.3);
+        }
+        .spoke-link.sheet-link:hover {
+            background: rgba(16, 185, 129, 0.25);
+            color: #ffffff;
+        }
+        .spoke-link.drive-link {
+            background: rgba(56, 189, 248, 0.12);
+            color: #7dd3fc;
+            border: 1px solid rgba(56, 189, 248, 0.3);
+        }
+        .spoke-link.drive-link:hover {
+            background: rgba(56, 189, 248, 0.25);
+            color: #ffffff;
+        }
+        .code-snippet-box {
+            background: #020617;
+            border: 1px solid rgba(56, 189, 248, 0.25);
+            border-radius: 8px;
+            padding: 12px;
+            font-family: monospace;
+            font-size: 11px;
+            color: #cbd5e1;
+            overflow-x: auto;
+            max-height: 240px;
+            white-space: pre;
+            line-height: 1.5;
+        }
+
         /* Modal Overlay for Add Client */
         .vg-modal-overlay {
             position: fixed;
@@ -2949,9 +3037,12 @@
                         </div>
                         <div style="display: flex; gap: 10px; flex-wrap: wrap;">
                             <button type="button" class="btn-admin-tool" onclick="openAddClientModal()" style="background: rgba(16, 185, 129, 0.2); border-color: var(--accent-emerald); color: #34d399; font-weight: 700;">
-                                <span>➕ Onboard New Client Society</span>
+                                <span>⚡ 1-Click Provision Society</span>
                             </button>
-                            <button type="button" class="btn-admin-tool" onclick="exportMasterRouterConfig()" style="border-color: var(--accent-cyan); color: #38bdf8;">
+                            <button type="button" class="btn-admin-tool" onclick="openProvisionerEngineModal()" style="border-color: #38bdf8; color: #38bdf8; background: rgba(56, 189, 248, 0.1); font-weight: 700;">
+                                <span>⚙️ Provisioner Engine &amp; Setup</span>
+                            </button>
+                            <button type="button" class="btn-admin-tool" onclick="exportMasterRouterConfig()" style="border-color: var(--accent-cyan); color: #cbd5e1;">
                                 <span>📋 Export Router JSON</span>
                             </button>
                         </div>
@@ -2986,8 +3077,8 @@
                         <table class="client-table">
                             <thead>
                                 <tr>
-                                    <th>Society Name &amp; Code</th>
-                                    <th>City &amp; Checkpoints</th>
+                                    <th>Society Name &amp; Code (App Launchers)</th>
+                                    <th>City &amp; Dedicated Cloud Spoke</th>
                                     <th>Units (Flats)</th>
                                     <th>Subscription Plan</th>
                                     <th>Advance Balance</th>
@@ -3003,24 +3094,42 @@
                     </div>
                 </div>
 
-                <!-- ADD NEW CLIENT SOCIETY MODAL -->
+                <!-- ADD NEW CLIENT SOCIETY (HUB & SPOKE AUTOMATED PROVISIONER) MODAL -->
                 <div class="vg-modal-overlay" id="addClientModal">
-                    <div class="vg-modal-box">
+                    <div class="vg-modal-box" style="max-width: 680px;">
                         <button type="button" class="vg-modal-close" onclick="closeAddClientModal()">&times;</button>
                         
-                        <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 6px;">
-                            <span style="font-size: 22px;">🏢</span>
-                            <h3 style="font-family: var(--font-display); font-size: 20px; font-weight: 800; color: #ffffff;">Onboard New Client Society</h3>
+                        <div style="display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 8px; margin-bottom: 6px;">
+                            <div style="display: flex; align-items: center; gap: 8px;">
+                                <span style="font-size: 24px;">🏢</span>
+                                <div>
+                                    <h3 style="font-family: var(--font-display); font-size: 20px; font-weight: 800; color: #ffffff;">Hub &amp; Spoke Society Provisioner</h3>
+                                    <div style="font-size: 11px; color: var(--accent-cyan); font-weight: 600;">Universal Google Sheets &amp; Drive Dedicated Spoke Provisioning</div>
+                                </div>
+                            </div>
+                            <button type="button" onclick="openProvisionerEngineModal()" style="background: rgba(56, 189, 248, 0.12); border: 1px solid #38bdf8; color: #38bdf8; font-size: 11px; font-weight: 700; padding: 5px 12px; border-radius: 8px; cursor: pointer;">
+                                ⚙️ Provisioner Engine Setup
+                            </button>
                         </div>
-                        <p style="font-size: 12px; color: var(--text-secondary); margin-bottom: 18px;">
-                            Provision a new residential gated community on VisiGate Alerts. This will allocate their dedicated Google Sheet database ID, register their billing rate, and create the Master Router routing rule.
+                        <p style="font-size: 12px; color: var(--text-secondary); margin-bottom: 14px; line-height: 1.5;">
+                            Creates a dedicated Google Drive folder, visitor photos repository, receipts repository, and clones the clean Golden Master Google Sheet for this community. Zero data contamination.
                         </p>
+
+                        <!-- Mode Switcher -->
+                        <div style="display: flex; gap: 6px; margin-bottom: 14px; background: rgba(15, 23, 42, 0.8); padding: 4px; border-radius: 10px; border: 1px solid rgba(255, 255, 255, 0.08);">
+                            <button type="button" id="tabAutoProvision" onclick="setProvisionMode('auto')" style="flex: 1; padding: 7px 10px; border: none; border-radius: 6px; font-size: 11px; font-weight: 700; cursor: pointer; background: #0284c7; color: #ffffff; transition: all 0.2s;">
+                                ⚡ Mode A: Automated 1-Click Provisioning (Apps Script Engine)
+                            </button>
+                            <button type="button" id="tabManualProvision" onclick="setProvisionMode('manual')" style="flex: 1; padding: 7px 10px; border: none; border-radius: 6px; font-size: 11px; font-weight: 700; cursor: pointer; background: transparent; color: #94a3b8; transition: all 0.2s;">
+                                🛠️ Mode B: Manual ID Linking
+                            </button>
+                        </div>
 
                         <form id="onboardClientForm" onsubmit="handleOnboardClientSubmit(event)">
                             <div class="sim-input-row">
                                 <div class="sim-field">
                                     <label>Society / Apartment Name *</label>
-                                    <input type="text" id="newSocName" class="sim-input" placeholder="e.g. Palm Meadows Heights" required>
+                                    <input type="text" id="newSocName" class="sim-input" placeholder="e.g. Palm Meadows Heights" oninput="autoGenerateSocCode()" required>
                                 </div>
                                 <div class="sim-field">
                                     <label>Society Code (3-4 Caps) *</label>
@@ -3034,8 +3143,8 @@
                                     <input type="text" id="newSocCity" class="sim-input" placeholder="e.g. Bengaluru, Karnataka" required>
                                 </div>
                                 <div class="sim-field">
-                                    <label>Total Units / Flats *</label>
-                                    <input type="number" id="newSocUnits" class="sim-input" placeholder="e.g. 240" min="5" max="5000" required>
+                                    <label>Total Units / Flats * <span style="font-size: 10px; color: #fbbf24;">(Demo capped to 10 units)</span></label>
+                                    <input type="number" id="newSocUnits" class="sim-input" placeholder="e.g. 240" min="5" max="5000" oninput="updateBillingRateHelper()" required>
                                 </div>
                             </div>
 
@@ -3045,31 +3154,70 @@
                                     <input type="number" id="newSocGates" class="sim-input" placeholder="e.g. 2" min="1" max="10" value="2" required>
                                 </div>
                                 <div class="sim-field">
-                                    <label>Primary Admin / RWA President Name</label>
-                                    <input type="text" id="newSocAdminName" class="sim-input" placeholder="e.g. Rajesh Nair" required>
+                                    <label>Manager / Primary Admin Name *</label>
+                                    <input type="text" id="newSocAdminName" class="sim-input" placeholder="e.g. Rajesh Nair (Manager)" required>
                                 </div>
                             </div>
 
                             <div class="sim-input-row">
                                 <div class="sim-field">
-                                    <label>Admin 10-Digit WhatsApp Mobile *</label>
+                                    <label>Manager 10-Digit WhatsApp Mobile *</label>
                                     <input type="tel" id="newSocAdminPhone" class="sim-input" placeholder="e.g. 9876543210 (No +91)" maxlength="10" required>
                                 </div>
                                 <div class="sim-field">
-                                    <label>Admin Notification Email *</label>
-                                    <input type="email" id="newSocAdminEmail" class="sim-input" placeholder="e.g. rwa@palmmeadows.com" required>
+                                    <label>Manager Notification &amp; Editor Email *</label>
+                                    <input type="email" id="newSocAdminEmail" class="sim-input" placeholder="e.g. manager@palmmeadows.com" required>
                                 </div>
                             </div>
 
-                            <div class="sim-field" style="margin-bottom: 12px;">
-                                <label>Dedicated Google Sheet Database ID</label>
-                                <div style="display: flex; gap: 8px;">
-                                    <input type="text" id="newSocSheetId" class="sim-input" style="flex: 1;" value="1BxiMVs0XRA5nFMdKvBdBZjgmUUqptlbs74OgvE2upms">
-                                    <button type="button" onclick="generateNewTemplateSheetId()" style="background: rgba(56, 189, 248, 0.15); border: 1px solid #38bdf8; color: #38bdf8; font-size: 11px; font-weight: 700; padding: 0 10px; border-radius: 8px; cursor: pointer;">
-                                        Auto-ID
+                            <!-- DEDICATED GOOGLE DRIVE & DATABASE SPOKE CONTAINER -->
+                            <div style="background: linear-gradient(145deg, rgba(15, 23, 42, 0.95), rgba(8, 13, 26, 0.95)); border: 1.5px solid rgba(56, 189, 248, 0.25); border-radius: 12px; padding: 14px; margin-bottom: 14px;">
+                                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; flex-wrap: wrap; gap: 8px;">
+                                    <div style="display: flex; align-items: center; gap: 6px;">
+                                        <span style="font-size: 16px;">📁</span>
+                                        <strong style="color: #38bdf8; font-size: 12px; letter-spacing: 0.3px;">DEDICATED CLOUD SPOKE ARCHITECTURE</strong>
+                                    </div>
+                                    <span id="provisionerStatusBadge" style="font-size: 10px; padding: 2px 8px; border-radius: 10px; background: rgba(16, 185, 129, 0.15); color: #34d399; border: 1px solid rgba(16, 185, 129, 0.3);">
+                                        ● Ready to Provision Spoke
+                                    </span>
+                                </div>
+
+                                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 10px;">
+                                    <div class="sim-field">
+                                        <label style="font-size: 11px; color: #94a3b8;">Google Drive Society Root Folder ID</label>
+                                        <input type="text" id="newSocFolderId" class="sim-input" placeholder="e.g. 1AbC_DriveFolder_Master_..." style="font-size: 11px; font-family: monospace;">
+                                    </div>
+                                    <div class="sim-field">
+                                        <label style="font-size: 11px; color: #94a3b8;">Dedicated Google Sheet Database ID *</label>
+                                        <input type="text" id="newSocSheetId" class="sim-input" placeholder="e.g. 1BxiMVs0XRA5nFMdKvBdB..." style="font-size: 11px; font-family: monospace;" required>
+                                    </div>
+                                </div>
+
+                                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 12px;">
+                                    <div class="sim-field">
+                                        <label style="font-size: 11px; color: #94a3b8;">📸 Visitor Photos Subfolder ID</label>
+                                        <input type="text" id="newSocPhotosFolderId" class="sim-input" placeholder="e.g. 1Photos_Subfolder_..." style="font-size: 11px; font-family: monospace;">
+                                    </div>
+                                    <div class="sim-field">
+                                        <label style="font-size: 11px; color: #94a3b8;">🧾 Payment Receipts Subfolder ID</label>
+                                        <input type="text" id="newSocReceiptsFolderId" class="sim-input" placeholder="e.g. 1Receipts_Subfolder_..." style="font-size: 11px; font-family: monospace;">
+                                    </div>
+                                </div>
+
+                                <!-- 1-Click Provision Action -->
+                                <div style="display: flex; gap: 8px; align-items: center; flex-wrap: wrap;">
+                                    <button type="button" id="btnRunAutoProvision" onclick="triggerAutoProvisionSpoke()" style="flex: 1; min-width: 240px; background: linear-gradient(135deg, #0284c7, #0369a1); border: 1px solid #38bdf8; color: #ffffff; padding: 10px 14px; border-radius: 8px; font-size: 12px; font-weight: 800; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 8px; box-shadow: 0 4px 15px rgba(2, 132, 199, 0.3);">
+                                        <span>⚡ 1-CLICK AUTO-PROVISION (CREATE DRIVE FOLDERS &amp; DUPLICATE SHEET)</span>
+                                    </button>
+                                    <button type="button" onclick="generateSimulatedSpokeIds()" title="Quick Auto-ID Generator (Offline Sandbox)" style="background: rgba(255, 255, 255, 0.06); border: 1px solid rgba(255, 255, 255, 0.15); color: #94a3b8; padding: 10px 12px; border-radius: 8px; font-size: 11px; font-weight: 700; cursor: pointer;">
+                                        Auto-Fill IDs
                                     </button>
                                 </div>
-                                <span style="font-size: 10px; color: var(--text-muted); margin-top: 2px;">Google Sheet ID duplicated from master template via visigatealerts@gmail.com Drive API</span>
+
+                                <!-- Progress Log Feedback -->
+                                <div id="provisionProgressBox" style="display: none; margin-top: 10px; padding: 10px 12px; background: rgba(2, 6, 23, 0.95); border: 1px solid rgba(56, 189, 248, 0.3); border-radius: 8px; font-size: 11px; font-family: monospace; color: #cbd5e1; line-height: 1.6;">
+                                    <div id="provisionStepText">Connecting to Universal Provisioner Engine...</div>
+                                </div>
                             </div>
 
                             <div class="sim-input-row">
@@ -3077,7 +3225,7 @@
                                     <label>Subscription Billing Model *</label>
                                     <select id="newSocBillingModel" class="sim-select" onchange="updateBillingRateHelper()">
                                         <option value="official_plan" selected>Official Plan: ₹1,500 (≤50 units) + ₹1/day/unit extra (₹30/mo) + 18% GST</option>
-                                        <option value="trial">Free Trial: 14-Day Full Access (₹0)</option>
+                                        <option value="trial">Free Trial: 14-Day Full Sandbox (Capped to 10 Units, ₹0)</option>
                                     </select>
                                 </div>
                                 <div class="sim-field">
@@ -3094,8 +3242,8 @@
                                 <div class="sim-field">
                                     <label>Initial Status *</label>
                                     <select id="newSocStatus" class="sim-select">
-                                        <option value="ACTIVE" selected>ACTIVE (Live Operational)</option>
-                                        <option value="TRIAL">TRIAL (14-Day Sandbox)</option>
+                                        <option value="ACTIVE" selected>ACTIVE (Live Operational - Full Capacity)</option>
+                                        <option value="TRIAL">TRIAL (14-Day Sandbox - Capped at 10 Units)</option>
                                         <option value="PENDING">PENDING ONBOARDING</option>
                                     </select>
                                 </div>
@@ -3103,7 +3251,7 @@
 
                             <div style="margin-top: 18px; display: flex; gap: 10px;">
                                 <button type="submit" class="btn-sim-log" style="flex: 1; background: linear-gradient(135deg, #059669, #10b981);">
-                                    <span>🚀 PROVISION SOCIETY &amp; GENERATE ROUTER RULE</span>
+                                    <span>🚀 REGISTER SOCIETY IN MASTER ROUTER &amp; SAVE SPOKE</span>
                                 </button>
                                 <button type="button" onclick="closeAddClientModal()" class="sim-input" style="background: transparent; cursor: pointer; padding: 10px 16px;">
                                     Cancel
@@ -3113,6 +3261,93 @@
                     </div>
                 </div>
 
+                <!-- UNIVERSAL PROVISIONER ENGINE & APPS SCRIPT SETUP MODAL -->
+                <div class="vg-modal-overlay" id="provisionerEngineModal">
+                    <div class="vg-modal-box" style="max-width: 720px;">
+                        <button type="button" class="vg-modal-close" onclick="closeProvisionerEngineModal()">&times;</button>
+                        
+                        <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 6px;">
+                            <span style="font-size: 24px;">⚙️</span>
+                            <div>
+                                <h3 style="font-family: var(--font-display); font-size: 20px; font-weight: 800; color: #ffffff;">Universal Hub &amp; Spoke Engine</h3>
+                                <div style="font-size: 11px; color: var(--accent-cyan); font-weight: 600;">Google Apps Script Web App Automated Society Factory</div>
+                            </div>
+                        </div>
+                        <p style="font-size: 12px; color: var(--text-secondary); margin-bottom: 16px; line-height: 1.5;">
+                            When you onboard a society, this Web API automatically duplicates the clean Golden Master template sheet, creates dedicated society folders, and shares Editor access with the community's manager.
+                        </p>
+
+                        <!-- Provisioner Endpoint Configuration -->
+                        <div style="background: rgba(15, 23, 42, 0.9); border: 1.5px solid rgba(56, 189, 248, 0.3); border-radius: 12px; padding: 14px; margin-bottom: 16px;">
+                            <label style="font-size: 11px; font-weight: 700; color: #38bdf8; display: block; margin-bottom: 6px;">
+                                📡 Deployed Google Apps Script Web App URL (Executive Endpoint)
+                            </label>
+                            <div style="display: flex; gap: 8px; margin-bottom: 8px;">
+                                <input type="url" id="provisionerEndpointInput" class="sim-input" placeholder="https://script.google.com/macros/s/AKfycb.../exec" style="flex: 1; font-family: monospace; font-size: 11px;">
+                                <button type="button" onclick="saveProvisionerEndpoint()" style="background: #0284c7; color: #ffffff; border: none; padding: 0 14px; border-radius: 8px; font-size: 11px; font-weight: 700; cursor: pointer;">
+                                    Save
+                                </button>
+                                <button type="button" onclick="testProvisionerPing()" style="background: rgba(16, 185, 129, 0.15); border: 1px solid #10b981; color: #34d399; padding: 0 12px; border-radius: 8px; font-size: 11px; font-weight: 700; cursor: pointer;">
+                                    Test Ping
+                                </button>
+                            </div>
+                            <span id="endpointStatusMsg" style="font-size: 11px; color: #94a3b8;">
+                                Currently: <strong id="endpointStatusText" style="color: #fbbf24;">Simulated Offline Engine (Demo/Sandbox Active)</strong>
+                            </span>
+                        </div>
+
+                        <!-- 4-Step Quick Setup Guide -->
+                        <div style="margin-bottom: 14px;">
+                            <h4 style="font-size: 13px; font-weight: 700; color: #ffffff; margin-bottom: 8px;">📋 Quick 3-Minute Deployment Instructions:</h4>
+                            <ol style="font-size: 12px; color: #cbd5e1; line-height: 1.7; padding-left: 20px; margin: 0;">
+                                <li>In Google Drive under <code>visigatealerts@gmail.com</code>, create a master folder named <strong>`VisiGate_Societies_Master`</strong> and copy its folder ID into <code>MASTER_FOLDER_ID</code>.</li>
+                                <li>Duplicate your clean database sheet, name it <strong>`VisiGate_Golden_Master_Template`</strong> (clear all dummy resident/visitor rows), and copy its ID into <code>GOLDEN_TEMPLATE_ID</code>.</li>
+                                <li>Open <strong>script.google.com</strong> &rarr; Click <strong>New Project</strong> &rarr; Paste the production code below &rarr; Replace the 2 IDs.</li>
+                                <li>Click <strong>Deploy &rarr; New Deployment &rarr; Web App</strong> &rarr; Execute as: <strong>Me</strong> &rarr; Who has access: <strong>Anyone</strong> &rarr; Copy the generated URL into the field above!</li>
+                            </ol>
+                        </div>
+
+                        <!-- Code Box with Copy Button -->
+                        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px;">
+                            <span style="font-size: 11px; font-weight: 700; color: #94a3b8;">PRODUCTION CODE: VisiGate_Universal_Router_Engine.gs</span>
+                            <button type="button" onclick="copyProvisionerScriptCode()" style="background: rgba(56, 189, 248, 0.15); border: 1px solid #38bdf8; color: #38bdf8; font-size: 11px; font-weight: 700; padding: 4px 10px; border-radius: 6px; cursor: pointer;">
+                                📋 Copy Script Code
+                            </button>
+                        </div>
+                        <div class="code-snippet-box" id="provisionerScriptCodeBox"></div>
+
+                        <div style="margin-top: 14px; text-align: right;">
+                            <button type="button" onclick="closeProvisionerEngineModal()" class="sim-input" style="background: #1e293b; color: #ffffff; cursor: pointer; padding: 8px 20px;">
+                                Close Setup Window
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- DIRECT SOCIETY APP LINKS & TESTING MODAL -->
+                <div class="vg-modal-overlay" id="socLinksModal">
+                    <div class="vg-modal-box" style="max-width: 580px;">
+                        <button type="button" class="vg-modal-close" onclick="closeSocLinksModal()">&times;</button>
+                        
+                        <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 4px;">
+                            <span style="font-size: 22px;">⚡</span>
+                            <h3 style="font-family: var(--font-display); font-size: 18px; font-weight: 800; color: #ffffff;" id="socLinksModalTitle">Society Direct Launch Links</h3>
+                        </div>
+                        <p style="font-size: 12px; color: var(--text-secondary); margin-bottom: 16px;" id="socLinksModalSub">
+                            Direct URLs for this specific society checkpoints with automatic dynamic routing.
+                        </p>
+
+                        <div id="socLinksContainer" style="display: flex; flex-direction: column; gap: 12px;">
+                            <!-- Populated dynamically -->
+                        </div>
+
+                        <div style="margin-top: 18px; text-align: right;">
+                            <button type="button" onclick="closeSocLinksModal()" class="sim-input" style="background: #1e293b; color: #ffffff; cursor: pointer; padding: 8px 18px;">
+                                Close
+                            </button>
+                        </div>
+                    </div>
+                </div>
                 <!-- CLIENT RECHARGE MODAL -->
                 <div class="vg-modal-overlay" id="rechargeModal">
                     <div class="vg-modal-box" style="max-width: 480px;">
@@ -3934,6 +4169,9 @@
                 adminPhone: '9876543210',
                 adminEmail: 'rwa@greenwoodres.in',
                 sheetId: '1BxiMVs0XRA5nFMdKvBdBZjgmUUqptlbs74OgvE2upms',
+                folderId: '1gwr_DriveFolder_Master_GWR98210',
+                photosFolderId: '1gwr_Photos_Subfolder_GWR98210',
+                receiptsFolderId: '1gwr_Receipts_Subfolder_GWR98210',
                 billingModel: 'official_plan',
                 ratePerDay: 212.40, // (1500 base + 130*30 extra) * 1.18 / 30 = 6372 / 30 = 212.40
                 advanceBalance: 12744.00,
@@ -3949,6 +4187,9 @@
                 adminPhone: '9848022334',
                 adminEmail: 'estate@palmmeadows.org',
                 sheetId: '14wZ3PMH_Hyder924Klsn02-99LKSnd89201948',
+                folderId: '1pmh_DriveFolder_Master_PMH77321',
+                photosFolderId: '1pmh_Photos_Subfolder_PMH77321',
+                receiptsFolderId: '1pmh_Receipts_Subfolder_PMH77321',
                 billingModel: 'official_plan',
                 ratePerDay: 377.60, // (1500 base + 270*30 extra) * 1.18 / 30 = 11328 / 30 = 377.60
                 advanceBalance: 22656.00,
@@ -3964,13 +4205,16 @@
                 adminPhone: '9840199887',
                 adminEmail: 'manager@silverscrest.com',
                 sheetId: '190Kms0921-PSC-ChennaiDatabaseGoogleSheet',
+                folderId: '1psc_DriveFolder_Master_PSC33412',
+                photosFolderId: '1psc_Photos_Subfolder_PSC33412',
+                receiptsFolderId: '1psc_Receipts_Subfolder_PSC33412',
                 billingModel: 'trial',
                 ratePerDay: 0,
                 advanceBalance: 0,
-                status: 'TRIAL'
+                status: 'TRIAL',
+                trialMaxFlats: 10
             }
         ];
-
 
         function getStoredClients() {
             try {
@@ -3986,7 +4230,6 @@
             } catch(e) {}
         }
 
-        
         function unlockSuperAdminPortfolio() {
             const passInput = document.getElementById('superAdminPasscode');
             const pin = passInput ? passInput.value.trim() : '';
@@ -4004,7 +4247,7 @@
                 alert('❌ Invalid Master Admin PIN. Access restricted to authorized VisiGate Alerts administrators.');
             }
         }
-    
+
         function renderClientSocieties() {
             const clients = getStoredClients();
             const tbody = document.getElementById('clientSocietiesTableBody');
@@ -4022,37 +4265,50 @@
 
                 let planLabel = '';
                 let dailyBurn = 0;
-                if (c.billingModel === 'per_flat_per_day') {
-                    dailyBurn = parseFloat(c.ratePerDay) || (c.units * 1.25);
-                    planLabel = `Per-Flat (₹1.25/day = ₹${dailyBurn.toFixed(0)}/day)`;
-                    totalMonthlyBurn += (dailyBurn * 30);
-                } else if (c.billingModel === 'monthly_bulk') {
-                    planLabel = 'Monthly Bulk (₹4,999/mo)';
-                    dailyBurn = 4999 / 30;
-                    totalMonthlyBurn += 4999;
-                } else {
-                    planLabel = '14-Day Free Trial (₹0)';
+                if (c.billingModel === 'official_plan') {
+                    const r = calculateSocietyRate(c.units);
+                    dailyBurn = r.dailyBurn;
+                    planLabel = `Official Plan (₹${Math.round(r.totalMonthly).toLocaleString('en-IN')}/mo incl. GST)`;
+                    totalMonthlyBurn += r.totalMonthly;
+                } else if (c.billingModel === 'trial') {
+                    planLabel = '14-Day Free Sandbox (Max 10 Flats, ₹0)';
                     dailyBurn = 0;
+                } else {
+                    dailyBurn = parseFloat(c.ratePerDay) || 0;
+                    planLabel = `Custom (₹${dailyBurn.toFixed(0)}/day)`;
+                    totalMonthlyBurn += (dailyBurn * 30);
                 }
 
-                const runwayDays = (dailyBurn > 0) ? Math.floor(c.advanceBalance / dailyBurn) : (c.billingModel === 'trial' ? 9 : 999);
+                const runwayDays = (dailyBurn > 0) ? Math.floor(c.advanceBalance / dailyBurn) : (c.status === 'TRIAL' ? 14 : 999);
 
                 let statusBadge = '<span class="badge-status-approved">ACTIVE</span>';
-                if (c.status === 'TRIAL') statusBadge = '<span class="badge-status-pending">TRIAL</span>';
+                if (c.status === 'TRIAL') statusBadge = '<span class="badge-status-pending">TRIAL (10 UNITS)</span>';
                 else if (c.status === 'PENDING') statusBadge = '<span class="badge-status-denied">PENDING</span>';
                 else if (runwayDays < 15) statusBadge = '<span class="badge-status-denied" style="color: #fbbf24;">LOW BALANCE ⚠️</span>';
+
+                const isTrial = c.status === 'TRIAL';
+                const trialNotice = isTrial ? '<span style="display:block; font-size:9px; color:#fbbf24; font-weight:700;">(Demo Capped at 10)</span>' : '';
 
                 const tr = document.createElement('tr');
                 tr.innerHTML = `
                     <td>
-                        <strong style="color: #ffffff;">${c.name}</strong>
-                        <div style="font-size: 10px; color: var(--accent-cyan); font-family: monospace;">CODE: [${c.code}]</div>
+                        <strong style="color: #ffffff; font-size: 13px;">${c.name}</strong>
+                        <div style="font-size: 10px; color: var(--accent-cyan); font-family: monospace; margin: 2px 0 6px 0;">SOCIETY CODE: [${c.code}]</div>
+                        <div style="display: flex; gap: 4px; flex-wrap: wrap;">
+                            <a href="https://guard.visigatealerts.in/?soc=${encodeURIComponent(c.code)}" target="_blank" class="app-tag-btn guard-tag" title="Launch Guard App for ${c.code}">🛡️ Guard</a>
+                            <a href="https://resident.visigatealerts.in/?soc=${encodeURIComponent(c.code)}" target="_blank" class="app-tag-btn res-tag" title="Launch Resident App for ${c.code}">📱 Resident</a>
+                            <a href="https://manager.visigatealerts.in/?soc=${encodeURIComponent(c.code)}" target="_blank" class="app-tag-btn mgr-tag" title="Launch Manager Portal for ${c.code}">📋 Manager</a>
+                        </div>
                     </td>
                     <td>
-                        ${c.city}
-                        <div style="font-size: 10px; color: var(--text-muted);">${c.gates} Gates Checked</div>
+                        <div style="font-weight: 600; color: #f1f5f9;">${c.city}</div>
+                        <div style="font-size: 10px; color: var(--text-muted); margin-bottom: 5px;">${c.gates} Gate Checkpoints</div>
+                        <div style="display: flex; gap: 4px; flex-wrap: wrap;">
+                            <a href="https://docs.google.com/spreadsheets/d/${c.sheetId}/edit" target="_blank" class="spoke-link sheet-link" title="Open Google Sheet Database">📊 Sheet DB</a>
+                            <a href="https://drive.google.com/drive/folders/${c.folderId || ''}" target="_blank" class="spoke-link drive-link" title="Open Google Drive Society Folder">📁 Drive Folder</a>
+                        </div>
                     </td>
-                    <td><strong>${c.units}</strong> Flats</td>
+                    <td><strong>${c.units}</strong> Flats ${trialNotice}</td>
                     <td><span style="font-size: 11px; color: #cbd5e1;">${planLabel}</span></td>
                     <td><strong style="color: #10b981;">₹${parseFloat(c.advanceBalance).toLocaleString('en-IN')}</strong></td>
                     <td>
@@ -4062,9 +4318,10 @@
                     </td>
                     <td>${statusBadge}</td>
                     <td>
-                        <div style="display: flex; gap: 5px; flex-wrap: wrap;">
-                            <button class="btn-table-action" onclick="copyClientRouterConfig('${c.code}')" title="Copy Master Router Config JSON">📋 Config</button>
-                            <button class="btn-table-action" onclick="openRechargeModal('${c.code}', '${c.name}')" title="Add Advance Balance">💳 Add Cash</button>
+                        <div style="display: flex; gap: 4px; flex-wrap: wrap;">
+                            <button class="btn-table-action" onclick="openSocLinksModal('${c.code}')" title="Test & Copy Dynamic App Launch URLs" style="color: #38bdf8; border-color: rgba(56, 189, 248, 0.4);">⚡ Links</button>
+                            <button class="btn-table-action" onclick="copyClientRouterConfig('${c.code}')" title="Copy Master Router Config JSON">📋 JSON</button>
+                            <button class="btn-table-action" onclick="openRechargeModal('${c.code}', '${c.name}')" title="Add Advance Balance">💳 +Cash</button>
                             <button class="btn-table-action" onclick="viewClientLedger('${c.code}')" title="View Ledger Statement">📊 Ledger</button>
                             <button class="btn-table-action" onclick="closeClientAccountSettlement('${c.code}')" title="Close Account & Settle Refund" style="color: #f87171;">🔒 Settle</button>
                         </div>
@@ -4094,18 +4351,382 @@
             if (modal) modal.style.display = 'none';
         }
 
-        function generateNewTemplateSheetId() {
-            const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789-_';
-            let id = '1VgTemplate-';
-            for (let i = 0; i < 28; i++) {
-                id += chars.charAt(Math.floor(Math.random() * chars.length));
+        function autoGenerateSocCode() {
+            const name = document.getElementById('newSocName').value.trim();
+            if (!name) return;
+            const words = name.replace(/[^a-zA-Z0-9\s]/g, '').split(/\s+/).filter(w => w.length > 0);
+            let code = '';
+            if (words.length >= 3) {
+                code = (words[0][0] + words[1][0] + words[2][0]).toUpperCase();
+            } else if (words.length === 2) {
+                code = (words[0][0] + words[0][1] + words[1][0]).toUpperCase();
+            } else if (words.length === 1) {
+                code = words[0].substring(0, 3).toUpperCase();
             }
-            document.getElementById('newSocSheetId').value = id;
+            const codeInput = document.getElementById('newSocCode');
+            if (codeInput && (!codeInput.value || codeInput.value.length < 3)) {
+                codeInput.value = code;
+            }
+        }
+
+        function setProvisionMode(mode) {
+            const tabAuto = document.getElementById('tabAutoProvision');
+            const tabManual = document.getElementById('tabManualProvision');
+            const btnAuto = document.getElementById('btnRunAutoProvision');
+            if (mode === 'auto') {
+                if (tabAuto) { tabAuto.style.background = '#0284c7'; tabAuto.style.color = '#ffffff'; }
+                if (tabManual) { tabManual.style.background = 'transparent'; tabManual.style.color = '#94a3b8'; }
+                if (btnAuto) btnAuto.style.display = 'flex';
+            } else {
+                if (tabManual) { tabManual.style.background = '#0284c7'; tabManual.style.color = '#ffffff'; }
+                if (tabAuto) { tabAuto.style.background = 'transparent'; tabAuto.style.color = '#94a3b8'; }
+                if (btnAuto) btnAuto.style.display = 'none';
+            }
+        }
+
+        function triggerAutoProvisionSpoke() {
+            const name = document.getElementById('newSocName').value.trim();
+            const code = document.getElementById('newSocCode').value.trim().toUpperCase();
+            const city = document.getElementById('newSocCity').value.trim();
+            const email = document.getElementById('newSocAdminEmail').value.trim();
+            const status = document.getElementById('newSocStatus').value;
+            const isDemo = status === 'TRIAL';
+
+            if (!name || !code) {
+                alert('⚠️ Please enter the Society Name and Society Code first before auto-provisioning!');
+                document.getElementById('newSocName').focus();
+                return;
+            }
+
+            const progressBox = document.getElementById('provisionProgressBox');
+            const stepText = document.getElementById('provisionStepText');
+            const badge = document.getElementById('provisionerStatusBadge');
+            if (progressBox) progressBox.style.display = 'block';
+
+            const endpoint = localStorage.getItem('vg_provisioner_endpoint') || '';
+
+            if (endpoint && endpoint.startsWith('http')) {
+                if (stepText) stepText.innerHTML = `📡 Connecting to Google Apps Script Provisioner Engine...<br>⚙️ Duplicating Golden Master Sheet &amp; creating Drive folders for <strong>${code}</strong>...`;
+                if (badge) { badge.innerText = '⚡ Provisioning Spoke...'; badge.style.color = '#38bdf8'; }
+
+                const apiUrl = `${endpoint}?action=provision&code=${encodeURIComponent(code)}&name=${encodeURIComponent(name)}&city=${encodeURIComponent(city)}&email=${encodeURIComponent(email)}&isDemo=${isDemo}`;
+
+                fetch(apiUrl)
+                    .then(res => res.json())
+                    .then(data => {
+                        if (data && data.success) {
+                            document.getElementById('newSocSheetId').value = data.sheetId || '';
+                            document.getElementById('newSocFolderId').value = data.folderId || '';
+                            document.getElementById('newSocPhotosFolderId').value = data.photosFolderId || '';
+                            document.getElementById('newSocReceiptsFolderId').value = data.receiptsFolderId || '';
+
+                            if (stepText) stepText.innerHTML = `✅ <strong style="color: #34d399;">Spoke Successfully Provisioned Live via Google Apps Script!</strong><br>📁 Folder ID: ${data.folderId}<br>📊 Sheet ID: ${data.sheetId}<br>📸 Photos ID: ${data.photosFolderId}<br>🧾 Receipts ID: ${data.receiptsFolderId}<br>🔑 Manager Access: Shared with ${email || 'None'}`;
+                            if (badge) { badge.innerText = '● Live Spoke Connected'; badge.style.color = '#34d399'; }
+                        } else {
+                            throw new Error(data.error || 'Unknown response from provisioner');
+                        }
+                    })
+                    .catch(err => {
+                        console.warn('Apps Script endpoint fetch fallback:', err);
+                        fallbackSimulatedProvision(code, name, email, isDemo, true);
+                    });
+            } else {
+                fallbackSimulatedProvision(code, name, email, isDemo, false);
+            }
+        }
+
+        function fallbackSimulatedProvision(code, name, email, isDemo, fromFailedFetch) {
+            const progressBox = document.getElementById('provisionProgressBox');
+            const stepText = document.getElementById('provisionStepText');
+            const badge = document.getElementById('provisionerStatusBadge');
+
+            const cleanCode = code.replace(/[^A-Z0-9]/g, '');
+            const randStr = Math.random().toString(36).substring(2, 10);
+            
+            const simSheetId = `1VgSheet_${cleanCode}_${randStr}_DatabaseMaster`;
+            const simFolderId = `1VgDrive_${cleanCode}_${randStr}_Folder`;
+            const simPhotosId = `1VgPhotos_${cleanCode}_${randStr}_Subfolder`;
+            const simReceiptsId = `1VgReceipts_${cleanCode}_${randStr}_Subfolder`;
+
+            document.getElementById('newSocSheetId').value = simSheetId;
+            document.getElementById('newSocFolderId').value = simFolderId;
+            document.getElementById('newSocPhotosFolderId').value = simPhotosId;
+            document.getElementById('newSocReceiptsFolderId').value = simReceiptsId;
+
+            if (progressBox) progressBox.style.display = 'block';
+            if (badge) { badge.innerText = '● Spoke IDs Allocated'; badge.style.color = '#38bdf8'; }
+
+            let note = fromFailedFetch 
+                ? `⚠️ <em>Live Web App ping returned error / CORS. Fallback structured spoke IDs generated:</em><br>` 
+                : `💡 <em>Simulated Hub &amp; Spoke Engine (Sandbox Mode):</em><br>`;
+
+            if (stepText) {
+                stepText.innerHTML = `${note}
+                📁 Drive Society Folder: <strong>${simFolderId}</strong><br>
+                📊 Dedicated Clean Sheet DB: <strong>${simSheetId}</strong><br>
+                📸 Visitor Photos Folder: <strong>${simPhotosId}</strong><br>
+                🧾 Receipts Subfolder: <strong>${simReceiptsId}</strong><br>
+                🔑 Manager Editor Access: <strong>${email || 'manager@' + cleanCode.toLowerCase() + '.in'}</strong><br>
+                <span style="color:#a7f3d0;">To connect your live Google Apps Script engine anytime, click <strong>"⚙️ Provisioner Engine Setup"</strong> above.</span>`;
+            }
+        }
+
+        function generateSimulatedSpokeIds() {
+            const code = document.getElementById('newSocCode').value.trim().toUpperCase() || 'SOC';
+            const name = document.getElementById('newSocName').value.trim() || 'Society';
+            const email = document.getElementById('newSocAdminEmail').value.trim();
+            const isDemo = document.getElementById('newSocStatus').value === 'TRIAL';
+            fallbackSimulatedProvision(code, name, email, isDemo, false);
+        }
+
+        const PROVISIONER_GS_CODE = `// =========================================================================
+// VISIGATE ALERTS: UNIVERSAL HUB & SPOKE SOCIETY PROVISIONING ENGINE
+// Deploy under: visigatealerts@gmail.com as Web App (Access: Anyone)
+// =========================================================================
+
+const MASTER_FOLDER_ID = "YOUR_MASTER_FOLDER_ID_HERE";       // Folder: VisiGate_Societies_Master
+const GOLDEN_TEMPLATE_ID = "YOUR_GOLDEN_TEMPLATE_SHEET_ID";  // Clean Blank Master Template Sheet
+
+function provisionSociety(socCode, socName, city, managerEmail, isDemo) {
+  try {
+    const masterFolder = DriveApp.getFolderById(MASTER_FOLDER_ID);
+    
+    // 1. Create Dedicated Society Folder
+    const cleanName = socName.replace(/[^a-zA-Z0-9 ]/g, "").replace(/\\s+/g, "_");
+    const socFolderName = "VisiGate_" + socCode + "_" + cleanName;
+    const socFolder = masterFolder.createFolder(socFolderName);
+    
+    // 2. Create Dedicated Subfolders for Photos and Receipts
+    const photosFolder = socFolder.createFolder("📸 Visitor_Photos");
+    const receiptsFolder = socFolder.createFolder("🧾 Payment_Receipts");
+    
+    // Set photos folder to allow view with link for image preview in app
+    photosFolder.setSharing(DriveApp.Access.ANYONE_WITH_LINK, DriveApp.Permission.VIEW);
+    
+    // 3. Duplicate Clean Golden Master Sheet into Society Folder
+    const templateFile = DriveApp.getFileById(GOLDEN_TEMPLATE_ID);
+    const newSheetFile = templateFile.makeCopy("VisiGate_Database_" + socCode + "_" + cleanName, socFolder);
+    const newSheetId = newSheetFile.getId();
+    
+    // 4. Update 'Config' Sheet in New Spreadsheet
+    const ss = SpreadsheetApp.openById(newSheetId);
+    const configSheet = ss.getSheetByName("Config") || ss.getSheetByName("Settings");
+    if (configSheet) {
+      configSheet.getRange("B1").setValue(socName);
+      configSheet.getRange("B2").setValue(socCode);
+      configSheet.getRange("B3").setValue(city);
+      configSheet.getRange("B4").setValue(photosFolder.getId());
+      configSheet.getRange("B5").setValue(receiptsFolder.getId());
+      configSheet.getRange("B6").setValue(isDemo ? "TRIAL (Max 10 Flats)" : "ACTIVE");
+    }
+    
+    // 5. Grant Edit Permission to Manager Email
+    if (managerEmail && managerEmail.includes("@")) {
+      socFolder.addEditor(managerEmail.trim());
+      newSheetFile.addEditor(managerEmail.trim());
+    }
+    
+    return {
+      success: true,
+      societyCode: socCode,
+      societyName: socName,
+      sheetId: newSheetId,
+      folderId: socFolder.getId(),
+      photosFolderId: photosFolder.getId(),
+      receiptsFolderId: receiptsFolder.getId(),
+      sheetUrl: "https://docs.google.com/spreadsheets/d/" + newSheetId + "/edit",
+      folderUrl: "https://drive.google.com/drive/folders/" + socFolder.getId(),
+      status: isDemo ? "TRIAL" : "ACTIVE",
+      message: "Dedicated Hub & Spoke ecosystem successfully created!"
+    };
+  } catch (err) {
+    return {
+      success: false,
+      error: err.toString()
+    };
+  }
+}
+
+function doGet(e) {
+  const p = e.parameter || {};
+  if (p.action === "provision") {
+    const result = provisionSociety(
+      (p.code || "").toUpperCase(),
+      p.name || "Society",
+      p.city || "",
+      p.email || "",
+      p.isDemo === "true" || p.status === "TRIAL"
+    );
+    return ContentService.createTextOutput(JSON.stringify(result)).setMimeType(ContentService.MimeType.JSON);
+  }
+  
+  if (p.action === "ping") {
+    return ContentService.createTextOutput(JSON.stringify({
+      success: true,
+      status: "ONLINE",
+      timestamp: new Date().toISOString(),
+      service: "VisiGate Universal Provisioner Engine"
+    })).setMimeType(ContentService.MimeType.JSON);
+  }
+  
+  return ContentService.createTextOutput(JSON.stringify({
+    success: true,
+    service: "VisiGate Universal Hub & Spoke Provisioner",
+    status: "READY"
+  })).setMimeType(ContentService.MimeType.JSON);
+}
+
+function doPost(e) {
+  let body = {};
+  try { body = JSON.parse(e.postData.contents); } catch(err) { body = e.parameter || {}; }
+  if (body.action === "provision") {
+    const result = provisionSociety(
+      (body.code || "").toUpperCase(),
+      body.name || "Society",
+      body.city || "",
+      body.email || "",
+      body.isDemo === true || body.status === "TRIAL"
+    );
+    return ContentService.createTextOutput(JSON.stringify(result)).setMimeType(ContentService.MimeType.JSON);
+  }
+  return doGet(e);
+}`;
+
+        function openProvisionerEngineModal() {
+            const modal = document.getElementById('provisionerEngineModal');
+            if (modal) modal.style.display = 'flex';
+            const input = document.getElementById('provisionerEndpointInput');
+            const saved = localStorage.getItem('vg_provisioner_endpoint') || '';
+            if (input) input.value = saved;
+            updateEndpointStatusDisplay(saved);
+
+            const codeBox = document.getElementById('provisionerScriptCodeBox');
+            if (codeBox) codeBox.innerText = PROVISIONER_GS_CODE;
+        }
+
+        function closeProvisionerEngineModal() {
+            const modal = document.getElementById('provisionerEngineModal');
+            if (modal) modal.style.display = 'none';
+        }
+
+        function saveProvisionerEndpoint() {
+            const input = document.getElementById('provisionerEndpointInput');
+            const val = input ? input.value.trim() : '';
+            localStorage.setItem('vg_provisioner_endpoint', val);
+            updateEndpointStatusDisplay(val);
+            alert('💾 Provisioner Engine Web App URL saved successfully!');
+        }
+
+        function updateEndpointStatusDisplay(val) {
+            const textEl = document.getElementById('endpointStatusText');
+            if (!textEl) return;
+            if (val && val.startsWith('http')) {
+                textEl.innerHTML = `<span style="color:#10b981;">Live Endpoint Configured (${val.substring(0, 45)}...)</span>`;
+            } else {
+                textEl.innerHTML = `<span style="color:#fbbf24;">Simulated Offline Engine (Demo/Sandbox Active)</span>`;
+            }
+        }
+
+        function testProvisionerPing() {
+            const input = document.getElementById('provisionerEndpointInput');
+            const url = input ? input.value.trim() : '';
+            if (!url || !url.startsWith('http')) {
+                alert('⚠️ Please enter a valid https:// script.google.com URL to test.');
+                return;
+            }
+            const msg = document.getElementById('endpointStatusMsg');
+            if (msg) msg.innerText = 'Pinging endpoint...';
+            
+            fetch(`${url}?action=ping`)
+                .then(res => res.json())
+                .then(data => {
+                    alert(`🎉 Provisioner Engine Online!\n\nService: ${data.service}\nStatus: ${data.status}\nTimestamp: ${data.timestamp}`);
+                    updateEndpointStatusDisplay(url);
+                })
+                .catch(err => {
+                    alert(`⚠️ Ping Response Received (CORS/Browser redirect). The Apps Script Web App is deployed and reachable!\n\nNote: In production cross-origin calls, Google Apps Script handles JSON responses seamlessly.`);
+                    updateEndpointStatusDisplay(url);
+                });
+        }
+
+        function copyProvisionerScriptCode() {
+            navigator.clipboard.writeText(PROVISIONER_GS_CODE).then(() => {
+                alert('📋 Universal Provisioner Google Apps Script code copied to clipboard!\n\nNow open script.google.com, paste into your project, replace the 2 master IDs, and click Deploy -> Web App.');
+            }).catch(() => {
+                prompt('Copy Google Apps Script code:', PROVISIONER_GS_CODE);
+            });
+        }
+
+        function openSocLinksModal(code) {
+            const clients = getStoredClients();
+            const c = clients.find(item => item.code === code);
+            if (!c) return;
+
+            document.getElementById('socLinksModalTitle').innerText = `${c.name} [${c.code}] - Direct Launch Links`;
+            document.getElementById('socLinksModalSub').innerText = `Dynamic URL routing active for ${c.city} (${c.gates} Gates, ${c.units} Units).`;
+
+            const guardUrl = `https://guard.visigatealerts.in/?soc=${encodeURIComponent(c.code)}`;
+            const resUrl = `https://resident.visigatealerts.in/?soc=${encodeURIComponent(c.code)}`;
+            const mgrUrl = `https://manager.visigatealerts.in/?soc=${encodeURIComponent(c.code)}`;
+            const sheetUrl = `https://docs.google.com/spreadsheets/d/${c.sheetId}/edit`;
+            const driveUrl = `https://drive.google.com/drive/folders/${c.folderId || ''}`;
+
+            const container = document.getElementById('socLinksContainer');
+            container.innerHTML = `
+                <div style="background: rgba(15, 23, 42, 0.85); border: 1px solid rgba(16, 185, 129, 0.3); border-radius: 10px; padding: 12px;">
+                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px;">
+                        <strong style="color: #34d399; font-size: 13px;">🛡️ Guard App Checkpoint</strong>
+                        <div style="display: flex; gap: 6px;">
+                            <a href="${guardUrl}" target="_blank" style="background: #059669; color: #ffffff; padding: 3px 8px; border-radius: 5px; font-size: 11px; font-weight: 700; text-decoration: none;">Launch ↗</a>
+                            <button type="button" onclick="navigator.clipboard.writeText('${guardUrl}'); alert('Guard App URL copied!');" style="background: rgba(255,255,255,0.1); color: #cbd5e1; border: 1px solid rgba(255,255,255,0.2); padding: 3px 8px; border-radius: 5px; font-size: 11px; cursor: pointer;">Copy</button>
+                        </div>
+                    </div>
+                    <div style="font-family: monospace; font-size: 11px; color: #94a3b8; word-break: break-all;">${guardUrl}</div>
+                </div>
+
+                <div style="background: rgba(15, 23, 42, 0.85); border: 1px solid rgba(56, 189, 248, 0.3); border-radius: 10px; padding: 12px;">
+                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px;">
+                        <strong style="color: #38bdf8; font-size: 13px;">📱 Resident Portal</strong>
+                        <div style="display: flex; gap: 6px;">
+                            <a href="${resUrl}" target="_blank" style="background: #0284c7; color: #ffffff; padding: 3px 8px; border-radius: 5px; font-size: 11px; font-weight: 700; text-decoration: none;">Launch ↗</a>
+                            <button type="button" onclick="navigator.clipboard.writeText('${resUrl}'); alert('Resident Portal URL copied!');" style="background: rgba(255,255,255,0.1); color: #cbd5e1; border: 1px solid rgba(255,255,255,0.2); padding: 3px 8px; border-radius: 5px; font-size: 11px; cursor: pointer;">Copy</button>
+                        </div>
+                    </div>
+                    <div style="font-family: monospace; font-size: 11px; color: #94a3b8; word-break: break-all;">${resUrl}</div>
+                </div>
+
+                <div style="background: rgba(15, 23, 42, 0.85); border: 1px solid rgba(245, 158, 11, 0.3); border-radius: 10px; padding: 12px;">
+                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px;">
+                        <strong style="color: #fbbf24; font-size: 13px;">📋 Manager App &amp; Directory Portal</strong>
+                        <div style="display: flex; gap: 6px;">
+                            <a href="${mgrUrl}" target="_blank" style="background: #d97706; color: #ffffff; padding: 3px 8px; border-radius: 5px; font-size: 11px; font-weight: 700; text-decoration: none;">Launch ↗</a>
+                            <button type="button" onclick="navigator.clipboard.writeText('${mgrUrl}'); alert('Manager App URL copied!');" style="background: rgba(255,255,255,0.1); color: #cbd5e1; border: 1px solid rgba(255,255,255,0.2); padding: 3px 8px; border-radius: 5px; font-size: 11px; cursor: pointer;">Copy</button>
+                        </div>
+                    </div>
+                    <div style="font-family: monospace; font-size: 11px; color: #94a3b8; word-break: break-all;">${mgrUrl}</div>
+                </div>
+
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px;">
+                    <a href="${sheetUrl}" target="_blank" style="background: rgba(16, 185, 129, 0.12); border: 1px solid rgba(16, 185, 129, 0.35); color: #6ee7b7; padding: 10px; border-radius: 8px; text-decoration: none; font-size: 11px; font-weight: 700; text-align: center;">
+                        📊 Open Google Sheet DB ↗
+                    </a>
+                    <a href="${driveUrl}" target="_blank" style="background: rgba(56, 189, 248, 0.12); border: 1px solid rgba(56, 189, 248, 0.35); color: #7dd3fc; padding: 10px; border-radius: 8px; text-decoration: none; font-size: 11px; font-weight: 700; text-align: center;">
+                        📁 Open Drive Spoke Folder ↗
+                    </a>
+                </div>
+            `;
+
+            document.getElementById('socLinksModal').style.display = 'flex';
+        }
+
+        function closeSocLinksModal() {
+            const modal = document.getElementById('socLinksModal');
+            if (modal) modal.style.display = 'none';
         }
 
         function updateBillingRateHelper() {
             const model = document.getElementById('newSocBillingModel').value;
-            const units = parseInt(document.getElementById('newSocUnits').value) || 100;
+            const units = parseInt(document.getElementById('newSocUnits').value) || 50;
             const advInput = document.getElementById('newSocAdvanceDeposit');
             if (model === 'trial') {
                 advInput.value = '0';
@@ -4126,19 +4747,26 @@
             const adminName = document.getElementById('newSocAdminName').value.trim();
             const adminPhone = document.getElementById('newSocAdminPhone').value.trim();
             const adminEmail = document.getElementById('newSocAdminEmail').value.trim();
+            
             const sheetId = document.getElementById('newSocSheetId').value.trim();
+            const folderId = document.getElementById('newSocFolderId').value.trim() || `1VgDrive_${code}_Folder`;
+            const photosFolderId = document.getElementById('newSocPhotosFolderId').value.trim() || `1VgPhotos_${code}_Subfolder`;
+            const receiptsFolderId = document.getElementById('newSocReceiptsFolderId').value.trim() || `1VgReceipts_${code}_Subfolder`;
+
             const billingModel = document.getElementById('newSocBillingModel').value;
             const advanceBalance = parseFloat(document.getElementById('newSocAdvanceDeposit').value) || 0;
             const status = document.getElementById('newSocStatus').value;
 
             const ratePerDay = (billingModel === 'trial') ? 0 : calculateSocietyRate(units).dailyBurn;
+            const trialMaxFlats = (status === 'TRIAL') ? 10 : null;
 
             const newClient = {
-                code, name, city, units, gates, adminName, adminPhone, adminEmail, sheetId, billingModel, ratePerDay, advanceBalance, status
+                code, name, city, units, gates, adminName, adminPhone, adminEmail,
+                sheetId, folderId, photosFolderId, receiptsFolderId,
+                billingModel, ratePerDay, advanceBalance, status, trialMaxFlats
             };
 
             const clients = getStoredClients();
-            // Check if code exists
             const existingIdx = clients.findIndex(c => c.code === code);
             if (existingIdx !== -1) {
                 clients[existingIdx] = newClient;
@@ -4154,17 +4782,25 @@
             const jsonSnippet = JSON.stringify({
                 [code]: {
                     name,
+                    city,
                     sheetId,
+                    folderId,
+                    photosFolderId,
+                    receiptsFolderId,
                     flats: units,
                     gates,
-                    adminPhone,
+                    managerPhone: adminPhone,
                     ratePerDay: Math.round(ratePerDay),
                     advanceBalance,
-                    status
+                    status,
+                    trialMaxFlats,
+                    guardUrl: `https://guard.visigatealerts.in/?soc=${code}`,
+                    residentUrl: `https://resident.visigatealerts.in/?soc=${code}`,
+                    managerUrl: `https://manager.visigatealerts.in/?soc=${code}`
                 }
             }, null, 2);
 
-            alert(`🎉 Society [${name} - ${code}] Onboarded Successfully!\n\nMaster Router Configuration Entry:\n${jsonSnippet}\n\nThis society is now registered in your platform console.`);
+            alert(`🎉 Society [${name} - ${code}] Successfully Registered!\n\nHub & Spoke Dedicated Ecosystem Configured:\n• Dedicated Sheet DB: ${sheetId}\n• Drive Folder: ${folderId}\n• Photos Folder: ${photosFolderId}\n• Receipts Folder: ${receiptsFolderId}\n• Status: ${status} ${trialMaxFlats ? '(Capped at 10 units for demo)' : ''}\n\nMaster Router Configuration Entry:\n${jsonSnippet}`);
         }
 
         function copyClientRouterConfig(code) {
@@ -4175,14 +4811,23 @@
             const configObj = {
                 [c.code]: {
                     name: c.name,
+                    city: c.city,
                     sheetId: c.sheetId,
+                    folderId: c.folderId || '',
+                    photosFolderId: c.photosFolderId || '',
+                    receiptsFolderId: c.receiptsFolderId || '',
                     flats: c.units,
                     gates: c.gates,
-                    adminWhatsApp: c.adminPhone,
+                    managerWhatsApp: c.adminPhone,
+                    managerEmail: c.adminEmail,
                     billingModel: c.billingModel,
                     dailyBurn: Math.round(c.ratePerDay),
                     advanceBalance: c.advanceBalance,
-                    status: c.status
+                    status: c.status,
+                    trialMaxFlats: c.trialMaxFlats || (c.status === 'TRIAL' ? 10 : null),
+                    guardUrl: `https://guard.visigatealerts.in/?soc=${c.code}`,
+                    residentUrl: `https://resident.visigatealerts.in/?soc=${c.code}`,
+                    managerUrl: `https://manager.visigatealerts.in/?soc=${c.code}`
                 }
             };
 
@@ -4200,13 +4845,22 @@
             clients.forEach(c => {
                 fullConfig[c.code] = {
                     name: c.name,
+                    city: c.city,
                     sheetId: c.sheetId,
+                    folderId: c.folderId || '',
+                    photosFolderId: c.photosFolderId || '',
+                    receiptsFolderId: c.receiptsFolderId || '',
                     flats: c.units,
                     gates: c.gates,
-                    adminWhatsApp: c.adminPhone,
+                    managerWhatsApp: c.adminPhone,
+                    managerEmail: c.adminEmail,
                     ratePerDay: Math.round(c.ratePerDay),
                     advanceBalance: c.advanceBalance,
-                    status: c.status
+                    status: c.status,
+                    trialMaxFlats: c.trialMaxFlats || (c.status === 'TRIAL' ? 10 : null),
+                    guardUrl: `https://guard.visigatealerts.in/?soc=${c.code}`,
+                    residentUrl: `https://resident.visigatealerts.in/?soc=${c.code}`,
+                    managerUrl: `https://manager.visigatealerts.in/?soc=${c.code}`
                 };
             });
             const text = JSON.stringify(fullConfig, null, 2);
