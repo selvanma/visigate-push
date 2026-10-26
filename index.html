@@ -4219,6 +4219,26 @@
                 advanceBalance: 0,
                 status: 'TRIAL',
                 trialMaxFlats: 10
+            },
+            {
+                code: 'RAM',
+                name: 'Ramky Trial Community',
+                city: 'Bengaluru, KA',
+                units: 10,
+                gates: 1,
+                adminName: 'Society Admin (Trial)',
+                adminPhone: '9876543210',
+                adminEmail: 'admin@ramkytrial.in',
+                sheetId: '1o3MmUOxTPh2fE52Vl20HsChAsW8SxHcJblPSQtv0HWw',
+                folderId: '1RxCvs_eYCxPa_cbK_mQTfGlHejKyAcA9',
+                photosFolderId: '1RxCvs_eYCxPa_cbK_mQTfGlHejKyAcA9',
+                receiptsFolderId: '1RxCvs_eYCxPa_cbK_mQTfGlHejKyAcA9',
+                backupFolderId: '1P4nlDhtRFaWeOl30hkhxrcadoaJ0aWqx',
+                billingModel: 'trial',
+                ratePerDay: 0,
+                advanceBalance: 0,
+                status: 'TRIAL',
+                trialMaxFlats: 10
             }
         ];
 
@@ -4410,7 +4430,8 @@
             const badge = document.getElementById('provisionerStatusBadge');
             if (progressBox) progressBox.style.display = 'block';
 
-            const endpoint = localStorage.getItem('vg_provisioner_endpoint') || '';
+            const defaultEndpoint = 'https://script.google.com/macros/s/AKfycbwoFZWkmfWdzAaMkL9CG9KhObVyYLb74puuWB8ihrXSYOLidtOK27kRBcKXNpv6-lgd/exec';
+            const endpoint = localStorage.getItem('vg_provisioner_endpoint') || defaultEndpoint;
 
             if (endpoint && endpoint.startsWith('http')) {
                 if (stepText) stepText.innerHTML = `📡 Connecting to Google Apps Script Provisioner Engine...<br>⚙️ Duplicating Golden Master Sheet &amp; creating Drive folders for <strong>${code}</strong>...`;
@@ -4648,7 +4669,8 @@ function doPost(e) {
             const modal = document.getElementById('provisionerEngineModal');
             if (modal) modal.style.display = 'flex';
             const input = document.getElementById('provisionerEndpointInput');
-            const saved = localStorage.getItem('vg_provisioner_endpoint') || '';
+            const defaultEndpoint = 'https://script.google.com/macros/s/AKfycbwoFZWkmfWdzAaMkL9CG9KhObVyYLb74puuWB8ihrXSYOLidtOK27kRBcKXNpv6-lgd/exec';
+            const saved = localStorage.getItem('vg_provisioner_endpoint') || defaultEndpoint;
             if (input) input.value = saved;
             updateEndpointStatusDisplay(saved);
 
