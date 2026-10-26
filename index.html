@@ -2303,6 +2303,29 @@
                                     </div>
 
                                     <!-- MacroDroid Ring Bar -->
+                                    
+                                    <!-- RESIDENT EMERGENCY SOS 911-914 TRIGGER BAR (100% FCM WEBPUSH) -->
+                                    <div style="background: rgba(239, 68, 68, 0.12); border: 1px solid rgba(239, 68, 68, 0.35); border-radius: 10px; padding: 10px; margin: 10px 0;">
+                                        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px;">
+                                            <strong style="color: #f87171; font-size: 11px;">🚨 TEST EMERGENCY SOS (CODES 911-914):</strong>
+                                            <span style="font-size: 9px; color: #10b981; font-weight: 700;">FCM WEBPUSH ONLY</span>
+                                        </div>
+                                        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 4px;">
+                                            <button type="button" onclick="triggerSimEmergency('911', 'Ambulance / Medical Emergency')" style="background: rgba(239, 68, 68, 0.25); border: 1px solid #ef4444; color: #ffffff; padding: 6px; font-size: 10px; font-weight: 700; border-radius: 6px; cursor: pointer; text-align: left;">
+                                                🚑 911 Ambulance
+                                            </button>
+                                            <button type="button" onclick="triggerSimEmergency('912', 'Fire / Gas Cylinder Leak')" style="background: rgba(245, 158, 11, 0.25); border: 1px solid #f59e0b; color: #ffffff; padding: 6px; font-size: 10px; font-weight: 700; border-radius: 6px; cursor: pointer; text-align: left;">
+                                                🔥 912 Fire Alert
+                                            </button>
+                                            <button type="button" onclick="triggerSimEmergency('913', 'Security Intruder Threat')" style="background: rgba(220, 38, 38, 0.3); border: 1px solid #dc2626; color: #ffffff; padding: 6px; font-size: 10px; font-weight: 700; border-radius: 6px; cursor: pointer; text-align: left;">
+                                                🚨 913 Intruder SOS
+                                            </button>
+                                            <button type="button" onclick="triggerSimEmergency('914', 'Lift Entrapment Crisis')" style="background: rgba(168, 85, 247, 0.25); border: 1px solid #a855f7; color: #ffffff; padding: 6px; font-size: 10px; font-weight: 700; border-radius: 6px; cursor: pointer; text-align: left;">
+                                                🛗 914 Lift Stuck
+                                            </button>
+                                        </div>
+                                    </div>
+
                                     <div class="macrodroid-ring-indicator" id="macrodroidIndicator">
                                         <span>🔔</span>
                                         <span id="macrodroidText">MacroDroid Ring Signal: Resident Phone Alert Synced</span>
@@ -3545,6 +3568,36 @@
             renderClientSocieties();
         });
         setTimeout(renderClientSocieties, 300);
+
+    
+        function triggerSimEmergency(code, desc) {
+            const unit = document.getElementById('dispTargetUnit').innerText || 'Tower B - Flat 402';
+            
+            // Set WebPush banner to Emergency
+            const wpText = document.getElementById('webpushNotificationText');
+            if (wpText) {
+                wpText.innerHTML = `🚨 <strong style="color: #ef4444;">CODE [${code}] EMERGENCY:</strong> ${desc} at ${unit}`;
+            }
+
+            // Raise all barriers
+            const barrier = document.getElementById('barrierIndicator');
+            const barrierText = document.getElementById('barrierText');
+            const latencyBadge = document.getElementById('barrierLatencyBadge');
+
+            if (barrier) barrier.className = 'barrier-status-bar barrier-lifted';
+            if (barrierText) barrierText.innerHTML = `🟢 ALL BARRIERS OPEN (CODE ${code} EMERGENCY OVERRIDE)`;
+            if (latencyBadge) latencyBadge.innerHTML = '⚡ Instant Siren Latency: <strong>0.28s</strong>';
+
+            const md = document.getElementById('macrodroidText');
+            if (md) {
+                md.innerHTML = `🚨 <strong style="color: #ef4444;">AUDIBLE EMERGENCY SIREN:</strong> Dispatched to All Guard Terminals!`;
+            }
+
+            // Add to Audit Log
+            addAuditLogEntry(`EMERGENCY CODE [${code}]`, desc, unit, 'Gate 1 (Ram Singh)', 'EMERGENCY 🚨', '🟢 All Barriers Raised for First Responders');
+
+            alert(`🚨 EMERGENCY BROADCAST ACTIVATED!\n\nCode: [${code}] - ${desc}\nLocation: ${unit}\nDispatched via: FCM WebPush Topic Broadcast (0 Meta/WhatsApp Fees)\nAction: Boom barriers automatically unlocked for ambulance/fire.`);
+        }
 
     </script>
     <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-messaging-compat.js"></script>

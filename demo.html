@@ -974,7 +974,135 @@
         }
 
     </style>
-    <script src="https://unpkg.com/html5-qrcode@2.3.8/html5-qrcode.min.js"></script>
+    <script src="https://unpkg.com/html5-qrcode@2.3.8/html5-qrcode.min.js">
+    // =========================================================================
+    // EMERGENCY SOS (CODES 911 TO 914) & AUDIO SIREN SYNTHESIZER
+    // =========================================================================
+    let audioContext = null;
+    let sirenOscillator = null;
+    let sirenGain = null;
+    let isSirenPlaying = false;
+
+    function playSynthesizedEmergencySiren() {
+        try {
+            if (!audioContext) {
+                audioContext = new (window.AudioContext || window.webkitAudioContext)();
+            }
+            if (audioContext.state === 'suspended') {
+                audioContext.resume();
+            }
+
+            if (isSirenPlaying) return;
+            isSirenPlaying = true;
+
+            sirenOscillator = audioContext.createOscillator();
+            sirenGain = audioContext.createGain();
+
+            sirenOscillator.type = 'sawtooth';
+            sirenGain.gain.setValueAtTime(0.3, audioContext.currentTime);
+
+            // Modulate pitch between 600Hz and 1200Hz to sound like real emergency siren
+            const now = audioContext.currentTime;
+            for (let i = 0; i < 30; i++) {
+                sirenOscillator.frequency.setValueAtTime(700, now + i * 0.8);
+                sirenOscillator.frequency.exponentialRampToValueAtTime(1300, now + i * 0.8 + 0.4);
+                sirenOscillator.frequency.exponentialRampToValueAtTime(700, now + i * 0.8 + 0.8);
+            }
+
+            sirenOscillator.connect(sirenGain);
+            sirenGain.connect(audioContext.destination);
+            sirenOscillator.start();
+        } catch(e) {
+            console.log('AudioContext not allowed without interaction:', e);
+        }
+    }
+
+    function stopSynthesizedEmergencySiren() {
+        try {
+            if (sirenOscillator) {
+                sirenOscillator.stop();
+                sirenOscillator.disconnect();
+                sirenOscillator = null;
+            }
+            isSirenPlaying = false;
+        } catch(e) {}
+    }
+
+    function triggerEmergencySos(code, desc) {
+        const flatSelector = document.getElementById('residentFlatSelector');
+        const selectedFlat = flatSelector ? flatSelector.value : 'Tower B - Flat 402';
+
+        const fb = document.getElementById('resSosFeedback');
+        if (fb) {
+            fb.style.display = 'block';
+            fb.innerHTML = `🚨 <strong>EMERGENCY CODE [${code}] SENT:</strong> ${desc} dispatched via FCM WebPush!`;
+            setTimeout(() => { fb.style.display = 'none'; }, 6000);
+        }
+
+        // Show Guard Emergency Modal & Play Siren
+        showGuardEmergencyAlert(code, desc, selectedFlat);
+
+        // Update Audit Log in Guard app if present
+        if (typeof addLogEntry === 'function') {
+            addLogEntry('EMERGENCY SOS', code + ' ' + desc, selectedFlat, 'DISPATCHED', 'HIGH-PRIORITY SIREN');
+        }
+    }
+
+    function showGuardEmergencyAlert(code, desc, flat) {
+        const modal = document.getElementById('guardEmergencyModal');
+        if (!modal) return;
+
+        const badge = document.getElementById('emergencyModalBadge');
+        const title = document.getElementById('emergencyModalTitle');
+        const loc = document.getElementById('emergencyModalLocation');
+        const details = document.getElementById('emergencyModalDetails');
+
+        if (badge) badge.innerText = `CRITICAL LIFE-SAFETY EMERGENCY: CODE [${code}]`;
+        if (title) title.innerText = desc;
+        if (loc) loc.innerText = flat;
+        if (details) details.innerText = `Resident triggered Code [${code}] via FCM WebPush. All gate barriers awaiting emergency override.`;
+
+        modal.style.display = 'flex';
+        playSynthesizedEmergencySiren();
+
+        // Also update guard Resident Alert Banner
+        const guardBanner = document.getElementById('guardResidentAlertBanner');
+        if (guardBanner) {
+            guardBanner.style.display = 'block';
+            guardBanner.style.background = 'rgba(239, 68, 68, 0.3)';
+            guardBanner.style.border = '2px solid #ef4444';
+            const badgeEl = document.getElementById('guardAlertDecisionBadge');
+            if (badgeEl) {
+                badgeEl.innerText = `EMERGENCY CODE [${code}]`;
+                badgeEl.style.background = '#ef4444';
+                badgeEl.style.color = '#ffffff';
+            }
+            const msgEl = document.getElementById('guardAlertMessage');
+            if (msgEl) msgEl.innerText = `${desc} at ${flat}!`;
+        }
+    }
+
+    function guardAcknowledgeEmergency(action) {
+        stopSynthesizedEmergencySiren();
+        const modal = document.getElementById('guardEmergencyModal');
+        if (modal) modal.style.display = 'none';
+
+        if (action === 'RAISE_BARRIERS') {
+            alert('🟢 ALL BOOM BARRIERS RAISED!\n\nGate 1 & Gate 2 barriers locked in OPEN position for Ambulance / Fire Brigade entry.\nDispatched via FCM WebPush.');
+        } else if (action === 'CALL_FLAT') {
+            alert('📞 Direct intercom call initiated to resident.');
+        } else {
+            alert('🏃 Patrol guard dispatched to emergency location.');
+        }
+    }
+
+    function closeGuardEmergencyModal() {
+        stopSynthesizedEmergencySiren();
+        const modal = document.getElementById('guardEmergencyModal');
+        if (modal) modal.style.display = 'none';
+    }
+
+</script>
 </head>
 <body>
 
@@ -2002,6 +2130,35 @@
                                 </div>
 
                                 <div id="resResponseFeedback" style="display: none; padding: 10px; border-radius: 6px; font-weight: 700; text-align: center; font-size: 12px; margin-top: 8px;"></div>
+
+                            <!-- EMERGENCY SOS BROADCAST (CODES 911 TO 914) - 100% FCM WEBPUSH (NO WHATSAPP NEEDED) -->
+                            <div class="phone-bubble" style="background: rgba(239, 68, 68, 0.08); border: 1px solid rgba(239, 68, 68, 0.35); border-radius: 12px; padding: 12px; margin-top: 12px;">
+                                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
+                                    <strong style="color: #f87171; font-size: 12px; display: flex; align-items: center; gap: 6px;">
+                                        <span>🚨</span> EMERGENCY SOS DISPATCH (FCM PUSH)
+                                    </strong>
+                                    <span style="font-size: 9px; background: rgba(239, 68, 68, 0.25); color: #fca5a5; padding: 2px 6px; border-radius: 4px; font-weight: 700;">SUB-SECOND</span>
+                                </div>
+                                <p style="font-size: 11px; color: #cbd5e1; margin-bottom: 8px; line-height: 1.4;">
+                                    Instantly alert all checkpoint guards, raise barriers, and trigger guard tablet sirens. Works 100% standalone via FCM WebPush with zero WhatsApp dependency:
+                                </p>
+                                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 6px;">
+                                    <button type="button" class="btn-wa-opt" onclick="triggerEmergencySos('911', 'Medical Ambulance Emergency')" style="background: rgba(239, 68, 68, 0.25); border: 1px solid #ef4444; color: #ffffff; padding: 8px 6px; font-size: 11px; font-weight: 700; border-radius: 8px; cursor: pointer; text-align: left;">
+                                        🚑 911 Medical / Ambulance
+                                    </button>
+                                    <button type="button" class="btn-wa-opt" onclick="triggerEmergencySos('912', 'Fire Brigade / Gas Leak')" style="background: rgba(245, 158, 11, 0.25); border: 1px solid #f59e0b; color: #ffffff; padding: 8px 6px; font-size: 11px; font-weight: 700; border-radius: 8px; cursor: pointer; text-align: left;">
+                                        🔥 912 Fire / Gas Leak
+                                    </button>
+                                    <button type="button" class="btn-wa-opt" onclick="triggerEmergencySos('913', 'Security Threat / Intruder SOS')" style="background: rgba(220, 38, 38, 0.35); border: 1px solid #dc2626; color: #ffffff; padding: 8px 6px; font-size: 11px; font-weight: 700; border-radius: 8px; cursor: pointer; text-align: left;">
+                                        🚨 913 Security / Intruder
+                                    </button>
+                                    <button type="button" class="btn-wa-opt" onclick="triggerEmergencySos('914', 'Lift / Elevator Entrapment')" style="background: rgba(168, 85, 247, 0.25); border: 1px solid #a855f7; color: #ffffff; padding: 8px 6px; font-size: 11px; font-weight: 700; border-radius: 8px; cursor: pointer; text-align: left;">
+                                        🛗 914 Lift Entrapment
+                                    </button>
+                                </div>
+                                <div id="resSosFeedback" style="display: none; margin-top: 8px; padding: 6px; border-radius: 6px; font-size: 10px; font-weight: 700; text-align: center; background: rgba(239, 68, 68, 0.3); color: #fca5a5;"></div>
+                            </div>
+
                             </div>
                         </div>
                     </div>
@@ -4185,5 +4342,42 @@
             if (activeInsideNum) activeInsideNum.innerText = `${insideCount} Active`;
         }
     </script>
+
+    <!-- GUARD TABLET EMERGENCY RED ALERT MODAL (SIREN & BARRIER OVERRIDE) -->
+    <div id="guardEmergencyModal" style="display: none; position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0,0,0,0.88); backdrop-filter: blur(8px); z-index: 99999; align-items: center; justify-content: center; padding: 16px;">
+        <div style="background: #180505; border: 3px solid #ef4444; border-radius: 20px; max-width: 580px; width: 100%; padding: 24px; box-shadow: 0 0 50px rgba(239, 68, 68, 0.7); animation: pulseGlowRed 1s infinite alternate; text-align: center;">
+            <div style="font-size: 54px; line-height: 1; margin-bottom: 8px; animation: bounce 0.8s infinite alternate;">🚨</div>
+            <div style="display: inline-block; background: #ef4444; color: #ffffff; font-size: 14px; font-weight: 900; padding: 4px 14px; border-radius: 20px; letter-spacing: 1px; margin-bottom: 12px;" id="emergencyModalBadge">
+                CRITICAL LIFE-SAFETY EMERGENCY: CODE [911]
+            </div>
+            <h2 style="font-family: var(--font-display); font-size: 24px; color: #ffffff; margin-bottom: 8px;" id="emergencyModalTitle">
+                Medical Ambulance Required
+            </h2>
+            <div style="background: rgba(255, 255, 255, 0.06); border: 1px solid rgba(239, 68, 68, 0.4); border-radius: 12px; padding: 14px; margin-bottom: 18px; text-align: left; font-size: 13px;">
+                <div style="color: #94a3b8; font-size: 11px;">EMERGENCY LOCATION &amp; CONTACT:</div>
+                <div style="font-size: 16px; font-weight: 800; color: #fca5a5; margin-top: 4px;" id="emergencyModalLocation">Tower B - Flat 402 (Dr. A. Sharma)</div>
+                <div style="color: #cbd5e1; font-size: 12px; margin-top: 4px;" id="emergencyModalDetails">Resident triggered 911 SOS via FCM WebPush. Siren sound active.</div>
+                <div style="color: #10b981; font-size: 11px; margin-top: 6px;">● FCM Topic Broadcast Dispatched to All Checkpoints &bull; Latency: 0.32s</div>
+            </div>
+
+            <div style="display: flex; flex-direction: column; gap: 10px;">
+                <button type="button" onclick="guardAcknowledgeEmergency('RAISE_BARRIERS')" style="background: linear-gradient(135deg, #059669, #10b981); color: #ffffff; border: none; padding: 14px; border-radius: 10px; font-size: 14px; font-weight: 800; cursor: pointer; box-shadow: 0 4px 14px rgba(16, 185, 129, 0.4);">
+                    🟢 LIFT ALL GATE BARRIERS (AMBULANCE / FIRE BRIGADE ENTRY)
+                </button>
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px;">
+                    <button type="button" onclick="guardAcknowledgeEmergency('CALL_FLAT')" style="background: rgba(56, 189, 248, 0.2); border: 1px solid #38bdf8; color: #38bdf8; padding: 10px; border-radius: 8px; font-size: 12px; font-weight: 700; cursor: pointer;">
+                        📞 Call Flat Intercom
+                    </button>
+                    <button type="button" onclick="guardAcknowledgeEmergency('DISPATCH_QRT')" style="background: rgba(245, 158, 11, 0.2); border: 1px solid #f59e0b; color: #fbbf24; padding: 10px; border-radius: 8px; font-size: 12px; font-weight: 700; cursor: pointer;">
+                        🏃 Dispatch Patrol Guard
+                    </button>
+                </div>
+                <button type="button" onclick="closeGuardEmergencyModal()" style="background: transparent; border: 1px solid rgba(255,255,255,0.2); color: #94a3b8; padding: 8px; border-radius: 8px; font-size: 11px; cursor: pointer; margin-top: 4px;">
+                    Silence Siren &amp; Dismiss Modal
+                </button>
+            </div>
+        </div>
+    </div>
+
 </body>
 </html>
