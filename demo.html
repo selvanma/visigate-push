@@ -1649,19 +1649,16 @@
                                 </div>
                                 <div class="form-group-item">
                                     <label class="form-label">Sub Category</label>
-                                    <select id="vSubCategory" class="form-select">
-                                        <option value="Amazon" selected>Amazon</option>
-                                        <option value="Flipkart">Flipkart</option>
-                                        <option value="Swiggy">Swiggy</option>
-                                        <option value="Zomato">Zomato</option>
-                                        <option value="Blinkit">Blinkit</option>
-                                        <option value="Zepto">Zepto</option>
-                                        <option value="BigBasket">BigBasket</option>
-                                        <option value="Courier / India Post">Courier / India Post</option>
-                                        <option value="Water Can Delivery">Water Can Delivery</option>
-                                        <option value="LPG Cylinder Delivery">LPG Cylinder Delivery</option>
-                                        <option value="Other Courier / Parcel">Other Courier / Parcel</option>
+                                    <select id="vSubCategory" class="form-select" onchange="onSubCategoryChange('v')">
+                                        <!-- Dynamically synced with App Categories -->
                                     </select>
+                                    <div id="vCustomOtherBox" style="display: none; margin-top: 8px;">
+                                        <div style="display: flex; gap: 8px;">
+                                            <input type="text" id="vCustomOther" class="form-input" placeholder="Type new Sub-Category (e.g. Dunzo, Urban Company)..." style="font-size: 13px;">
+                                            <button type="button" class="btn-primary" style="padding: 6px 14px; font-size: 12px; white-space: nowrap; border-radius: 6px; cursor: pointer;" onclick="addCustomSubCategory('v')">➕ Add</button>
+                                        </div>
+                                        <span style="font-size: 11px; color: #10b981; display: block; margin-top: 4px;">⚡ Will be copied & saved to Dynamic Category</span>
+                                    </div>
                                 </div>
                                 <div class="form-group-item">
                                     <label class="form-label">Target Flat / Villa (Max 10 Registered)</label>
@@ -1773,10 +1770,16 @@
                                 </div>
                                 <div class="form-group-item">
                                     <label class="form-label">Vehicle Sub Category</label>
-                                    <select id="vehSubCategory" class="form-select">
-                                        <option value="Auto" selected>Auto</option>
-                                        <option value="Taxi">Taxi</option>
+                                    <select id="vehSubCategory" class="form-select" onchange="onSubCategoryChange('veh')">
+                                        <!-- Dynamically synced with App Categories -->
                                     </select>
+                                    <div id="vehCustomOtherBox" style="display: none; margin-top: 8px;">
+                                        <div style="display: flex; gap: 8px;">
+                                            <input type="text" id="vehCustomOther" class="form-input" placeholder="Type new Vehicle Sub-Category (e.g. Porter, Blinkit EV)..." style="font-size: 13px;">
+                                            <button type="button" class="btn-primary" style="padding: 6px 14px; font-size: 12px; white-space: nowrap; border-radius: 6px; cursor: pointer;" onclick="addCustomSubCategory('veh')">➕ Add</button>
+                                        </div>
+                                        <span style="font-size: 11px; color: #10b981; display: block; margin-top: 4px;">⚡ Will be copied & saved to Dynamic Category</span>
+                                    </div>
                                 </div>
                                 <div class="form-group-item">
                                     <label class="form-label">Vehicle Parking Status</label>
@@ -3028,6 +3031,10 @@
             updateApprovedDropBoxUi();
             updateLiveTime();
             setInterval(updateLiveTime, 30000);
+            
+            // Initialize App Categories & Subcategories
+            onCategoryChange('v');
+            onCategoryChange('veh');
         });
 
         function renderShiftGuardsInputs() {
@@ -3253,34 +3260,119 @@
             }
         }
 
+        // Baseline App Categories matching Guard App v611 & Dynamic Categories Master
+        const BASELINE_APP_CATEGORIES = {
+            "Resident": ["Owner-Resident", "Tenant-Resident", "CoOwner-Resident", "Owner-Occupant", "Tenant-Occupant"],
+            "Preapproved-Visitor": ["Owner-not-a-Resident", "Family", "Relative", "Friend", "Guest"],
+            "Daily-Visitor": ["Maid", "Cook", "Driver", "Nanny", "Gardner", "House-Keeping", "Swimming-Pool", "Guard", "Manager", "Tutor", "DriveU"],
+            "Delivery-Visitor": ["Swiggy", "Zomato", "Porter", "Amazon", "Flipkart", "Myntra", "Bigbasket", "FTH", "Newspaper", "Amazon Now", "Blinkit", "Citi Super Market", "Zepto", "Meesho", "Target"],
+            "Service-Visitor": ["Urban-Company", "Electrician", "Plumber", "Carpenter", "Painter", "Civil", "Pesticide", "Intercom", "CCTV", "ACT", "Airtel", "BSNL", "TataSky", "TVCable", "Structural Engineer", "Ironing"]
+        };
+
+        const BASELINE_VEH_CATEGORIES = {
+            "Resident-Vehicle": ["Owner-Resident", "Tenant-Resident", "CoOwner-Resident", "Owner-Occupant", "Tenant-Occupant"],
+            "Preapproved-Vehicle": ["Owner-not-a-Resident", "Family", "Relative", "Friend", "Guest"],
+            "Daily-Vehicle": ["Maid", "Cook", "Driver", "Nanny", "Gardner", "House-Keeping", "Swimming-Pool", "Guard", "Manager", "Tutor", "DriveU"],
+            "Delivery-Vehicle": ["Swiggy", "Zomato", "Porter", "Amazon", "Flipkart", "Myntra", "Bigbasket", "FTH", "Newspaper", "Amazon Now", "Blinkit", "Citi Super Market", "Zepto", "Meesho", "Target"],
+            "Service-Vehicle": ["Urban-Company", "Electrician", "Plumber", "Carpenter", "Painter", "Civil", "Pesticide", "Intercom", "CCTV", "ACT", "Airtel", "BSNL", "TataSky", "TVCable", "Structural Engineer", "Ironing"],
+            "Public-Vehicle": ["Auto", "Taxi", "Uber", "Ola", "Rapido"]
+        };
+
+        // Retrieve Dynamic Categories from LocalStorage (mirrors Google Sheet Dynamic_Categories)
+        function getDynamicCategoriesList() {
+            try {
+                return JSON.parse(localStorage.getItem('vg_demo_dynamic_categories') || '[]');
+            } catch(e) { return []; }
+        }
+
+        function saveDynamicCategory(mainCat, subCat, isVeh) {
+            let list = getDynamicCategoriesList();
+            let cleanSub = String(subCat || '').trim();
+            if (!cleanSub) return;
+            let exists = list.some(item => String(item.mainCat).toLowerCase() === String(mainCat).toLowerCase() && String(item.subCat).toLowerCase() === cleanSub.toLowerCase());
+            if (!exists) {
+                list.push({
+                    timestamp: new Date().toISOString(),
+                    type: isVeh ? "Vehicle" : "Visitor",
+                    mainCat: mainCat,
+                    subCat: cleanSub
+                });
+                localStorage.setItem('vg_demo_dynamic_categories', JSON.stringify(list));
+            }
+        }
+
         function onCategoryChange(prefix) {
             const mainSel = document.getElementById(`${prefix}MainCategory`);
             const subSel = document.getElementById(`${prefix}SubCategory`);
+            const customBox = document.getElementById(`${prefix}CustomOtherBox`);
+            if (customBox) customBox.style.display = 'none';
             if (!mainSel || !subSel) return;
-            const val = mainSel.value;
+            const mainVal = mainSel.value;
             subSel.innerHTML = '';
 
-            let opts = [];
-            if (val === 'Delivery') {
-                opts = ['Amazon Delivery', 'Swiggy Food', 'Zomato Food', 'Blinkit Quick', 'Zepto Quick', 'Flipkart Logistics', 'Blue Dart', 'Courier Other'];
-            } else if (val === 'Cab') {
-                opts = ['Uber Cab', 'Ola Cab', 'Rapido Auto/Bike', 'BluSmart Electric', 'Airport Taxi'];
-            } else if (val === 'Guest') {
-                opts = ['Family Relative', 'Personal Friend', 'Party Guest', 'Home Tutor', 'Tenant Prospect'];
-            } else if (val === 'Domestic Staff') {
-                opts = ['House Maid / Cook', 'Car Cleaner', 'Driver', 'Gardener', 'Babysitter'];
-            } else if (val === 'Vendor') {
-                opts = ['Electrician', 'Plumber', 'Carpenter', 'Pest Control', 'Appliance Service', 'Interior Contractor'];
-            } else {
-                opts = ['Police / Law Enforcement', 'Ambulance / Medical', 'Fire Safety Inspection', 'Government Auditor'];
-            }
+            const isVeh = (prefix === 'veh');
+            const catMap = isVeh ? BASELINE_VEH_CATEGORIES : BASELINE_APP_CATEGORIES;
+            let baseOpts = catMap[mainVal] ? [...catMap[mainVal]] : ['General'];
 
-            opts.forEach(o => {
+            // Append any dynamically added categories for this main category
+            const dynList = getDynamicCategoriesList();
+            dynList.forEach(item => {
+                if (String(item.mainCat).toLowerCase() === String(mainVal).toLowerCase() && !baseOpts.some(x => x.toLowerCase() === item.subCat.toLowerCase())) {
+                    baseOpts.push(item.subCat);
+                }
+            });
+
+            // Ensure "Others" is always available at the end
+            baseOpts = baseOpts.filter(x => x !== 'Others');
+            baseOpts.push('Others');
+
+            baseOpts.forEach((o, idx) => {
                 const opt = document.createElement('option');
                 opt.value = o;
-                opt.innerText = o;
+                opt.innerText = o.replace(/-/g, ' ');
+                if (idx === 0) opt.selected = true;
                 subSel.appendChild(opt);
             });
+        }
+
+        function onSubCategoryChange(prefix) {
+            const subSel = document.getElementById(`${prefix}SubCategory`);
+            const customBox = document.getElementById(`${prefix}CustomOtherBox`);
+            const customInput = document.getElementById(`${prefix}CustomOther`);
+            if (!subSel || !customBox) return;
+            if (subSel.value === 'Others') {
+                customBox.style.display = 'block';
+                if (customInput) { customInput.value = ''; customInput.focus(); }
+            } else {
+                customBox.style.display = 'none';
+            }
+        }
+
+        function addCustomSubCategory(prefix) {
+            const mainSel = document.getElementById(`${prefix}MainCategory`);
+            const subSel = document.getElementById(`${prefix}SubCategory`);
+            const customInput = document.getElementById(`${prefix}CustomOther`);
+            const customBox = document.getElementById(`${prefix}CustomOtherBox`);
+            if (!mainSel || !subSel || !customInput) return;
+            const newSub = customInput.value.trim();
+            if (!newSub || newSub.length < 2) {
+                alert('Please enter a valid Sub-Category name (minimum 2 characters).');
+                return;
+            }
+
+            const isVeh = (prefix === 'veh');
+            saveDynamicCategory(mainSel.value, newSub, isVeh);
+
+            // Re-populate and select the newly added dynamic subcategory
+            onCategoryChange(prefix);
+            subSel.value = newSub;
+            if (customBox) customBox.style.display = 'none';
+
+            const statusText = document.getElementById('telemetryStatusText');
+            if (statusText) {
+                statusText.innerText = `[DYNAMIC CATEGORY] Added "${newSub}" under ${mainSel.value} and copied to Dynamic Category master!`;
+            }
+            alert(`✅ Sub-Category "${newSub}" successfully added and saved to Dynamic Categories!`);
         }
 
         // Photo Upload Handler for Facial Capture Viewfinder
@@ -3335,7 +3427,14 @@
                 const plate = document.getElementById('vPlate').value.trim() || 'None';
                 const slot = document.getElementById('vSlotNumber').value.trim() || '-';
                 const mainCat = document.getElementById('vMainCategory').value;
-                const subCat = document.getElementById('vSubCategory').value;
+                let subCat = document.getElementById('vSubCategory').value;
+                if (subCat === 'Others') {
+                    const custom = document.getElementById('vCustomOther') ? document.getElementById('vCustomOther').value.trim() : '';
+                    if (custom) {
+                        saveDynamicCategory(mainCat, custom, false);
+                        subCat = custom;
+                    }
+                }
                 const vMobile = document.getElementById('vMobile').value.trim();
 
                 if (!flat) {
@@ -3473,13 +3572,23 @@
                     status: 'PARKED'
                 });
 
+                const vehMainCat = document.getElementById('vehMainCategory') ? document.getElementById('vehMainCategory').value : "Public-Vehicle";
+                let vehSubCat = document.getElementById('vehSubCategory') ? document.getElementById('vehSubCategory').value : "Auto";
+                if (vehSubCat === 'Others') {
+                    const custom = document.getElementById('vehCustomOther') ? document.getElementById('vehCustomOther').value.trim() : '';
+                    if (custom) {
+                        saveDynamicCategory(vehMainCat, custom, true);
+                        vehSubCat = custom;
+                    }
+                }
+
                 entriesLog.unshift({
                     code: driverCode,
                     name: `${driver} (Driver)`,
                     mobile: mobile || "Not Provided",
                     token: driverToken,
-                    mainCategory: "Vehicle Entry",
-                    subCategory: document.getElementById('vehOwnership').value,
+                    mainCategory: vehMainCat,
+                    subCategory: vehSubCat,
                     flat: flat,
                     headCount: 1,
                     vehicle: plate,
