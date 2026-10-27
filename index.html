@@ -3902,17 +3902,51 @@
 
         // Universal Society Subdomain & Parameter Detection
         function detectActiveSociety() {
+            // 1. From Query Parameters (?soc=RAM or ?society=RAM or ?code=RAM)
             let soc = urlParams.get('soc') || urlParams.get('society') || urlParams.get('code') || '';
-            const parts = host.split('.');
-            // If domain is e.g. ram.visigatealerts.in or ram.visigate-alerts.web.app or ram.visigatealerts.web.app
-            if (parts.length >= 3) {
-                const sub = parts[0].toLowerCase();
-                const reserved = ['www', 'guard', 'resident', 'mc', 'manager', 'admin', 'visigate-alerts', 'visigatealerts', 'localhost'];
-                if (!reserved.includes(sub)) {
-                    soc = sub;
+            
+            // 2. From URL Hash (#soc=RAM or #RAM) - Hashes are preserved across HTTP 301 redirects!
+            if (!soc && window.location.hash) {
+                const hash = window.location.hash.replace('#', '').trim();
+                const hashMatch = hash.match(/(?:soc|society)=([A-Z0-9_-]+)/i);
+                if (hashMatch) {
+                    soc = hashMatch[1];
+                } else if (/^[A-Za-z0-9_-]{2,10}$/.test(hash) && !['portals', 'admin-hub', 'pricing', 'features', 'contact', 'triple-alerts'].includes(hash.toLowerCase())) {
+                    soc = hash;
                 }
             }
-            return soc ? soc.toUpperCase().trim() : '';
+
+            // 3. From Subdomain (e.g. ram.visigatealerts.in or ram.visigate-alerts.web.app)
+            if (!soc) {
+                const parts = host.split('.');
+                if (parts.length >= 3) {
+                    const sub = parts[0].toLowerCase();
+                    const reserved = ['www', 'guard', 'resident', 'mc', 'manager', 'admin', 'visigate-alerts', 'visigatealerts', 'localhost'];
+                    if (!reserved.includes(sub)) {
+                        soc = sub;
+                    }
+                }
+            }
+
+            // 4. From Saved LocalStorage / SessionStorage Memory
+            if (!soc) {
+                try {
+                    soc = localStorage.getItem('vg_last_active_soc') || sessionStorage.getItem('vg_last_active_soc') || '';
+                } catch(e) {}
+            }
+
+            // Default to 'RAM' if still not set
+            if (!soc) {
+                soc = 'RAM';
+            }
+
+            soc = soc.toUpperCase().trim();
+            try {
+                localStorage.setItem('vg_last_active_soc', soc);
+                sessionStorage.setItem('vg_last_active_soc', soc);
+            } catch(e) {}
+
+            return soc;
         }
 
         let detectedSoc = detectActiveSociety();
@@ -4469,10 +4503,10 @@
                 adminName: 'Society Admin (Trial)',
                 adminPhone: '9876543210',
                 adminEmail: 'admin@ramcommunity.in',
-                sheetId: '1I0c_PXnGLonlcxP6HoIF4SlaLwg1qMugHDyZkM9TPTM', // Golden spoke database for RAM
-                folderId: '1Kaom74nsSpSs3w9o0vu8cUoWoMtvlJPN', // Verified accessible Master Spoke Folder
-                photosFolderId: '1Kaom74nsSpSs3w9o0vu8cUoWoMtvlJPN',
-                receiptsFolderId: '1Kaom74nsSpSs3w9o0vu8cUoWoMtvlJPN',
+                sheetId: '1o3MmUOxTPh2fE52Vl20HsChAsW8SxHcJblPSQtv0HWw', // Verified Dedicated Spoke Sheet for RAM
+                folderId: '1RxCvs_eYCxPa_cbK_mQTfGlHejKyAcA9', // Dedicated Spoke Drive Folder for RAM
+                photosFolderId: '1jnyxRYntvftG4_VZYvwB7Y2_WMOf6wg7',
+                receiptsFolderId: '1RxCvs_eYCxPa_cbK_mQTfGlHejKyAcA9',
                 backupFolderId: '1P4nlDhtRFaWeOl30hkhxrcadoaJ0aWqx',
                 billingModel: 'trial',
                 ratePerDay: 0,
@@ -4497,11 +4531,15 @@
                     city: 'Bengaluru, KA',
                     units: 10,
                     gates: 1,
-                    sheetId: '1I0c_PXnGLonlcxP6HoIF4SlaLwg1qMugHDyZkM9TPTM',
-                    folderId: '1Kaom74nsSpSs3w9o0vu8cUoWoMtvlJPN',
+                    sheetId: currentHubSocCode === 'RAM' ? '1o3MmUOxTPh2fE52Vl20HsChAsW8SxHcJblPSQtv0HWw' : '1hG0H_uRucsWTcDUOECz0DO0PSiy33regcMUAPgXCXJQ',
+                    folderId: currentHubSocCode === 'RAM' ? '1RxCvs_eYCxPa_cbK_mQTfGlHejKyAcA9' : '1RxCvs_eYCxPa_cbK_mQTfGlHejKyAcA9',
                     status: 'TRIAL'
                 };
             }
+            try {
+                localStorage.setItem('vg_last_active_soc', currentHubSocCode);
+                sessionStorage.setItem('vg_last_active_soc', currentHubSocCode);
+            } catch(e) {}
 
             // Update Header & Status
             const badgeEl = document.getElementById('hubSocBadge');
@@ -4523,20 +4561,26 @@
 
             const switcher = document.getElementById('hubSocietySwitcher');
             if (switcher) switcher.value = c.code;
+            try {
+                if (!window.location.search.includes('soc=')) {
+                    window.history.replaceState({ soc: c.code }, '', window.location.pathname + '?soc=' + encodeURIComponent(c.code) + window.location.hash);
+                }
+            } catch(e) {}
 
-            // Generate URLs for all 6 boxes
-            const guardUrl = `https://guard.visigatealerts.in/?soc=${encodeURIComponent(c.code)}&sheetId=${encodeURIComponent(c.sheetId)}&aptName=${encodeURIComponent(c.name)}`;
-            const resUrl = `https://resident.visigatealerts.in/?soc=${encodeURIComponent(c.code)}&sheetId=${encodeURIComponent(c.sheetId)}&aptName=${encodeURIComponent(c.name)}`;
-            const mcUrl = `https://mc.visigatealerts.in/?soc=${encodeURIComponent(c.code)}&sheetId=${encodeURIComponent(c.sheetId)}&aptName=${encodeURIComponent(c.name)}`;
-            const mgrUrl = `https://manager.visigatealerts.in/?soc=${encodeURIComponent(c.code)}&sheetId=${encodeURIComponent(c.sheetId)}&aptName=${encodeURIComponent(c.name)}`;
+            // Generate URLs for all 6 boxes - strictly decouple RAM from Ramky Utsav photo
+            const photoParam = (c.code === 'RAM') ? '&photoUrl=none' : '';
+            const guardUrl = `https://guard.visigatealerts.in/?soc=${encodeURIComponent(c.code)}&sheetId=${encodeURIComponent(c.sheetId)}&aptName=${encodeURIComponent(c.name)}${photoParam}`;
+            const resUrl = `https://resident.visigatealerts.in/?soc=${encodeURIComponent(c.code)}&sheetId=${encodeURIComponent(c.sheetId)}&aptName=${encodeURIComponent(c.name)}${photoParam}`;
+            const mcUrl = `https://mc.visigatealerts.in/?soc=${encodeURIComponent(c.code)}&sheetId=${encodeURIComponent(c.sheetId)}&aptName=${encodeURIComponent(c.name)}${photoParam}`;
+            const mgrUrl = `https://manager.visigatealerts.in/?soc=${encodeURIComponent(c.code)}&sheetId=${encodeURIComponent(c.sheetId)}&aptName=${encodeURIComponent(c.name)}${photoParam}`;
             
-            const directGuardUrl = `${APPS.guard}?soc=${encodeURIComponent(c.code)}&sheetId=${encodeURIComponent(c.sheetId)}&aptName=${encodeURIComponent(c.name)}`;
-            const directResUrl = `${APPS.resident}?soc=${encodeURIComponent(c.code)}&sheetId=${encodeURIComponent(c.sheetId)}&aptName=${encodeURIComponent(c.name)}`;
-            const directMcUrl = `${APPS.mc}&soc=${encodeURIComponent(c.code)}&sheetId=${encodeURIComponent(c.sheetId)}&aptName=${encodeURIComponent(c.name)}`;
-            const directMgrUrl = `${APPS.manager}&soc=${encodeURIComponent(c.code)}&sheetId=${encodeURIComponent(c.sheetId)}&aptName=${encodeURIComponent(c.name)}`;
+            const directGuardUrl = `${APPS.guard}?soc=${encodeURIComponent(c.code)}&sheetId=${encodeURIComponent(c.sheetId)}&aptName=${encodeURIComponent(c.name)}${photoParam}`;
+            const directResUrl = `${APPS.resident}?soc=${encodeURIComponent(c.code)}&sheetId=${encodeURIComponent(c.sheetId)}&aptName=${encodeURIComponent(c.name)}${photoParam}`;
+            const directMcUrl = `${APPS.mc}&soc=${encodeURIComponent(c.code)}&sheetId=${encodeURIComponent(c.sheetId)}&aptName=${encodeURIComponent(c.name)}${photoParam}`;
+            const directMgrUrl = `${APPS.manager}&soc=${encodeURIComponent(c.code)}&sheetId=${encodeURIComponent(c.sheetId)}&aptName=${encodeURIComponent(c.name)}${photoParam}`;
             
             const sheetUrl = `https://docs.google.com/spreadsheets/d/${c.sheetId}/edit`;
-            const driveUrl = `https://drive.google.com/drive/folders/${c.folderId || '1Kaom74nsSpSs3w9o0vu8cUoWoMtvlJPN'}`;
+            const driveUrl = `https://drive.google.com/drive/folders/${c.folderId || '1RxCvs_eYCxPa_cbK_mQTfGlHejKyAcA9'}`;
 
             const container = document.getElementById('societyPortalBoxesContainer');
             if (!container) return;
@@ -4809,16 +4853,29 @@ All 6 app portal links refreshed in real-time.`);
                     if (Array.isArray(parsed) && parsed.length > 0) {
                         let hasMod = false;
                         parsed.forEach(c => {
-                            if (!c.sheetId || c.sheetId.startsWith('1VgSheet_')) {
-                                c.sheetId = '1I0c_PXnGLonlcxP6HoIF4SlaLwg1qMugHDyZkM9TPTM';
-                                hasMod = true;
-                            }
-                            if (!c.folderId || c.folderId.startsWith('1VgDrive_') || c.folderId === '1RxCvs_eYCxPa_cbK_mQTfGlHejKyAcA9') {
-                                c.folderId = '1Kaom74nsSpSs3w9o0vu8cUoWoMtvlJPN';
-                                hasMod = true;
-                            }
                             if (c.code === 'RAM') {
                                 c.name = 'RAM Community';
+                                if (!c.sheetId || c.sheetId === '1I0c_PXnGLonlcxP6HoIF4SlaLwg1qMugHDyZkM9TPTM' || c.sheetId.startsWith('1VgSheet_')) {
+                                    c.sheetId = '1o3MmUOxTPh2fE52Vl20HsChAsW8SxHcJblPSQtv0HWw';
+                                    hasMod = true;
+                                }
+                                if (!c.folderId || c.folderId === '1Kaom74nsSpSs3w9o0vu8cUoWoMtvlJPN' || c.folderId.startsWith('1VgDrive_')) {
+                                    c.folderId = '1RxCvs_eYCxPa_cbK_mQTfGlHejKyAcA9';
+                                    hasMod = true;
+                                }
+                                if (!c.photosFolderId || c.photosFolderId === '1Kaom74nsSpSs3w9o0vu8cUoWoMtvlJPN') {
+                                    c.photosFolderId = '1jnyxRYntvftG4_VZYvwB7Y2_WMOf6wg7';
+                                    hasMod = true;
+                                }
+                            } else {
+                                if (!c.sheetId || c.sheetId.startsWith('1VgSheet_')) {
+                                    c.sheetId = '1hG0H_uRucsWTcDUOECz0DO0PSiy33regcMUAPgXCXJQ';
+                                    hasMod = true;
+                                }
+                                if (!c.folderId || c.folderId.startsWith('1VgDrive_')) {
+                                    c.folderId = '1RxCvs_eYCxPa_cbK_mQTfGlHejKyAcA9';
+                                    hasMod = true;
+                                }
                             }
                         });
                         if (hasMod) {
@@ -5722,11 +5779,11 @@ function doPost(e) {
                 }
             } catch(e) {}
 
-            // Auto-detect society (from ?soc=RAM or ram.visigatealerts.in or ram.visigate-alerts.web.app)
+            // Auto-detect society (from ?soc=RAM or ram.visigatealerts.in or ram.visigate-alerts.web.app or localStorage memory)
             const activeSoc = detectActiveSociety();
-            if (activeSoc) {
-                renderSocietyPortalHub(activeSoc);
-            }
+            renderSocietyPortalHub(activeSoc);
+            const hubSec = document.getElementById('societyPortalHub');
+            if (hubSec) hubSec.style.display = 'block';
 
             // Auto-unlock if session was authorized
             try {
