@@ -2,8 +2,10 @@ importScripts('https://www.gstatic.com/firebasejs/10.8.0/firebase-app-compat.js'
 importScripts('https://www.gstatic.com/firebasejs/10.8.0/firebase-messaging-compat.js');
 
 try {
-  importScripts('/firebase-config.js');
-} catch(e) {}
+  importScripts(new URL('firebase-config.js', self.location.href).href);
+} catch (e) {
+  console.warn('[firebase-messaging-sw.js] Firebase config file unavailable; using embedded project config.', e);
+}
 
 if (!firebase.apps.length) {
   firebase.initializeApp(typeof firebaseConfig !== 'undefined' ? firebaseConfig : {
@@ -22,9 +24,10 @@ const messaging = firebase.messaging();
  * BACKGROUND FCM WEBPUSH MESSAGE HANDLER
  * Handles:
  * 1. High-Resolution Visitor Camera Photos (image property)
- * 2. Resident 1-Tap Lock-Screen Response Action Buttons (Approve / Deny / Locker)
- * 3. Life-Safety Emergency Codes (911 Medical, 912 Fire, 913 Security, 914 Lift)
+ * 2. Life-Safety Emergency Codes (911 Medical, 912 Fire, 913 Security, 914 Lift)
  *    with persistent lock-screen display (requireInteraction: true) and continuous vibration.
+ * Resident decisions and barrier controls stay in the authenticated app until their
+ * server-side authorization handlers are available.
  */
 messaging.onBackgroundMessage((payload) => {
   console.log('[firebase-messaging-sw.js] Incoming WebPush Payload:', payload);
@@ -41,27 +44,13 @@ messaging.onBackgroundMessage((payload) => {
   let iconUrl = notif.icon || data.icon || 'https://img.icons8.com/color/96/security-gate.png';
   let badgeUrl = 'https://img.icons8.com/color/48/shield.png';
 
-  let actions = [];
   let requireInteraction = false;
   let vibratePattern = [200, 100, 200];
 
   if (isEmergency) {
-    // Emergency 911 to 914: Persistent lock-screen, audible pulse, barrier override
+    // Keep emergency alerts visible until opened; the app handles authorized response.
     requireInteraction = true;
     vibratePattern = [500, 200, 500, 200, 500, 200, 1000];
-
-    actions = [
-      { action: 'EMERGENCY_RAISE_ALL', title: '🟢 Raise All Barriers (Emergency Entry)' },
-      { action: 'CALL_FLAT', title: '📞 Call Resident Intercom' },
-      { action: 'DISPATCH_GUARD', title: '🏃 Dispatch Patrol Guard to Flat' }
-    ];
-  } else {
-    // Normal Visitor Entry with Direct Resident Decision Buttons
-    actions = [
-      { action: 'APPROVE_ENTRY', title: '✓ Approve & Raise Barrier' },
-      { action: 'DENY_ENTRY', title: '✕ Deny Entry' },
-      { action: 'GATE_LOCKER', title: '📦 Keep at Gate Locker' }
-    ];
   }
 
   const notificationOptions = {
@@ -73,7 +62,7 @@ messaging.onBackgroundMessage((payload) => {
     renotify: true,
     tag: isEmergency ? `vg_emergency_${emergencyCode}` : (data.passId || 'vg_gate_alert'),
     vibrate: vibratePattern,
-    actions: actions,
+    actions: [],
     data: {
       passId: data.passId || 'PASS-' + Date.now(),
       soc: data.soc || 'DEMO',
@@ -81,7 +70,7 @@ messaging.onBackgroundMessage((payload) => {
       isEmergency: isEmergency,
       flat: data.flat || 'Tower B - Flat 402',
       gate: data.gate || 'Gate 1',
-      url: data.click_action || '/demo.html'
+      url: data.click_action || 'demo.html'
     }
   };
 
@@ -104,56 +93,41 @@ messaging.onBackgroundMessage((payload) => {
 });
 
 /**
- * NOTIFICATION CLICK & ACTION BUTTON LISTENER
- * Enables resident to respond (Approve / Deny / Locker) directly from lock screen
- * without needing to open the browser tab or app.
+ * Notification clicks open the app on the same origin. Privileged decisions
+ * require the app's authenticated flow.
  */
 self.addEventListener('notificationclick', (event) => {
   event.notification.close();
 
-  const action = event.action;
   const notifData = event.notification.data || {};
-  const passId = notifData.passId;
-  const soc = notifData.soc || 'DEMO';
-  const targetUrl = notifData.url || '/demo.html';
-
-  console.log('[firebase-messaging-sw.js] User tapped action:', action, 'Pass ID:', passId);
-
-  if (action === 'APPROVE_ENTRY' || action === 'DENY_ENTRY' || action === 'GATE_LOCKER') {
-    // 1-Tap Resident Action: Send background decision to Master Router
-    const routerEndpoint = `https://script.google.com/macros/s/AKfycbwz-eVMRCO7Sd1dGIIVkHgmBXvfTxrbou5WX_lR2bIx3mKocZUAjWbqI_CuSy_dSw3-/exec?action=RECORD_DECISION&soc=${soc}&passId=${passId}&decision=${action}`;
-
-    event.waitUntil(
-      fetch(routerEndpoint, { method: 'POST', mode: 'no-cors' })
-        .then(() => {
-          console.log('[firebase-messaging-sw.js] Successfully recorded resident response in Master Router:', action);
-        })
-        .catch((err) => {
-          console.error('[firebase-messaging-sw.js] Error recording decision:', err);
-        })
-    );
-  } else if (action === 'EMERGENCY_RAISE_ALL') {
-    // Emergency Action: Immediately broadcast barrier lift to Master Router
-    const emergencyEndpoint = `https://script.google.com/macros/s/AKfycbwz-eVMRCO7Sd1dGIIVkHgmBXvfTxrbou5WX_lR2bIx3mKocZUAjWbqI_CuSy_dSw3-/exec?action=EMERGENCY_LIFT_BARRIER&soc=${soc}&code=${notifData.emergencyCode}`;
-
-    event.waitUntil(
-      fetch(emergencyEndpoint, { method: 'POST', mode: 'no-cors' })
-        .then(() => console.log('[firebase-messaging-sw.js] Emergency barrier lift signal dispatched'))
-    );
-  } else {
-    // Clicked notification body -> Bring existing tab to focus or open new window
-    event.waitUntil(
-      self.clients.matchAll({ type: 'window', includeUncontrolled: true }).then((clientList) => {
-        for (let i = 0; i < clientList.length; i++) {
-          const client = clientList[i];
-          if (client.url.includes('visigate') && 'focus' in client) {
-            return client.focus();
-          }
-        }
-        if (self.clients.openWindow) {
-          return self.clients.openWindow(targetUrl);
-        }
-      })
-    );
+  let targetUrl = new URL('demo.html', self.registration.scope).href;
+  try {
+    const requestedUrl = new URL(notifData.url || 'demo.html', self.registration.scope);
+    if (requestedUrl.origin === self.location.origin && requestedUrl.href.startsWith(self.registration.scope)) {
+      targetUrl = requestedUrl.href;
+    }
+  } catch (err) {
+    console.warn('[firebase-messaging-sw.js] Ignoring invalid notification URL:', err);
   }
+
+  event.waitUntil(
+    self.clients.matchAll({ type: 'window', includeUncontrolled: true }).then((clientList) => {
+      for (let i = 0; i < clientList.length; i++) {
+        const client = clientList[i];
+        if (new URL(client.url).origin === self.location.origin &&
+            client.url.startsWith(self.registration.scope) &&
+            'focus' in client) {
+          if ('navigate' in client) {
+            return client.navigate(targetUrl).then((navigatedClient) => {
+              return (navigatedClient || client).focus();
+            });
+          }
+          return client.focus();
+        }
+      }
+      if (self.clients.openWindow) {
+        return self.clients.openWindow(targetUrl);
+      }
+    })
+  );
 });
