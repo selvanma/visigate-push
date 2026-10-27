@@ -1199,21 +1199,21 @@
                     </div>
 
                     <!-- Firebase Phone OTP Verification Container -->
-                    <div id="phoneOtpContainer" style="display: none; background: rgba(15, 23, 42, 0.85); border: 1px solid rgba(56, 189, 248, 0.4); border-radius: 8px; padding: 12px; margin-top: 2px;">
-                        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px;">
-                            <span style="font-size: 11px; color: #38bdf8; font-weight: 700;">🔥 Firebase Auth &bull; SMS OTP Verification</span>
-                            <span id="otpTimerLabel" style="font-size: 11px; color: var(--text-muted);">Code valid for 5:00</span>
+                    <div id="phoneOtpContainer" style="display: none; background: rgba(15, 23, 42, 0.95); border: 1px solid rgba(56, 189, 248, 0.5); border-radius: 8px; padding: 14px; margin-top: 6px;">
+                        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
+                            <span style="font-size: 12px; color: #38bdf8; font-weight: 800;">🔥 Firebase Auth &bull; Interactive Testbed OTP</span>
+                            <span id="otpTimerLabel" style="font-size: 11px; color: #34d399; font-weight: 700; background: rgba(16, 185, 129, 0.15); padding: 2px 8px; border-radius: 4px;">Code: 123456 (Ready)</span>
                         </div>
-                        <p style="font-size: 11px; color: #cbd5e1; margin-bottom: 8px;">
-                            Dispatched 6-digit SMS OTP to your registered phone. <em>(Sandbox Test OTP: <strong>123456</strong> for instant evaluation)</em>
-                        </p>
-                        <div style="display: flex; gap: 8px;">
-                            <input type="text" id="gatePhoneOtp" class="form-input" placeholder="Enter 6-digit OTP (e.g. 123456)" maxlength="6" style="flex: 1; letter-spacing: 2px; font-weight: 700; text-align: center;">
-                            <button type="button" class="btn-top-action" onclick="verifyFirebasePhoneOtp()" style="background: #10b981; color: #ffffff; border: none; font-weight: 700;">
-                                <span>Verify OTP</span>
+                        <div style="background: rgba(56, 189, 248, 0.1); border: 1px solid rgba(56, 189, 248, 0.25); border-radius: 6px; padding: 8px 10px; margin-bottom: 10px; font-size: 11px; color: #e2e8f0; line-height: 1.5;">
+                            ⚡ <strong>Instant Testbed Mode:</strong> In this interactive sandbox, telecom carrier SMS dispatch is simulated to eliminate SMS gateway delays. Your instant verification code is <strong style="color: #38bdf8; font-size: 13px; letter-spacing: 1px;">123456</strong> (pre-filled below).
+                        </div>
+                        <div style="display: flex; gap: 8px; flex-wrap: wrap;">
+                            <input type="text" id="gatePhoneOtp" class="form-input" value="123456" placeholder="Enter 6-digit OTP (123456)" maxlength="6" style="flex: 1; min-width: 130px; letter-spacing: 3px; font-weight: 800; text-align: center; color: #38bdf8; font-size: 15px; background: rgba(15, 23, 42, 0.8);">
+                            <button type="button" class="btn-top-action" onclick="verifyFirebasePhoneOtp()" style="background: #10b981; color: #ffffff; border: none; font-weight: 700; padding: 0 16px; cursor: pointer;">
+                                <span>Verify OTP 123456 &rarr;</span>
                             </button>
                         </div>
-                        <div id="otpFeedbackMsg" style="display: none; font-size: 11px; margin-top: 6px; font-weight: 700;"></div>
+                        <div id="otpFeedbackMsg" style="display: none; font-size: 11px; margin-top: 8px; font-weight: 700;"></div>
                     </div>
 
                     <div id="phoneVerifiedBadge" style="display: none; background: rgba(16, 185, 129, 0.15); border: 1px solid rgba(16, 185, 129, 0.4); color: #34d399; padding: 6px 12px; border-radius: 6px; font-size: 12px; font-weight: 700;">
@@ -3960,24 +3960,27 @@
                 setTimeout(() => container.scrollIntoView({ behavior: 'smooth', block: 'nearest' }), 50);
             }
 
+            const otpInput = document.getElementById('gatePhoneOtp');
+            if (otpInput) {
+                otpInput.value = "123456"; // Auto-filled so user is never stranded
+                otpInput.focus();
+            }
+
             const feedback = document.getElementById('otpFeedbackMsg');
             if (feedback) {
                 feedback.style.display = 'block';
-                feedback.style.color = '#38bdf8';
-                feedback.innerText = `📲 Demo OTP generated for +91 ${cleanPhone}. (Sandbox Code: 123456)`;
+                feedback.style.color = '#34d399';
+                feedback.innerHTML = `✅ <strong>Instant Code: 123456</strong> pre-filled! Tap <em>"Verify OTP 123456"</em> below.`;
             }
 
-            const otpInput = document.getElementById('gatePhoneOtp');
-            if (otpInput) {
-                otpInput.value = "";
-                otpInput.focus();
-            }
+            alert(`📲 Testbed Verification Code: 123456\n\nFor +91 ${cleanPhone}, Code [ 123456 ] has been automatically pre-filled into the OTP box.\n\n(Note: Carrier SMS dispatch is simulated in this public testbed sandbox with code 123456 so you can evaluate all features immediately without telecom carrier gateway delays.)\n\nPlease tap "Verify OTP" to continue.`);
         }
 
         function verifyFirebasePhoneOtp() {
-            const otp = document.getElementById('gatePhoneOtp').value.trim();
+            const otpInput = document.getElementById('gatePhoneOtp');
+            const otp = (otpInput ? otpInput.value : '123456').trim() || '123456';
             const rawPhone = document.getElementById('gateWhatsApp').value.trim();
-            const cleanPhone = clean10DigitPhone(rawPhone);
+            const cleanPhone = clean10DigitPhone(rawPhone) || "9845012345";
             const feedback = document.getElementById('otpFeedbackMsg');
             const badge = document.getElementById('phoneVerifiedBadge');
             const container = document.getElementById('phoneOtpContainer');
@@ -3988,7 +3991,7 @@
                 if (container) container.style.display = 'none';
                 if (badge) {
                     badge.style.display = 'block';
-                    badge.innerText = `✅ Phone +91 ${cleanPhone} Verified (OTP Authenticated)`;
+                    badge.innerText = `✅ Phone +91 ${cleanPhone} Verified (Sandbox OTP 123456 Authenticated)`;
                 }
                 if (unlockBtn) {
                     setTimeout(() => {
@@ -3997,7 +4000,7 @@
                         unlockBtn.style.borderColor = '#10b981';
                     }, 100);
                 }
-                alert(`✅ Phone Verification Successful!\n\nPhone: +91 ${cleanPhone}\nStatus: Verified\n\nPlease tap "Unlock & Access Full Interactive Demo" below.`);
+                alert(`✅ Phone Verification Successful!\n\nPhone: +91 ${cleanPhone}\nStatus: Verified via Testbed Sandbox\n\nPlease tap "Unlock & Access Full Interactive Demo" below.`);
             } else {
                 if (feedback) {
                     feedback.style.display = 'block';
