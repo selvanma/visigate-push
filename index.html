@@ -967,6 +967,24 @@
             margin: 24px 0;
             border-radius: 12px;
             border: 1px solid var(--border-glass);
+            scrollbar-width: thin;
+            scrollbar-color: var(--accent-cyan) rgba(255, 255, 255, 0.1);
+        }
+
+        .privilege-table-wrap::-webkit-scrollbar,
+        .audit-table-wrap::-webkit-scrollbar {
+            height: 8px;
+        }
+
+        .privilege-table-wrap::-webkit-scrollbar-track,
+        .audit-table-wrap::-webkit-scrollbar-track {
+            background: rgba(255, 255, 255, 0.06);
+        }
+
+        .privilege-table-wrap::-webkit-scrollbar-thumb,
+        .audit-table-wrap::-webkit-scrollbar-thumb {
+            background: var(--accent-cyan);
+            border-radius: 9999px;
         }
 
         .privilege-table {
@@ -1489,6 +1507,11 @@
                 grid-template-columns: minmax(0, 1fr) !important;
             }
 
+            #pricing .pricing-grid {
+                grid-template-columns: minmax(0, 1fr) !important;
+                gap: 20px !important;
+            }
+
             .sim-tabs-header {
                 gap: 4px;
             }
@@ -1821,6 +1844,8 @@
         .audit-table-wrap {
             overflow-x: auto;
             margin-top: 10px;
+            scrollbar-width: thin;
+            scrollbar-color: var(--accent-cyan) rgba(255, 255, 255, 0.1);
         }
 
         .audit-table {
@@ -3032,7 +3057,7 @@
                 </p>
             </div>
 
-            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 30px; align-items: start;">
+            <div class="pricing-grid" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 30px; align-items: start;">
                 <!-- Left Column: The Official Society Plan Card -->
                 <div style="background: linear-gradient(145deg, #0b1120, #080d1a); border: 2px solid var(--accent-cyan); border-radius: 20px; padding: 28px; box-shadow: 0 15px 35px rgba(0,0,0,0.6); position: relative;">
                     <div style="position: absolute; top: -12px; right: 24px; background: linear-gradient(135deg, #0284c7, #2563eb); color: #ffffff; font-size: 11px; font-weight: 800; padding: 4px 12px; border-radius: 20px; letter-spacing: 0.5px; box-shadow: 0 4px 10px rgba(2, 132, 199, 0.4);">
