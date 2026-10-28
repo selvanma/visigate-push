@@ -53,6 +53,10 @@
             -webkit-font-smoothing: antialiased;
         }
 
+        html {
+            scroll-behavior: smooth;
+        }
+
         /* Sticky Navigation Header */
         header.demo-header {
             position: sticky;
@@ -129,6 +133,39 @@
         .btn-top-action:hover {
             background: rgba(56, 189, 248, 0.25);
             color: #ffffff;
+        }
+
+        .floating-home {
+            position: fixed;
+            right: 24px;
+            bottom: max(24px, env(safe-area-inset-bottom));
+            z-index: 1100;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 12px 18px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 9999px;
+            background: linear-gradient(135deg, #2563eb, #38bdf8);
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.35);
+            color: #fff;
+            font-size: 14px;
+            font-weight: 700;
+            text-decoration: none;
+        }
+
+        .floating-home:hover,
+        .floating-home:focus-visible {
+            background: linear-gradient(135deg, #1d4ed8, #0ea5e9);
+            outline: 2px solid #fff;
+            outline-offset: 3px;
+        }
+
+        @media (max-width: 640px) {
+            .floating-home {
+                right: 16px;
+                bottom: calc(16px + env(safe-area-inset-bottom, 0px));
+            }
         }
 
         
@@ -1253,7 +1290,7 @@
     </div>
 
     <!-- Header -->
-    <header class="demo-header">
+    <header class="demo-header" id="top">
         <div class="header-wrap">
             <a href="/" class="brand-box">
                 <span style="font-size: 22px;">🛡️</span>
@@ -1273,11 +1310,14 @@
                     <span>⚙️ Setup Residents (Max 10)</span>
                 </a>
                 <a href="/" class="btn-top-action" style="background: transparent; border-color: var(--border-glass); color: var(--text-secondary);">
-                    <span>← Main Platform</span>
+                    <span>← Main Page</span>
                 </a>
             </div>
         </div>
     </header>
+
+    <a class="floating-home" href="#top" aria-label="Return to the top of the VisiGate demo"
+        onclick="window.scrollTo({ top: 0, behavior: 'smooth' }); return false;">↑ Home</a>
 
     <!-- Hero -->
     <section class="demo-hero">
@@ -2377,7 +2417,7 @@
                 <strong>Storage &amp; Notification Architecture:</strong> This interactive demo uses sample workflows and local browser data. Demo notifications and barrier actions are previews and do not send live Firebase messages or control physical equipment. Live deployments require the society's configured Google Sheets database, Firebase project and credentials.
             </div>
             <div style="margin-top: 10px;">
-                <a href="/" style="color: var(--accent-cyan); text-decoration: none;">Return to Main visigatealerts.in Platform</a>
+                <a href="/" style="color: var(--accent-cyan); text-decoration: none;">Return to Main Page</a>
             </div>
         </div>
     </footer>
