@@ -1485,6 +1485,38 @@
                 display: none;
             }
 
+            .top-usps-banner-grid {
+                grid-template-columns: minmax(0, 1fr) !important;
+            }
+
+            .sim-tabs-header {
+                gap: 4px;
+            }
+
+            .sim-tab-btn {
+                min-width: 0;
+                min-height: 44px;
+                padding: 8px 4px;
+                font-size: 10px;
+                overflow-wrap: anywhere;
+                text-align: center;
+            }
+
+            .sim-input-row {
+                grid-template-columns: minmax(0, 1fr);
+            }
+
+            .sim-field {
+                min-width: 0;
+            }
+
+            .guard-tablet-frame .sim-input,
+            .guard-tablet-frame .sim-select {
+                width: 100%;
+                min-width: 0;
+                max-width: 100%;
+            }
+
             .arch-grid {
                 grid-template-columns: 1fr !important;
                 gap: 14px !important;
@@ -2416,7 +2448,7 @@
 
             <!-- Secondary Alerts & Zero Training Banner -->
             <div style="background: linear-gradient(135deg, rgba(15, 23, 42, 0.95), rgba(8, 13, 26, 0.95)); border: 1.5px solid rgba(56, 189, 248, 0.3); border-radius: 18px; padding: 22px 26px; margin-bottom: 30px; box-shadow: 0 10px 30px rgba(0,0,0,0.4);">
-                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 20px; align-items: center;">
+                <div class="top-usps-banner-grid" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 20px; align-items: center;">
                     <div style="display: flex; gap: 14px; align-items: flex-start;">
                         <span style="font-size: 28px; line-height: 1;">📲</span>
                         <div>
