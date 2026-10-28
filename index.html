@@ -63,6 +63,22 @@
             scroll-behavior: smooth;
             -webkit-tap-highlight-color: transparent;
             -webkit-text-size-adjust: 100%;
+            scrollbar-width: thin;
+            scrollbar-color: var(--accent-cyan) rgba(255, 255, 255, 0.1);
+        }
+
+        html::-webkit-scrollbar {
+            width: 10px;
+        }
+
+        html::-webkit-scrollbar-track {
+            background: rgba(255, 255, 255, 0.06);
+        }
+
+        html::-webkit-scrollbar-thumb {
+            background: var(--accent-cyan);
+            border: 2px solid var(--bg-primary);
+            border-radius: 9999px;
         }
 
         html,
@@ -1151,6 +1167,52 @@
         }
 
         /* Comprehensive Mobile & Cross-Device Responsive Overhaul */
+        @media (max-width: 1100px) {
+            nav.nav-links,
+            .status-pill {
+                display: none !important;
+            }
+
+            .header-actions {
+                gap: 8px;
+            }
+
+            .header-actions > .btn-portal-launch[href="#top"] {
+                display: none;
+            }
+
+            .mobile-nav-bar {
+                display: flex !important;
+                gap: 8px;
+                overflow-x: auto;
+                padding: 10px 16px 8px;
+                background: rgba(15, 23, 42, 0.85);
+                border-bottom: 1px solid var(--border-glass);
+                -webkit-overflow-scrolling: touch;
+                scrollbar-width: thin;
+                scrollbar-color: var(--accent-cyan) rgba(255, 255, 255, 0.1);
+            }
+
+            .mobile-nav-bar::-webkit-scrollbar {
+                height: 8px;
+            }
+
+            .mobile-nav-bar::-webkit-scrollbar-track {
+                background: rgba(255, 255, 255, 0.06);
+                border-radius: 9999px;
+            }
+
+            .mobile-nav-bar::-webkit-scrollbar-thumb {
+                background: var(--accent-cyan);
+                border-radius: 9999px;
+            }
+
+            .mobile-nav-bar:focus-visible {
+                outline: 2px solid var(--accent-cyan);
+                outline-offset: -2px;
+            }
+        }
+
         @media (max-width: 900px) {
             .portals-grid {
                 grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
@@ -1201,11 +1263,7 @@
                 background: rgba(15, 23, 42, 0.85);
                 border-bottom: 1px solid var(--border-glass);
                 -webkit-overflow-scrolling: touch;
-                scrollbar-width: none;
-            }
-
-            .mobile-nav-bar::-webkit-scrollbar {
-                display: none;
+                scrollbar-width: thin;
             }
 
             .m-pill {
@@ -1423,6 +1481,10 @@
         }
 
         @media (max-width: 480px) {
+            .header-actions > .btn-portal-launch[href="#top"] {
+                display: none;
+            }
+
             .arch-grid {
                 grid-template-columns: 1fr !important;
                 gap: 14px !important;
@@ -1539,11 +1601,16 @@
             grid-template-columns: 1.15fr 0.85fr;
             gap: 24px;
             align-items: start;
+            min-width: 0;
+        }
+
+        .sim-split-layout > * {
+            min-width: 0;
         }
 
         @media (max-width: 980px) {
             .sim-split-layout {
-                grid-template-columns: 1fr;
+                grid-template-columns: minmax(0, 1fr);
             }
         }
 
@@ -1553,6 +1620,8 @@
             border: 1px solid var(--border-glass);
             border-radius: 18px;
             padding: 18px;
+            width: 100%;
+            min-width: 0;
             box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
             position: relative;
         }
@@ -2207,7 +2276,7 @@
             onclick="window.scrollTo({ top: 0, behavior: 'smooth' }); return false;">↑ Home</a>
 
         <!-- Mobile Horizontal Quick Navigation Bar -->
-        <div class="mobile-nav-bar" style="display: none;">
+        <div class="mobile-nav-bar" role="navigation" aria-label="Quick navigation" tabindex="0" style="display: none;">
             <a href="/demo.html" class="m-pill" style="border-color: rgba(245, 158, 11, 0.4); color: #fbbf24;">🎭
                 Demo</a>
             <a href="#top-usps" class="m-pill" style="border-color: rgba(52, 211, 153, 0.4); color: #34d399;">🌟 Top 10 USPs</a>
