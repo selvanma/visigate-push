@@ -240,6 +240,13 @@
             outline-offset: 3px;
         }
 
+        @media (max-width: 768px) {
+            .floating-home {
+                right: 16px;
+                bottom: calc(72px + env(safe-area-inset-bottom, 0px));
+            }
+        }
+
         .status-pill {
             display: inline-flex;
             align-items: center;
