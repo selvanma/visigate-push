@@ -7,8 +7,8 @@
     <title>VisiGate Alerts | Intelligent Gated Community Security & Real-Time Resident Alerts</title>
     <meta name="description"
         content="Visitor and gate management for housing societies with primary Firebase WebPush, optional secondary WhatsApp Meta API cards and MacroDroid missed-call alerts, plus visitor, vehicle and ParcelDoc workflows.">
-    <link rel="icon" type="image/svg+xml"
-        href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🛡️</text></svg>">
+    <link rel="icon" type="image/svg+xml" href="visigate-icon.svg">
+    <link rel="icon" type="image/png" sizes="192x192" href="visigate-icon-192.png">
 
     <!-- Google Fonts: Outfit & Plus Jakarta Sans -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -177,9 +177,10 @@
         }
 
         .brand-icon {
-            font-size: 28px;
+            width: 36px;
+            height: 36px;
+            flex: 0 0 36px;
             filter: drop-shadow(0 0 10px rgba(56, 189, 248, 0.6));
-            animation: pulse-glow 3s infinite alternate;
         }
 
         .brand-text {
@@ -2299,10 +2300,10 @@
         <header class="site-header" id="top">
             <div class="nav-container">
                 <a href="#top" class="brand-logo" aria-label="VisiGate Alerts home">
-                    <span class="brand-icon">🛡️</span>
+                    <img class="brand-icon" src="visigate-icon.svg" alt="">
                     <div class="brand-text">
                         <span class="brand-title">VisiGate Alerts</span>
-                        <span class="brand-subtitle">Smart Community Security</span>
+                        <span class="brand-subtitle">Smart Gate Security</span>
                     </div>
                 </a>
 

@@ -5,7 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, viewport-fit=cover">
     <title>Society Interactive Live Demo & Multi-App Testbed | VisiGate Alerts</title>
     <meta name="description" content="Configure and test-drive VisiGate Alerts for your housing society. Test Guard Phone with Visitor, Vehicle, ParcelDoc tabs, Resident Suite, MC Analytics, and Manager Portal.">
-    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🛡️</text></svg>">
+    <link rel="icon" type="image/svg+xml" href="visigate-icon.svg">
+    <link rel="icon" type="image/png" sizes="192x192" href="visigate-icon-192.png">
     
     <!-- Google Fonts: Outfit & Plus Jakarta Sans -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -87,6 +88,18 @@
             color: #ffffff;
         }
 
+        .brand-mark {
+            width: 34px;
+            height: 34px;
+            flex: 0 0 34px;
+        }
+
+        .brand-copy {
+            display: flex;
+            flex-direction: column;
+            line-height: 1.1;
+        }
+
         .brand-logo-text {
             font-family: var(--font-display);
             font-weight: 700;
@@ -94,6 +107,15 @@
             background: linear-gradient(135deg, #ffffff 40%, #38bdf8 100%);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
+        }
+
+        .brand-tagline {
+            margin-top: 3px;
+            color: #38bdf8;
+            font-size: 9px;
+            font-weight: 700;
+            letter-spacing: 1.2px;
+            text-transform: uppercase;
         }
 
         .sandbox-society-pill {
@@ -1293,8 +1315,11 @@
     <header class="demo-header" id="top">
         <div class="header-wrap">
             <a href="/" class="brand-box">
-                <span style="font-size: 22px;">🛡️</span>
-                <span class="brand-logo-text">VisiGate Alerts</span>
+                <img class="brand-mark" src="visigate-icon.svg" alt="">
+                <span class="brand-copy">
+                    <span class="brand-logo-text">VisiGate Alerts</span>
+                    <span class="brand-tagline">Smart Gate Security</span>
+                </span>
             </a>
 
             <div class="sandbox-society-pill" id="headerSocietyBadge">
