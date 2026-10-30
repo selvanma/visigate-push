@@ -2581,8 +2581,7 @@
 
                 const timeoutId = setTimeout(() => finish(new Error('The trial service did not respond. Please retry.')), 60000);
                 const onMessage = event => {
-                    if (event.source !== frame.contentWindow ||
-                        !(event.origin === 'https://script.google.com' || event.origin.endsWith('.googleusercontent.com')) ||
+                    if (!(event.origin === 'https://script.google.com' || event.origin.endsWith('.googleusercontent.com')) ||
                         !event.data || event.data.type !== 'VG_TRIAL_API_RESPONSE' ||
                         event.data.nonce !== nonce) return;
                     finish(null, event.data.result);
