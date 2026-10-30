@@ -1230,13 +1230,13 @@
             <span class="modal-badge">🔐 Trial Registration &bull; Demo-Only Verification</span>
             <h2 class="modal-title">Unlock Society Interactive Trial</h2>
             <p class="modal-desc">
-                Explore the Guard, Resident, MC and Manager workflows in a browser-only trial. Phone and email codes are simulated; no SMS or email is sent and they do not prove account ownership. Submitting sends your contact details to VisiGate Alerts as a trial inquiry; no live society database is created.
+                Enter your society contact details to explore the VisiGate Guard, Resident, MC and Manager workflows.
             </p>
 
             <form id="mandatoryGateForm" onsubmit="handleMandatoryUnlock(event)">
                 <div class="form-stack-vertical">
                     <div class="form-group-item">
-                        <label class="form-label">Society / Apartment / Tower Name <span class="modal-req-tag">* (Real Society Required)</span></label>
+                        <label class="form-label">Society/Apartment Name <span class="modal-req-tag">* (Real Society Required)</span></label>
                         <input type="text" id="gateSocietyName" class="form-input" value="" placeholder="e.g. Greenwood Heights Apartment" required minlength="3">
                     </div>
 
@@ -1284,7 +1284,7 @@
                         <label class="form-label">Your Email ID <span class="modal-req-tag">* (Compulsory)</span></label>
                         <input type="email" id="gateEmail" class="form-input" value="" placeholder="you@domain.xxx (e.g. secretary@greenwood.in)" required oninput="onGateEmailInput()">
                         <button type="button" id="btnSendEmailCode" class="btn-top-action" onclick="sendDemoEmailCode()" style="margin-top: 8px; background: rgba(56, 189, 248, 0.2); border-color: rgba(56, 189, 248, 0.5); color: #38bdf8;">
-                            <span>✉️ Verify Email (Trial Code)</span>
+                            <span>✉️ Verify Email</span>
                         </button>
                         <div id="emailCodeContainer" style="display: none; margin-top: 8px; padding: 10px; border-radius: 8px; border: 1px solid rgba(56, 189, 248, 0.35); background: rgba(15, 23, 42, 0.8);">
                             <label class="form-label" for="gateEmailCode">Trial email code <span id="emailCodeExpiry" style="font-size: 11px; color: #34d399;"></span></label>
@@ -1300,7 +1300,7 @@
                     <div class="form-group-item">
                         <label class="form-label">Your Role in Society <span class="modal-opt-tag">(Optional Entry)</span></label>
                         <select id="gateRole" class="form-select">
-                            <option value="" selected>-- Select Role (Optional) --</option>
+                            <option value="" selected>-- Select Role --</option>
                             <option value="MC President">MC President</option>
                             <option value="MC Secretary">MC Secretary</option>
                             <option value="MC Member">MC Member</option>
@@ -1361,7 +1361,7 @@
         <span class="demo-badge-pill">Interactive Sandbox Trial &amp; Multi-App Testbed</span>
         <h1 class="demo-title">Test-Drive VisiGate for Your Society</h1>
         <p class="demo-subtitle">
-            Explore Guard Phone workflows (Visitor, Vehicle, ParcelDoc), Resident, MC and Manager views. This is a sandbox: records, notifications and gate actions are simulated; no live messages or physical barriers are triggered.
+            Explore Guard Phone workflows (Visitor, Vehicle, ParcelDoc), Resident, MC and Manager views.
         </p>
     </section>
 
