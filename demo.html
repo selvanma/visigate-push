@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, viewport-fit=cover">
-    <title>Society Interactive Live Demo & Multi-App Testbed | VisiGate Alerts</title>
+    <title>Society Interactive Sandbox Trial & Multi-App Testbed | VisiGate Alerts</title>
     <meta name="description" content="Configure and test-drive VisiGate Alerts for your housing society. Test Guard Phone with Visitor, Vehicle, ParcelDoc tabs, Resident Suite, MC Analytics, and Manager Portal.">
     <link rel="icon" type="image/svg+xml" href="visigate-icon.svg">
     <link rel="icon" type="image/png" sizes="192x192" href="visigate-icon-192.png">
@@ -1227,10 +1227,10 @@
 
     <div class="mandatory-modal-overlay" id="mandatoryLeadGate" style="display: none;">
         <div class="mandatory-modal-card">
-            <span class="modal-badge">🔐 Mandatory Registration &bull; Firebase Phone Verification</span>
-            <h2 class="modal-title">Unlock Society Interactive Testbed</h2>
+            <span class="modal-badge">🔐 Trial Registration &bull; Demo-Only Verification</span>
+            <h2 class="modal-title">Unlock Society Interactive Trial</h2>
             <p class="modal-desc">
-                Experience the live 3-tab Guard App (Visitor, Vehicle, ParcelDoc), Resident Mobile Suite, MC Analytics &amp; Manager Hub. Please enter your authentic society details and verify your phone number to unlock the live demonstration.
+                Explore the Guard, Resident, MC and Manager workflows in a browser-only trial. Phone and email codes are simulated; no SMS or email is sent and they do not prove account ownership. Submitting sends your contact details to VisiGate Alerts as a trial inquiry; no live society database is created.
             </p>
 
             <form id="mandatoryGateForm" onsubmit="handleMandatoryUnlock(event)">
@@ -1253,7 +1253,7 @@
                             </div>
                             <input type="tel" id="gateWhatsApp" class="form-input" value="" placeholder="Enter 10-digit number (e.g. 9845012345)" maxlength="10" required style="flex: 1; font-weight: 600; letter-spacing: 0.5px;" oninput="onGatePhoneInput()">
                             <button type="button" id="btnSendPhoneOtp" class="btn-top-action" onclick="sendFirebasePhoneOtp()" style="background: rgba(56, 189, 248, 0.2); border-color: rgba(56, 189, 248, 0.5); color: #38bdf8; white-space: nowrap;">
-                                <span>📲 Request OTP</span>
+                                <span>📲 Generate Trial Code</span>
                             </button>
                         </div>
                     </div>
@@ -1261,28 +1261,40 @@
                     <!-- Firebase Phone OTP Verification Container -->
                     <div id="phoneOtpContainer" style="display: none; background: rgba(15, 23, 42, 0.95); border: 1px solid rgba(56, 189, 248, 0.5); border-radius: 8px; padding: 14px; margin-top: 6px;">
                         <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
-                            <span style="font-size: 12px; color: #38bdf8; font-weight: 800;">🔥 Firebase Auth &bull; Interactive Testbed OTP</span>
-                            <span id="otpTimerLabel" style="font-size: 11px; color: #34d399; font-weight: 700; background: rgba(16, 185, 129, 0.15); padding: 2px 8px; border-radius: 4px;">Code: 123456 (Ready)</span>
+                            <span style="font-size: 12px; color: #38bdf8; font-weight: 800;">🔐 Trial Phone Code</span>
+                            <span id="otpTimerLabel" style="font-size: 11px; color: #34d399; font-weight: 700; background: rgba(16, 185, 129, 0.15); padding: 2px 8px; border-radius: 4px;">Request a new code</span>
                         </div>
                         <div style="background: rgba(56, 189, 248, 0.1); border: 1px solid rgba(56, 189, 248, 0.25); border-radius: 6px; padding: 8px 10px; margin-bottom: 10px; font-size: 11px; color: #e2e8f0; line-height: 1.5;">
-                            ⚡ <strong>Instant Testbed Mode:</strong> In this interactive sandbox, telecom carrier SMS dispatch is simulated to eliminate SMS gateway delays. Your instant verification code is <strong style="color: #38bdf8; font-size: 13px; letter-spacing: 1px;">123456</strong> (pre-filled below).
+                            ⚠️ <strong>Trial only:</strong> SMS is not sent. A randomized code is shown here for this browser session: <strong id="demoPhoneOtpDisplay" style="color: #38bdf8; font-size: 13px; letter-spacing: 1px;">Request a code</strong>
                         </div>
                         <div style="display: flex; gap: 8px; flex-wrap: wrap;">
-                            <input type="text" id="gatePhoneOtp" class="form-input" value="123456" placeholder="Enter 6-digit OTP (123456)" maxlength="6" style="flex: 1; min-width: 130px; letter-spacing: 3px; font-weight: 800; text-align: center; color: #38bdf8; font-size: 15px; background: rgba(15, 23, 42, 0.8);">
+                            <input type="text" id="gatePhoneOtp" class="form-input" value="" inputmode="numeric" autocomplete="one-time-code" placeholder="Enter 6-digit trial code" maxlength="6" style="flex: 1; min-width: 130px; letter-spacing: 3px; font-weight: 800; text-align: center; color: #38bdf8; font-size: 15px; background: rgba(15, 23, 42, 0.8);">
                             <button type="button" class="btn-top-action" onclick="verifyFirebasePhoneOtp()" style="background: #10b981; color: #ffffff; border: none; font-weight: 700; padding: 0 16px; cursor: pointer;">
-                                <span>Verify OTP 123456 &rarr;</span>
+                                <span>Verify Phone Code &rarr;</span>
                             </button>
                         </div>
                         <div id="otpFeedbackMsg" style="display: none; font-size: 11px; margin-top: 8px; font-weight: 700;"></div>
                     </div>
 
                     <div id="phoneVerifiedBadge" style="display: none; background: rgba(16, 185, 129, 0.15); border: 1px solid rgba(16, 185, 129, 0.4); color: #34d399; padding: 6px 12px; border-radius: 6px; font-size: 12px; font-weight: 700;">
-                        ✅ Phone Verified via Firebase Authentication
+                        ✅ Phone trial code accepted in this browser trial (not real SMS verification)
                     </div>
 
                     <div class="form-group-item">
-                        <label class="form-label">Your Email ID <span class="modal-req-tag">* (Compulsory: ending in @xxxxxx.xxx)</span></label>
-                        <input type="email" id="gateEmail" class="form-input" value="" placeholder="you@domain.xxx (e.g. secretary@greenwood.in)" required>
+                        <label class="form-label">Your Email ID <span class="modal-req-tag">* (Compulsory)</span></label>
+                        <input type="email" id="gateEmail" class="form-input" value="" placeholder="you@domain.xxx (e.g. secretary@greenwood.in)" required oninput="onGateEmailInput()">
+                        <button type="button" id="btnSendEmailCode" class="btn-top-action" onclick="sendDemoEmailCode()" style="margin-top: 8px; background: rgba(56, 189, 248, 0.2); border-color: rgba(56, 189, 248, 0.5); color: #38bdf8;">
+                            <span>✉️ Verify Email (Trial Code)</span>
+                        </button>
+                        <div id="emailCodeContainer" style="display: none; margin-top: 8px; padding: 10px; border-radius: 8px; border: 1px solid rgba(56, 189, 248, 0.35); background: rgba(15, 23, 42, 0.8);">
+                            <label class="form-label" for="gateEmailCode">Trial email code <span id="emailCodeExpiry" style="font-size: 11px; color: #34d399;"></span></label>
+                            <div style="font-size: 11px; color: #cbd5e1; margin-bottom: 8px;">No email is sent. Enter the randomized code shown here: <strong id="demoEmailCodeDisplay" style="color: #38bdf8; letter-spacing: 1px;">Request a code</strong></div>
+                            <div style="display: flex; gap: 8px;">
+                                <input type="text" id="gateEmailCode" class="form-input" inputmode="numeric" autocomplete="one-time-code" placeholder="6-digit trial code" maxlength="6">
+                                <button type="button" class="btn-top-action" onclick="verifyDemoEmailCode()" style="background: #10b981; color: #ffffff; border: none; font-weight: 700;">Verify</button>
+                            </div>
+                        </div>
+                        <div id="emailVerifiedBadge" style="display: none; margin-top: 8px; color: #34d399; font-size: 12px; font-weight: 700;">✅ Email code verified in this browser trial</div>
                     </div>
 
                     <div class="form-group-item">
@@ -1291,10 +1303,10 @@
                             <option value="" selected>-- Select Role (Optional) --</option>
                             <option value="MC President">MC President</option>
                             <option value="MC Secretary">MC Secretary</option>
-                            <option value="Estate Manager">Estate / Facility Manager</option>
-                            <option value="Security Committee">Security Committee Member</option>
-                            <option value="Resident Owner">Resident / Flat Owner</option>
-                            <option value="Prospective Evaluator">Prospective Evaluator</option>
+                            <option value="MC Member">MC Member</option>
+                            <option value="Estate/Facility Manager">Estate / Facility Manager</option>
+                            <option value="Resident/Flat Owner">Resident / Flat Owner</option>
+                            <option value="Evaluator">Evaluator</option>
                         </select>
                     </div>
                 </div>
@@ -1304,7 +1316,7 @@
                 </div>
 
                 <button type="submit" id="btnSubmitUnlock" class="btn-launch-sandbox" style="width: 100%; padding: 13px;">
-                    <span>🔓 Unlock &amp; Access Full Interactive Demo</span>
+                    <span>🔓 Unlock &amp; Access Full Interactive Trial</span>
                     <span>&rarr;</span>
                 </button>
             </form>
@@ -1346,7 +1358,7 @@
 
     <!-- Hero -->
     <section class="demo-hero">
-        <span class="demo-badge-pill">Interactive Live Demonstration &amp; Multi-App Testbed</span>
+        <span class="demo-badge-pill">Interactive Sandbox Trial &amp; Multi-App Testbed</span>
         <h1 class="demo-title">Test-Drive VisiGate for Your Society</h1>
         <p class="demo-subtitle">
             Explore Guard Phone workflows (Visitor, Vehicle, ParcelDoc), Resident, MC and Manager views. This is a sandbox: records, notifications and gate actions are simulated; no live messages or physical barriers are triggered.
@@ -1360,16 +1372,16 @@
                 <span>🏢 Society Configuration, Shift Guards &amp; Resident Directory</span>
             </div>
             <span style="font-size: 12px; color: var(--accent-cyan); font-weight: 600;">
-                ⚡ Strictly restricted to maximum 10 Flats / Villas / Houses &bull; 2 Residents per Unit
+                ⚡ Trial limits: 10 units &bull; up to 10 residents per unit
             </span>
         </div>
 
         <form id="onboardingForm" onsubmit="applySocietySetup(event)">
-            <!-- Gate & 4 Shift Guards (2 Day Shift, 2 Night Shift) Registration -->
+            <!-- Trial setup uses browser-local records; no live Drive or Sheets are created. -->
             <div style="display: flex; justify-content: space-between; align-items: center; background: rgba(15, 23, 42, 0.7); border: 1px dashed rgba(56, 189, 248, 0.35); border-radius: 8px; padding: 10px 14px; margin-bottom: 14px; flex-wrap: wrap; gap: 10px;">
             <div>
-                <strong style="color: #38bdf8; font-size: 13px;">✨ Test-Drive with Realistic Demo Data:</strong>
-                <span style="font-size: 12px; color: var(--text-secondary); margin-left: 6px;">Pre-populate 10 flats (2 residents each) &amp; 4 shift guards with dummy numbers (codes = last 4 digits) for immediate live testing.</span>
+                <strong style="color: #38bdf8; font-size: 13px;">✨ Configure a Sandbox Trial:</strong>
+                <span style="font-size: 12px; color: var(--text-secondary); margin-left: 6px;">Trial limits: 10 units, 10 residents per unit, 10 guards, 10 gates and 10 committee roles. Changes stay in this browser.</span>
             </div>
             <button type="button" class="btn-top-action" onclick="fillRealisticDemoData()" style="background: rgba(16, 185, 129, 0.2); border-color: rgba(16, 185, 129, 0.5); color: #34d399; font-size: 12px; padding: 7px 14px;">
                 <span>✨ 1-Click Auto-Fill Demo Sample Data</span>
@@ -1377,13 +1389,18 @@
         </div>
 
         <div class="setup-section-title" style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 6px;">
-                <span>1. Checkpoint Gate &amp; Shift Guards Registration (2 Day Shift &amp; 2 Night Shift Guards in Demo &bull; Unlimited in Live Production)</span>
-                <span style="font-size: 11px; color: #38bdf8;">Demo: 4 Shift Guards (2 Day, 2 Night) &bull; Live: Unlimited Guards &amp; Checkpoints (Test with 1 to 4 Guards)</span>
+                <span>1. Checkpoint Gates &amp; Shift Guards (up to 10 of each in this trial)</span>
+                <span id="guardLimitCounter" style="font-size: 11px; color: #38bdf8;">4 / 10 guards &bull; 1 / 10 gates</span>
             </div>
 
             <div style="margin-bottom: 14px;">
-                <label class="form-label">Gate Name / Number</label>
-                <input type="text" id="cfgGateName" class="form-input" placeholder="e.g. Main Gate / Gate 1" value="" style="max-width: 380px;">
+                <label class="form-label">Checkpoint Gates (maximum 10)</label>
+                <div style="display: flex; gap: 8px; max-width: 600px; flex-wrap: wrap;">
+                    <input type="text" id="cfgGateName" class="form-input" placeholder="e.g. Main Gate / Gate 1" value="Main Gate" oninput="onGateNameChange(0, this.value)" style="max-width: 380px;">
+                    <button type="button" class="btn-top-action" onclick="setActiveGate(0)">Use this gate</button>
+                    <button type="button" class="btn-top-action" onclick="addTrialGate()">➕ Add Gate</button>
+                </div>
+                <div id="extraGateConfig" style="display: grid; gap: 8px; max-width: 600px; margin-top: 8px;"></div>
             </div>
 
             <!-- Two Column Shift Cards: Day Shift & Night Shift -->
@@ -1485,9 +1502,41 @@
                 </div>
             </div>
 
+            <div style="margin: 0 0 18px; padding: 12px; border: 1px dashed rgba(56, 189, 248, 0.35); border-radius: 8px;">
+                <div style="display: flex; justify-content: space-between; gap: 8px; flex-wrap: wrap; align-items: center;">
+                    <strong style="color: #38bdf8;">Additional trial guards (maximum 10 total)</strong>
+                    <button type="button" class="btn-top-action" id="btnAddTrialGuard" onclick="addTrialGuard()">➕ Add Guard</button>
+                </div>
+                <div id="extraGuardConfig" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 10px; margin-top: 10px;"></div>
+            </div>
+
+            <div class="setup-section-title" style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 6px;">
+                <span>2. Society Committee (10 roles: Manager/Admin, President, Secretary, 7 Members)</span>
+                <span style="font-size: 11px; color: #38bdf8;">Names and emails are trial-only</span>
+            </div>
+            <div class="table-responsive" style="margin-bottom: 18px;">
+                <table class="res-reg-table" style="min-width: 700px;">
+                    <thead><tr><th>Role</th><th>Name</th><th>Email</th></tr></thead>
+                    <tbody id="committeeRosterBody"></tbody>
+                </table>
+            </div>
+
+            <div style="margin: 0 0 18px; padding: 12px; border: 1px solid rgba(148, 163, 184, 0.25); border-radius: 8px;">
+                <strong style="color: #e2e8f0;">Society settings and charges</strong>
+                <p style="font-size: 11px; color: var(--text-secondary); margin: 6px 0 10px;">In a live deployment, admin contact details belong in the society database. Rates and amenity charges are Super-Admin controlled. This public trial does not create or edit a Google Sheet.</p>
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 8px;">
+                    <label class="form-label">Admin/Manager WhatsApp<input id="trialAdminPhone" class="form-input" readonly value="Available after trial registration"></label>
+                    <label class="form-label">Admin/Manager Email<input id="trialAdminEmail" class="form-input" readonly value="Available after trial registration"></label>
+                    <label class="form-label">Maintenance per sq. ft.<input class="form-input" readonly value="Super-Admin only"></label>
+                    <label class="form-label">Clubhouse full / half day<input class="form-input" readonly value="Super-Admin only"></label>
+                    <label class="form-label">Shifting charge<input class="form-input" readonly value="Super-Admin only"></label>
+                    <label class="form-label">Other amenity charges<input class="form-input" readonly value="Super-Admin only"></label>
+                </div>
+            </div>
+
             <!-- Resident Directory (Strictly Restricted to Max 10 Flats / Villas / Houses with 2 Residents each) -->
             <div class="setup-section-title" style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 6px;">
-                <span>2. Resident Directory (Max 10 Flats / Villas / Houses &bull; 2 Residents per Unit in Demo &bull; Unlimited in Live Production)</span>
+                <span>3. MASTER_FLATS &amp; Resident Directory (Max 10 Units &bull; Max 10 Residents per Unit)</span>
                 <span style="font-size: 12px; color: #10b981; font-weight: 700;" id="residentUnitCounter">Configured Flats: 0 / 10 Max</span>
             </div>
             
@@ -1496,13 +1545,12 @@
                     <thead>
                         <tr>
                             <th style="width: 14%;">Flat / Villa / House No.</th>
-                            <th style="width: 39%;">Resident 1 (Primary Resident)</th>
-                            <th style="width: 39%;">Resident 2 (Co-Resident)</th>
+                            <th colspan="2" style="width: 78%;">Residents (maximum 10 per unit)</th>
                             <th style="width: 8%; text-align: center;">Action</th>
                         </tr>
                     </thead>
                     <tbody id="residentRegTableBody">
-                        <!-- Populated by JavaScript strictly up to 10 entries with 2 residents each -->
+                        <!-- Populated by JavaScript with up to 10 units and 10 residents per unit -->
                     </tbody>
                 </table>
             </div>
@@ -1513,11 +1561,11 @@
                         <span>➕ Add Flat (Max 10)</span>
                     </button>
                     <button type="button" class="btn-top-action" style="background: rgba(239, 68, 68, 0.15); border-color: rgba(239, 68, 68, 0.35); color: #f87171;" onclick="clearAllFlats()">
-                        <span>🗑️ Clear All Flats</span>
+                        <span>🗑️ Clear Trial Units</span>
                     </button>
                 </div>
                 <button type="submit" class="btn-launch-sandbox">
-                    <span>🚀 Save Settings &amp; Sync Across All 4 Apps</span>
+                    <span>🚀 Apply Trial Settings in This Browser</span>
                 </button>
             </div>
         </form>
@@ -1557,7 +1605,7 @@
                     <div class="panel-heading">
                         <span id="guardAppBrandIcon">🏢</span>
                         <span>                        <strong id="guardAppSocietyTitle" style="color: #ffffff;">Your Society / Apartment</strong> &bull; Guard Checkpoint Phone</span>
-                        <span class="badge-live-tag">LIVE PWA GATE ENGINE</span>
+                        <span class="badge-live-tag">SANDBOX TRIAL SIMULATION</span>
                     </div>
                     <div style="font-size: 12px; color: var(--text-secondary); display: flex; align-items: center; gap: 8px; flex-wrap: wrap;">
                         <span>Checkpoint: <strong id="displayGateLabel" style="color: #fff;">Gate 1</strong></span>
@@ -1788,7 +1836,7 @@
                                 </div>
                                 <div class="log-terminal-output" id="guardLogOutput">
                                     [READY] Guard phone initialized on Checkpoint Gate 1.<br>
-                                    [SHIFTS] 4 Shift Guards (2 Day, 2 Night) registered with Firebase FCM Tokens.<br>
+                                    [SHIFTS] 4 sample guards (2 Day, 2 Night) configured for this browser trial.<br>
                                     [WAITING] Awaiting manual visitor, vehicle, or parcel entry...<br>
                                 </div>
                             </div>
@@ -2453,9 +2501,18 @@
         // =====================================================================
         let currentSociety = "";
         let currentGate = "Main Gate";
+        const MAX_TRIAL_GUARDS = 10;
+        const MAX_TRIAL_GATES = 10;
+        let societyGates = ["Main Gate"];
+        let activeGateIndex = 0;
+        const committeeRoster = [
+            { role: "Manager/Admin", name: "", email: "" },
+            { role: "MC President", name: "", email: "" },
+            { role: "MC Secretary", name: "", email: "" },
+            ...Array.from({ length: 7 }, () => ({ role: "MC Member", name: "", email: "" }))
+        ];
         
-        // 4 Shift Guards Registered per Society (2 Day Shift, 2 Night Shift)
-        // 4 Shift Guards Registered per Society (2 Day Shift, 2 Night Shift in Demo • Unlimited in Live)
+        // Four sample shift guards are preloaded; a trial may add up to ten total.
         // Pre-populated with 10-digit dummy numbers (codes = last 4 digits) for immediate testing.
         // Users can manually edit/delete any dummy names and numbers, or test with just 1 guard!
         let shiftGuards = [
@@ -2477,7 +2534,7 @@
         // Registered Flats (STRICTLY RESTRICTED TO MAXIMUM 10 FLATS / VILLAS / HOUSES)
         // Each flat allows TWO Resident entries (Resident 1 + Resident 2) for demo
         const MAX_FLATS = 10;
-        // Pre-populated with 10 Flats (2 residents each) with 10-digit dummy numbers (codes = last 4 digits)
+        // Pre-populated with 10 units and 2 sample residents each; trial permits up to 10 residents per unit.
         // for immediate live testing. Can manually delete/edit dummy names and numbers or test with 1 guard.
         let registeredFlats = [
             {
@@ -2605,6 +2662,16 @@
             }
             const clean = (seed || 'user').toString().replace(/\D/g, '').slice(-4) || 'fcm';
             return `fcm_${role}_${clean}_${rand}`;
+        }
+
+        function escapeHtmlAttribute(value) {
+            return String(value || '').replace(/[&<>"']/g, char => ({
+                '&': '&amp;',
+                '<': '&lt;',
+                '>': '&gt;',
+                '"': '&quot;',
+                "'": '&#39;'
+            })[char]);
         }
 
         function copyToken(text) {
@@ -2793,13 +2860,16 @@
         // SHIFT GUARDS REGISTRATION & ON-DUTY SWITCHER
         // =====================================================================
         function onShiftGuardChange(idx) {
-            const name = document.getElementById(`cfgGuardName_${idx}`).value.trim();
-            const phone = document.getElementById(`cfgGuardPhone_${idx}`).value.trim();
+            const nameInput = document.getElementById(`cfgGuardName_${idx}`);
+            const phoneInput = document.getElementById(`cfgGuardPhone_${idx}`);
+            if (!shiftGuards[idx] || !nameInput || !phoneInput) return;
+            const name = nameInput.value.trim();
+            const phone = phoneInput.value.trim();
             const codeInput = document.getElementById(`cfgGuardCode_${idx}`);
             const badge = document.getElementById(`gTokenBadge_${idx}`);
 
             const code = extractLast4Digits(phone);
-            codeInput.value = code;
+            if (codeInput) codeInput.value = code;
             shiftGuards[idx].name = name;
             shiftGuards[idx].phone = phone;
             shiftGuards[idx].code = code;
@@ -2807,9 +2877,11 @@
             if (phone.length >= 4) {
                 const token = generateFcmToken(`guard_${shiftGuards[idx].shift.toLowerCase()}${idx+1}`, code);
                 shiftGuards[idx].token = token;
-                badge.innerText = token;
-                badge.title = `Firebase FCM Token: ${token} (Click to copy)`;
-            } else {
+                if (badge) {
+                    badge.innerText = token;
+                    badge.title = `Demo FCM token: ${token} (Click to copy)`;
+                }
+            } else if (badge) {
                 badge.innerText = `fcm_guard_${shiftGuards[idx].shift.toLowerCase()}${idx+1}_pending`;
             }
 
@@ -2848,11 +2920,149 @@
 
             const gateLabel = document.getElementById('displayGateLabel');
             if (gateLabel) gateLabel.innerText = currentGate || "Main Gate";
+            const guardCounter = document.getElementById('guardLimitCounter');
+            if (guardCounter) guardCounter.innerText = `${shiftGuards.length} / ${MAX_TRIAL_GUARDS} guards • ${societyGates.length} / ${MAX_TRIAL_GATES} gates`;
+            const addGuardButton = document.getElementById('btnAddTrialGuard');
+            if (addGuardButton) addGuardButton.disabled = shiftGuards.length >= MAX_TRIAL_GUARDS;
+        }
+
+        function renderAdditionalShiftGuards() {
+            const container = document.getElementById('extraGuardConfig');
+            if (!container) return;
+            container.innerHTML = shiftGuards.slice(4).map((guard, offset) => {
+                const index = offset + 4;
+                const shiftLabel = guard.shift === 'DAY' ? 'Day' : 'Night';
+                return `
+                    <div style="background: rgba(15, 23, 42, 0.7); border: 1px solid rgba(56, 189, 248, 0.25); border-radius: 8px; padding: 10px;">
+                        <div style="display: flex; justify-content: space-between; gap: 8px; align-items: center; margin-bottom: 8px;">
+                            <strong style="font-size: 12px; color: #e2e8f0;">${escapeHtmlAttribute(guard.label || `${shiftLabel} Guard ${index + 1}`)}</strong>
+                            <span id="gTokenBadge_${index}" class="token-badge" title="Demo FCM token" onclick="copyToken(this.innerText)">${escapeHtmlAttribute(guard.token || 'fcm_guard_pending')}</span>
+                        </div>
+                        <div class="form-grid" style="grid-template-columns: 1.2fr 1.2fr 0.8fr; gap: 6px;">
+                            <input type="text" id="cfgGuardName_${index}" class="form-input" placeholder="Guard full name" value="${escapeHtmlAttribute(guard.name)}" oninput="onShiftGuardChange(${index})">
+                            <input type="tel" id="cfgGuardPhone_${index}" class="form-input" placeholder="+91 XXXXXXXXXX" value="${escapeHtmlAttribute(guard.phone)}" oninput="onShiftGuardChange(${index})">
+                            <input type="text" id="cfgGuardCode_${index}" class="form-input" value="${escapeHtmlAttribute(guard.code)}" readonly placeholder="Last 4">
+                        </div>
+                        <button type="button" class="btn-top-action" style="margin-top: 8px; padding: 4px 8px;" onclick="removeTrialGuard(${index})">Remove this guard</button>
+                    </div>
+                `;
+            }).join('');
+            updateActiveGuardUi();
+        }
+
+        function addTrialGuard() {
+            if (shiftGuards.length >= MAX_TRIAL_GUARDS) {
+                alert(`Trial limit reached: maximum ${MAX_TRIAL_GUARDS} guards.`);
+                return;
+            }
+            const dayCount = shiftGuards.filter(guard => guard.shift === 'DAY').length;
+            const nightCount = shiftGuards.length - dayCount;
+            const shift = dayCount <= nightCount ? 'DAY' : 'NIGHT';
+            const shiftCount = shift === 'DAY' ? dayCount + 1 : nightCount + 1;
+            const index = shiftGuards.length;
+            shiftGuards.push({
+                shift,
+                label: `${shift === 'DAY' ? 'Day' : 'Night'} Guard ${shiftCount}`,
+                name: '',
+                phone: '',
+                code: '0000',
+                token: ''
+            });
+            renderAdditionalShiftGuards();
+            updateActiveGuardUi();
+        }
+
+        function removeTrialGuard(index) {
+            if (index < 4 || index >= shiftGuards.length) return;
+            shiftGuards.splice(index, 1);
+            if (activeGuardIndex >= shiftGuards.length) activeGuardIndex = shiftGuards.length - 1;
+            shiftGuards.forEach((guard, guardIndex) => {
+                const count = shiftGuards.slice(0, guardIndex + 1).filter(item => item.shift === guard.shift).length;
+                guard.label = `${guard.shift === 'DAY' ? 'Day' : 'Night'} Guard ${count}`;
+            });
+            renderAdditionalShiftGuards();
+            updateActiveGuardUi();
+        }
+
+        function renderExtraGateConfig() {
+            const container = document.getElementById('extraGateConfig');
+            if (!container) return;
+            container.innerHTML = societyGates.slice(1).map((name, offset) => {
+                const index = offset + 1;
+                return `
+                    <div style="display: flex; gap: 8px; flex-wrap: wrap;">
+                        <input type="text" class="form-input" value="${escapeHtmlAttribute(name)}" aria-label="Gate ${index + 1} name" oninput="onGateNameChange(${index}, this.value)" style="max-width: 380px;">
+                        <button type="button" class="btn-top-action" onclick="setActiveGate(${index})">Use this gate</button>
+                        <button type="button" class="btn-top-action" onclick="removeTrialGate(${index})">Remove</button>
+                    </div>
+                `;
+            }).join('');
+            const addGateButton = document.querySelector('button[onclick="addTrialGate()"]');
+            if (addGateButton) addGateButton.disabled = societyGates.length >= MAX_TRIAL_GATES;
+            const guardCounter = document.getElementById('guardLimitCounter');
+            if (guardCounter) guardCounter.innerText = `${shiftGuards.length} / ${MAX_TRIAL_GUARDS} guards • ${societyGates.length} / ${MAX_TRIAL_GATES} gates`;
+        }
+
+        function onGateNameChange(index, value) {
+            if (index < 0 || index >= societyGates.length) return;
+            societyGates[index] = value.trim();
+            if (activeGateIndex === index) {
+                currentGate = societyGates[index] || `Gate ${index + 1}`;
+                updateActiveGuardUi();
+            }
+        }
+
+        function setActiveGate(index) {
+            if (index < 0 || index >= societyGates.length) return;
+            activeGateIndex = index;
+            currentGate = societyGates[index].trim() || `Gate ${index + 1}`;
+            updateActiveGuardUi();
+        }
+
+        function addTrialGate() {
+            if (societyGates.length >= MAX_TRIAL_GATES) {
+                alert(`Trial limit reached: maximum ${MAX_TRIAL_GATES} gates.`);
+                return;
+            }
+            societyGates.push(`Gate ${societyGates.length + 1}`);
+            renderExtraGateConfig();
+        }
+
+        function removeTrialGate(index) {
+            if (index <= 0 || index >= societyGates.length) return;
+            societyGates.splice(index, 1);
+            if (activeGateIndex >= societyGates.length) activeGateIndex = 0;
+            currentGate = societyGates[activeGateIndex] || 'Main Gate';
+            societyGates.forEach((name, gateIndex) => {
+                if (gateIndex > 0 && !name.trim()) societyGates[gateIndex] = `Gate ${gateIndex + 1}`;
+            });
+            renderExtraGateConfig();
+            updateActiveGuardUi();
+        }
+
+        function renderCommitteeRoster() {
+            const tbody = document.getElementById('committeeRosterBody');
+            if (!tbody) return;
+            tbody.innerHTML = committeeRoster.map((member, index) => `
+                <tr>
+                    <td><strong>${member.role}</strong></td>
+                    <td><input class="form-input" type="text" aria-label="${member.role} name" value="${escapeHtmlAttribute(member.name)}" oninput="committeeRoster[${index}].name = this.value"></td>
+                    <td><input class="form-input" type="email" aria-label="${member.role} email" value="${escapeHtmlAttribute(member.email)}" oninput="committeeRoster[${index}].email = this.value"></td>
+                </tr>
+            `).join('');
         }
 
         // =====================================================================
-        // RESIDENT DIRECTORY (MAX 10 FLATS / VILLAS, 2 RESIDENTS PER FLAT)
+        // MASTER_FLATS trial directory: up to 10 units and 10 residents per unit.
         // =====================================================================
+        const MAX_RESIDENTS_PER_UNIT = 10;
+
+        function getResidentRecord(flat, residentIndex) {
+            const key = `res${residentIndex + 1}`;
+            if (!flat[key]) flat[key] = { name: "", phone: "", code: "", token: "" };
+            return flat[key];
+        }
+
         function renderResidentRegistrationTable() {
             const tbody = document.getElementById('residentRegTableBody');
             if (!tbody) return;
@@ -2860,37 +3070,31 @@
 
             registeredFlats.forEach((f, i) => {
                 const tr = document.createElement('tr');
+                const residentCards = Array.from({ length: MAX_RESIDENTS_PER_UNIT }, (_, residentIndex) => {
+                    const key = `res${residentIndex + 1}`;
+                    const resident = getResidentRecord(f, residentIndex);
+                    const badgeClass = residentIndex % 2 === 0 ? '' : ' token-badge-emerald';
+                    const color = residentIndex % 2 === 0 ? '#38bdf8' : '#10b981';
+                    return `
+                        <div style="background: rgba(30, 41, 59, 0.4); padding: 8px; border-radius: 6px; border: 1px solid rgba(56, 189, 248, 0.2); margin-bottom: 6px;">
+                            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 4px;">
+                                <strong style="font-size: 11px; color: #f8fafc;">Resident ${residentIndex + 1}${residentIndex === 0 ? ' (Primary)' : ''}</strong>
+                                <span id="resTokenBadge_${i}_${key}" class="token-badge${badgeClass}" style="font-size: 9px;" title="Demo FCM token" onclick="copyToken('${resident.token || ''}')">${(resident.token || `fcm_${key}_pending`).slice(0, 14)}...</span>
+                            </div>
+                            <div class="form-grid" style="grid-template-columns: 1.2fr 1.2fr 0.8fr; gap: 4px;">
+                                <input type="text" class="form-input" placeholder="Full Name" value="${resident.name || ''}" oninput="onResidentInput(${i}, '${key}', 'name', this.value)" style="padding: 4px 6px; font-size: 11px;">
+                                <input type="tel" class="form-input" placeholder="+91 XXXXXXXXXX" value="${resident.phone || ''}" oninput="onResidentInput(${i}, '${key}', 'phone', this.value)" style="padding: 4px 6px; font-size: 11px;">
+                                <input type="text" id="resCode_${i}_${key}" class="form-input" placeholder="Last 4" value="${resident.code || ''}" readonly style="padding: 4px 6px; font-size: 11px; text-align: center; color: ${color}; font-weight: 700; background: rgba(15, 23, 42, 0.7);">
+                            </div>
+                        </div>
+                    `;
+                }).join('');
                 tr.innerHTML = `
                     <td style="vertical-align: top;">
                         <input type="text" class="form-input" placeholder="e.g. Flat 101 / Villa 4" value="${f.flat || ''}" oninput="onFlatNoChange(${i}, this.value)" style="font-weight: 700; color: #38bdf8;">
                         <div style="font-size: 10px; color: var(--text-muted); margin-top: 4px;">Unit #${i+1}</div>
                     </td>
-                    <td style="vertical-align: top;">
-                        <div style="background: rgba(30, 41, 59, 0.4); padding: 8px; border-radius: 6px; border: 1px solid rgba(56, 189, 248, 0.2);">
-                            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 4px;">
-                                <strong style="font-size: 11px; color: #f8fafc;">Resident 1 (Primary)</strong>
-                                <span class="token-badge" style="font-size: 9px;" title="Firebase FCM Token" onclick="copyToken('${f.res1.token || ''}')">${(f.res1.token || 'fcm_res1_pending').slice(0, 14)}...</span>
-                            </div>
-                            <div class="form-grid" style="grid-template-columns: 1.2fr 1.2fr 0.8fr; gap: 4px;">
-                                <input type="text" class="form-input" placeholder="Full Name" value="${f.res1.name || ''}" oninput="onResidentInput(${i}, 'res1', 'name', this.value)" style="padding: 4px 6px; font-size: 11px;">
-                                <input type="tel" class="form-input" placeholder="+91 XXXXXXXXXX" value="${f.res1.phone || ''}" oninput="onResidentInput(${i}, 'res1', 'phone', this.value)" style="padding: 4px 6px; font-size: 11px;">
-                                <input type="text" class="form-input" placeholder="Last 4" value="${f.res1.code || ''}" readonly style="padding: 4px 6px; font-size: 11px; text-align: center; color: #38bdf8; font-weight: 700; background: rgba(15, 23, 42, 0.7);">
-                            </div>
-                        </div>
-                    </td>
-                    <td style="vertical-align: top;">
-                        <div style="background: rgba(30, 41, 59, 0.4); padding: 8px; border-radius: 6px; border: 1px solid rgba(16, 185, 129, 0.2);">
-                            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 4px;">
-                                <strong style="font-size: 11px; color: #f8fafc;">Resident 2 (Co-Resident)</strong>
-                                <span class="token-badge token-badge-emerald" style="font-size: 9px;" title="Firebase FCM Token" onclick="copyToken('${f.res2.token || ''}')">${(f.res2.token || 'fcm_res2_pending').slice(0, 14)}...</span>
-                            </div>
-                            <div class="form-grid" style="grid-template-columns: 1.2fr 1.2fr 0.8fr; gap: 4px;">
-                                <input type="text" class="form-input" placeholder="Full Name" value="${f.res2.name || ''}" oninput="onResidentInput(${i}, 'res2', 'name', this.value)" style="padding: 4px 6px; font-size: 11px;">
-                                <input type="tel" class="form-input" placeholder="+91 XXXXXXXXXX" value="${f.res2.phone || ''}" oninput="onResidentInput(${i}, 'res2', 'phone', this.value)" style="padding: 4px 6px; font-size: 11px;">
-                                <input type="text" class="form-input" placeholder="Last 4" value="${f.res2.code || ''}" readonly style="padding: 4px 6px; font-size: 11px; text-align: center; color: #10b981; font-weight: 700; background: rgba(15, 23, 42, 0.7);">
-                            </div>
-                        </div>
-                    </td>
+                    <td colspan="2" style="vertical-align: top;">${residentCards}</td>
                     <td style="vertical-align: middle; text-align: center;">
                         <button type="button" class="btn-top-action" style="padding: 4px 8px; font-size: 11px; color: #f87171; border-color: rgba(239, 68, 68, 0.35); background: rgba(239, 68, 68, 0.1);" onclick="removeResidentFlatRow(${i})">
                             🗑️
@@ -2956,11 +3160,7 @@
                 alert(`Demo Limit Reached: Strictly restricted to maximum ${MAX_FLATS} Flats / Villas / Houses per test society.`);
                 return;
             }
-            registeredFlats.push({
-                flat: "",
-                res1: { name: "", phone: "", code: "", token: "" },
-                res2: { name: "", phone: "", code: "", token: "" }
-            });
+            registeredFlats.push({ flat: "" });
             renderResidentRegistrationTable();
             syncFlatDropdowns();
         }
@@ -2976,11 +3176,8 @@
         }
 
         function clearAllFlats() {
-            if (confirm("Clear all flat and resident entries to start fresh?")) {
-                registeredFlats = [
-                    { flat: "", res1: { name: "", phone: "", code: "", token: "" }, res2: { name: "", phone: "", code: "", token: "" } },
-                    { flat: "", res1: { name: "", phone: "", code: "", token: "" }, res2: { name: "", phone: "", code: "", token: "" } }
-                ];
+            if (confirm("Clear all browser-only trial unit and resident entries to start fresh? No Google Sheet data is affected.")) {
+                registeredFlats = [{ flat: "" }, { flat: "" }];
                 renderResidentRegistrationTable();
                 syncFlatDropdowns();
             }
@@ -3010,9 +3207,10 @@
                     validFlats.forEach(f => {
                         const opt = document.createElement('option');
                         opt.value = f.flat;
-                        const r1Info = f.res1.name ? `${f.res1.name} (Code: ${f.res1.code})` : '';
-                        const r2Info = f.res2.name ? ` & ${f.res2.name}` : '';
-                        opt.innerText = `${f.flat}${r1Info ? ' - ' + r1Info + r2Info : ''}`;
+                        const residentNames = Array.from({ length: MAX_RESIDENTS_PER_UNIT }, (_, residentIndex) => getResidentRecord(f, residentIndex))
+                            .filter(resident => resident.name && resident.name.trim())
+                            .map(resident => resident.name.trim());
+                        opt.innerText = `${f.flat}${residentNames.length ? ' - ' + residentNames.join(', ') : ''}`;
                         sel.appendChild(opt);
                     });
                 }
@@ -3085,6 +3283,9 @@
         window.addEventListener('DOMContentLoaded', () => {
             checkLeadGate();
             renderShiftGuardsInputs();
+            renderAdditionalShiftGuards();
+            renderExtraGateConfig();
+            renderCommitteeRoster();
             renderResidentRegistrationTable();
             syncFlatDropdowns();
             renderTables();
@@ -3098,7 +3299,7 @@
         });
 
         function renderShiftGuardsInputs() {
-            shiftGuards.forEach((g, i) => {
+            shiftGuards.slice(0, 4).forEach((g, i) => {
                 const nameEl = document.getElementById(`cfgGuardName_${i}`);
                 const phoneEl = document.getElementById(`cfgGuardPhone_${i}`);
                 const codeEl = document.getElementById(`cfgGuardCode_${i}`);
@@ -3112,11 +3313,18 @@
         }
 
         function checkLeadGate() {
-            const registered = localStorage.getItem('visigate_demo_unlocked');
+            let registered = localStorage.getItem('visigate_demo_unlocked') === 'true';
             const savedLead = localStorage.getItem('visigate_demo_lead');
             if (savedLead) {
                 try {
                     leadContact = JSON.parse(savedLead);
+                    isLeadPhoneVerified = leadContact.phoneVerified === true;
+                    isLeadEmailVerified = leadContact.emailVerified === true;
+                    registered = registered && isLeadPhoneVerified && isLeadEmailVerified;
+                    const adminPhone = document.getElementById('trialAdminPhone');
+                    const adminEmail = document.getElementById('trialAdminEmail');
+                    if (adminPhone && leadContact.phone) adminPhone.value = leadContact.phone;
+                    if (adminEmail && leadContact.email) adminEmail.value = leadContact.email;
                     if (leadContact.society) {
                         currentSociety = leadContact.society;
                         applySocietyNameAcrossUi(currentSociety);
@@ -3179,6 +3387,16 @@
                 return;
             }
 
+            if (!isLeadPhoneVerified || leadOtpPhone !== clean10DigitPhone(phone)) {
+                alert("Complete phone-code verification for this number first. This is a browser-only trial simulation, not real SMS verification.");
+                return;
+            }
+
+            if (!isLeadEmailVerified || leadOtpEmail !== email.toLowerCase()) {
+                alert("Complete email-code verification for this email address first. This is a browser-only trial simulation, not real email verification.");
+                return;
+            }
+
             const cleanPhone = clean10DigitPhone(phone);
             const fullPhone = "+91 " + cleanPhone;
             leadContact = { 
@@ -3187,13 +3405,19 @@
                 phone: fullPhone, 
                 email, 
                 role, 
-                verified: isLeadPhoneVerified || true,
+                phoneVerified: true,
+                emailVerified: true,
+                verificationMode: "DEMO_SIMULATED",
                 timestamp: new Date().toISOString()
             };
             currentSociety = society;
             localStorage.setItem('visigate_demo_unlocked', 'true');
             localStorage.setItem('visigate_demo_lead', JSON.stringify(leadContact));
-            localStorage.setItem('visigate_phone_verified', 'true');
+            localStorage.setItem('visigate_phone_verified', 'demo-simulated');
+            const adminPhone = document.getElementById('trialAdminPhone');
+            const adminEmail = document.getElementById('trialAdminEmail');
+            if (adminPhone) adminPhone.value = fullPhone;
+            if (adminEmail) adminEmail.value = email;
 
             // Dispatch Lead to Master Router endpoint which emails visigatealerts@gmail.com
             const leadApiUrl = "https://script.google.com/macros/s/AKfycbwz-eVMRCO7Sd1dGIIVkHgmBXvfTxrbou5WX_lR2bIx3mKocZUAjWbqI_CuSy_dSw3-/exec" +
@@ -3214,7 +3438,7 @@
             updateHeaderLeadBadge();
             document.getElementById('mandatoryLeadGate').style.display = 'none';
 
-            alert(`Welcome to VisiGate Sandbox Demo, ${name}!\n\nSociety: ${society}\nWhatsApp: ${fullPhone} (Verified)\nOfficial Support: info@visigatealerts.in\n\nFull Live Platform Unlocked.`);
+            alert(`Welcome to VisiGate Sandbox Trial, ${name}!\n\nSociety: ${society}\nPhone and email codes: simulated in this browser only\nOfficial Support: info@visigatealerts.in\n\nTrial workspace unlocked. Your contact details were submitted as a trial inquiry. No live society database or notifications were created.`);
         }
 
         function applySocietyNameAcrossUi(socName) {
@@ -3243,7 +3467,8 @@
 
         function applySocietySetup(e) {
             e.preventDefault();
-            currentGate = document.getElementById('cfgGateName').value.trim() || "Main Gate";
+            societyGates[0] = document.getElementById('cfgGateName').value.trim() || "Main Gate";
+            currentGate = societyGates[activeGateIndex] || societyGates[0];
 
             // Validate shift guards phone numbers (clean 10 digits, allow blank if testing with only 1 guard)
             for (let i = 0; i < shiftGuards.length; i++) {
@@ -3262,10 +3487,10 @@
             const now = new Date().toLocaleTimeString();
             const activeGuard = shiftGuards[activeGuardIndex];
             const gLog = document.getElementById('guardLogOutput');
-            gLog.innerHTML += `<br><span style="color: #38bdf8;">[${now}] 🏢 [SETUP_SYNC] Checkpoint Gate updated to: "${currentGate}". 4 Shift Guards synchronized. Active Officer: ${activeGuard.label} (${activeGuard.name || 'Guard'}, Code: ${activeGuard.code}). Configured Flats: ${registeredFlats.filter(f => f.flat).length} / 10 Max.</span><br>`;
+            gLog.innerHTML += `<br><span style="color: #38bdf8;">[${now}] 🏢 [TRIAL_SETUP] Active gate: "${currentGate}". ${shiftGuards.length} trial guards configured. Active Officer: ${activeGuard.label} (${activeGuard.name || 'Guard'}, Code: ${activeGuard.code}). Configured Flats: ${registeredFlats.filter(f => f.flat).length} / 10 Max.</span><br>`;
             gLog.scrollTop = gLog.scrollHeight;
 
-            alert(`Settings Saved & Synchronized Successfully!\n\nGate: ${currentGate}\nActive Guard: ${activeGuard.label} (${activeGuard.name || 'Guard'} - Code: ${activeGuard.code})\nTotal Shift Guards: 4 (2 Day, 2 Night)\nRegistered Flats: ${registeredFlats.filter(f => f.flat).length} / 10 Max`);
+            alert(`Trial settings updated in this browser.\n\nActive gate: ${currentGate}\nTrial guards: ${shiftGuards.length} / ${MAX_TRIAL_GUARDS}\nTrial gates: ${societyGates.length} / ${MAX_TRIAL_GATES}\nRegistered units: ${registeredFlats.filter(f => f.flat).length} / ${MAX_FLATS}\nResidents per unit: up to ${MAX_RESIDENTS_PER_UNIT}\nCommittee roles: ${committeeRoster.length} / 10\n\nNo Google Sheet, Drive folder, message or live app data was changed.`);
             document.getElementById('sandboxWorkspace').scrollIntoView({ behavior: 'smooth' });
         }
 
@@ -3988,10 +4213,48 @@
         // FIREBASE PHONE OTP VERIFICATION FOR MANDATORY UNLOCK GATE
         // =====================================================================
         let isLeadPhoneVerified = false;
+        let isLeadEmailVerified = false;
         let leadOtpDispatchedCode = null;
+        let leadOtpPhone = null;
+        let leadOtpExpiresAt = 0;
+        let leadOtpTimerId = null;
+        let leadEmailCode = null;
+        let leadOtpEmail = null;
+        let leadEmailCodeExpiresAt = 0;
+
+        function generateDemoCode() {
+            const values = new Uint32Array(1);
+            if (window.crypto && window.crypto.getRandomValues) {
+                window.crypto.getRandomValues(values);
+                return String(100000 + (values[0] % 900000));
+            }
+            return String(Math.floor(100000 + Math.random() * 900000));
+        }
+
+        function clearLeadEmailVerification() {
+            isLeadEmailVerified = false;
+            leadEmailCode = null;
+            leadOtpEmail = null;
+            leadEmailCodeExpiresAt = 0;
+            const codeContainer = document.getElementById('emailCodeContainer');
+            const codeDisplay = document.getElementById('demoEmailCodeDisplay');
+            const codeInput = document.getElementById('gateEmailCode');
+            const badge = document.getElementById('emailVerifiedBadge');
+            const expiry = document.getElementById('emailCodeExpiry');
+            if (codeContainer) codeContainer.style.display = 'none';
+            if (codeDisplay) codeDisplay.innerText = 'Request a code';
+            if (codeInput) codeInput.value = '';
+            if (badge) badge.style.display = 'none';
+            if (expiry) expiry.innerText = '';
+        }
 
         function onGatePhoneInput() {
             isLeadPhoneVerified = false;
+            leadOtpDispatchedCode = null;
+            leadOtpPhone = null;
+            leadOtpExpiresAt = 0;
+            if (leadOtpTimerId) clearInterval(leadOtpTimerId);
+            clearLeadEmailVerification();
             const input = document.getElementById('gateWhatsApp');
             if (input) {
                 let val = input.value.replace(/\D/g, '');
@@ -4002,6 +4265,16 @@
             }
             const badge = document.getElementById('phoneVerifiedBadge');
             if (badge) badge.style.display = 'none';
+            const display = document.getElementById('demoPhoneOtpDisplay');
+            if (display) display.innerText = 'Request a code';
+            const otpInput = document.getElementById('gatePhoneOtp');
+            if (otpInput) otpInput.value = '';
+            const timer = document.getElementById('otpTimerLabel');
+            if (timer) timer.innerText = 'Request a new code';
+        }
+
+        function onGateEmailInput() {
+            clearLeadEmailVerification();
         }
 
         function sendFirebasePhoneOtp() {
@@ -4013,7 +4286,11 @@
                 return;
             }
 
-            leadOtpDispatchedCode = "123456";
+            isLeadPhoneVerified = false;
+            clearLeadEmailVerification();
+            leadOtpDispatchedCode = generateDemoCode();
+            leadOtpPhone = cleanPhone;
+            leadOtpExpiresAt = Date.now() + 5 * 60 * 1000;
             const container = document.getElementById('phoneOtpContainer');
             if (container) {
                 container.style.display = 'block';
@@ -4022,37 +4299,58 @@
 
             const otpInput = document.getElementById('gatePhoneOtp');
             if (otpInput) {
-                otpInput.value = "123456"; // Auto-filled so user is never stranded
-                otpInput.focus();
+                otpInput.value = '';
             }
 
+            const display = document.getElementById('demoPhoneOtpDisplay');
+            if (display) display.innerText = leadOtpDispatchedCode;
             const feedback = document.getElementById('otpFeedbackMsg');
             if (feedback) {
                 feedback.style.display = 'block';
-                feedback.style.color = '#34d399';
-                feedback.innerHTML = `✅ <strong>Instant Code: 123456</strong> pre-filled! Tap <em>"Verify OTP 123456"</em> below.`;
+                feedback.style.color = '#fbbf24';
+                feedback.innerText = 'Trial code generated in this browser. No SMS was sent. Code expires in 5 minutes.';
             }
 
-            alert(`📲 Testbed Verification Code: 123456\n\nFor +91 ${cleanPhone}, Code [ 123456 ] has been automatically pre-filled into the OTP box.\n\n(Note: Carrier SMS dispatch is simulated in this public testbed sandbox with code 123456 so you can evaluate all features immediately without telecom carrier gateway delays.)\n\nPlease tap "Verify OTP" to continue.`);
+            const timer = document.getElementById('otpTimerLabel');
+            if (leadOtpTimerId) clearInterval(leadOtpTimerId);
+            const updateExpiry = () => {
+                const secondsLeft = Math.max(0, Math.ceil((leadOtpExpiresAt - Date.now()) / 1000));
+                if (timer) timer.innerText = secondsLeft ? `Expires in ${Math.floor(secondsLeft / 60)}:${String(secondsLeft % 60).padStart(2, '0')}` : 'Code expired';
+                if (!secondsLeft) {
+                    leadOtpDispatchedCode = null;
+                    clearInterval(leadOtpTimerId);
+                }
+            };
+            updateExpiry();
+            leadOtpTimerId = setInterval(updateExpiry, 1000);
+            alert(`Trial phone code: ${leadOtpDispatchedCode}\n\nFor +91 ${cleanPhone}, enter this randomized code in the trial form. It expires in 5 minutes.\n\nNo SMS is sent. This browser-only simulation does not verify ownership of the phone number.`);
         }
 
         function verifyFirebasePhoneOtp() {
             const otpInput = document.getElementById('gatePhoneOtp');
-            const otp = (otpInput ? otpInput.value : '123456').trim() || '123456';
+            const otp = otpInput ? otpInput.value.trim() : '';
             const rawPhone = document.getElementById('gateWhatsApp').value.trim();
-            const cleanPhone = clean10DigitPhone(rawPhone) || "9845012345";
+            const cleanPhone = clean10DigitPhone(rawPhone);
             const feedback = document.getElementById('otpFeedbackMsg');
             const badge = document.getElementById('phoneVerifiedBadge');
             const container = document.getElementById('phoneOtpContainer');
             const unlockBtn = document.getElementById('btnSubmitUnlock');
 
-            if (otp === "123456" || (otp.length === 6 && /^\d+$/.test(otp))) {
+            if (leadOtpDispatchedCode && Date.now() <= leadOtpExpiresAt && cleanPhone === leadOtpPhone && otp === leadOtpDispatchedCode) {
                 isLeadPhoneVerified = true;
                 if (container) container.style.display = 'none';
                 if (badge) {
                     badge.style.display = 'block';
-                    badge.innerText = `✅ Phone +91 ${cleanPhone} Verified (Sandbox OTP 123456 Authenticated)`;
+                    badge.innerText = `✅ Phone code accepted for +91 ${cleanPhone} (browser trial only; not SMS-verified)`;
                 }
+                leadOtpDispatchedCode = null;
+                if (leadOtpTimerId) clearInterval(leadOtpTimerId);
+                const display = document.getElementById('demoPhoneOtpDisplay');
+                if (display) display.innerText = 'Code accepted';
+                if (otpInput) otpInput.value = '';
+                if (feedback) feedback.style.display = 'none';
+                const timer = document.getElementById('otpTimerLabel');
+                if (timer) timer.innerText = 'Trial code accepted';
                 if (unlockBtn) {
                     setTimeout(() => {
                         unlockBtn.scrollIntoView({ behavior: 'smooth', block: 'center' });
@@ -4060,14 +4358,53 @@
                         unlockBtn.style.borderColor = '#10b981';
                     }, 100);
                 }
-                alert(`✅ Phone Verification Successful!\n\nPhone: +91 ${cleanPhone}\nStatus: Verified via Testbed Sandbox\n\nPlease tap "Unlock & Access Full Interactive Demo" below.`);
+                alert(`Phone trial code accepted for +91 ${cleanPhone}.\n\nThis is not real phone/SMS verification. Next, verify your email using the trial code.`);
             } else {
                 if (feedback) {
                     feedback.style.display = 'block';
                     feedback.style.color = '#f87171';
-                    feedback.innerText = "❌ Invalid OTP code. For instant demo verification, enter: 123456";
+                    feedback.innerText = leadOtpDispatchedCode && Date.now() > leadOtpExpiresAt
+                        ? '❌ Trial code expired. Request a new code.'
+                        : '❌ Code does not match the current phone code. Request a new code if needed.';
                 }
             }
+        }
+
+        function sendDemoEmailCode() {
+            if (!isLeadPhoneVerified) {
+                alert('Verify the phone trial code first.');
+                return;
+            }
+            const email = document.getElementById('gateEmail').value.trim().toLowerCase();
+            if (!isValidEmail(email)) {
+                alert('Enter a valid email address before requesting its trial code.');
+                document.getElementById('gateEmail').focus();
+                return;
+            }
+            leadEmailCode = generateDemoCode();
+            leadOtpEmail = email;
+            leadEmailCodeExpiresAt = Date.now() + 5 * 60 * 1000;
+            isLeadEmailVerified = false;
+            document.getElementById('demoEmailCodeDisplay').innerText = leadEmailCode;
+            document.getElementById('gateEmailCode').value = '';
+            document.getElementById('emailCodeExpiry').innerText = '(expires in 5 minutes)';
+            document.getElementById('emailCodeContainer').style.display = 'block';
+            alert(`Trial email code: ${leadEmailCode}\n\nEnter this randomized code for ${email}. It expires in 5 minutes.\n\nNo email is sent. This browser-only simulation does not verify ownership of the email address.`);
+        }
+
+        function verifyDemoEmailCode() {
+            const email = document.getElementById('gateEmail').value.trim().toLowerCase();
+            const enteredCode = document.getElementById('gateEmailCode').value.trim();
+            if (leadEmailCode && Date.now() <= leadEmailCodeExpiresAt && email === leadOtpEmail && enteredCode === leadEmailCode) {
+                isLeadEmailVerified = true;
+                leadEmailCode = null;
+                document.getElementById('emailCodeContainer').style.display = 'none';
+                document.getElementById('emailVerifiedBadge').style.display = 'block';
+                document.getElementById('emailVerifiedBadge').innerText = '✅ Email trial code accepted (browser trial only; not email-verified)';
+                return;
+            }
+            const expired = leadEmailCode && Date.now() > leadEmailCodeExpiresAt;
+            alert(expired ? 'The trial email code has expired. Request a new code.' : 'The code does not match this email. Request a new code if needed.');
         }
 
         // =====================================================================
@@ -4151,11 +4488,11 @@
             const now = new Date().toLocaleTimeString();
             const logBox = document.getElementById('guardLogOutput');
             if (logBox) {
-                logBox.innerHTML += `<br><span style="color: #10b981;">[${now}] ✨ [SAMPLE_DATA_LOADED] Populated 10 Flats (20 Residents) with 10-digit dummy numbers &amp; last-4 codes, 4 Shift Guards, and sample Visitor &amp; Vehicle entries!</span><br>`;
+                logBox.innerHTML += `<br><span style="color: #10b981;">[${now}] ✨ [SAMPLE_DATA_LOADED] Populated 10 trial units with 2 sample residents each and 4 sample guards. Add up to 10 residents per unit and 10 guards total.</span><br>`;
                 logBox.scrollTop = logBox.scrollHeight;
             }
 
-            alert("✨ Realistic Demo Sample Data Loaded Successfully!\n\n• 10 Flats / Villas (Flats 101-502) configured with 2 residents each\n• 4 Shift Guards (2 Day, 2 Night) configured with Codes & FCM Tokens\n• 10-digit dummy mobile numbers used with auto-derived last 4 digits code\n• Sample visitor (Rahul Swiggy) and cab driver pre-filled for immediate testing!");
+            alert("✨ Sandbox Trial Sample Data Loaded Successfully!\n\n• 10 units configured with 2 sample residents each (up to 10 residents per unit)\n• 4 sample guards configured (add up to 10 total)\n• Sample visitor and vehicle entries are browser-only\n• No live FCM messages, SMS, email, Sheets or Drive folders are created.");
         }
 
         // =====================================================================
