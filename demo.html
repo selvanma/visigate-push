@@ -1227,7 +1227,7 @@
 
     <div class="mandatory-modal-overlay" id="mandatoryLeadGate" style="display: none;">
         <div class="mandatory-modal-card">
-            <span class="modal-badge">🔐 Trial Registration &bull; Demo-Only Verification</span>
+            <span class="modal-badge">🔐 Trial Registration</span>
             <h2 class="modal-title">Unlock Society Interactive Trial</h2>
             <p class="modal-desc">
                 Enter your society contact details to explore the VisiGate Guard, Resident, MC and Manager workflows.
@@ -1287,14 +1287,14 @@
                             <span>✉️ Verify Email</span>
                         </button>
                         <div id="emailCodeContainer" style="display: none; margin-top: 8px; padding: 10px; border-radius: 8px; border: 1px solid rgba(56, 189, 248, 0.35); background: rgba(15, 23, 42, 0.8);">
-                            <label class="form-label" for="gateEmailCode">Trial email code <span id="emailCodeExpiry" style="font-size: 11px; color: #34d399;"></span></label>
-                            <div style="font-size: 11px; color: #cbd5e1; margin-bottom: 8px;">No email is sent. Enter the randomized code shown here: <strong id="demoEmailCodeDisplay" style="color: #38bdf8; letter-spacing: 1px;">Request a code</strong></div>
+                            <label class="form-label" for="gateEmailCode">Email verification code <span id="emailCodeExpiry" style="font-size: 11px; color: #34d399;"></span></label>
+                            <div style="font-size: 11px; color: #cbd5e1; margin-bottom: 8px;">Enter the verification code sent to your email address.</div>
                             <div style="display: flex; gap: 8px;">
-                                <input type="text" id="gateEmailCode" class="form-input" inputmode="numeric" autocomplete="one-time-code" placeholder="6-digit trial code" maxlength="6">
+                                <input type="text" id="gateEmailCode" class="form-input" inputmode="numeric" autocomplete="one-time-code" placeholder="6-digit email code" maxlength="6">
                                 <button type="button" class="btn-top-action" onclick="verifyDemoEmailCode()" style="background: #10b981; color: #ffffff; border: none; font-weight: 700;">Verify</button>
                             </div>
                         </div>
-                        <div id="emailVerifiedBadge" style="display: none; margin-top: 8px; color: #34d399; font-size: 12px; font-weight: 700;">✅ Email code verified in this browser trial</div>
+                        <div id="emailVerifiedBadge" style="display: none; margin-top: 8px; color: #34d399; font-size: 12px; font-weight: 700;">✅ Email address verified</div>
                     </div>
 
                     <div class="form-group-item">
@@ -1309,6 +1309,10 @@
                             <option value="Evaluator">Evaluator</option>
                         </select>
                     </div>
+                    <label class="form-group-item" style="display: flex; flex-direction: row; align-items: flex-start; gap: 8px; font-size: 11px; color: var(--text-secondary);">
+                        <input type="checkbox" id="trialConsent" required style="margin-top: 4px;">
+                        <span>I agree that VisiGate may create this trial Google Sheet/Drive folder, store the details I enter for this trial, and send my inquiry to info@visialerts.in.</span>
+                    </label>
                 </div>
 
                 <div style="font-size: 11px; color: var(--text-muted); margin-bottom: 14px; text-align: center;">
@@ -1377,11 +1381,10 @@
         </div>
 
         <form id="onboardingForm" onsubmit="applySocietySetup(event)">
-            <!-- Trial setup uses browser-local records; no live Drive or Sheets are created. -->
             <div style="display: flex; justify-content: space-between; align-items: center; background: rgba(15, 23, 42, 0.7); border: 1px dashed rgba(56, 189, 248, 0.35); border-radius: 8px; padding: 10px 14px; margin-bottom: 14px; flex-wrap: wrap; gap: 10px;">
             <div>
                 <strong style="color: #38bdf8; font-size: 13px;">✨ Configure a Sandbox Trial:</strong>
-                <span style="font-size: 12px; color: var(--text-secondary); margin-left: 6px;">Trial limits: 10 units, 10 residents per unit, 10 guards, 10 gates and 10 committee roles. Changes stay in this browser.</span>
+                <span style="font-size: 12px; color: var(--text-secondary); margin-left: 6px;">Trial limits: 10 units, 10 residents per unit, 10 guards, 10 gates and 10 committee roles. Apply settings to save them in the society Google Sheet.</span>
             </div>
             <button type="button" class="btn-top-action" onclick="fillRealisticDemoData()" style="background: rgba(16, 185, 129, 0.2); border-color: rgba(16, 185, 129, 0.5); color: #34d399; font-size: 12px; padding: 7px 14px;">
                 <span>✨ 1-Click Auto-Fill Demo Sample Data</span>
@@ -1523,7 +1526,7 @@
 
             <div style="margin: 0 0 18px; padding: 12px; border: 1px solid rgba(148, 163, 184, 0.25); border-radius: 8px;">
                 <strong style="color: #e2e8f0;">Society settings and charges</strong>
-                <p style="font-size: 11px; color: var(--text-secondary); margin: 6px 0 10px;">In a live deployment, admin contact details belong in the society database. Rates and amenity charges are Super-Admin controlled. This public trial does not create or edit a Google Sheet.</p>
+                <p style="font-size: 11px; color: var(--text-secondary); margin: 6px 0 10px;">This trial uses its own Google Sheet. Super-Admin controls rates and amenity charges.</p>
                 <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 8px;">
                     <label class="form-label">Admin/Manager WhatsApp<input id="trialAdminPhone" class="form-input" readonly value="Available after trial registration"></label>
                     <label class="form-label">Admin/Manager Email<input id="trialAdminEmail" class="form-input" readonly value="Available after trial registration"></label>
@@ -1532,9 +1535,17 @@
                     <label class="form-label">Shifting charge<input class="form-input" readonly value="Super-Admin only"></label>
                     <label class="form-label">Other amenity charges<input class="form-input" readonly value="Super-Admin only"></label>
                 </div>
+                <div id="trialSheetLinks" style="display: none; margin-top: 10px; font-size: 12px;">
+                    <a id="trialSheetLink" href="#" target="_blank" rel="noopener noreferrer" style="color: #38bdf8; margin-right: 14px;">Open trial Google Sheet</a>
+                    <a id="trialFolderLink" href="#" target="_blank" rel="noopener noreferrer" style="color: #38bdf8;">Open trial Drive folder</a>
+                </div>
+                <div id="trialPaymentPanel" style="display: none; margin-top: 12px; padding-top: 10px; border-top: 1px solid rgba(148, 163, 184, 0.25);">
+                    <button type="button" class="btn-top-action" id="btnUpgradeTrial" onclick="startOnlinePayment()">Continue with online payment</button>
+                    <span id="trialPaymentStatus" style="font-size: 11px; color: var(--text-secondary); margin-left: 8px;">Your trial data stays in this society database.</span>
+                </div>
             </div>
 
-            <!-- Resident Directory (Strictly Restricted to Max 10 Flats / Villas / Houses with 2 Residents each) -->
+            <!-- Resident Directory (up to 10 units and 10 residents per unit) -->
             <div class="setup-section-title" style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 6px;">
                 <span>3. MASTER_FLATS &amp; Resident Directory (Max 10 Units &bull; Max 10 Residents per Unit)</span>
                 <span style="font-size: 12px; color: #10b981; font-weight: 700;" id="residentUnitCounter">Configured Flats: 0 / 10 Max</span>
@@ -1565,7 +1576,7 @@
                     </button>
                 </div>
                 <button type="submit" class="btn-launch-sandbox">
-                    <span>🚀 Apply Trial Settings in This Browser</span>
+                    <span>🚀 Apply &amp; Save Trial Settings</span>
                 </button>
             </div>
         </form>
@@ -1836,7 +1847,7 @@
                                 </div>
                                 <div class="log-terminal-output" id="guardLogOutput">
                                     [READY] Guard phone initialized on Checkpoint Gate 1.<br>
-                                    [SHIFTS] 4 sample guards (2 Day, 2 Night) configured for this browser trial.<br>
+                                    [SHIFTS] Four blank day/night guard entries are ready for this trial.<br>
                                     [WAITING] Awaiting manual visitor, vehicle, or parcel entry...<br>
                                 </div>
                             </div>
@@ -2512,14 +2523,11 @@
             ...Array.from({ length: 7 }, () => ({ role: "MC Member", name: "", email: "" }))
         ];
         
-        // Four sample shift guards are preloaded; a trial may add up to ten total.
-        // Pre-populated with 10-digit dummy numbers (codes = last 4 digits) for immediate testing.
-        // Users can manually edit/delete any dummy names and numbers, or test with just 1 guard!
         let shiftGuards = [
-            { shift: 'DAY', label: 'Day Guard 1', name: 'Ramesh Kumar', phone: '9845022011', code: '2011', token: 'fcm_guard_day1_2011_live' },
-            { shift: 'DAY', label: 'Day Guard 2', name: 'Suresh Patil', phone: '9845022012', code: '2012', token: 'fcm_guard_day2_2012_live' },
-            { shift: 'NIGHT', label: 'Night Guard 1', name: 'Bahadur Thapa', phone: '9845022013', code: '2013', token: 'fcm_guard_night1_2013_live' },
-            { shift: 'NIGHT', label: 'Night Guard 2', name: 'Dhaniram Singh', phone: '9845022014', code: '2014', token: 'fcm_guard_night2_2014_live' }
+            { shift: 'DAY', label: 'Day Guard 1', name: '', phone: '', code: '0000', token: '' },
+            { shift: 'DAY', label: 'Day Guard 2', name: '', phone: '', code: '0000', token: '' },
+            { shift: 'NIGHT', label: 'Night Guard 1', name: '', phone: '', code: '0000', token: '' },
+            { shift: 'NIGHT', label: 'Night Guard 2', name: '', phone: '', code: '0000', token: '' }
         ];
         let activeGuardIndex = 0; // Currently on-duty officer
 
@@ -2530,12 +2538,126 @@
             email: "",
             role: ""
         };
+        const TRIAL_BACKEND_URL = "https://script.google.com/macros/s/AKfycby5A499zroIkcTGjg2Isk5hXR9Ik1ejyqNIwAhnbBH_p0zWyPrL04iiq-tIHofDWqVU/exec";
+        let currentTrialId = localStorage.getItem('visigate_trial_id') || '';
+        let currentTrialToken = localStorage.getItem('visigate_trial_token') || '';
+        let currentTrialSheetUrl = '';
+        let currentTrialFolderUrl = '';
 
-        // Registered Flats (STRICTLY RESTRICTED TO MAXIMUM 10 FLATS / VILLAS / HOUSES)
-        // Each flat allows TWO Resident entries (Resident 1 + Resident 2) for demo
+        function createTrialNonce() {
+            if (!window.crypto || !window.crypto.getRandomValues) {
+                throw new Error('Secure browser support is required for trial registration.');
+            }
+            return Array.from(window.crypto.getRandomValues(new Uint8Array(16)))
+                .map(value => value.toString(16).padStart(2, '0')).join('');
+        }
+
+        function callTrialBackend(action, payload) {
+            return new Promise((resolve, reject) => {
+                const nonce = createTrialNonce();
+                const frame = document.createElement('iframe');
+                const form = document.createElement('form');
+                const frameName = 'vgTrialApi_' + nonce;
+                frame.name = frameName;
+                frame.style.display = 'none';
+                frame.setAttribute('aria-hidden', 'true');
+                form.method = 'POST';
+                form.action = TRIAL_BACKEND_URL;
+                form.target = frameName;
+                form.style.display = 'none';
+
+                [
+                    ['action', action],
+                    ['origin', window.location.origin],
+                    ['nonce', nonce],
+                    ['payload', JSON.stringify(payload || {})]
+                ].forEach(([name, value]) => {
+                    const input = document.createElement('input');
+                    input.type = 'hidden';
+                    input.name = name;
+                    input.value = value;
+                    form.appendChild(input);
+                });
+
+                const timeoutId = setTimeout(() => finish(new Error('The trial service did not respond. Please retry.')), 60000);
+                const onMessage = event => {
+                    if (event.source !== frame.contentWindow ||
+                        !(event.origin === 'https://script.google.com' || event.origin.endsWith('.googleusercontent.com')) ||
+                        !event.data || event.data.type !== 'VG_TRIAL_API_RESPONSE' ||
+                        event.data.nonce !== nonce) return;
+                    finish(null, event.data.result);
+                };
+                const finish = (error, result) => {
+                    clearTimeout(timeoutId);
+                    window.removeEventListener('message', onMessage);
+                    form.remove();
+                    frame.remove();
+                    if (error) reject(error);
+                    else if (!result || !result.success) reject(new Error(result && result.error ? result.error : 'The trial service rejected this request.'));
+                    else resolve(result);
+                };
+
+                window.addEventListener('message', onMessage);
+                document.body.appendChild(frame);
+                document.body.appendChild(form);
+                form.submit();
+            });
+        }
+
+        function showTrialDatabaseLinks(sheetUrl, folderUrl, paymentConfigured, status) {
+            currentTrialSheetUrl = sheetUrl || currentTrialSheetUrl;
+            currentTrialFolderUrl = folderUrl || currentTrialFolderUrl;
+            const links = document.getElementById('trialSheetLinks');
+            const sheetLink = document.getElementById('trialSheetLink');
+            const folderLink = document.getElementById('trialFolderLink');
+            const panel = document.getElementById('trialPaymentPanel');
+            const paymentStatus = document.getElementById('trialPaymentStatus');
+            const paymentButton = document.getElementById('btnUpgradeTrial');
+            if (links && currentTrialSheetUrl && currentTrialFolderUrl) {
+                links.style.display = 'block';
+                sheetLink.href = currentTrialSheetUrl;
+                folderLink.href = currentTrialFolderUrl;
+            }
+            if (panel) panel.style.display = currentTrialId ? 'block' : 'none';
+            if (status === 'ACTIVE') {
+                if (paymentButton) paymentButton.disabled = true;
+                if (paymentStatus) paymentStatus.innerText = 'Payment verified. This society is active.';
+            } else if (paymentConfigured === false && paymentStatus) {
+                paymentStatus.innerText = 'Online payment will open after VisiGate configures its approved plan and Razorpay account.';
+            }
+        }
+
+        async function restoreTrialSetup() {
+            if (!currentTrialId || !currentTrialToken) return;
+            try {
+                const result = await callTrialBackend('loadTrialSetup', {
+                    trialId: currentTrialId,
+                    trialToken: currentTrialToken
+                });
+                registeredFlats = result.setup.units;
+                shiftGuards = result.setup.guards.length ? result.setup.guards : shiftGuards;
+                societyGates = result.setup.gates;
+                currentGate = societyGates[0] || 'Main Gate';
+                committeeRoster.splice(0, committeeRoster.length, ...result.setup.committee);
+                renderShiftGuardsInputs();
+                renderAdditionalShiftGuards();
+                renderExtraGateConfig();
+                renderCommitteeRoster();
+                renderResidentRegistrationTable();
+                syncFlatDropdowns();
+                applySocietyNameAcrossUi(result.societyName || currentSociety);
+                showTrialDatabaseLinks(result.sheetUrl, result.folderUrl, result.paymentConfigured, result.status);
+                if (result.paymentCheckError) {
+                    document.getElementById('trialPaymentStatus').innerText = result.paymentCheckError;
+                }
+            } catch (error) {
+                console.error('Could not restore the saved society trial:', error);
+                alert('Your trial database could not be loaded: ' + error.message);
+            }
+        }
+
+        // Trial societies start blank and may configure up to ten units.
         const MAX_FLATS = 10;
-        // Pre-populated with 10 units and 2 sample residents each; trial permits up to 10 residents per unit.
-        // for immediate live testing. Can manually delete/edit dummy names and numbers or test with 1 guard.
         let registeredFlats = [
             {
                 flat: "Flat 101",
@@ -2588,6 +2710,7 @@
                 res2: { name: "Jaspreet Kaur", phone: "9845015022", code: "5022", token: "fcm_res_502_res2_5022" }
             }
         ];
+        registeredFlats = [{ flat: "" }];
 
         // Active Visitors / Vehicles Log
         let entriesLog = [];
@@ -3082,8 +3205,8 @@
                                 <span id="resTokenBadge_${i}_${key}" class="token-badge${badgeClass}" style="font-size: 9px;" title="Demo FCM token" onclick="copyToken('${resident.token || ''}')">${(resident.token || `fcm_${key}_pending`).slice(0, 14)}...</span>
                             </div>
                             <div class="form-grid" style="grid-template-columns: 1.2fr 1.2fr 0.8fr; gap: 4px;">
-                                <input type="text" class="form-input" placeholder="Full Name" value="${resident.name || ''}" oninput="onResidentInput(${i}, '${key}', 'name', this.value)" style="padding: 4px 6px; font-size: 11px;">
-                                <input type="tel" class="form-input" placeholder="+91 XXXXXXXXXX" value="${resident.phone || ''}" oninput="onResidentInput(${i}, '${key}', 'phone', this.value)" style="padding: 4px 6px; font-size: 11px;">
+                                <input type="text" class="form-input" placeholder="Full Name" value="${escapeHtmlAttribute(resident.name)}" oninput="onResidentInput(${i}, '${key}', 'name', this.value)" style="padding: 4px 6px; font-size: 11px;">
+                                <input type="tel" class="form-input" placeholder="+91 XXXXXXXXXX" value="${escapeHtmlAttribute(resident.phone)}" oninput="onResidentInput(${i}, '${key}', 'phone', this.value)" style="padding: 4px 6px; font-size: 11px;">
                                 <input type="text" id="resCode_${i}_${key}" class="form-input" placeholder="Last 4" value="${resident.code || ''}" readonly style="padding: 4px 6px; font-size: 11px; text-align: center; color: ${color}; font-weight: 700; background: rgba(15, 23, 42, 0.7);">
                             </div>
                         </div>
@@ -3091,7 +3214,7 @@
                 }).join('');
                 tr.innerHTML = `
                     <td style="vertical-align: top;">
-                        <input type="text" class="form-input" placeholder="e.g. Flat 101 / Villa 4" value="${f.flat || ''}" oninput="onFlatNoChange(${i}, this.value)" style="font-weight: 700; color: #38bdf8;">
+                        <input type="text" class="form-input" placeholder="e.g. Flat 101 / Villa 4" value="${escapeHtmlAttribute(f.flat)}" oninput="onFlatNoChange(${i}, this.value)" style="font-weight: 700; color: #38bdf8;">
                         <div style="font-size: 10px; color: var(--text-muted); margin-top: 4px;">Unit #${i+1}</div>
                     </td>
                     <td colspan="2" style="vertical-align: top;">${residentCards}</td>
@@ -3176,8 +3299,8 @@
         }
 
         function clearAllFlats() {
-            if (confirm("Clear all browser-only trial unit and resident entries to start fresh? No Google Sheet data is affected.")) {
-                registeredFlats = [{ flat: "" }, { flat: "" }];
+            if (confirm("Clear the current unit and resident entries from this form? The Google Sheet changes only after you apply settings.")) {
+                registeredFlats = [{ flat: "" }];
                 renderResidentRegistrationTable();
                 syncFlatDropdowns();
             }
@@ -3296,6 +3419,7 @@
             // Initialize App Categories & Subcategories
             onCategoryChange('v');
             onCategoryChange('veh');
+            restoreTrialSetup();
         });
 
         function renderShiftGuardsInputs() {
@@ -3307,13 +3431,14 @@
                 if (nameEl) nameEl.value = g.name || '';
                 if (phoneEl) phoneEl.value = g.phone || '';
                 if (codeEl) codeEl.value = g.code || extractLast4Digits(g.phone);
-                if (badge && g.token) badge.innerText = g.token;
+                if (badge) badge.innerText = g.token || `fcm_guard_${g.shift.toLowerCase()}${i + 1}_pending`;
             });
             updateActiveGuardUi();
         }
 
         function checkLeadGate() {
-            let registered = localStorage.getItem('visigate_demo_unlocked') === 'true';
+            let registered = localStorage.getItem('visigate_demo_unlocked') === 'true' &&
+                Boolean(currentTrialId && currentTrialToken);
             const savedLead = localStorage.getItem('visigate_demo_lead');
             if (savedLead) {
                 try {
@@ -3355,7 +3480,7 @@
             if (gateModal) gateModal.style.display = 'flex';
         }
 
-        function handleMandatoryUnlock(e) {
+        async function handleMandatoryUnlock(e) {
             e.preventDefault();
             const society = document.getElementById('gateSocietyName').value.trim();
             const name = document.getElementById('gateFullName').value.trim();
@@ -3393,13 +3518,51 @@
             }
 
             if (!isLeadEmailVerified || leadOtpEmail !== email.toLowerCase()) {
-                alert("Complete email-code verification for this email address first. This is a browser-only trial simulation, not real email verification.");
+                alert("Verify the code sent to this email address first.");
+                return;
+            }
+
+            if (!leadEmailCode) {
+                alert("Your email verification code is no longer available. Request and verify a new code.");
                 return;
             }
 
             const cleanPhone = clean10DigitPhone(phone);
             const fullPhone = "+91 " + cleanPhone;
-            leadContact = { 
+            const submitButton = document.getElementById('btnSubmitUnlock');
+            if (submitButton) {
+                submitButton.disabled = true;
+                submitButton.innerText = 'Creating your trial database...';
+            }
+            let provisioned;
+            try {
+                provisioned = await callTrialBackend('provisionTrial', {
+                    societyName: society,
+                    contactName: name,
+                    phone: cleanPhone,
+                    email: email.toLowerCase(),
+                    role: role,
+                    consent: document.getElementById('trialConsent').checked,
+                    emailCode: leadEmailCode
+                });
+            } catch (error) {
+                alert('Your trial society was not created: ' + error.message);
+                return;
+            } finally {
+                if (submitButton) {
+                    submitButton.disabled = false;
+                    submitButton.innerText = 'Unlock & Access Full Interactive Trial';
+                }
+            }
+
+            currentTrialId = provisioned.trialId;
+            currentTrialToken = provisioned.trialToken;
+            localStorage.setItem('visigate_trial_id', currentTrialId);
+            localStorage.setItem('visigate_trial_token', currentTrialToken);
+            currentTrialSheetUrl = provisioned.sheetUrl;
+            currentTrialFolderUrl = provisioned.folderUrl;
+            leadEmailCode = null;
+            leadContact = {
                 society, 
                 name, 
                 phone: fullPhone, 
@@ -3407,7 +3570,7 @@
                 role, 
                 phoneVerified: true,
                 emailVerified: true,
-                verificationMode: "DEMO_SIMULATED",
+                verificationMode: "EMAIL_VERIFIED_PHONE_TRIAL_CODE",
                 timestamp: new Date().toISOString()
             };
             currentSociety = society;
@@ -3419,26 +3582,12 @@
             if (adminPhone) adminPhone.value = fullPhone;
             if (adminEmail) adminEmail.value = email;
 
-            // Dispatch Lead to Master Router endpoint which emails visigatealerts@gmail.com
-            const leadApiUrl = "https://script.google.com/macros/s/AKfycbwz-eVMRCO7Sd1dGIIVkHgmBXvfTxrbou5WX_lR2bIx3mKocZUAjWbqI_CuSy_dSw3-/exec" +
-                "?action=submitDemoLead" +
-                "&society=" + encodeURIComponent(society) +
-                "&name=" + encodeURIComponent(name) +
-                "&phone=" + encodeURIComponent(fullPhone) +
-                "&email=" + encodeURIComponent(email) +
-                "&role=" + encodeURIComponent(role);
-
-            try {
-                fetch(leadApiUrl, { mode: 'no-cors' }).catch(function(err) {
-                    console.log('Lead dispatch note:', err);
-                });
-            } catch(e) {}
-
             applySocietyNameAcrossUi(currentSociety);
             updateHeaderLeadBadge();
+            showTrialDatabaseLinks(provisioned.sheetUrl, provisioned.folderUrl, false, 'TRIAL');
             document.getElementById('mandatoryLeadGate').style.display = 'none';
 
-            alert(`Welcome to VisiGate Sandbox Trial, ${name}!\n\nSociety: ${society}\nPhone and email codes: simulated in this browser only\nOfficial Support: info@visigatealerts.in\n\nTrial workspace unlocked. Your contact details were submitted as a trial inquiry. No live society database or notifications were created.`);
+            alert(`Welcome to VisiGate Sandbox Trial, ${name}!\n\nSociety: ${society}\nA trial Google Sheet and Drive folder have been created. The sheet is shared as view-only; changes are saved through this trial.\nEmail verification was completed. Phone code remains a browser trial simulation.\nLead notification ${provisioned.leadNotified ? 'sent' : 'could not be sent'} to info@visialerts.in.\n\nUse the links in Society Settings to open your trial records.`);
         }
 
         function applySocietyNameAcrossUi(socName) {
@@ -3465,12 +3614,17 @@
             if (pClock) pClock.innerText = timeStr;
         }
 
-        function applySocietySetup(e) {
+        async function applySocietySetup(e) {
             e.preventDefault();
             societyGates[0] = document.getElementById('cfgGateName').value.trim() || "Main Gate";
             currentGate = societyGates[activeGateIndex] || societyGates[0];
 
-            // Validate shift guards phone numbers (clean 10 digits, allow blank if testing with only 1 guard)
+            if (!currentTrialId || !currentTrialToken) {
+                alert('Create or register this society trial before saving its settings.');
+                openLeadModal();
+                return;
+            }
+
             for (let i = 0; i < shiftGuards.length; i++) {
                 const p = shiftGuards[i].phone ? shiftGuards[i].phone.trim() : '';
                 if (p && clean10DigitPhone(p).length !== 10) {
@@ -3478,6 +3632,48 @@
                     const phoneEl = document.getElementById(`cfgGuardPhone_${i}`);
                     if (phoneEl) phoneEl.focus();
                     return;
+                }
+            }
+
+            const setup = {
+                units: registeredFlats.map(flat => ({
+                    flat: flat.flat || '',
+                    residents: Array.from({ length: MAX_RESIDENTS_PER_UNIT }, (_, index) => {
+                        const resident = getResidentRecord(flat, index);
+                        return { name: resident.name || '', phone: resident.phone || '' };
+                    })
+                })),
+                guards: shiftGuards.map(guard => ({
+                    shift: guard.shift,
+                    label: guard.label,
+                    name: guard.name || '',
+                    phone: guard.phone || ''
+                })),
+                gates: societyGates,
+                committee: committeeRoster.map(member => ({
+                    role: member.role,
+                    name: member.name || '',
+                    email: member.email || ''
+                }))
+            };
+            const submitButton = document.querySelector('#onboardingForm button[type="submit"]');
+            if (submitButton) {
+                submitButton.disabled = true;
+                submitButton.innerText = 'Saving trial settings...';
+            }
+            try {
+                await callTrialBackend('saveTrialSetup', {
+                    trialId: currentTrialId,
+                    trialToken: currentTrialToken,
+                    setup: setup
+                });
+            } catch (error) {
+                alert('Trial settings were not saved to the Google Sheet: ' + error.message);
+                return;
+            } finally {
+                if (submitButton) {
+                    submitButton.disabled = false;
+                    submitButton.innerText = '🚀 Apply & Save Trial Settings';
                 }
             }
 
@@ -3490,8 +3686,76 @@
             gLog.innerHTML += `<br><span style="color: #38bdf8;">[${now}] 🏢 [TRIAL_SETUP] Active gate: "${currentGate}". ${shiftGuards.length} trial guards configured. Active Officer: ${activeGuard.label} (${activeGuard.name || 'Guard'}, Code: ${activeGuard.code}). Configured Flats: ${registeredFlats.filter(f => f.flat).length} / 10 Max.</span><br>`;
             gLog.scrollTop = gLog.scrollHeight;
 
-            alert(`Trial settings updated in this browser.\n\nActive gate: ${currentGate}\nTrial guards: ${shiftGuards.length} / ${MAX_TRIAL_GUARDS}\nTrial gates: ${societyGates.length} / ${MAX_TRIAL_GATES}\nRegistered units: ${registeredFlats.filter(f => f.flat).length} / ${MAX_FLATS}\nResidents per unit: up to ${MAX_RESIDENTS_PER_UNIT}\nCommittee roles: ${committeeRoster.length} / 10\n\nNo Google Sheet, Drive folder, message or live app data was changed.`);
+            alert(`Trial settings saved to the society Google Sheet.\n\nActive gate: ${currentGate}\nTrial guards: ${shiftGuards.length} / ${MAX_TRIAL_GUARDS}\nTrial gates: ${societyGates.length} / ${MAX_TRIAL_GATES}\nRegistered units: ${registeredFlats.filter(f => f.flat).length} / ${MAX_FLATS}\nResidents per unit: up to ${MAX_RESIDENTS_PER_UNIT}\nCommittee roles: ${committeeRoster.length} / 10\n\nThe server enforces these trial limits. Notifications and gate actions remain simulated.`);
             document.getElementById('sandboxWorkspace').scrollIntoView({ behavior: 'smooth' });
+        }
+
+        async function startOnlinePayment() {
+            if (!currentTrialId || !currentTrialToken) {
+                alert('Register your society trial before continuing to payment.');
+                return;
+            }
+            const button = document.getElementById('btnUpgradeTrial');
+            const status = document.getElementById('trialPaymentStatus');
+            if (button) button.disabled = true;
+            if (status) status.innerText = 'Preparing secure payment...';
+            try {
+                const order = await callTrialBackend('createRazorpayOrder', {
+                    trialId: currentTrialId,
+                    trialToken: currentTrialToken
+                });
+                if (!window.Razorpay) {
+                    await new Promise((resolve, reject) => {
+                        const script = document.createElement('script');
+                        script.src = 'https://checkout.razorpay.com/v1/checkout.js';
+                        script.onload = resolve;
+                        script.onerror = () => reject(new Error('Razorpay checkout could not be loaded.'));
+                        document.head.appendChild(script);
+                    });
+                }
+                const checkout = new Razorpay({
+                    key: order.keyId,
+                    order_id: order.orderId,
+                    amount: order.amount,
+                    currency: order.currency,
+                    name: 'VisiGate Alerts',
+                    description: 'Continue ' + order.name + ' trial as a paid society',
+                    handler: async function(response) {
+                        try {
+                            await callTrialBackend('verifyRazorpayPayment', {
+                                trialId: currentTrialId,
+                                trialToken: currentTrialToken,
+                                orderId: response.razorpay_order_id,
+                                paymentId: response.razorpay_payment_id,
+                                signature: response.razorpay_signature
+                            });
+                            showTrialDatabaseLinks(currentTrialSheetUrl, currentTrialFolderUrl, true, 'ACTIVE');
+                            alert('Payment verified. Your society subscription is active; its trial records remain in the same Google Sheet.');
+                        } catch (error) {
+                            alert('Payment was received, but VisiGate could not confirm activation: ' + error.message + '. Contact info@visialerts.in with your payment reference.');
+                        }
+                    },
+                    prefill: {
+                        name: leadContact.name || '',
+                        email: leadContact.email || '',
+                        contact: clean10DigitPhone(leadContact.phone || '')
+                    },
+                    notes: { society: leadContact.society || '' },
+                    theme: { color: '#0284c7' },
+                    modal: { ondismiss: function() {
+                        if (status) status.innerText = 'Payment was not completed; your trial remains available.';
+                    } }
+                });
+                checkout.on('payment.failed', function(response) {
+                    alert('Payment failed: ' + (response.error && response.error.description ? response.error.description : 'Please try again.'));
+                });
+                checkout.open();
+            } catch (error) {
+                if (status) status.innerText = error.message;
+                alert('Could not start online payment: ' + error.message);
+            } finally {
+                if (button && (!status || !status.innerText.includes('Payment verified'))) button.disabled = false;
+            }
         }
 
         // App & Sub-tab switchers
@@ -4370,7 +4634,7 @@
             }
         }
 
-        function sendDemoEmailCode() {
+        async function sendDemoEmailCode() {
             if (!isLeadPhoneVerified) {
                 alert('Verify the phone trial code first.');
                 return;
@@ -4381,30 +4645,46 @@
                 document.getElementById('gateEmail').focus();
                 return;
             }
-            leadEmailCode = generateDemoCode();
             leadOtpEmail = email;
-            leadEmailCodeExpiresAt = Date.now() + 5 * 60 * 1000;
+            leadEmailCodeExpiresAt = Date.now() + 10 * 60 * 1000;
             isLeadEmailVerified = false;
-            document.getElementById('demoEmailCodeDisplay').innerText = leadEmailCode;
+            leadEmailCode = null;
             document.getElementById('gateEmailCode').value = '';
-            document.getElementById('emailCodeExpiry').innerText = '(expires in 5 minutes)';
+            document.getElementById('emailCodeExpiry').innerText = '(expires in 10 minutes)';
             document.getElementById('emailCodeContainer').style.display = 'block';
-            alert(`Trial email code: ${leadEmailCode}\n\nEnter this randomized code for ${email}. It expires in 5 minutes.\n\nNo email is sent. This browser-only simulation does not verify ownership of the email address.`);
+            const button = document.getElementById('btnSendEmailCode');
+            if (button) button.disabled = true;
+            try {
+                await callTrialBackend('requestTrialEmailCode', { email: email });
+                document.getElementById('emailCodeExpiry').innerText = '(sent; expires in 10 minutes)';
+                alert('A verification code has been sent to ' + email + '.');
+            } catch (error) {
+                clearLeadEmailVerification();
+                alert('Could not send the email verification code: ' + error.message);
+            } finally {
+                if (button) button.disabled = false;
+            }
         }
 
-        function verifyDemoEmailCode() {
+        async function verifyDemoEmailCode() {
             const email = document.getElementById('gateEmail').value.trim().toLowerCase();
             const enteredCode = document.getElementById('gateEmailCode').value.trim();
-            if (leadEmailCode && Date.now() <= leadEmailCodeExpiresAt && email === leadOtpEmail && enteredCode === leadEmailCode) {
-                isLeadEmailVerified = true;
-                leadEmailCode = null;
-                document.getElementById('emailCodeContainer').style.display = 'none';
-                document.getElementById('emailVerifiedBadge').style.display = 'block';
-                document.getElementById('emailVerifiedBadge').innerText = '✅ Email trial code accepted (browser trial only; not email-verified)';
+            if (email !== leadOtpEmail || !/^\d{6}$/.test(enteredCode)) {
+                alert('Enter the six-digit code sent to the current email address.');
                 return;
             }
-            const expired = leadEmailCode && Date.now() > leadEmailCodeExpiresAt;
-            alert(expired ? 'The trial email code has expired. Request a new code.' : 'The code does not match this email. Request a new code if needed.');
+            try {
+                await callTrialBackend('verifyTrialEmailCode', { email: email, code: enteredCode });
+                isLeadEmailVerified = true;
+                leadEmailCode = enteredCode;
+                document.getElementById('emailCodeContainer').style.display = 'none';
+                document.getElementById('emailVerifiedBadge').style.display = 'block';
+                document.getElementById('emailVerifiedBadge').innerText = '✅ Email address verified';
+            } catch (error) {
+                isLeadEmailVerified = false;
+                leadEmailCode = null;
+                alert('Email verification failed: ' + error.message);
+            }
         }
 
         // =====================================================================
@@ -4488,11 +4768,11 @@
             const now = new Date().toLocaleTimeString();
             const logBox = document.getElementById('guardLogOutput');
             if (logBox) {
-                logBox.innerHTML += `<br><span style="color: #10b981;">[${now}] ✨ [SAMPLE_DATA_LOADED] Populated 10 trial units with 2 sample residents each and 4 sample guards. Add up to 10 residents per unit and 10 guards total.</span><br>`;
+                logBox.innerHTML += `<br><span style="color: #10b981;">[${now}] ✨ [SAMPLE_DATA_LOADED] Populated the form with 10 sample units and 4 guards. Review and apply to save this sample data to the trial sheet.</span><br>`;
                 logBox.scrollTop = logBox.scrollHeight;
             }
 
-            alert("✨ Sandbox Trial Sample Data Loaded Successfully!\n\n• 10 units configured with 2 sample residents each (up to 10 residents per unit)\n• 4 sample guards configured (add up to 10 total)\n• Sample visitor and vehicle entries are browser-only\n• No live FCM messages, SMS, email, Sheets or Drive folders are created.");
+            alert("✨ Sandbox Trial sample data loaded in the form.\n\n• 10 sample units and 4 guards are available to review\n• Residents may be added up to 10 per unit\n• Apply Trial Settings to save configuration to the society Google Sheet\n• Visitor logs, FCM notifications and gate actions remain simulated.");
         }
 
         // =====================================================================
