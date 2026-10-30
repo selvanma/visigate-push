@@ -1246,49 +1246,49 @@
                     </div>
 
                     <div class="form-group-item">
-                        <label class="form-label">Your WhatsApp Number <span class="modal-req-tag">* (10-Digit Mobile / WhatsApp)</span></label>
+                        <label class="form-label">Your WhatsApp Number <span class="modal-req-tag">* (10-Digit WhatsApp No.)</span></label>
                         <div style="display: flex; gap: 8px;">
                             <div style="display: flex; align-items: center; justify-content: center; background: rgba(15, 23, 42, 0.8); border: 1px solid var(--border-glass); border-radius: 8px; padding: 0 12px; color: #38bdf8; font-weight: 700; font-size: 13px; white-space: nowrap;">
                                 🇮🇳 +91
                             </div>
                             <input type="tel" id="gateWhatsApp" class="form-input" value="" placeholder="Enter 10-digit number (e.g. 9845012345)" maxlength="10" required style="flex: 1; font-weight: 600; letter-spacing: 0.5px;" oninput="onGatePhoneInput()">
                             <button type="button" id="btnSendPhoneOtp" class="btn-top-action" onclick="sendFirebasePhoneOtp()" style="background: rgba(56, 189, 248, 0.2); border-color: rgba(56, 189, 248, 0.5); color: #38bdf8; white-space: nowrap;">
-                                <span>📲 Generate Trial Code</span>
+                                <span>📲 Send WhatsApp Code</span>
                             </button>
                         </div>
                     </div>
 
-                    <!-- Firebase Phone OTP Verification Container -->
+                    <!-- WhatsApp OTP Verification Container -->
                     <div id="phoneOtpContainer" style="display: none; background: rgba(15, 23, 42, 0.95); border: 1px solid rgba(56, 189, 248, 0.5); border-radius: 8px; padding: 14px; margin-top: 6px;">
                         <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
-                            <span style="font-size: 12px; color: #38bdf8; font-weight: 800;">🔐 Trial Phone Code</span>
-                            <span id="otpTimerLabel" style="font-size: 11px; color: #34d399; font-weight: 700; background: rgba(16, 185, 129, 0.15); padding: 2px 8px; border-radius: 4px;">Request a new code</span>
+                            <span style="font-size: 12px; color: #38bdf8; font-weight: 800;">🔐 WhatsApp Verification Code</span>
+                            <span id="otpTimerLabel" style="font-size: 11px; color: #34d399; font-weight: 700; background: rgba(16, 185, 129, 0.15); padding: 2px 8px; border-radius: 4px;">Request a code</span>
                         </div>
                         <div style="background: rgba(56, 189, 248, 0.1); border: 1px solid rgba(56, 189, 248, 0.25); border-radius: 6px; padding: 8px 10px; margin-bottom: 10px; font-size: 11px; color: #e2e8f0; line-height: 1.5;">
-                            ⚠️ <strong>Trial only:</strong> SMS is not sent. A randomized code is shown here for this browser session: <strong id="demoPhoneOtpDisplay" style="color: #38bdf8; font-size: 13px; letter-spacing: 1px;">Request a code</strong>
+                            A one-time verification code will be sent to this WhatsApp number. It expires in 5 minutes.
                         </div>
                         <div style="display: flex; gap: 8px; flex-wrap: wrap;">
-                            <input type="text" id="gatePhoneOtp" class="form-input" value="" inputmode="numeric" autocomplete="one-time-code" placeholder="Enter 6-digit trial code" maxlength="6" style="flex: 1; min-width: 130px; letter-spacing: 3px; font-weight: 800; text-align: center; color: #38bdf8; font-size: 15px; background: rgba(15, 23, 42, 0.8);">
+                            <input type="text" id="gatePhoneOtp" class="form-input" value="" inputmode="numeric" autocomplete="one-time-code" placeholder="Enter 6-digit WhatsApp code" maxlength="6" style="flex: 1; min-width: 130px; letter-spacing: 3px; font-weight: 800; text-align: center; color: #38bdf8; font-size: 15px; background: rgba(15, 23, 42, 0.8);">
                             <button type="button" class="btn-top-action" onclick="verifyFirebasePhoneOtp()" style="background: #10b981; color: #ffffff; border: none; font-weight: 700; padding: 0 16px; cursor: pointer;">
-                                <span>Verify Phone Code &rarr;</span>
+                                <span>Verify WhatsApp Code &rarr;</span>
                             </button>
                         </div>
                         <div id="otpFeedbackMsg" style="display: none; font-size: 11px; margin-top: 8px; font-weight: 700;"></div>
                     </div>
 
                     <div id="phoneVerifiedBadge" style="display: none; background: rgba(16, 185, 129, 0.15); border: 1px solid rgba(16, 185, 129, 0.4); color: #34d399; padding: 6px 12px; border-radius: 6px; font-size: 12px; font-weight: 700;">
-                        ✅ Phone trial code accepted in this browser trial (not real SMS verification)
+                        ✅ WhatsApp number verified
                     </div>
 
                     <div class="form-group-item">
-                        <label class="form-label">Your Email ID <span class="modal-req-tag">* (Compulsory)</span></label>
-                        <input type="email" id="gateEmail" class="form-input" value="" placeholder="you@domain.xxx (e.g. secretary@greenwood.in)" required oninput="onGateEmailInput()">
+                        <label class="form-label">Your Email ID <span class="modal-req-tag">* (any email provider)</span></label>
+                        <input type="email" id="gateEmail" class="form-input" value="" placeholder="you@xxxxxxx.xxx" required oninput="onGateEmailInput()">
                         <button type="button" id="btnSendEmailCode" class="btn-top-action" onclick="sendDemoEmailCode()" style="margin-top: 8px; background: rgba(56, 189, 248, 0.2); border-color: rgba(56, 189, 248, 0.5); color: #38bdf8;">
                             <span>✉️ Verify Email</span>
                         </button>
                         <div id="emailCodeContainer" style="display: none; margin-top: 8px; padding: 10px; border-radius: 8px; border: 1px solid rgba(56, 189, 248, 0.35); background: rgba(15, 23, 42, 0.8);">
                             <label class="form-label" for="gateEmailCode">Email verification code <span id="emailCodeExpiry" style="font-size: 11px; color: #34d399;"></span></label>
-                            <div style="font-size: 11px; color: #cbd5e1; margin-bottom: 8px;">Enter the verification code sent to your email address.</div>
+                            <div style="font-size: 11px; color: #cbd5e1; margin-bottom: 8px;">Enter the verification code sent to any email address you can access.</div>
                             <div style="display: flex; gap: 8px;">
                                 <input type="text" id="gateEmailCode" class="form-input" inputmode="numeric" autocomplete="one-time-code" placeholder="6-digit email code" maxlength="6">
                                 <button type="button" class="btn-top-action" onclick="verifyDemoEmailCode()" style="background: #10b981; color: #ffffff; border: none; font-weight: 700;">Verify</button>
@@ -2751,7 +2751,7 @@
 
         function isValidEmail(email) {
             if (!email) return false;
-            // Format: standard email ending with @domain.xxx
+            // Accept any usable email provider; verification is sent to the supplied address.
             const re = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
             return re.test(email.trim());
         }
@@ -3506,13 +3506,13 @@
             }
 
             if (!isValidEmail(email)) {
-                alert("Please enter a valid official Email ID ending with @domain.xxx\n\nExample: secretary@greenwoodheights.com");
+                alert("Please enter a valid email address from any provider.\n\nExample: you@xxxxxxx.xxx");
                 document.getElementById('gateEmail').focus();
                 return;
             }
 
             if (!isLeadPhoneVerified || leadOtpPhone !== clean10DigitPhone(phone)) {
-                alert("Complete phone-code verification for this number first. This is a browser-only trial simulation, not real SMS verification.");
+                alert("Verify the WhatsApp code sent to this number first.");
                 return;
             }
 
@@ -3569,7 +3569,7 @@
                 role, 
                 phoneVerified: true,
                 emailVerified: true,
-                verificationMode: "EMAIL_VERIFIED_PHONE_TRIAL_CODE",
+                verificationMode: "WHATSAPP_AND_EMAIL_OTP",
                 timestamp: new Date().toISOString()
             };
             currentSociety = society;
@@ -4473,26 +4473,16 @@
         // =====================================================================
         
         // =====================================================================
-        // FIREBASE PHONE OTP VERIFICATION FOR MANDATORY UNLOCK GATE
+        // WhatsApp OTP verification for the mandatory trial registration gate
         // =====================================================================
         let isLeadPhoneVerified = false;
         let isLeadEmailVerified = false;
-        let leadOtpDispatchedCode = null;
         let leadOtpPhone = null;
         let leadOtpExpiresAt = 0;
         let leadOtpTimerId = null;
         let leadEmailCode = null;
         let leadOtpEmail = null;
         let leadEmailCodeExpiresAt = 0;
-
-        function generateDemoCode() {
-            const values = new Uint32Array(1);
-            if (window.crypto && window.crypto.getRandomValues) {
-                window.crypto.getRandomValues(values);
-                return String(100000 + (values[0] % 900000));
-            }
-            return String(Math.floor(100000 + Math.random() * 900000));
-        }
 
         function clearLeadEmailVerification() {
             isLeadEmailVerified = false;
@@ -4513,7 +4503,6 @@
 
         function onGatePhoneInput() {
             isLeadPhoneVerified = false;
-            leadOtpDispatchedCode = null;
             leadOtpPhone = null;
             leadOtpExpiresAt = 0;
             if (leadOtpTimerId) clearInterval(leadOtpTimerId);
@@ -4528,8 +4517,6 @@
             }
             const badge = document.getElementById('phoneVerifiedBadge');
             if (badge) badge.style.display = 'none';
-            const display = document.getElementById('demoPhoneOtpDisplay');
-            if (display) display.innerText = 'Request a code';
             const otpInput = document.getElementById('gatePhoneOtp');
             if (otpInput) otpInput.value = '';
             const timer = document.getElementById('otpTimerLabel');
@@ -4540,56 +4527,55 @@
             clearLeadEmailVerification();
         }
 
-        function sendFirebasePhoneOtp() {
+        async function sendFirebasePhoneOtp() {
             const rawPhone = document.getElementById('gateWhatsApp').value.trim();
             const cleanPhone = clean10DigitPhone(rawPhone);
             if (!isValidWhatsApp(cleanPhone)) {
-                alert("Please enter a valid 10-digit WhatsApp / Mobile number before requesting OTP.\n\nExample: 9845012345");
+                alert("Please enter a valid 10-digit WhatsApp number before requesting a code.\n\nExample: 9845012345");
                 document.getElementById('gateWhatsApp').focus();
                 return;
             }
 
             isLeadPhoneVerified = false;
             clearLeadEmailVerification();
-            leadOtpDispatchedCode = generateDemoCode();
-            leadOtpPhone = cleanPhone;
-            leadOtpExpiresAt = Date.now() + 5 * 60 * 1000;
-            const container = document.getElementById('phoneOtpContainer');
-            if (container) {
-                container.style.display = 'block';
-                setTimeout(() => container.scrollIntoView({ behavior: 'smooth', block: 'nearest' }), 50);
-            }
-
-            const otpInput = document.getElementById('gatePhoneOtp');
-            if (otpInput) {
-                otpInput.value = '';
-            }
-
-            const display = document.getElementById('demoPhoneOtpDisplay');
-            if (display) display.innerText = leadOtpDispatchedCode;
-            const feedback = document.getElementById('otpFeedbackMsg');
-            if (feedback) {
-                feedback.style.display = 'block';
-                feedback.style.color = '#fbbf24';
-                feedback.innerText = 'Trial code generated in this browser. No SMS was sent. Code expires in 5 minutes.';
-            }
-
-            const timer = document.getElementById('otpTimerLabel');
-            if (leadOtpTimerId) clearInterval(leadOtpTimerId);
-            const updateExpiry = () => {
-                const secondsLeft = Math.max(0, Math.ceil((leadOtpExpiresAt - Date.now()) / 1000));
-                if (timer) timer.innerText = secondsLeft ? `Expires in ${Math.floor(secondsLeft / 60)}:${String(secondsLeft % 60).padStart(2, '0')}` : 'Code expired';
-                if (!secondsLeft) {
-                    leadOtpDispatchedCode = null;
-                    clearInterval(leadOtpTimerId);
+            const button = document.getElementById('btnSendPhoneOtp');
+            if (button) button.disabled = true;
+            try {
+                await callTrialBackend('requestTrialWhatsAppCode', { phone: cleanPhone });
+                leadOtpPhone = cleanPhone;
+                leadOtpExpiresAt = Date.now() + 5 * 60 * 1000;
+                const container = document.getElementById('phoneOtpContainer');
+                if (container) {
+                    container.style.display = 'block';
+                    setTimeout(() => container.scrollIntoView({ behavior: 'smooth', block: 'nearest' }), 50);
                 }
-            };
-            updateExpiry();
-            leadOtpTimerId = setInterval(updateExpiry, 1000);
-            alert(`Trial phone code: ${leadOtpDispatchedCode}\n\nFor +91 ${cleanPhone}, enter this randomized code in the trial form. It expires in 5 minutes.\n\nNo SMS is sent. This browser-only simulation does not verify ownership of the phone number.`);
+                const otpInput = document.getElementById('gatePhoneOtp');
+                if (otpInput) otpInput.value = '';
+                const feedback = document.getElementById('otpFeedbackMsg');
+                if (feedback) {
+                    feedback.style.display = 'block';
+                    feedback.style.color = '#34d399';
+                    feedback.innerText = 'WhatsApp accepted the verification request. Check your WhatsApp messages; the code expires in 5 minutes.';
+                }
+                const timer = document.getElementById('otpTimerLabel');
+                if (leadOtpTimerId) clearInterval(leadOtpTimerId);
+                const updateExpiry = () => {
+                    const secondsLeft = Math.max(0, Math.ceil((leadOtpExpiresAt - Date.now()) / 1000));
+                    if (timer) timer.innerText = secondsLeft ? `Expires in ${Math.floor(secondsLeft / 60)}:${String(secondsLeft % 60).padStart(2, '0')}` : 'Code expired';
+                    if (!secondsLeft) clearInterval(leadOtpTimerId);
+                };
+                updateExpiry();
+                leadOtpTimerId = setInterval(updateExpiry, 1000);
+            } catch (error) {
+                leadOtpPhone = null;
+                leadOtpExpiresAt = 0;
+                alert('Could not send the WhatsApp verification code: ' + error.message);
+            } finally {
+                if (button) button.disabled = false;
+            }
         }
 
-        function verifyFirebasePhoneOtp() {
+        async function verifyFirebasePhoneOtp() {
             const otpInput = document.getElementById('gatePhoneOtp');
             const otp = otpInput ? otpInput.value.trim() : '';
             const rawPhone = document.getElementById('gateWhatsApp').value.trim();
@@ -4599,17 +4585,28 @@
             const container = document.getElementById('phoneOtpContainer');
             const unlockBtn = document.getElementById('btnSubmitUnlock');
 
-            if (leadOtpDispatchedCode && Date.now() <= leadOtpExpiresAt && cleanPhone === leadOtpPhone && otp === leadOtpDispatchedCode) {
+            if (leadOtpPhone && Date.now() <= leadOtpExpiresAt && cleanPhone === leadOtpPhone && /^\d{6}$/.test(otp)) {
+                const verifyButton = container ? container.querySelector('button') : null;
+                if (verifyButton) verifyButton.disabled = true;
+                try {
+                    await callTrialBackend('verifyTrialWhatsAppCode', { phone: cleanPhone, code: otp });
+                } catch (error) {
+                    if (feedback) {
+                        feedback.style.display = 'block';
+                        feedback.style.color = '#f87171';
+                        feedback.innerText = error.message;
+                    }
+                    return;
+                } finally {
+                    if (verifyButton) verifyButton.disabled = false;
+                }
                 isLeadPhoneVerified = true;
                 if (container) container.style.display = 'none';
                 if (badge) {
                     badge.style.display = 'block';
-                    badge.innerText = `✅ Phone code accepted for +91 ${cleanPhone} (browser trial only; not SMS-verified)`;
+                    badge.innerText = `✅ WhatsApp number +91 ${cleanPhone} verified`;
                 }
-                leadOtpDispatchedCode = null;
                 if (leadOtpTimerId) clearInterval(leadOtpTimerId);
-                const display = document.getElementById('demoPhoneOtpDisplay');
-                if (display) display.innerText = 'Code accepted';
                 if (otpInput) otpInput.value = '';
                 if (feedback) feedback.style.display = 'none';
                 const timer = document.getElementById('otpTimerLabel');
@@ -4621,14 +4618,14 @@
                         unlockBtn.style.borderColor = '#10b981';
                     }, 100);
                 }
-                alert(`Phone trial code accepted for +91 ${cleanPhone}.\n\nThis is not real phone/SMS verification. Next, verify your email using the trial code.`);
+                alert(`WhatsApp number +91 ${cleanPhone} verified. Next, verify the code sent to your email address.`);
             } else {
                 if (feedback) {
                     feedback.style.display = 'block';
                     feedback.style.color = '#f87171';
-                    feedback.innerText = leadOtpDispatchedCode && Date.now() > leadOtpExpiresAt
-                        ? '❌ Trial code expired. Request a new code.'
-                        : '❌ Code does not match the current phone code. Request a new code if needed.';
+                    feedback.innerText = Date.now() > leadOtpExpiresAt
+                        ? '❌ WhatsApp code expired. Request a new code.'
+                        : '❌ Enter the six-digit WhatsApp code sent to this number.';
                 }
             }
         }
@@ -4640,7 +4637,7 @@
             }
             const email = document.getElementById('gateEmail').value.trim().toLowerCase();
             if (!isValidEmail(email)) {
-                alert('Enter a valid email address before requesting its trial code.');
+                alert('Enter a valid email address before requesting its verification code.');
                 document.getElementById('gateEmail').focus();
                 return;
             }
