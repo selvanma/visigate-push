@@ -1253,7 +1253,7 @@
                             </div>
                             <input type="tel" id="gateWhatsApp" class="form-input" value="" placeholder="Enter 10-digit number (e.g. 9845012345)" maxlength="10" required style="flex: 1; font-weight: 600; letter-spacing: 0.5px;" oninput="onGatePhoneInput()">
                             <button type="button" id="btnSendPhoneOtp" class="btn-top-action" onclick="sendFirebasePhoneOtp()" style="background: rgba(56, 189, 248, 0.2); border-color: rgba(56, 189, 248, 0.5); color: #38bdf8; white-space: nowrap;">
-                                <span>📲 Send WhatsApp Code</span>
+                                <span>📲 Generate WhatsApp Trial Code</span>
                             </button>
                         </div>
                     </div>
@@ -1265,7 +1265,7 @@
                             <span id="otpTimerLabel" style="font-size: 11px; color: #34d399; font-weight: 700; background: rgba(16, 185, 129, 0.15); padding: 2px 8px; border-radius: 4px;">Request a code</span>
                         </div>
                         <div style="background: rgba(56, 189, 248, 0.1); border: 1px solid rgba(56, 189, 248, 0.25); border-radius: 6px; padding: 8px 10px; margin-bottom: 10px; font-size: 11px; color: #e2e8f0; line-height: 1.5;">
-                            A one-time verification code will be sent to this WhatsApp number. It expires in 5 minutes.
+                            Trial simulation only: no WhatsApp message is sent. Enter this generated code: <strong id="demoPhoneOtpDisplay" style="color: #38bdf8; letter-spacing: 1px;">Generate a code</strong> (expires in 5 minutes).
                         </div>
                         <div style="display: flex; gap: 8px; flex-wrap: wrap;">
                             <input type="text" id="gatePhoneOtp" class="form-input" value="" inputmode="numeric" autocomplete="one-time-code" placeholder="Enter 6-digit WhatsApp code" maxlength="6" style="flex: 1; min-width: 130px; letter-spacing: 3px; font-weight: 800; text-align: center; color: #38bdf8; font-size: 15px; background: rgba(15, 23, 42, 0.8);">
@@ -1284,17 +1284,17 @@
                         <label class="form-label">Your Email ID <span class="modal-req-tag">* (any email provider)</span></label>
                         <input type="email" id="gateEmail" class="form-input" value="" placeholder="you@xxxxxxx.xxx" required oninput="onGateEmailInput()">
                         <button type="button" id="btnSendEmailCode" class="btn-top-action" onclick="sendDemoEmailCode()" style="margin-top: 8px; background: rgba(56, 189, 248, 0.2); border-color: rgba(56, 189, 248, 0.5); color: #38bdf8;">
-                            <span>✉️ Verify Email</span>
+                            <span>✉️ Generate Email Trial Code</span>
                         </button>
                         <div id="emailCodeContainer" style="display: none; margin-top: 8px; padding: 10px; border-radius: 8px; border: 1px solid rgba(56, 189, 248, 0.35); background: rgba(15, 23, 42, 0.8);">
                             <label class="form-label" for="gateEmailCode">Email verification code <span id="emailCodeExpiry" style="font-size: 11px; color: #34d399;"></span></label>
-                            <div style="font-size: 11px; color: #cbd5e1; margin-bottom: 8px;">Enter the verification code sent to any email address you can access.</div>
+                            <div style="font-size: 11px; color: #cbd5e1; margin-bottom: 8px;">Trial simulation only: no email is sent. Enter the generated code shown here: <strong id="demoEmailCodeDisplay" style="color: #38bdf8; letter-spacing: 1px;">Generate a code</strong>.</div>
                             <div style="display: flex; gap: 8px;">
                                 <input type="text" id="gateEmailCode" class="form-input" inputmode="numeric" autocomplete="one-time-code" placeholder="6-digit email code" maxlength="6">
                                 <button type="button" class="btn-top-action" onclick="verifyDemoEmailCode()" style="background: #10b981; color: #ffffff; border: none; font-weight: 700;">Verify</button>
                             </div>
                         </div>
-                        <div id="emailVerifiedBadge" style="display: none; margin-top: 8px; color: #34d399; font-size: 12px; font-weight: 700;">✅ Email address verified</div>
+                        <div id="emailVerifiedBadge" style="display: none; margin-top: 8px; color: #34d399; font-size: 12px; font-weight: 700;">✅ Email trial code accepted (not email-verified)</div>
                     </div>
 
                     <div class="form-group-item">
@@ -1311,7 +1311,7 @@
                     </div>
                     <label class="form-group-item" style="display: flex; flex-direction: row; align-items: flex-start; gap: 8px; font-size: 11px; color: var(--text-secondary);">
                         <input type="checkbox" id="trialConsent" required style="margin-top: 4px;">
-                        <span>I agree that VisiGate may create this trial Google Sheet/Drive folder, store the details I enter for this trial, and send my inquiry to info@visialerts.in.</span>
+                        <span>I agree that VisiGate may create this trial Google Sheet/Drive folder, store the details I enter for this trial, and send my inquiry to info@visigatealerts.in.</span>
                     </label>
                 </div>
 
@@ -3512,12 +3512,12 @@
             }
 
             if (!isLeadPhoneVerified || leadOtpPhone !== clean10DigitPhone(phone)) {
-                alert("Verify the WhatsApp code sent to this number first.");
+                alert("Enter the WhatsApp trial code shown in the form first.");
                 return;
             }
 
             if (!isLeadEmailVerified || leadOtpEmail !== email.toLowerCase()) {
-                alert("Verify the code sent to this email address first.");
+                alert("Enter the email trial code shown in the form first.");
                 return;
             }
 
@@ -3569,7 +3569,7 @@
                 role, 
                 phoneVerified: true,
                 emailVerified: true,
-                verificationMode: "WHATSAPP_AND_EMAIL_OTP",
+                verificationMode: "SIMULATED_WHATSAPP_AND_EMAIL_OTP",
                 timestamp: new Date().toISOString()
             };
             currentSociety = society;
@@ -3586,7 +3586,7 @@
             showTrialDatabaseLinks(provisioned.sheetUrl, provisioned.folderUrl, false, 'TRIAL');
             document.getElementById('mandatoryLeadGate').style.display = 'none';
 
-            alert(`Welcome to VisiGate Sandbox Trial, ${name}!\n\nSociety: ${society}\nA trial Google Sheet and Drive folder have been created. The sheet is shared as view-only; changes are saved through this trial.\nEmail verification was completed. Phone code remains a browser trial simulation.\nLead notification ${provisioned.leadNotified ? 'sent' : 'could not be sent'} to info@visialerts.in.\n\nUse the links in Society Settings to open your trial records.`);
+            alert(`Welcome to VisiGate Sandbox Trial, ${name}!\n\nSociety: ${society}\nA trial Google Sheet and Drive folder have been created. The sheet is shared as view-only; changes are saved through this trial.\nEmail and WhatsApp codes were accepted in trial simulation only; ownership was not verified.\nLead notification ${provisioned.leadNotified ? 'sent' : 'could not be sent'} to info@visigatealerts.in.\n\nUse the links in Society Settings to open your trial records.`);
         }
 
         function applySocietyNameAcrossUi(socName) {
@@ -3731,7 +3731,7 @@
                             showTrialDatabaseLinks(currentTrialSheetUrl, currentTrialFolderUrl, true, 'ACTIVE');
                             alert('Payment verified. Your society subscription is active; its trial records remain in the same Google Sheet.');
                         } catch (error) {
-                            alert('Payment was received, but VisiGate could not confirm activation: ' + error.message + '. Contact info@visialerts.in with your payment reference.');
+                            alert('Payment was received, but VisiGate could not confirm activation: ' + error.message + '. Contact info@visigatealerts.in with your payment reference.');
                         }
                     },
                     prefill: {
@@ -4541,9 +4541,10 @@
             const button = document.getElementById('btnSendPhoneOtp');
             if (button) button.disabled = true;
             try {
-                await callTrialBackend('requestTrialWhatsAppCode', { phone: cleanPhone });
+                const response = await callTrialBackend('requestTrialWhatsAppCode', { phone: cleanPhone });
                 leadOtpPhone = cleanPhone;
                 leadOtpExpiresAt = Date.now() + 5 * 60 * 1000;
+                document.getElementById('demoPhoneOtpDisplay').innerText = response.trialCode;
                 const container = document.getElementById('phoneOtpContainer');
                 if (container) {
                     container.style.display = 'block';
@@ -4555,7 +4556,7 @@
                 if (feedback) {
                     feedback.style.display = 'block';
                     feedback.style.color = '#34d399';
-                    feedback.innerText = 'WhatsApp accepted the verification request. Check your WhatsApp messages; the code expires in 5 minutes.';
+                    feedback.innerText = 'Trial code generated in this page. No WhatsApp message was sent.';
                 }
                 const timer = document.getElementById('otpTimerLabel');
                 if (leadOtpTimerId) clearInterval(leadOtpTimerId);
@@ -4569,7 +4570,7 @@
             } catch (error) {
                 leadOtpPhone = null;
                 leadOtpExpiresAt = 0;
-                alert('Could not send the WhatsApp verification code: ' + error.message);
+                alert('Could not generate the WhatsApp trial code: ' + error.message);
             } finally {
                 if (button) button.disabled = false;
             }
@@ -4604,7 +4605,7 @@
                 if (container) container.style.display = 'none';
                 if (badge) {
                     badge.style.display = 'block';
-                    badge.innerText = `✅ WhatsApp number +91 ${cleanPhone} verified`;
+                    badge.innerText = `✅ WhatsApp trial code accepted for +91 ${cleanPhone} (not real number verification)`;
                 }
                 if (leadOtpTimerId) clearInterval(leadOtpTimerId);
                 if (otpInput) otpInput.value = '';
@@ -4618,21 +4619,21 @@
                         unlockBtn.style.borderColor = '#10b981';
                     }, 100);
                 }
-                alert(`WhatsApp number +91 ${cleanPhone} verified. Next, verify the code sent to your email address.`);
+                alert(`WhatsApp trial code accepted for +91 ${cleanPhone}. No message was sent. Next, generate the email trial code.`);
             } else {
                 if (feedback) {
                     feedback.style.display = 'block';
                     feedback.style.color = '#f87171';
                     feedback.innerText = Date.now() > leadOtpExpiresAt
                         ? '❌ WhatsApp code expired. Request a new code.'
-                        : '❌ Enter the six-digit WhatsApp code sent to this number.';
+                        : '❌ Enter the six-digit WhatsApp trial code shown above.';
                 }
             }
         }
 
         async function sendDemoEmailCode() {
             if (!isLeadPhoneVerified) {
-                alert('Verify the phone trial code first.');
+                alert('Accept the WhatsApp trial code first.');
                 return;
             }
             const email = document.getElementById('gateEmail').value.trim().toLowerCase();
@@ -4651,12 +4652,13 @@
             const button = document.getElementById('btnSendEmailCode');
             if (button) button.disabled = true;
             try {
-                await callTrialBackend('requestTrialEmailCode', { email: email });
-                document.getElementById('emailCodeExpiry').innerText = '(sent; expires in 10 minutes)';
-                alert('A verification code has been sent to ' + email + '.');
+                const response = await callTrialBackend('requestTrialEmailCode', { email: email });
+                document.getElementById('demoEmailCodeDisplay').innerText = response.trialCode;
+                document.getElementById('emailCodeExpiry').innerText = '(trial code; expires in 10 minutes)';
+                alert('Your email trial code is shown in the form. No email was sent.');
             } catch (error) {
                 clearLeadEmailVerification();
-                alert('Could not send the email verification code: ' + error.message);
+                alert('Could not generate the email trial code: ' + error.message);
             } finally {
                 if (button) button.disabled = false;
             }
@@ -4666,7 +4668,7 @@
             const email = document.getElementById('gateEmail').value.trim().toLowerCase();
             const enteredCode = document.getElementById('gateEmailCode').value.trim();
             if (email !== leadOtpEmail || !/^\d{6}$/.test(enteredCode)) {
-                alert('Enter the six-digit code sent to the current email address.');
+                alert('Enter the six-digit email trial code shown in the form.');
                 return;
             }
             try {
@@ -4675,11 +4677,11 @@
                 leadEmailCode = enteredCode;
                 document.getElementById('emailCodeContainer').style.display = 'none';
                 document.getElementById('emailVerifiedBadge').style.display = 'block';
-                document.getElementById('emailVerifiedBadge').innerText = '✅ Email address verified';
+                document.getElementById('emailVerifiedBadge').innerText = '✅ Email trial code accepted (not email-verified)';
             } catch (error) {
                 isLeadEmailVerified = false;
                 leadEmailCode = null;
-                alert('Email verification failed: ' + error.message);
+                alert('Email trial code verification failed: ' + error.message);
             }
         }
 
