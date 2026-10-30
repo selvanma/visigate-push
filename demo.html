@@ -4735,17 +4735,24 @@
             if (!resDetails) return;
 
             if (flatObj) {
-                const r1 = flatObj.res1;
-                const r2 = flatObj.res2;
+                const residents = Array.from({ length: MAX_RESIDENTS_PER_UNIT }, (_, residentIndex) => ({
+                    resident: getResidentRecord(flatObj, residentIndex),
+                    residentIndex
+                })).filter(item => item.resident.name.trim() || item.resident.phone.trim());
+                const residentRows = residents.length
+                    ? residents.map(({ resident, residentIndex }) => `
+                        <div style="margin-top: 6px; padding: 6px; background: rgba(30, 41, 59, 0.6); border-radius: 6px; font-size: 11px;">
+                            <strong>Resident ${residentIndex + 1}${residentIndex === 0 ? ' (Primary)' : ''}:</strong> ${escapeHtmlAttribute(resident.name || `Resident ${residentIndex + 1}`)}
+                            &bull; Code: <code style="color: #38bdf8; font-weight: 700;">${escapeHtmlAttribute(resident.code || '0000')}</code><br>
+                            <span class="token-badge" style="font-size: 8px;" title="Trial resident token" onclick="copyToken('${escapeHtmlAttribute(resident.token)}')">${escapeHtmlAttribute((resident.token || `fcm_res${residentIndex + 1}_pending`).slice(0, 22))}...</span>
+                        </div>
+                    `).join('')
+                    : '<div style="font-size: 11px; color: #94a3b8; margin-top: 6px;">No residents have been added to this unit yet.</div>';
                 resDetails.innerHTML = `
-                    <strong>Unit:</strong> ${flatObj.flat}<br>
-                    <div style="margin-top: 6px; padding: 6px; background: rgba(30, 41, 59, 0.6); border-radius: 6px; font-size: 11px;">
-                        <strong>Resident 1 (Primary):</strong> ${r1.name || 'Resident 1'} &bull; Code: <code style="color: #38bdf8; font-weight: 700;">${r1.code || '0000'}</code><br>
-                        <span class="token-badge" style="font-size: 8px;" title="Resident 1 Token" onclick="copyToken('${r1.token}')">${(r1.token || 'fcm_res1_pending').slice(0, 22)}...</span><br>
-                        <strong style="margin-top: 4px; display: inline-block;">Resident 2 (Co-Resident):</strong> ${r2.name || 'Resident 2'} &bull; Code: <code style="color: #10b981; font-weight: 700;">${r2.code || '0000'}</code><br>
-                        <span class="token-badge token-badge-emerald" style="font-size: 8px;" title="Resident 2 Token" onclick="copyToken('${r2.token}')">${(r2.token || 'fcm_res2_pending').slice(0, 22)}...</span>
-                    </div>
-                    <div style="font-size: 10px; color: #94a3b8; margin-top: 6px;">Status: Ready for gate approvals via Firebase WebPush.</div>
+                    <strong>Unit:</strong> ${escapeHtmlAttribute(flatObj.flat)}<br>
+                    <strong>Residents:</strong> ${residents.length} / ${MAX_RESIDENTS_PER_UNIT}
+                    ${residentRows}
+                    <div style="font-size: 10px; color: #94a3b8; margin-top: 6px;">Browser trial records only; no live notifications are sent.</div>
                 `;
             }
         }
